@@ -100,7 +100,11 @@ class VehicleList extends Component {
                 field: 'power',
                 name: 'Power',
                 render: power => power + "kw",
-
+            },
+            {
+                field: 'id',
+                name: 'Actions',
+                render: (id, item) => <Link to={"/vehicles/" + id + '/' + VehicleService.slugify(item)}>View</Link>,
             }
         ];
 

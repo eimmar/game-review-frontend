@@ -13,6 +13,7 @@ import {
     EuiPageContent,
 } from '@elastic/eui';
 import Form from "./Vehicle/Form";
+import View from "./Vehicle/View";
 
 // import auth0Client from '../utils/Auth';
 
@@ -40,6 +41,7 @@ class Home extends Component {
                                 <Route exact path={"/callback"} component={Callback} />
                                 <Route exact path={"/vehicles"} component={VehicleList} />
                                 <Route exact path={"/vehicles/new"} component={Form} />
+                                <Route exact path={"/vehicles/:id/:slug"} component={View} />
                                 {/*<SecuredRoute path={'/private'} component={PrivateResources}/>*/}
                                 <Route path={"/"} component={PublicResources} />
                             </Switch>

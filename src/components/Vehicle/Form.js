@@ -3,13 +3,10 @@ import React, { Component } from 'react';
 import {
     EuiButton,
     EuiFieldNumber,
-    EuiFieldText,
     EuiForm,
     EuiFormRow,
-    EuiRange,
     EuiSelect,
     EuiSpacer,
-    EuiSwitch,
 } from '@elastic/eui';
 import BrandService from "../../services/brandService";
 import ModelService from "../../services/modelService";
@@ -26,13 +23,14 @@ class Form extends Component {
             models: [],
             minYearTo: 1900
         };
-    }
 
-    onSwitchChange = () => {
-        this.setState({
-            isSwitchChecked: !this.state.isSwitchChecked,
-        });
-    };
+        this.fuelTypes = [
+            {text: 'Petrol'},
+            {text: 'Diesel'},
+            {text: 'Electric'},
+            {text: 'Hybrid'},
+        ]
+    }
 
     onBrandChange = e => {
         ModelService.getAllByBrand(e.target.value).then(response => {
@@ -70,34 +68,34 @@ class Form extends Component {
 
     render() {
         return (
-            <EuiForm>
+            <EuiForm name={"vehicle"}>
                 <Link to={"/vehicles"}>Back</Link>
                 <EuiFormRow label="Brand">
-                    <EuiSelect options={this.state.brands} onChange={this.onBrandChange}/>
+                    <EuiSelect name={"vehicle[brand]"} options={this.state.brands} onChange={this.onBrandChange}/>
                 </EuiFormRow>
 
                 <EuiFormRow label="Model">
-                    <EuiSelect options={this.state.models}/>
+                    <EuiSelect name={"vehicle[model]"} options={this.state.models}/>
                 </EuiFormRow>
 
                 <EuiFormRow label="Made from year">
-                    <EuiFieldNumber min={1900} max={new Date().getFullYear()} onChange={this.onMadeFromChange}/>
+                    <EuiFieldNumber name={"vehicle[yearFrom]"} min={1900} max={new Date().getFullYear()} onChange={this.onMadeFromChange}/>
                 </EuiFormRow>
 
                 <EuiFormRow label="Made to year">
-                    <EuiFieldNumber min={this.state.minYearTo} max={new Date().getFullYear()}/>
+                    <EuiFieldNumber name={"vehicle[yearTo]"} min={this.state.minYearTo} max={new Date().getFullYear()}/>
                 </EuiFormRow>
 
                 <EuiFormRow label="Fuel type">
-                    <EuiSelect options={this.state.models}/>
+                    <EuiSelect name={"vehicle[fuelType]"} options={this.fuelTypes}/>
                 </EuiFormRow>
 
                 <EuiFormRow label="Engine capacity (ml.)">
-                    <EuiFieldNumber min={0}/>
+                    <EuiFieldNumber name={"vehicle[engineCapacity]"} min={0}/>
                 </EuiFormRow>
 
                 <EuiFormRow label="Power (kW)">
-                    <EuiFieldNumber min={0}/>
+                    <EuiFieldNumber name={"vehicle[power]"} min={0}/>
                 </EuiFormRow>
 
                 <EuiSpacer />
