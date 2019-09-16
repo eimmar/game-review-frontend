@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Link, withRouter} from 'react-router-dom';
-// import auth0Client from '../utils/Auth';
 
 import {
     EuiBasicTable,
@@ -9,10 +8,11 @@ import {
     EuiPageContentHeader,
     EuiPageContentHeaderSection,
     EuiTitle,
-    EuiPageContentBody} from '@elastic/eui';
+    EuiPageContentBody,
+    EuiLoadingSpinner,
+    EuiButton, EuiSpacer
+} from '@elastic/eui';
 import VehicleService from "../../services/vehicleService";
-import Callback from "../Callback";
-import PublicResources from "../publicResources";
 
 
 class VehicleList extends Component {
@@ -24,7 +24,8 @@ class VehicleList extends Component {
             pageIndex: 0,
             pageSize: 10,
             allItems: [],
-            pageOfItems: []
+            pageOfItems: [],
+            isLoading: true,
         };
     }
 
@@ -40,7 +41,8 @@ class VehicleList extends Component {
     componentDidMount() {
         VehicleService.getAll().then((response) => {
             this.setState({
-                allItems: response.data
+                allItems: response.data,
+                isLoading: false
             })
         });
     }
@@ -129,13 +131,21 @@ class VehicleList extends Component {
                     </EuiPageContentHeaderSection>
                 </EuiPageContentHeader>
                 <EuiPageContentBody>
-                    <Link to={"/vehicles/new"}>Add new</Link>
-                    <EuiBasicTable
+                    <EuiFlexGroup gutterSize="s" alignItems="center">
+                        <EuiFlexItem grow={false}>
+                            <EuiButton onClick={() => this.props.history.push('/vehicles/new')}>
+                                Add New
+                            </EuiButton>
+                        </EuiFlexItem>
+                    </EuiFlexGroup>
+                    <EuiSpacer />
+                    {this.state.isLoading ? <EuiLoadingSpinner size="xl" /> :
+                        <EuiBasicTable
                         items={pageOfItems}
                         columns={columns}
                         pagination={pagination}
                         onChange={this.onTableChange}
-                    />
+                    />}
                 </EuiPageContentBody>
             </>
         );

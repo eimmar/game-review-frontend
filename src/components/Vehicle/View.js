@@ -1,52 +1,143 @@
 import React, {Component} from 'react';
 
-import {EuiText} from '@elastic/eui';
-import {Link} from "react-router-dom";
+import {
+    EuiButton, EuiCallOut, EuiConfirmModal,
+    EuiFlexGroup,
+    EuiFlexItem,
+    EuiLoadingSpinner, EuiOverlayMask,
+    EuiSpacer,
+    EuiText
+} from '@elastic/eui';
 import VehicleService from "../../services/vehicleService";
+import {Link} from "react-router-dom";
 
 class View extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            vehicle: []
+            vehicle: [],
+            isLoading: true,
+            showDeleteModal: false,
+            deletedMessage: false
         }
     }
     componentDidMount() {
         VehicleService.get(this.props.match.params.id).then(response => {
             this.setState({
-                vehicle: response.data
+                vehicle: response.data,
+                isLoading: false
             })
         })
+    }
+
+    closeDeleteModal = () => {
+        this.setState({ showDeleteModal: false });
+    };
+
+    confirmDeleteModal = () => {
+        this.setState({
+            isLoading: true,
+        });
+
+        VehicleService.delete(this.state.vehicle.id)
+            .then(response => {
+                this.setState({
+                    deletedMessage: `Vehicle "${response.data.brand} ${response.data.model}" has been deleted!`,
+                });
+            })
+            .catch(reason => (
+                this.setState({
+                    formError: reason.response.data,
+                })
+            ))
+            .finally(() => {
+                this.setState({
+                    showDeleteModal: false,
+                    isLoading: false
+                })
+            });
+    };
+
+    showDeleteModal = () => {
+        this.setState({ showDeleteModal: true });
+    };
+
+    renderError() {
+        return (<EuiCallOut title={this.state.formError} color="danger" iconType="alert"/>)
     }
 
     render() {
         const vehicle = this.state.vehicle;
         return (
-            <div>
-                <EuiText grow={false}>
-                    <Link to={"/vehicles"}>Back</Link>
-                    <Link to={"/vehicles/" + vehicle.id + "/" + VehicleService.slugify(vehicle) + "/edit"}>Edit</Link>
-                    <dl>
-                        <dt>Brand</dt>
-                        <dd>{vehicle.brand}</dd>
+            <>
+                {this.state.deletedMessage ?
+                    <EuiCallOut title={this.state.deletedMessage} color="success" iconType="check">
+                        <p>
+                            <Link to={"/vehicles"}>Return to list</Link>.
+                        </p>
+                    </EuiCallOut>
+                    :
+                    <div>
+                        {this.state.formError ? this.renderError() : ''}
+                        <EuiText grow={false}>
+                            <EuiFlexGroup gutterSize="s" alignItems="center">
+                                <EuiFlexItem grow={false}>
+                                    <EuiButton onClick={() => this.props.history.push('/vehicles')} color={"primary"}>
+                                        Back
+                                    </EuiButton>
+                                </EuiFlexItem>
+                                <EuiFlexItem grow={false} color={"secondary"}>
+                                    <EuiButton onClick={() => this.props.history.push("/vehicles/" + vehicle.id + "/" + VehicleService.slugify(vehicle) + "/edit")}>
+                                        Edit
+                                    </EuiButton>
+                                </EuiFlexItem>
+                                <EuiFlexItem grow={false}>
+                                    <EuiButton onClick={this.showDeleteModal} color={"danger"}>
+                                        Delete
+                                    </EuiButton>
+                                </EuiFlexItem>
+                            </EuiFlexGroup>
+                            <EuiSpacer />
+                            {this.state.isLoading ? <EuiLoadingSpinner size="xl" /> :
+                                <>
+                                    <h2>
+                                        {`Viewing ${this.state.vehicle.brand} ${this.state.vehicle.model }`}
+                                    </h2>
+                                    <dl>
+                                        <dt>Brand</dt>
+                                        <dd>{vehicle.brand}</dd>
 
-                        <dt>Model</dt>
-                        <dd>{vehicle.model}</dd>
+                                        <dt>Model</dt>
+                                        <dd>{vehicle.model}</dd>
 
-                        <dt>Year made</dt>
-                        <dd>{vehicle.madeFrom}-{vehicle.madeTo}</dd>
+                                        <dt>Year made</dt>
+                                        <dd>{vehicle.madeFrom}-{vehicle.madeTo}</dd>
 
-                        <dt>Fuel type</dt>
-                        <dd>{vehicle.fuelType}</dd>
+                                        <dt>Fuel type</dt>
+                                        <dd>{vehicle.fuelType}</dd>
 
-                        <dt>Engine capacity</dt>
-                        <dd>{(vehicle.engineCapacity / 1000).toFixed(1)} l.</dd>
+                                        <dt>Engine capacity</dt>
+                                        <dd>{(vehicle.engineCapacity / 1000).toFixed(1)} l.</dd>
 
-                        <dt>Power</dt>
-                        <dd>{vehicle.power} kW</dd>
-                    </dl>
-                </EuiText>
-            </div>
+                                        <dt>Power</dt>
+                                        <dd>{vehicle.power} kW</dd>
+                                    </dl></>}
+                        </EuiText>
+                        {this.state.showDeleteModal ? <EuiOverlayMask>
+                            <EuiConfirmModal
+                                title="Are you sure you want to delete this Vehicle?"
+                                onCancel={this.closeDeleteModal}
+                                onConfirm={this.confirmDeleteModal}
+                                cancelButtonText="No"
+                                confirmButtonText="Yes"
+                                buttonColor="danger"
+                                defaultFocusedButton="confirm">
+                                <p>This action cannot be undone.</p>
+                            </EuiConfirmModal>
+                        </EuiOverlayMask> : ''}
+                    </div>
+                }
+            </>
         );
     }
 }

@@ -19,6 +19,11 @@ class VehicleService {
         return DataApi.put('/api/vehicle/' + id, data);
     }
 
+    static delete(id) {
+        return DataApi.delete('/api/vehicle/' + id);
+    }
+
+
     static slugify(vehicle) {
         return Slugifier.slugify(vehicle.brand + '-' + vehicle.model);
     }
