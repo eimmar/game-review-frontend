@@ -23,6 +23,7 @@ class VehicleList extends Component {
         this.state = {
             pageIndex: 0,
             pageSize: 10,
+            allItems: [],
             pageOfItems: []
         };
     }
@@ -39,14 +40,16 @@ class VehicleList extends Component {
     componentDidMount() {
         VehicleService.getAll().then((response) => {
             this.setState({
-                pageOfItems: response.data
+                allItems: response.data
             })
         });
     }
 
     render() {
-        const { pageIndex, pageSize, pageOfItems } = this.state;
-        const totalItemCount = 10;
+        const { pageIndex, pageSize } = this.state;
+        let startIndex = pageIndex * pageSize;
+        const pageOfItems = this.state.allItems.slice(startIndex, startIndex + pageSize);
+        const totalItemCount = this.state.allItems.length;
 
         const columns = [
             {

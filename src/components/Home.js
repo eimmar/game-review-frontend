@@ -6,14 +6,12 @@ import SecuredRoute from "./SecuredRoute";
 import PrivateResources from "./privateResources";
 import PublicResources from "./publicResources";
 
-import VehicleList from "./Vehicle/List";
 import {
     EuiPage,
     EuiPageBody,
     EuiPageContent,
 } from '@elastic/eui';
-import Form from "./Vehicle/Form";
-import View from "./Vehicle/View";
+import VehicleRoutes from "./Vehicle/Routes";
 
 // import auth0Client from '../utils/Auth';
 
@@ -39,9 +37,7 @@ class Home extends Component {
                         <EuiPageContent>
                             <Switch>
                                 <Route exact path={"/callback"} component={Callback} />
-                                <Route exact path={"/vehicles"} component={VehicleList} />
-                                <Route exact path={"/vehicles/new"} component={Form} />
-                                <Route exact path={"/vehicles/:id/:slug"} component={View} />
+                                <VehicleRoutes/>
                                 {/*<SecuredRoute path={'/private'} component={PrivateResources}/>*/}
                                 <Route path={"/"} component={PublicResources} />
                             </Switch>
