@@ -58,28 +58,15 @@ class VehicleList extends Component {
                 field: 'brand',
                 name: 'Brand',
                 truncateText: true,
-                hideForMobile: true,
-                mobileOptions: {
-                    show: false,
-                },
             },
             {
                 field: 'model',
                 name: 'Model',
                 truncateText: true,
-                mobileOptions: {
-                    show: false,
-                },
             },
             {
                 field: 'madeFrom',
                 name: 'Year made',
-                mobileOptions: {
-                    header: false,
-                    only: true,
-                    enlarge: true,
-                    fullWidth: true,
-                },
                 render: (name, item) => (
                     <EuiFlexGroup responsive={false} alignItems="center">
                         <EuiFlexItem>
@@ -92,9 +79,6 @@ class VehicleList extends Component {
                 field: 'fuelType',
                 name: 'Fuel Type',
                 truncateText: true,
-                mobileOptions: {
-                    show: false,
-                },
             },
             {
                 field: 'engineCapacity',
@@ -105,6 +89,11 @@ class VehicleList extends Component {
                 field: 'power',
                 name: 'Power',
                 render: power => power + "kw",
+            },
+            {
+                field: 'rating',
+                name: 'Rating',
+                render: rating => rating ? rating + "/5" : 'Not Rated',
             },
             {
                 field: 'id',

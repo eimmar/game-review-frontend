@@ -8,23 +8,23 @@ import {
     EuiSpacer,
     EuiText
 } from '@elastic/eui';
-import VehicleService from "../../services/vehicleService";
+import ReviewService from "../../services/reviewService";
 import {Link} from "react-router-dom";
 
 class View extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            vehicle: [],
+            review: [],
             isLoading: true,
             showDeleteModal: false,
             deletedMessage: false
         }
     }
     componentDidMount() {
-        VehicleService.get(this.props.match.params.id).then(response => {
+        ReviewService.get(this.props.match.params.id).then(response => {
             this.setState({
-                vehicle: response.data,
+                review: response.data,
                 isLoading: false
             })
         })
@@ -39,10 +39,10 @@ class View extends Component {
             isLoading: true,
         });
 
-        VehicleService.delete(this.state.vehicle.id)
-            .then(response => {
+        ReviewService.delete(this.state.review.id)
+            .then(() => {
                 this.setState({
-                    deletedMessage: `Vehicle "${response.data.brand} ${response.data.model}" has been deleted!`,
+                    deletedMessage: `Review has been deleted!`,
                 });
             })
             .catch(reason => (
@@ -67,13 +67,13 @@ class View extends Component {
     }
 
     render() {
-        const vehicle = this.state.vehicle;
+        const review = this.state.review;
         return (
             <>
                 {this.state.deletedMessage ?
                     <EuiCallOut title={this.state.deletedMessage} color="success" iconType="check">
                         <p>
-                            <Link to={"/vehicles"}>Return to list</Link>.
+                            <Link to={"/reviews"}>Return to list</Link>.
                         </p>
                     </EuiCallOut>
                     :
@@ -82,12 +82,12 @@ class View extends Component {
                         <EuiText grow={false}>
                             <EuiFlexGroup gutterSize="s" alignItems="center">
                                 <EuiFlexItem grow={false}>
-                                    <EuiButton onClick={() => this.props.history.push('/vehicles')} color={"primary"}>
+                                    <EuiButton onClick={() => this.props.history.push('/reviews')} color={"primary"}>
                                         Back
                                     </EuiButton>
                                 </EuiFlexItem>
                                 <EuiFlexItem grow={false} color={"secondary"}>
-                                    <EuiButton onClick={() => this.props.history.push("/vehicles/" + vehicle.id + "/" + VehicleService.slugify(vehicle) + "/edit")}>
+                                    <EuiButton onClick={() => this.props.history.push("/reviews/" + review.id + "/edit")}>
                                         Edit
                                     </EuiButton>
                                 </EuiFlexItem>
@@ -101,34 +101,23 @@ class View extends Component {
                             {this.state.isLoading ? <EuiLoadingSpinner size="xl" /> :
                                 <>
                                     <h2>
-                                        {`Viewing ${this.state.vehicle.brand} ${this.state.vehicle.model }`}
+                                        {`Viewing review`}
                                     </h2>
                                     <dl>
-                                        <dt>Brand</dt>
-                                        <dd>{vehicle.brand}</dd>
-
-                                        <dt>Model</dt>
-                                        <dd>{vehicle.model}</dd>
-
-                                        <dt>Year made</dt>
-                                        <dd>{vehicle.madeFrom}-{vehicle.madeTo}</dd>
-
-                                        <dt>Fuel type</dt>
-                                        <dd>{vehicle.fuelType}</dd>
-
-                                        <dt>Engine capacity</dt>
-                                        <dd>{(vehicle.engineCapacity / 1000).toFixed(1)} l.</dd>
-
-                                        <dt>Power</dt>
-                                        <dd>{vehicle.power} kW</dd>
-
                                         <dt>Rating</dt>
-                                        <dd>{vehicle.rating ? vehicle.rating + "/5" : "Not Rated"}</dd>
-                                    </dl></>}
+                                        <dd>{review.rating}</dd>
+
+                                        <dt>Comment</dt>
+                                        <dd>{review.comment}</dd>
+
+                                        <dt>Created at</dt>
+                                        <dd>{review.dateCreated}</dd>
+                                    </dl>
+                                </>}
                         </EuiText>
                         {this.state.showDeleteModal ? <EuiOverlayMask>
                             <EuiConfirmModal
-                                title="Are you sure you want to delete this Vehicle?"
+                                title="Are you sure you want to delete this review?"
                                 onCancel={this.closeDeleteModal}
                                 onConfirm={this.confirmDeleteModal}
                                 cancelButtonText="No"

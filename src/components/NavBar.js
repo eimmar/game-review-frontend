@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import { EuiTabs, EuiTab, EuiSpacer } from '@elastic/eui';
-
-// import auth0Client from '../utils/Auth';
+import { EuiTabs, EuiTab } from '@elastic/eui';
 
 
 class NavBar extends Component {
@@ -21,6 +19,12 @@ class NavBar extends Component {
                 name: 'Vehicles',
                 disabled: false,
                 href: '/vehicles',
+            },
+            {
+                id: 'review_list',
+                name: 'Reviews',
+                disabled: false,
+                href: '/reviews',
             },
         ];
 

@@ -1,9 +1,8 @@
 import DataApi from "./dataApi";
-import Slugifier from "../utils/slugifier";
 
-const baseUrl = "/vehicle/";
+const baseUrl = "/review/";
 
-class VehicleService {
+class ReviewService {
 
     static getAll() {
         return DataApi.get(baseUrl);
@@ -11,6 +10,10 @@ class VehicleService {
 
     static get(id) {
         return DataApi.get(baseUrl + id);
+    }
+
+    static getByVehicle(vehicleId) {
+        return DataApi.get(baseUrl + 'vehicle/' + vehicleId);
     }
 
     static create(data) {
@@ -24,9 +27,5 @@ class VehicleService {
     static delete(id) {
         return DataApi.delete(baseUrl + id);
     }
-
-    static slugify(vehicle) {
-        return Slugifier.slugify(vehicle.brand + '-' + vehicle.model);
-    }
 }
-export default VehicleService;
+export default ReviewService;
