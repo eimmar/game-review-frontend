@@ -13,7 +13,7 @@ import {Link} from "react-router-dom";
 import VehicleService from "../../services/vehicleService";
 
 
-class Form extends Component {
+class VehicleForm extends Component {
     constructor(props) {
         super(props);
 
@@ -148,17 +148,18 @@ class Form extends Component {
 
     render() {
         return (
-            <EuiForm name={"vehicle"}>
-                <EuiFlexGroup gutterSize="s" alignItems="center">
-                    <EuiFlexItem grow={false}>
-                        <EuiButton onClick={() => this.props.history.push('/vehicles')}>
-                            Back
-                        </EuiButton>
-                    </EuiFlexItem>
-                </EuiFlexGroup>
-                <EuiSpacer />
+            <>
+                {this.state.isLoading ? <EuiLoadingSpinner size="xl" /> : <EuiForm name={"vehicle"}>
+                    <EuiFlexGroup gutterSize="s" alignItems="center">
+                        <EuiFlexItem grow={false}>
+                            <EuiButton onClick={() => this.props.history.push('/vehicles')}>
+                                Back
+                            </EuiButton>
+                        </EuiFlexItem>
+                    </EuiFlexGroup>
+                    <EuiSpacer />
 
-                {this.state.isLoading ? <EuiLoadingSpinner size="xl" /> :
+
                     <form onSubmit={this.handleFormSubmit}>
                         {this.state.formError ? this.renderError() : ''}
                         {this.state.formSuccess ? this.renderSuccess() : ''}
@@ -227,9 +228,10 @@ class Form extends Component {
                                    isDisabled={this.state.submitting}>
                             {this.state.vehicle.id ? 'Update' : 'Create'}
                         </EuiButton>
-                    </form>}
-            </EuiForm>
+                    </form>
+                </EuiForm>}
+            </>
         );
     }
 }
-export default Form;
+export default VehicleForm;

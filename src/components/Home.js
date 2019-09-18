@@ -10,9 +10,11 @@ import {
     EuiPageContent,
 } from '@elastic/eui';
 import ReviewList from "./Review/List";
-import View from "./Review/View";
-import Form from "./Review/Form";
+import ReviewView from "./Review/View";
+import ReviewForm from "./Review/Form";
 import VehicleList from "./Vehicle/List";
+import VehicleForm from "./Vehicle/Form";
+import VehicleView from "./Vehicle/View";
 
 
 class Home extends Component {
@@ -27,13 +29,13 @@ class Home extends Component {
                             <Switch>
                                 <Route exact path={"/callback"} component={Callback} />
                                 <Route exact path={"/reviews"} component={ReviewList} />
-                                {/*<Route exact path={"/reviews/new"} component={Form} />*/}
-                                <Route exact path={"/reviews/:id"} component={View} />
-                                <Route exact path={"/reviews/:id//edit"} component={Form} />
+                                <Route exact path={"/reviews/new"} render={props => <ReviewForm {...props} app={this}/>}/>
+                                <Route exact path={"/reviews/:id"} component={ReviewView} />
+                                <Route exact path={"/reviews/:id//edit"} component={ReviewForm} />
                                 <Route exact path={"/vehicles"} component={VehicleList} />
-                                <Route exact path={"/vehicles/new"} component={Form} />
-                                <Route exact path={"/vehicles/:id/:slug"} component={View} />
-                                <Route exact path={"/vehicles/:id/:slug/edit"} component={Form} />
+                                <Route exact path={"/vehicles/new"} component={VehicleForm} />
+                                <Route exact path={"/vehicles/:id/:slug"} component={VehicleView} />
+                                <Route exact path={"/vehicles/:id/:slug/edit"} component={VehicleForm} />
                                 <Route path={"/"} component={PublicResources} />
                             </Switch>
                         </EuiPageContent>

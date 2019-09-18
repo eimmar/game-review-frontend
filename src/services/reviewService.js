@@ -17,15 +17,23 @@ class ReviewService {
     }
 
     static create(data) {
-        return DataApi.post(baseUrl, data);
+        return DataApi.post(baseUrl, this.prepareReviewData(data));
     }
 
     static update(id, data) {
-        return DataApi.put(baseUrl + id, data);
+        return DataApi.put(baseUrl + id, this.prepareReviewData(data));
     }
 
     static delete(id) {
         return DataApi.delete(baseUrl + id);
+    }
+
+    static prepareReviewData(data) {
+        return {
+            comment: data.comment,
+            vehicle: data.vehicle.id,
+            rating: data.rating
+        }
     }
 }
 export default ReviewService;

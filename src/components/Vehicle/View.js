@@ -10,8 +10,10 @@ import {
 } from '@elastic/eui';
 import VehicleService from "../../services/vehicleService";
 import {Link} from "react-router-dom";
+import ReviewList from "../Review/List";
+import ReviewForm from "../Review/Form";
 
-class View extends Component {
+class VehicleView extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -79,7 +81,7 @@ class View extends Component {
                     :
                     <div>
                         {this.state.formError ? this.renderError() : ''}
-                        <EuiText grow={false}>
+                        {this.state.isLoading ? <EuiLoadingSpinner size="xl" /> :<EuiText grow={false}>
                             <EuiFlexGroup gutterSize="s" alignItems="center">
                                 <EuiFlexItem grow={false}>
                                     <EuiButton onClick={() => this.props.history.push('/vehicles')} color={"primary"}>
@@ -96,36 +98,43 @@ class View extends Component {
                                         Delete
                                     </EuiButton>
                                 </EuiFlexItem>
+                                <EuiFlexItem grow={false}>
+                                    <EuiButton onClick={() => this.props.history.push(`/reviews/new`, {vehicle: vehicle})} color={"primary"}>
+                                        Write a review
+                                    </EuiButton>
+                                </EuiFlexItem>
                             </EuiFlexGroup>
                             <EuiSpacer />
-                            {this.state.isLoading ? <EuiLoadingSpinner size="xl" /> :
-                                <>
-                                    <h2>
-                                        {`Viewing ${this.state.vehicle.brand} ${this.state.vehicle.model }`}
-                                    </h2>
-                                    <dl>
-                                        <dt>Brand</dt>
-                                        <dd>{vehicle.brand}</dd>
 
-                                        <dt>Model</dt>
-                                        <dd>{vehicle.model}</dd>
+                            <h2>
+                                {`Viewing ${this.state.vehicle.brand} ${this.state.vehicle.model }`}
+                            </h2>
+                            <dl>
+                                <dt>Brand</dt>
+                                <dd>{vehicle.brand}</dd>
 
-                                        <dt>Year made</dt>
-                                        <dd>{vehicle.madeFrom}-{vehicle.madeTo}</dd>
+                                <dt>Model</dt>
+                                <dd>{vehicle.model}</dd>
 
-                                        <dt>Fuel type</dt>
-                                        <dd>{vehicle.fuelType}</dd>
+                                <dt>Year made</dt>
+                                <dd>{vehicle.madeFrom}-{vehicle.madeTo}</dd>
 
-                                        <dt>Engine capacity</dt>
-                                        <dd>{(vehicle.engineCapacity / 1000).toFixed(1)} l.</dd>
+                                <dt>Fuel type</dt>
+                                <dd>{vehicle.fuelType}</dd>
 
-                                        <dt>Power</dt>
-                                        <dd>{vehicle.power} kW</dd>
+                                <dt>Engine capacity</dt>
+                                <dd>{(vehicle.engineCapacity / 1000).toFixed(1)} l.</dd>
 
-                                        <dt>Rating</dt>
-                                        <dd>{vehicle.rating ? vehicle.rating + "/5" : "Not Rated"}</dd>
-                                    </dl></>}
-                        </EuiText>
+                                <dt>Power</dt>
+                                <dd>{vehicle.power} kW</dd>
+
+                                <dt>Rating</dt>
+                                <dd>{vehicle.rating ? vehicle.rating + "/5" : "Not Rated"}</dd>
+                            </dl>
+
+                            <EuiSpacer />
+                            <ReviewList vehicleId={vehicle.id}/>
+                        </EuiText>}
                         {this.state.showDeleteModal ? <EuiOverlayMask>
                             <EuiConfirmModal
                                 title="Are you sure you want to delete this Vehicle?"
@@ -144,4 +153,4 @@ class View extends Component {
         );
     }
 }
-export default View;
+export default VehicleView;

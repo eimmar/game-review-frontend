@@ -11,7 +11,7 @@ import {
 import ReviewService from "../../services/reviewService";
 import {Link} from "react-router-dom";
 
-class View extends Component {
+class ReviewView extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -133,4 +133,4 @@ class View extends Component {
         );
     }
 }
-export default View;
+export default ReviewView;
