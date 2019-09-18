@@ -53,13 +53,7 @@ class ReviewForm extends Component {
                     isLoading: false
                 });
             })
-        } else {
-            this.setState({
-                isLoading: false
-            });
-        }
-
-        if (this.props.location.state.vehicle) {
+        } else if (this.state.review && this.props.location.state.vehicle) {
             let review = this.state.review;
             review.vehicle = this.props.location.state.vehicle;
             this.setState({

@@ -79,7 +79,7 @@ class ReviewView extends Component {
                     :
                     <div>
                         {this.state.formError ? this.renderError() : ''}
-                        <EuiText grow={false}>
+                        {this.state.isLoading ? <EuiLoadingSpinner size="xl" /> :<EuiText grow={false}>
                             <EuiFlexGroup gutterSize="s" alignItems="center">
                                 <EuiFlexItem grow={false}>
                                     <EuiButton onClick={() => this.props.history.push('/reviews')} color={"primary"}>
@@ -98,23 +98,23 @@ class ReviewView extends Component {
                                 </EuiFlexItem>
                             </EuiFlexGroup>
                             <EuiSpacer />
-                            {this.state.isLoading ? <EuiLoadingSpinner size="xl" /> :
-                                <>
-                                    <h2>
-                                        {`Viewing review`}
-                                    </h2>
-                                    <dl>
-                                        <dt>Rating</dt>
-                                        <dd>{review.rating}</dd>
+                            <h2>
+                                {`Viewing review`}
+                            </h2>
+                            <dl>
+                                <dt>Vehicle</dt>
+                                <dd>{review.vehicle.brand} {review.vehicle.model} {(review.vehicle.engineCapacity / 1000).toFixed(1)}l {review.vehicle.power} kW</dd>
 
-                                        <dt>Comment</dt>
-                                        <dd>{review.comment}</dd>
+                                <dt>Rating</dt>
+                                <dd>{review.rating}</dd>
 
-                                        <dt>Created at</dt>
-                                        <dd>{review.dateCreated}</dd>
-                                    </dl>
-                                </>}
-                        </EuiText>
+                                <dt>Comment</dt>
+                                <dd>{review.comment}</dd>
+
+                                <dt>Created at</dt>
+                                <dd>{review.dateCreated}</dd>
+                            </dl>
+                        </EuiText>}
                         {this.state.showDeleteModal ? <EuiOverlayMask>
                             <EuiConfirmModal
                                 title="Are you sure you want to delete this review?"

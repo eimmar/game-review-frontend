@@ -31,7 +31,7 @@ class Home extends Component {
                                 <Route exact path={"/reviews"} component={ReviewList} />
                                 <Route exact path={"/reviews/new"} render={props => <ReviewForm {...props} app={this}/>}/>
                                 <Route exact path={"/reviews/:id"} component={ReviewView} />
-                                <Route exact path={"/reviews/:id//edit"} component={ReviewForm} />
+                                <Route exact path={"/reviews/:id/edit"} component={ReviewForm} />
                                 <Route exact path={"/vehicles"} component={VehicleList} />
                                 <Route exact path={"/vehicles/new"} component={VehicleForm} />
                                 <Route exact path={"/vehicles/:id/:slug"} component={VehicleView} />

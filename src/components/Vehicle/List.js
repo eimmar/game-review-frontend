@@ -93,7 +93,7 @@ class VehicleList extends Component {
             {
                 field: 'rating',
                 name: 'Rating',
-                render: rating => rating ? rating + "/5" : 'Not Rated',
+                render: rating => rating ? parseFloat(rating).toFixed(1) + "/5" : 'Not Rated',
             },
             {
                 field: 'id',

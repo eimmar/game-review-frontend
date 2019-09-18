@@ -129,7 +129,7 @@ class VehicleView extends Component {
                                 <dd>{vehicle.power} kW</dd>
 
                                 <dt>Rating</dt>
-                                <dd>{vehicle.rating ? vehicle.rating + "/5" : "Not Rated"}</dd>
+                                <dd>{vehicle.rating ? parseFloat(vehicle.rating).toFixed(1) + "/5" : "Not Rated"}</dd>
                             </dl>
 
                             <EuiSpacer />
