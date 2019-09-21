@@ -26,6 +26,12 @@ class NavBar extends Component {
                 disabled: false,
                 href: '/reviews',
             },
+            {
+                id: 'review_report_list',
+                name: 'Review Reports',
+                disabled: false,
+                href: '/reviews-reports',
+            },
         ];
 
         this.state = {
@@ -44,11 +50,12 @@ class NavBar extends Component {
             <EuiTab
                 isSelected={tab.href === this.state.selectedTabHref}
                 disabled={tab.disabled}
-                key={index}>
-                <Link to={tab.href}
-                      onClick={() => this.onSelectedTabChanged(tab.href)}>
-                    {tab.name}
-                </Link>
+                key={index}
+                onClick={() => {
+                    this.onSelectedTabChanged(tab.href);
+                    this.props.history.push(tab.href)
+                }}>
+                {tab.name}
             </EuiTab>
         ));
     }

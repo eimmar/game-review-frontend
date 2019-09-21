@@ -15,6 +15,9 @@ import ReviewForm from "./Review/Form";
 import VehicleList from "./Vehicle/List";
 import VehicleForm from "./Vehicle/Form";
 import VehicleView from "./Vehicle/View";
+import ReviewReportForm from "./ReviewReport/Form";
+import ReviewReportView from "./ReviewReport/View";
+import ReviewReportList from "./ReviewReport/List";
 
 
 class Home extends Component {
@@ -36,6 +39,10 @@ class Home extends Component {
                                 <Route exact path={"/vehicles/new"} component={VehicleForm} />
                                 <Route exact path={"/vehicles/:id/:slug"} component={VehicleView} />
                                 <Route exact path={"/vehicles/:id/:slug/edit"} component={VehicleForm} />
+                                <Route exact path={"/reviews-reports"} component={ReviewReportList} />
+                                <Route exact path={"/reviews-reports/new"} component={ReviewReportForm} />
+                                <Route exact path={"/reviews-reports/:id"} component={ReviewReportView} />
+                                <Route exact path={"/reviews-reports/:id/edit"} component={ReviewReportForm} />
                                 <Route path={"/"} component={PublicResources} />
                             </Switch>
                         </EuiPageContent>

@@ -8,24 +8,24 @@ import {
     EuiSpacer,
     EuiText
 } from '@elastic/eui';
-import ReviewService from "../../services/reviewService";
+import ReviewReportService from "../../services/reviewReportService";
 import {Link} from "react-router-dom";
 import moment from "moment";
 
-class ReviewView extends Component {
+class ReviewReportView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            review: [],
+            reviewReport: [],
             isLoading: true,
             showDeleteModal: false,
             deletedMessage: false
         }
     }
     componentDidMount() {
-        ReviewService.get(this.props.match.params.id).then(response => {
+        ReviewReportService.get(this.props.match.params.id).then(response => {
             this.setState({
-                review: response.data,
+                reviewReport: response.data,
                 isLoading: false
             })
         })
@@ -40,10 +40,10 @@ class ReviewView extends Component {
             isLoading: true,
         });
 
-        ReviewService.delete(this.state.review.id)
+        ReviewReportService.delete(this.state.reviewReport.id)
             .then(() => {
                 this.setState({
-                    deletedMessage: `Review has been deleted!`,
+                    deletedMessage: `Review report has been deleted!`,
                 });
             })
             .catch(reason => (
@@ -68,13 +68,13 @@ class ReviewView extends Component {
     }
 
     render() {
-        const review = this.state.review;
+        const reviewReport = this.state.reviewReport;
         return (
             <>
                 {this.state.deletedMessage ?
                     <EuiCallOut title={this.state.deletedMessage} color="success" iconType="check">
                         <p>
-                            <Link to={"/reviews"}>Return to list</Link>.
+                            <Link to={"/reviews-reports"}>Return to list</Link>.
                         </p>
                     </EuiCallOut>
                     :
@@ -83,12 +83,12 @@ class ReviewView extends Component {
                         {this.state.isLoading ? <EuiLoadingSpinner size="xl" /> :<EuiText grow={false}>
                             <EuiFlexGroup gutterSize="s" alignItems="center">
                                 <EuiFlexItem grow={false}>
-                                    <EuiButton onClick={() => this.props.history.push('/reviews')} color={"primary"}>
+                                    <EuiButton onClick={() => this.props.history.push('/reviews-reports')} color={"primary"}>
                                         Back
                                     </EuiButton>
                                 </EuiFlexItem>
                                 <EuiFlexItem grow={false} color={"secondary"}>
-                                    <EuiButton onClick={() => this.props.history.push("/reviews/" + review.id + "/edit")}>
+                                    <EuiButton onClick={() => this.props.history.push("/reviews-reports/" + reviewReport.id + "/edit")}>
                                         Edit
                                     </EuiButton>
                                 </EuiFlexItem>
@@ -100,25 +100,28 @@ class ReviewView extends Component {
                             </EuiFlexGroup>
                             <EuiSpacer />
                             <h2>
-                                {`Viewing review`}
+                                {`Viewing review report`}
                             </h2>
                             <dl>
-                                <dt>Vehicle</dt>
-                                <dd>{review.vehicle.brand} {review.vehicle.model} {(review.vehicle.engineCapacity / 1000).toFixed(1)}l {review.vehicle.power} kW</dd>
+                                <dt>Review comment</dt>
+                                <dd>{reviewReport.review.comment}</dd>
 
-                                <dt>Rating</dt>
-                                <dd>{review.rating}</dd>
+                                <dt>Review rating</dt>
+                                <dd>{reviewReport.review.rating}/5</dd>
 
-                                <dt>Comment</dt>
-                                <dd>{review.comment}</dd>
+                                <dt>Reason for reporting</dt>
+                                <dd>{reviewReport.comment}</dd>
+
+                                <dt>Report status</dt>
+                                <dd>{ReviewReportService.getStatusName(reviewReport.status)}</dd>
 
                                 <dt>Created at</dt>
-                                <dd>{moment(review.dateCreated).format('YYYY-MM-DD HH:mm:ss')}</dd>
+                                <dd>{moment(reviewReport.dateCreated).format('YYYY-MM-DD HH:mm:ss')}</dd>
                             </dl>
                         </EuiText>}
                         {this.state.showDeleteModal ? <EuiOverlayMask>
                             <EuiConfirmModal
-                                title="Are you sure you want to delete this review?"
+                                title="Are you sure you want to delete this review report?"
                                 onCancel={this.closeDeleteModal}
                                 onConfirm={this.confirmDeleteModal}
                                 cancelButtonText="No"
@@ -134,4 +137,4 @@ class ReviewView extends Component {
         );
     }
 }
-export default ReviewView;
+export default ReviewReportView;

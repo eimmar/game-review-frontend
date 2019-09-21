@@ -2,17 +2,15 @@ import React, { Component } from 'react';
 
 import {
     EuiButton,
-    EuiFieldNumber,
     EuiForm,
     EuiFormRow,
     EuiSpacer,
-    EuiCallOut, EuiFlexGroup, EuiFlexItem, EuiLoadingSpinner, EuiText, EuiTextArea
+    EuiCallOut, EuiFlexGroup, EuiFlexItem, EuiLoadingSpinner, EuiText, EuiTextArea, EuiSelect
 } from '@elastic/eui';
 import {Link} from "react-router-dom";
-import ReviewService from "../../services/reviewService";
-import VehicleService from "../../services/vehicleService";
+import ReviewReportService from "../../services/reviewReportService";
 
-class ReviewForm extends Component {
+class ReviewReportForm extends Component {
     constructor(props) {
         super(props);
 
@@ -21,11 +19,11 @@ class ReviewForm extends Component {
             formError: '',
             submitting: false,
             isLoading: true,
-            review: {
-                id: '',
-                vehicle: {},
+            reviewReport: {
+                id: null,
+                review: {},
                 comment: '',
-                rating: 1
+                dateCreated: null
             }
         };
 
@@ -35,29 +33,29 @@ class ReviewForm extends Component {
 
 
     onValueChange(e) {
-        let review = this.state.review;
-        review[e.target.name] = e.target.value;
+        let reviewReport = this.state.reviewReport;
+        reviewReport[e.target.name] = e.target.value;
         this.setState({
-            review: review
+            reviewReport: reviewReport
         })
     }
 
     componentDidMount() {
         if (this.props.match.params && this.props.match.params.id) {
-            ReviewService.get(this.props.match.params.id).then(response => {
+            ReviewReportService.get(this.props.match.params.id).then(response => {
                 this.setState({
-                    review: response.data
+                    reviewReport: response.data
                 })
             }).finally(() => {
                 this.setState({
                     isLoading: false
                 });
             })
-        } else if (this.state.review && this.props.location.state && this.props.location.state.vehicle) {
-            let review = this.state.review;
-            review.vehicle = this.props.location.state.vehicle;
+        } else if (this.state.reviewReport && this.props.location.state && this.props.location.state.review) {
+            let reviewReport = this.state.reviewReport;
+            reviewReport.review = this.props.location.state.review;
             this.setState({
-                review: review,
+                reviewReport: reviewReport,
                 isLoading: false
             })
         } else {
@@ -73,18 +71,18 @@ class ReviewForm extends Component {
             submitting: true,
             isLoading: true
         });
-        let review = this.state.review;
-        (review.id ? ReviewService.update(review.id, review) : ReviewService.create(review))
+        let reviewReport = this.state.reviewReport;
+        (reviewReport.id ? ReviewReportService.update(reviewReport.id, reviewReport) : ReviewReportService.create(reviewReport))
             .then(() => {
                 this.setState({
-                    formSuccess: `Review has been ${review.id ? 'updated' : 'created'}!`,
+                    formSuccess: `Review report has been ${reviewReport.id ? 'updated' : 'created'}!`,
                     formError: false,
-                    submitting: !review.id
+                    submitting: !reviewReport.id
 
                 });
             }).catch(e => {
             this.setState({
-                formError: e.response ? e.response.data : 'Could not ' + (this.state.review.id ? `update review` : 'create review'),
+                formError: e.response ? e.response.data : 'Could not ' + (this.state.reviewReport.id ? `update review report` : 'create review report'),
                 submitting: false,
             });
         });
@@ -95,7 +93,7 @@ class ReviewForm extends Component {
     }
 
     getBackUrl() {
-        return `/vehicles/${this.state.review.vehicle.id}/${VehicleService.slugify(this.state.review.vehicle)}`
+        return `/reviews/`;
     }
 
     renderError() {
@@ -105,7 +103,7 @@ class ReviewForm extends Component {
     renderSuccess() {
         return (
             <EuiCallOut title={this.state.formSuccess} color="success" iconType="check">
-                <Link to={this.getBackUrl()}>Back to list</Link>
+                <Link to={this.getBackUrl()}>Back to review list</Link>
             </EuiCallOut>
         )
     }
@@ -114,7 +112,7 @@ class ReviewForm extends Component {
 
         return (
             <>
-                <EuiForm name={"review"}>
+                <EuiForm name={"reviewReport"}>
                     <EuiFlexGroup gutterSize="s" alignItems="center">
                         <EuiFlexItem grow={false}>
                             <EuiButton onClick={() => this.props.history.push(this.getBackUrl())}>
@@ -129,32 +127,43 @@ class ReviewForm extends Component {
                     {this.state.isLoading ? <EuiLoadingSpinner size="xl" /> :<form onSubmit={this.handleFormSubmit}>
                         <EuiText>
                             <h2>
-                                {this.state.review.vehicle.brand + ' ' + this.state.review.vehicle.model}
+                                Reporting review on vehicle
+                                {this.state.reviewReport.review.vehicle ?
+                                    ' ' + this.state.reviewReport.review.vehicle.brand + ' ' + this.state.reviewReport.review.vehicle.model : ''}
                             </h2>
+
+                            <dt>Review comment</dt>
+                            <dd>{this.state.reviewReport.review.comment}</dd>
+
+                            <dt>Review rating</dt>
+                            <dd>{this.state.reviewReport.review.rating}/5</dd>
+
                             <h3>
-                                {this.state.review.id ? `Update Review` : 'Create Review'}
+                                {this.state.reviewReport.id ? `Update Review report` : 'Create Review report'}
                             </h3>
                         </EuiText>
 
-                        <EuiFormRow label="Review">
+                        <EuiFormRow label="Reason">
                             <EuiTextArea name={"comment"}
-                                         placeholder="Write a review"
-                                         value={this.state.review.comment}
+                                         placeholder="Write a reason"
+                                         value={this.state.reviewReport.comment}
                                          onChange={this.onValueChange}
                             />
                         </EuiFormRow>
+                        {this.state.reviewReport.id && <EuiFormRow label="Status">
+                            <EuiSelect name={"status"}
+                                       options={Object.keys(ReviewReportService.getAllStatuses()).map(item => {
+                                           return {text: ReviewReportService.getStatusName(item), value: item}
+                                       })}
+                                       hasNoInitialSelection={true}
+                                       value={this.state.reviewReport.status}
+                                       onChange={this.onValueChange}/>
+                        </EuiFormRow>}
 
-                        <EuiFormRow label="Rating">
-                            <EuiFieldNumber value={parseInt(this.state.review.rating)}
-                                            name={"rating"}
-                                            min={1}
-                                            max={5}
-                                            onChange={this.onValueChange}/>
-                        </EuiFormRow>
                         <EuiSpacer />
                         <EuiButton type="submit" fill
                                    isDisabled={this.state.submitting}>
-                            {this.state.review.id ? 'Update' : 'Create'}
+                            {this.state.reviewReport.id ? 'Update' : 'Create'}
                         </EuiButton>
                     </form>}
                 </EuiForm>
@@ -163,4 +172,4 @@ class ReviewForm extends Component {
     }
 }
 
-export default ReviewForm;
+export default ReviewReportForm;

@@ -11,7 +11,6 @@ import {
 import VehicleService from "../../services/vehicleService";
 import {Link} from "react-router-dom";
 import ReviewList from "../Review/List";
-import ReviewForm from "../Review/Form";
 
 class VehicleView extends Component {
     constructor(props) {

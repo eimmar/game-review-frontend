@@ -9,11 +9,11 @@ import {
     EuiPageContentBody,
     EuiLoadingSpinner,
 } from '@elastic/eui';
-import ReviewService from "../../services/reviewService";
+import ReviewReportService from "../../services/reviewReportService";
 import moment from "moment";
 
 
-class ReviewList extends Component {
+class ReviewReportList extends Component {
 
     constructor(props) {
         super(props);
@@ -37,13 +37,12 @@ class ReviewList extends Component {
     };
 
     componentDidMount() {
-        (this.props.vehicleId ? ReviewService.getByVehicle(this.props.vehicleId) : ReviewService.getAll())
-            .then((response) => {
-                this.setState({
-                    allItems: response.data,
-                    isLoading: false
-                })
-            });
+        ReviewReportService.getAll().then((response) => {
+            this.setState({
+                allItems: response.data,
+                isLoading: false
+            })
+        });
     }
 
     render() {
@@ -59,8 +58,10 @@ class ReviewList extends Component {
                 truncateText: true,
             },
             {
-                field: 'rating',
-                name: 'Rating',
+                field: 'status',
+                name: 'Staus',
+                truncateText: true,
+                render: (status) => ReviewReportService.getStatusName(status)
             },
             {
                 field: 'dateCreated',
@@ -70,10 +71,7 @@ class ReviewList extends Component {
             {
                 field: 'id',
                 name: 'Actions',
-                render: (id, row) => <>
-                    <Link to={"/reviews/" + id}>View</Link>
-                    <Link className={"ml8"} to={{ pathname: `/reviews-reports/new`, state: {review: row}}}>Report</Link>
-                </>,
+                render: (id) => <Link to={"/reviews-reports/" + id}>View</Link>,
             }
         ];
 
@@ -90,7 +88,7 @@ class ReviewList extends Component {
                 <EuiPageContentHeader>
                     <EuiPageContentHeaderSection>
                         <EuiTitle>
-                            <h2>Review list</h2>
+                            <h2>Review Report list</h2>
                         </EuiTitle>
                     </EuiPageContentHeaderSection>
                 </EuiPageContentHeader>
@@ -108,4 +106,4 @@ class ReviewList extends Component {
     }
 }
 
-export default withRouter(ReviewList);
+export default withRouter(ReviewReportList);
