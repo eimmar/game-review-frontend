@@ -18,6 +18,7 @@ import VehicleView from "./Vehicle/View";
 import ReviewReportForm from "./ReviewReport/Form";
 import ReviewReportView from "./ReviewReport/View";
 import ReviewReportList from "./ReviewReport/List";
+import Footer from "./Footer";
 
 
 class Home extends Component {
@@ -47,6 +48,7 @@ class Home extends Component {
                             </Switch>
                         </EuiPageContent>
                     </EuiPageBody>
+                    <Footer/>
                 </EuiPage>
             </>
         )

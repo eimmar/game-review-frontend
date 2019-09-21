@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import { EuiTabs, EuiTab } from '@elastic/eui';
+import { EuiTabs, EuiTab, EuiAccordion} from '@elastic/eui';
 
 
 class NavBar extends Component {
@@ -45,10 +45,12 @@ class NavBar extends Component {
         });
     };
 
+    isSelected = (href) => this.state.selectedTabHref === href;
+
     renderTabs() {
         return this.tabs.map((tab, index) => (
             <EuiTab
-                isSelected={tab.href === this.state.selectedTabHref}
+                isSelected={this.isSelected(tab.href)}
                 disabled={tab.disabled}
                 key={index}
                 onClick={() => {
@@ -60,12 +62,34 @@ class NavBar extends Component {
         ));
     }
 
+    renderHamburgerMenu() {
+        return this.tabs.map((tab, index) => (
+            <p key={index}>
+                <Link to={tab.href}
+                      className={this.isSelected(tab.href) ? "active block" : "block"}
+                      disabled={tab.disabled}
+                      onClick={() => this.onSelectedTabChanged(tab.href)}>
+                    {tab.name}
+                </Link>
+            </p>
+        ));
+    }
+
     render() {
         return (
             <Fragment>
                 <EuiTabs>
-                    <div className={"main-container"}>
-                        {this.renderTabs()}
+                    <div className={"main-container header"}>
+                        <div className={"mobile-hide"}>
+                            {this.renderTabs()}
+                        </div>
+                        <EuiAccordion
+                            id="accordion1"
+                            className={"desktop-hide"}
+                            buttonContent={"Menu"}
+                            initialIsOpen={false}>
+                            {this.renderHamburgerMenu()}
+                        </EuiAccordion>
                     </div>
                 </EuiTabs>
             </Fragment>

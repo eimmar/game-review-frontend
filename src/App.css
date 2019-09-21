@@ -41,3 +41,79 @@
 .ml8 {
   margin-left: 8px;
 }
+
+.responsive-img {
+  max-width: 100%;
+}
+
+@font-face {
+  src: url("https://fonts.googleapis.com/css?family=ABeeZee") format('css');
+  font-family: ABeeZee;
+}
+
+* {
+  font-family: ABeeZee, serif;
+}
+
+p, a, div {
+  font-size: 15px;
+}
+
+.center {
+  text-align: center;
+}
+
+.header {
+  min-height: 48px;
+}
+
+.header button {
+  height: 48px;
+}
+
+.header .euiAccordion__button {
+  padding-left: 16px;
+}
+
+.block {
+  display: block;
+}
+
+.header .active {
+  background-color: aliceblue;
+}
+
+.euiModal.euiModal--confirmation {
+  top: 0 !important;
+}
+
+@media only screen and (min-width: 769px) {
+  .desktop-hide {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .mobile-hide {
+    display: none;
+  }
+
+  .header span {
+    font-size: 20px;
+  }
+
+  .header a {
+    font-size: 20px;
+    line-height: 40px;
+    padding-left: 16px;
+  }
+
+  .euiFormRow,
+  .euiFormControlLayout,
+  .euiFormRow textarea,
+  .euiFormRow input,
+  .euiFormRow select {
+    max-width: 100%
+  }
+}
+

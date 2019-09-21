@@ -55,12 +55,11 @@ class ReviewReportList extends Component {
             {
                 field: 'comment',
                 name: 'Comment',
-                truncateText: true,
+                truncateText: false,
             },
             {
                 field: 'status',
                 name: 'Staus',
-                truncateText: true,
                 render: (status) => ReviewReportService.getStatusName(status)
             },
             {

@@ -56,7 +56,7 @@ class ReviewList extends Component {
             {
                 field: 'comment',
                 name: 'Comment',
-                truncateText: true,
+                truncateText: false,
             },
             {
                 field: 'rating',
