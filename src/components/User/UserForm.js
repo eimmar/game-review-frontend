@@ -9,7 +9,6 @@ import {
 } from '@elastic/eui';
 import {Link} from "react-router-dom";
 import AuthService from "../../services/authService";
-// import ReviewReportService from "../../services/userService";
 
 class UserForm extends Component {
     constructor(props) {
@@ -39,31 +38,6 @@ class UserForm extends Component {
         })
     }
 
-    componentDidMount() {
-        // if (this.props.match.params && this.props.match.params.id) {
-        //     ReviewReportService.get(this.props.match.params.id).then(response => {
-        //         this.setState({
-        //             user: response.data
-        //         })
-        //     }).finally(() => {
-        //         this.setState({
-        //             isLoading: false
-        //         });
-        //     })
-        // } else if (this.state.user && this.props.location.state && this.props.location.state.review) {
-        //     let user = this.state.user;
-        //     user.review = this.props.location.state.review;
-        //     this.setState({
-        //         user: user,
-        //         isLoading: false
-        //     })
-        // } else {
-        //     this.setState({
-        //         formError: 'Error. Please refresh the page.'
-        //     })
-        // }
-    }
-
     handleFormSubmit(e) {
         e.preventDefault();
         this.setState({
@@ -84,11 +58,16 @@ class UserForm extends Component {
                 formError: error.response ? error.response.data.message : 'Could not ' + (this.props.isRegister ? `register` : 'login'),
                 submitting: false,
             });
-        });
-
-
-        this.setState({
-            isLoading: false
+        }).finally(() => {
+            this.setState({
+                isLoading: false
+            });
+            if (this.state.formSuccess) {
+                this.props.history.push({
+                    pathname: "/",
+                    state: {success: this.state.formSuccess}
+                })
+            }
         });
     }
 

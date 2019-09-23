@@ -1,54 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import { EuiTabs, EuiTab, EuiAccordion} from '@elastic/eui';
-import AuthService from "../services/authService";
+import Navigation from "../utils/navigation";
 
 
 class NavBar extends Component {
     constructor(props) {
         super(props);
-
-        this.tabs = [
-            {
-                id: 'home_link',
-                name: 'Home',
-                disabled: false,
-                href: '/',
-            },
-            {
-                id: 'vehicle_list',
-                name: 'Vehicles',
-                disabled: false,
-                href: '/vehicles',
-            },
-            {
-                id: 'review_list',
-                name: 'Reviews',
-                disabled: false,
-                href: '/reviews',
-            },
-        ];
-        !AuthService.getCurrentUser() && this.tabs.push(
-            {
-                id: 'login',
-                name: 'Login',
-                disabled: false,
-                href: '/login',
-            },
-            {
-                id: 'register',
-                name: 'Register',
-                disabled: false,
-                href: '/register',
-            }
-        );
-
-        AuthService.isAdmin() && this.tabs.push({
-            id: 'review_report_list',
-            name: 'Review Reports',
-            disabled: false,
-            href: '/reviews-reports',
-        });
 
         this.state = {
             selectedTabHref: window.location.pathname,
@@ -63,8 +21,8 @@ class NavBar extends Component {
 
     isSelected = (href) => this.state.selectedTabHref === href;
 
-    renderTabs() {
-        return this.tabs.map((tab, index) => (
+    renderTabs(tabs) {
+        return tabs.map((tab, index) => (
             <EuiTab
                 isSelected={this.isSelected(tab.href)}
                 disabled={tab.disabled}
@@ -78,8 +36,8 @@ class NavBar extends Component {
         ));
     }
 
-    renderHamburgerMenu() {
-        return this.tabs.map((tab, index) => (
+    renderHamburgerMenu(tabs) {
+        return tabs.map((tab, index) => (
             <p key={index}>
                 <Link to={tab.href}
                       className={this.isSelected(tab.href) ? "active block" : "block"}
@@ -92,24 +50,20 @@ class NavBar extends Component {
     }
 
     render() {
+        let tabs = Navigation.buildTabs();
         return (
             <Fragment>
                 <EuiTabs>
                     <div className={"main-container header"}>
                         <div className={"mobile-hide"}>
-                            {this.renderTabs()}
-                            {AuthService.getCurrentUser() && <EuiTab
-                                key={"log-out"}
-                                onClick={() => {AuthService.logout()}}>
-                                Logout
-                            </EuiTab>}
+                            {this.renderTabs(tabs)}
                         </div>
                         <EuiAccordion
                             id="accordion1"
                             className={"desktop-hide"}
                             buttonContent={"Menu"}
                             initialIsOpen={false}>
-                            {this.renderHamburgerMenu()}
+                            {this.renderHamburgerMenu(tabs)}
                         </EuiAccordion>
                     </div>
                 </EuiTabs>

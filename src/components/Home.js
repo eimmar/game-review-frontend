@@ -21,6 +21,7 @@ import ReviewReportList from "./ReviewReport/List";
 import Footer from "./Footer";
 import UserForm from "./User/UserForm";
 import AuthService from "../services/authService";
+import Logout from "./User/Logout";
 
 
 class Home extends Component {
@@ -39,6 +40,7 @@ class Home extends Component {
                             <Switch>
                                 {!isLoggedIn && <Route path={"/login"} render={props => <UserForm {...props} isRegister={false}/>} />}
                                 {!isLoggedIn && <Route path={"/register"} render={props => <UserForm {...props} isRegister={true}/>} />}
+                                {isLoggedIn && <Route path={"/logout"} component={Logout}/>}
 
 
                                 {isUser && <Route exact path={"/reviews/new"} render={props => <ReviewForm {...props} app={this}/>}/>}

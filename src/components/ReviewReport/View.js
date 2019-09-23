@@ -49,7 +49,7 @@ class ReviewReportView extends Component {
             })
             .catch(e => (
                 this.setState({
-                    formError: e.response ? e.response.data : "Access denied.",
+                    formError: e.response ? e.response.data.message : "Access denied.",
                 })
             ))
             .finally(() => {

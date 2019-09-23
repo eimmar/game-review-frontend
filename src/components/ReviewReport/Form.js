@@ -82,7 +82,7 @@ class ReviewReportForm extends Component {
                 });
             }).catch(e => {
             this.setState({
-                formError: e.response ? e.response.data : 'Could not ' + (this.state.reviewReport.id ? `update review report` : 'create review report'),
+                formError: e.response ? e.response.data.message : 'Could not ' + (this.state.reviewReport.id ? `update review report` : 'create review report'),
                 submitting: false,
             });
         });

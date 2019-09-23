@@ -1,61 +1,12 @@
 import React, { Component } from 'react';
 import {EuiBottomBar, EuiFlexGroup, EuiFlexItem, EuiButton } from '@elastic/eui';
 import {withRouter} from "react-router-dom";
-import AuthService from "../services/authService";
+import Navigation from "../utils/navigation";
 
 
 class Footer extends Component {
     constructor(props) {
         super(props);
-
-        this.tabs = [
-            {
-                id: 'home_link',
-                name: 'Home',
-                disabled: false,
-                href: '/',
-            },
-            {
-                id: 'vehicle_list',
-                name: 'Vehicles',
-                disabled: false,
-                href: '/vehicles',
-            },
-            {
-                id: 'review_list',
-                name: 'Reviews',
-                disabled: false,
-                href: '/reviews',
-            },
-        ];
-
-        AuthService.isAdmin() && this.tabs.push({
-            id: 'review_report_list',
-            name: 'Review Reports',
-            disabled: false,
-            href: '/reviews-reports',
-        });
-
-        !AuthService.getCurrentUser() && this.tabs.push([
-            {
-                id: 'login',
-                name: 'Login',
-                disabled: false,
-                href: '/login',
-            },
-            {
-                id: 'register',
-                name: 'Register',
-                disabled: false,
-                href: '/register',
-            },
-            {
-                id: 'logout',
-                name: 'Logout',
-                disabled: false,
-                href: '/logout',
-            }
-        ]);
 
         this.state = {
             selectedTabHref: window.location.pathname,
@@ -69,7 +20,7 @@ class Footer extends Component {
     };
 
     renderTabs() {
-        return this.tabs.map((tab, index) => (
+        return Navigation.buildTabs().map((tab, index) => (
             <EuiFlexItem grow={false} key={index}>
                 <EuiButton color="ghost" size="s" iconType="help"
                            selected={tab.href === this.state.selectedTabHref}
