@@ -11,6 +11,7 @@ import {
 import ReviewService from "../../services/reviewService";
 import {Link} from "react-router-dom";
 import moment from "moment";
+import AuthService from "../../services/authService";
 
 class ReviewView extends Component {
     constructor(props) {
@@ -46,9 +47,9 @@ class ReviewView extends Component {
                     deletedMessage: `Review has been deleted!`,
                 });
             })
-            .catch(reason => (
+            .catch(e => (
                 this.setState({
-                    formError: reason.response.data,
+                    formError: e.response ? e.response.data : "Access denied.",
                 })
             ))
             .finally(() => {
@@ -87,16 +88,16 @@ class ReviewView extends Component {
                                         Back
                                     </EuiButton>
                                 </EuiFlexItem>
-                                <EuiFlexItem grow={false} color={"secondary"}>
+                                {AuthService.isAdmin() && <EuiFlexItem grow={false} color={"secondary"}>
                                     <EuiButton onClick={() => this.props.history.push("/reviews/" + review.id + "/edit")}>
                                         Edit
                                     </EuiButton>
-                                </EuiFlexItem>
-                                <EuiFlexItem grow={false}>
+                                </EuiFlexItem>}
+                                {AuthService.isSuperAdmin() && <EuiFlexItem grow={false}>
                                     <EuiButton onClick={this.showDeleteModal} color={"danger"}>
                                         Delete
                                     </EuiButton>
-                                </EuiFlexItem>
+                                </EuiFlexItem>}
                             </EuiFlexGroup>
                             <EuiSpacer />
                             <h2>

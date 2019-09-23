@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import { EuiTabs, EuiTab, EuiAccordion} from '@elastic/eui';
+import AuthService from "../services/authService";
 
 
 class NavBar extends Component {
@@ -26,13 +27,28 @@ class NavBar extends Component {
                 disabled: false,
                 href: '/reviews',
             },
-            {
-                id: 'review_report_list',
-                name: 'Review Reports',
-                disabled: false,
-                href: '/reviews-reports',
-            },
         ];
+        !AuthService.getCurrentUser() && this.tabs.push(
+            {
+                id: 'login',
+                name: 'Login',
+                disabled: false,
+                href: '/login',
+            },
+            {
+                id: 'register',
+                name: 'Register',
+                disabled: false,
+                href: '/register',
+            }
+        );
+
+        AuthService.isAdmin() && this.tabs.push({
+            id: 'review_report_list',
+            name: 'Review Reports',
+            disabled: false,
+            href: '/reviews-reports',
+        });
 
         this.state = {
             selectedTabHref: window.location.pathname,
@@ -82,6 +98,11 @@ class NavBar extends Component {
                     <div className={"main-container header"}>
                         <div className={"mobile-hide"}>
                             {this.renderTabs()}
+                            {AuthService.getCurrentUser() && <EuiTab
+                                key={"log-out"}
+                                onClick={() => {AuthService.logout()}}>
+                                Logout
+                            </EuiTab>}
                         </div>
                         <EuiAccordion
                             id="accordion1"

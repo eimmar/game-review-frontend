@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {EuiBottomBar, EuiFlexGroup, EuiFlexItem, EuiButton } from '@elastic/eui';
 import {withRouter} from "react-router-dom";
+import AuthService from "../services/authService";
 
 
 class Footer extends Component {
@@ -26,13 +27,35 @@ class Footer extends Component {
                 disabled: false,
                 href: '/reviews',
             },
-            {
-                id: 'review_report_list',
-                name: 'Review Reports',
-                disabled: false,
-                href: '/reviews-reports',
-            },
         ];
+
+        AuthService.isAdmin() && this.tabs.push({
+            id: 'review_report_list',
+            name: 'Review Reports',
+            disabled: false,
+            href: '/reviews-reports',
+        });
+
+        !AuthService.getCurrentUser() && this.tabs.push([
+            {
+                id: 'login',
+                name: 'Login',
+                disabled: false,
+                href: '/login',
+            },
+            {
+                id: 'register',
+                name: 'Register',
+                disabled: false,
+                href: '/register',
+            },
+            {
+                id: 'logout',
+                name: 'Logout',
+                disabled: false,
+                href: '/logout',
+            }
+        ]);
 
         this.state = {
             selectedTabHref: window.location.pathname,

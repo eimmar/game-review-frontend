@@ -124,7 +124,7 @@ class VehicleForm extends Component {
                 });
             }).catch(e => {
             this.setState({
-                formError: e.response.data,
+                formError: e.response ? e.response.data : "Access denied.",
                 submitting: false,
             });
         });

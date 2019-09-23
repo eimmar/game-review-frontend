@@ -11,6 +11,7 @@ import {
 import VehicleService from "../../services/vehicleService";
 import {Link} from "react-router-dom";
 import ReviewList from "../Review/List";
+import AuthService from "../../services/authService";
 
 class VehicleView extends Component {
     constructor(props) {
@@ -46,9 +47,9 @@ class VehicleView extends Component {
                     deletedMessage: `Vehicle "${response.data.brand} ${response.data.model}" has been deleted!`,
                 });
             })
-            .catch(reason => (
+            .catch(e => (
                 this.setState({
-                    formError: reason.response.data,
+                    formError: e.response ? e.response.data : "Access denied.",
                 })
             ))
             .finally(() => {
@@ -87,21 +88,21 @@ class VehicleView extends Component {
                                         Back
                                     </EuiButton>
                                 </EuiFlexItem>
-                                <EuiFlexItem grow={false} color={"secondary"}>
+                                {AuthService.isAdmin() && <EuiFlexItem grow={false} color={"secondary"}>
                                     <EuiButton onClick={() => this.props.history.push("/vehicles/" + vehicle.id + "/" + VehicleService.slugify(vehicle) + "/edit")}>
                                         Edit
                                     </EuiButton>
-                                </EuiFlexItem>
-                                <EuiFlexItem grow={false}>
+                                </EuiFlexItem>}
+                                {AuthService.isSuperAdmin() && <EuiFlexItem grow={false}>
                                     <EuiButton onClick={this.showDeleteModal} color={"danger"}>
                                         Delete
                                     </EuiButton>
-                                </EuiFlexItem>
-                                <EuiFlexItem grow={false}>
+                                </EuiFlexItem>}
+                                {AuthService.isUser() && <EuiFlexItem grow={false}>
                                     <EuiButton onClick={() => this.props.history.push(`/reviews/new`, {vehicle: vehicle})} color={"primary"}>
                                         Write a review
                                     </EuiButton>
-                                </EuiFlexItem>
+                                </EuiFlexItem>}
                             </EuiFlexGroup>
                             <EuiSpacer />
 

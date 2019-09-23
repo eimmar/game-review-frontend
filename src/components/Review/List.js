@@ -11,6 +11,7 @@ import {
 } from '@elastic/eui';
 import ReviewService from "../../services/reviewService";
 import moment from "moment";
+import AuthService from "../../services/authService";
 
 
 class ReviewList extends Component {
@@ -72,7 +73,7 @@ class ReviewList extends Component {
                 name: 'Actions',
                 render: (id, row) => <>
                     <Link to={"/reviews/" + id}>View</Link>
-                    <Link className={"ml8"} to={{ pathname: `/reviews-reports/new`, state: {review: row}}}>Report</Link>
+                    {AuthService.isUser() && <Link className={"ml8"} to={{ pathname: `/reviews-reports/new`, state: {review: row}}}>Report</Link>}
                 </>,
             }
         ];

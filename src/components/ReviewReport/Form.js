@@ -93,7 +93,7 @@ class ReviewReportForm extends Component {
     }
 
     getBackUrl() {
-        return `/reviews/`;
+        return `/reviews-reports`;
     }
 
     renderError() {
@@ -103,7 +103,7 @@ class ReviewReportForm extends Component {
     renderSuccess() {
         return (
             <EuiCallOut title={this.state.formSuccess} color="success" iconType="check">
-                <Link to={this.getBackUrl()}>Back to review list</Link>
+                <Link to={this.getBackUrl()}>Back to report list</Link>
             </EuiCallOut>
         )
     }
