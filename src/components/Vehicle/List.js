@@ -13,6 +13,7 @@ import {
     EuiButton, EuiSpacer
 } from '@elastic/eui';
 import VehicleService from "../../services/vehicleService";
+import AuthService from "../../services/authService";
 
 
 class VehicleList extends Component {
@@ -120,13 +121,13 @@ class VehicleList extends Component {
                     </EuiPageContentHeaderSection>
                 </EuiPageContentHeader>
                 <EuiPageContentBody>
-                    <EuiFlexGroup gutterSize="s" alignItems="center">
+                    {AuthService.isAdmin() && <EuiFlexGroup gutterSize="s" alignItems="center">
                         <EuiFlexItem grow={false}>
                             <EuiButton onClick={() => this.props.history.push('/vehicles/new')}>
                                 Add New
                             </EuiButton>
                         </EuiFlexItem>
-                    </EuiFlexGroup>
+                    </EuiFlexGroup>}
                     <EuiSpacer />
                     {this.state.isLoading ? <EuiLoadingSpinner size="xl" /> :
                         <EuiBasicTable
