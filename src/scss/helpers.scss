@@ -1,0 +1,97 @@
+//----------------------------------------
+// Spacing
+//----------------------------------------
+$offset-helpers: (
+    t: 'top',
+    r: 'right',
+    b: 'bottom',
+    l: 'left',
+    m: 'margin',
+    m-t: 'margin-top',
+    m-r: 'margin-right',
+    m-b: 'margin-bottom',
+    m-l: 'margin-left',
+    p: 'padding',
+    p-t: 'padding-top',
+    p-r: 'padding-right',
+    p-b: 'padding-bottom',
+    p-l: 'padding-left',
+    l-h: 'line-height',
+);
+
+@each $class, $property in $offset-helpers {
+    $helperMaxValue: 100;
+    $helperStep: 5;
+    @while $helperMaxValue >= 0 {
+        .#{$class + '-' + $helperMaxValue} {
+            #{$property}: #{$helperMaxValue}px !important;
+        }
+        $helperMaxValue: $helperMaxValue - $helperStep;
+    }
+}
+
+.position {
+    &-relative {
+        position: relative;
+    }
+}
+
+.display {
+    &-iblock {
+        display: inline-block;
+    }
+
+    &-flex {
+        display: flex;
+    }
+
+    &-grid {
+        display: grid;
+    }
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.font-light {
+    font-weight: 300;
+}
+
+.text {
+    &-right {
+        text-align: right;
+    }
+
+    &-center {
+        text-align: center;
+    }
+}
+
+.par {
+    margin-bottom: 24px;
+}
+
+.v-align {
+    &-top {
+        vertical-align: top;
+    }
+
+    &-bottom {
+        vertical-align: bottom;
+    }
+
+    &-middle {
+        vertical-align: middle;
+    }
+
+    &-baseline {
+        vertical-align: baseline;
+    }
+}
+
+.width {
+    &-full {
+        width: 100% !important;
+    }
+}

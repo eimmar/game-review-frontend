@@ -1,0 +1,5 @@
+node_modules/
+public/
+.cache/
+src/assets/
+src/react-app-env.d.ts
