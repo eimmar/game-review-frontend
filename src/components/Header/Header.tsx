@@ -1,12 +1,12 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import styles from './Header.module.scss';
-import { ContentLayout } from '../../layouts/ContentLayout/ContentLayout';
-import { flattenClasses } from '../../services/Util/StyleUtils';
+import styles from './Header.module.scss'
+import { ContentLayout } from '../../layouts/ContentLayout/ContentLayout'
+import { flattenClasses } from '../../services/Util/StyleUtils'
 
 export class Header extends React.PureComponent {
     render() {
-        const classes = flattenClasses([styles.header, 'm-t-30']);
+        const classes = flattenClasses([styles.header, 'm-t-30'])
 
         return (
             <header className={classes}>
@@ -14,6 +14,6 @@ export class Header extends React.PureComponent {
                     <h1>Header</h1>
                 </ContentLayout>
             </header>
-        );
+        )
     }
 }

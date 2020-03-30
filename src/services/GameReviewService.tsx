@@ -1,30 +1,30 @@
-import DataApi from './DataApi';
+import DataApi from './DataApi'
 
-const baseUrl = '/review/';
+const baseUrl = '/review/'
 
 class ReviewService {
     static getAll() {
-        return DataApi.get(baseUrl);
+        return DataApi.get(baseUrl)
     }
 
     static get(id: string) {
-        return DataApi.get(baseUrl + id);
+        return DataApi.get(baseUrl + id)
     }
 
     static getByVehicle(vehicleId: string) {
-        return DataApi.get(`${baseUrl}vehicle/${vehicleId}`);
+        return DataApi.get(`${baseUrl}vehicle/${vehicleId}`)
     }
 
     static create(data: any) {
-        return DataApi.post(baseUrl, this.prepareReviewData(data));
+        return DataApi.post(baseUrl, this.prepareReviewData(data))
     }
 
     static update(id: string, data: any) {
-        return DataApi.put(baseUrl + id, this.prepareReviewData(data));
+        return DataApi.put(baseUrl + id, this.prepareReviewData(data))
     }
 
     static delete(id: string) {
-        return DataApi.delete(baseUrl + id);
+        return DataApi.delete(baseUrl + id)
     }
 
     static prepareReviewData(data: any) {
@@ -32,8 +32,8 @@ class ReviewService {
             comment: data.comment,
             vehicle: data.vehicle.id,
             rating: data.rating,
-        };
+        }
     }
 }
 
-export default ReviewService;
+export default ReviewService
