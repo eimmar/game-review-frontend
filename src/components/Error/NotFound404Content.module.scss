@@ -1,0 +1,13 @@
+.container {
+    margin: auto;
+    padding: 10px;
+    height: 90vh;
+
+    .header {
+        height: 90vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

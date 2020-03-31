@@ -10,6 +10,9 @@ import { routes } from './parameters'
 import { lazyComponent } from './services/Util/PageSpeed'
 import Registration from './views/User/Registration'
 import Login from './views/User/Login'
+import ForgotPassword from './views/User/ForgotPassword'
+import ResetPassword from './views/User/ResetPassword'
+import NotFound404 from './views/Error/NotFound404'
 
 const HomePage = lazyComponent(import('./views/HomePage'))
 
@@ -17,11 +20,14 @@ function App() {
     return (
         <BrowserRouter>
             <ToastContainer />
-            <Header />
             <Switch>
                 <PublicRoute exact path={routes.homePage} component={HomePage} />
                 <PublicRoute exact path={routes.register} component={Registration} />
                 <PublicRoute exact path={routes.login} component={Login} />
+                <PublicRoute exact path={routes.forgotPassword} component={ForgotPassword} />
+                <PublicRoute exact path={`${routes.resetPassword}/:guid`} component={ResetPassword} />
+
+                <PublicRoute component={NotFound404} />
             </Switch>
         </BrowserRouter>
     )

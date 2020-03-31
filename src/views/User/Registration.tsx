@@ -6,7 +6,7 @@ import RegistrationForm from '../../components/User/Registration/RegistrationFor
 export default class Registration extends React.PureComponent {
     render() {
         return (
-            <MainLayout>
+            <MainLayout maxWidth="xs">
                 <RegistrationForm />
             </MainLayout>
         )

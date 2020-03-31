@@ -20,6 +20,16 @@ export interface RegistrationRequest {
     password: string
 }
 
+export interface ForgotPasswordRequest {
+    email: string
+}
+
+export interface ResetPasswordRequest {
+    password: string
+    repeatPassword: string
+    guid: string
+}
+
 class AuthService {
     login(params: LogInRequest) {
         return axios.post(`${backendUrl}/api/auth/login`, params).then((response) => {
@@ -37,6 +47,18 @@ class AuthService {
 
     register(params: RegistrationRequest): Promise<any> {
         return axios.post(`${backendUrl}/api/auth/register`, params)
+    }
+
+    forgotPassword(params: ForgotPasswordRequest): Promise<any> {
+        return axios.post(`${backendUrl}/api/auth/forgot-password`, params)
+    }
+
+    checkResetPassword(guid: string): Promise<any> {
+        return axios.post(`${backendUrl}/api/auth/reset-password-check`, { guid })
+    }
+
+    resetPassword(params: ResetPasswordRequest): Promise<any> {
+        return axios.post(`${backendUrl}/api/auth/reset-password`, params)
     }
 
     logout() {

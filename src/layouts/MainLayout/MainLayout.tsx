@@ -5,16 +5,21 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 
 import styles from './MainLayout.module.scss'
 import Copyright from '../../components/Copyright/Copyright'
+import { Header } from '../../components/Header/Header'
 
-export class MainLayout extends React.PureComponent {
+interface Props {
+    maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false
+}
+
+export class MainLayout extends React.PureComponent<Props> {
     render() {
-        const { children } = this.props
+        const { children, maxWidth } = this.props
 
         return (
             <div className={styles.mainLayout}>
+                <Header />
                 <div className={styles.content}>
-                    {/* <ContentLayout>{children}</ContentLayout> */}
-                    <Container component="main" maxWidth="xs">
+                    <Container component="main" maxWidth={maxWidth}>
                         <CssBaseline />
                         {children}
                         <Box mt={5}>

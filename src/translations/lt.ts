@@ -1,5 +1,6 @@
 export const ltTranslations = {
-    'common.website_name': 'Žaisk',
+    'common.websiteName': 'Žaisk',
+    'common.notFoundMessage': '404: Puslapis neegzistuoja :/',
 
     'user.alreadyHaveAccount': 'Esate registruotas narys? Prisijunkite',
     'user.register': 'Registruotis',
@@ -13,7 +14,14 @@ export const ltTranslations = {
     'user.successLogIn': 'Prisijungimas sėkmingas!',
     'user.forgotPassword': 'Pamiršau slaptažodį',
     'user.registerIfNoAccount': 'Neturite paskyros? Užsiregistruokite!',
+    'user.resetPassword': 'Slaptažodžio keitimas',
+    'user.repeatPassword': 'Pakartokite slaptažodį',
+    'user.changePassword': 'Keisti slaptažodį',
+    'user.sendResetPasswordRequest': 'Siųsti',
+    'user.passwordResetLinkSent': 'Slaptažodžio keitimo nurodymai buvo nusiųsti į Jusų elektroninio pašto paskyrą.',
+    'user.passwordResetSuccess': 'Slaptažodis pakeistas sėkmingai! Galite prisijungti.',
 
     'errors.validation.required': 'Šis laukas yra privalomas',
     'errors.validation.email': 'Netinkamas el. paštas',
+    'errors.validation.passwordsMustMatch': 'Slaptažodžiai turi sutapti',
 }
