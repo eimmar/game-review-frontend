@@ -9,8 +9,10 @@ import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles'
 import { Form, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
+import { withRouter, RouteComponentProps, Link as RouterLink } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
-import { RegistrationRequest } from '../../../services/AuthService'
+import { authService, RegistrationRequest } from '../../../services/AuthService'
 import { t } from '../../../i18n'
 import { routes } from '../../../parameters'
 
@@ -35,7 +37,7 @@ const styles = ({ palette, spacing }: Theme) =>
         },
     })
 
-interface Props extends WithStyles<typeof styles> {
+interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     classes: {
         paper: string
         avatar: string
@@ -64,36 +66,19 @@ class RegistrationForm extends Component<Props> {
     }
 
     handleSubmit = (values: RegistrationRequest, actions: FormikHelpers<RegistrationRequest>) => {
-        // const { initialValues } = this.state
-        // // eslint-disable-next-line
-        // const { history } = this.props;
-        //
-        // // eslint-disable-next-line
-        // const partnerId: string | null = this.shouldAllowPartnerChoiceOnCreation ? values.partnerId : null
-        //
-        // ;(initialValues.guid
-        //         ? rentalStationService.update({ guid: initialValues.guid, ...values })
-        //         : rentalStationService.create({ guid: null, ...values, partnerId })
-        // )
-        //     .then((rentalStation) => {
-        //         if (initialValues.guid) {
-        //             history.push({
-        //                 pathname: rentalStationRoutes.list.path,
-        //                 state: { success: t('rentalStation.successEdit') },
-        //             })
-        //         } else {
-        //             toast.success(t('rentalStation.successCreate'))
-        //             history.push({
-        //                 pathname: rentalStationRoutes.update.path,
-        //                 state: { entity: rentalStation, defaultTab: Tabs.Photos },
-        //             })
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         actions.setStatus({ msg: error.message, error: true })
-        //         this.setState({ error: error.message })
-        //     })
-        //     .finally(() => actions.setSubmitting(false))
+        const { history } = this.props
+
+        authService
+            .register(values)
+            .then(() => {
+                toast.success(t('user.successCreate'))
+                history.push({ pathname: routes.homePage })
+            })
+            .catch((error) => {
+                actions.setStatus({ msg: error.message, error: true })
+                toast.error(t(error.message))
+            })
+            .finally(() => actions.setSubmitting(false))
     }
 
     render() {
@@ -106,7 +91,6 @@ class RegistrationForm extends Component<Props> {
                 </Avatar>
                 <Typography component="h1" variant="h5">{t`user.register`}</Typography>
                 <Formik<RegistrationRequest>
-                    enableReinitialize
                     initialValues={this.initialValues}
                     validationSchema={this.validationSchema}
                     onSubmit={this.handleSubmit}
@@ -184,8 +168,8 @@ class RegistrationForm extends Component<Props> {
                             </Button>
                             <Grid container justify="flex-end">
                                 <Grid item>
-                                    <Link href={routes.login} variant="body2">
-                                        {t`user.alreadyHaveAccount`}
+                                    <Link variant="body2">
+                                        <RouterLink to={routes.login}>{t`user.alreadyHaveAccount`}</RouterLink>
                                     </Link>
                                 </Grid>
                             </Grid>
@@ -197,4 +181,4 @@ class RegistrationForm extends Component<Props> {
     }
 }
 
-export default withStyles(styles)(RegistrationForm)
+export default withRouter(withStyles(styles)(RegistrationForm))

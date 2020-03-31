@@ -1,30 +1,30 @@
-import DataApi from './DataApi'
 import Slugifier from './Util/Slugifier'
+import { dataApi } from './DataApi'
 
 const baseUrl = '/vehicle/'
 
-class VehicleService {
-    static getAll() {
-        return DataApi.get(baseUrl)
+class GameService {
+    getAll() {
+        return dataApi.get(baseUrl)
     }
 
-    static get(id: string) {
-        return DataApi.get(baseUrl + id)
+    get(id: string) {
+        return dataApi.get(baseUrl + id)
     }
 
-    static create(data: string) {
-        return DataApi.post(baseUrl, data)
+    create(data: string) {
+        return dataApi.post(baseUrl, data)
     }
 
-    static update(id: string, data: string) {
-        return DataApi.put(baseUrl + id, data)
+    update(id: string, data: string) {
+        return dataApi.put(baseUrl + id, data)
     }
 
-    static delete(id: string) {
-        return DataApi.delete(baseUrl + id)
+    delete(id: string) {
+        return dataApi.delete(baseUrl + id)
     }
 
-    static slugify(vehicle: object) {
+    slugify(vehicle: object) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const { brand, model } = vehicle
@@ -33,4 +33,4 @@ class VehicleService {
     }
 }
 
-export default VehicleService
+export const gameService = new GameService()

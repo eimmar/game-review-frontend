@@ -21,7 +21,7 @@ export interface RegistrationRequest {
 }
 
 class AuthService {
-    static login(params: LogInRequest) {
+    login(params: LogInRequest) {
         return axios.post(`${backendUrl}/api/auth/login`, params).then((response) => {
             if (response.status === 200 && response.data.token) {
                 const { token } = response.data
@@ -35,20 +35,20 @@ class AuthService {
         })
     }
 
-    static register(params: RegistrationRequest): Promise<any> {
+    register(params: RegistrationRequest): Promise<any> {
         return axios.post(`${backendUrl}/api/auth/register`, params)
     }
 
-    static logout() {
+    logout() {
         localStorage.removeItem('current_user')
     }
 
-    static getCurrentUser() {
+    getCurrentUser() {
         return localStorage.getItem('current_user') ? JSON.parse(localStorage.getItem('current_user') as string) : null
     }
 
-    static getAuthHeaders() {
-        const currentUser = AuthService.getCurrentUser()
+    getAuthHeaders() {
+        const currentUser = this.getCurrentUser()
 
         return {
             headers: {
@@ -57,23 +57,23 @@ class AuthService {
         }
     }
 
-    static hasRole(role: string) {
+    hasRole(role: string) {
         const currentUser = this.getCurrentUser()
 
         return currentUser && currentUser.roles.includes(role)
     }
 
-    static isUser() {
+    isUser() {
         return this.hasRole('ROLE_USER')
     }
 
-    static isAdmin() {
+    isAdmin() {
         return this.hasRole('ROLE_ADMIN')
     }
 
-    static isSuperAdmin() {
+    isSuperAdmin() {
         return this.hasRole('ROLE_SUPER_ADMIN')
     }
 }
 
-export default AuthService
+export const authService = new AuthService()

@@ -1,29 +1,28 @@
 import Axios from 'axios'
 
-// eslint-disable-next-line import/no-cycle
-import AuthService from './AuthService'
 import { backendUrl } from '../parameters'
+import { authService } from './AuthService'
 
 class DataApi {
-    static get(path: string, params?: any) {
-        const config = AuthService.getAuthHeaders()
+    get(path: string, params?: any) {
+        const config = authService.getAuthHeaders()
 
         return Axios.get(backendUrl + path, { ...config, data: params })
     }
 
-    static post(path: string, params?: any) {
-        return Axios.post(backendUrl + path, params, AuthService.getAuthHeaders())
+    post(path: string, params?: any) {
+        return Axios.post(backendUrl + path, params, authService.getAuthHeaders())
     }
 
-    static put(path: string, params?: any) {
-        return Axios.put(backendUrl + path, params, AuthService.getAuthHeaders())
+    put(path: string, params?: any) {
+        return Axios.put(backendUrl + path, params, authService.getAuthHeaders())
     }
 
-    static delete(path: string, params?: any) {
-        const config = AuthService.getAuthHeaders()
+    delete(path: string, params?: any) {
+        const config = authService.getAuthHeaders()
 
         return Axios.delete(backendUrl + path, { ...config, data: params })
     }
 }
 
-export default DataApi
+export const dataApi = new DataApi()

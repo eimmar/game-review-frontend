@@ -4,4 +4,5 @@ export const routes = {
     homePage: '/',
     register: '/register',
     login: '/login',
+    forgotPassword: '/forgot-password',
 }
