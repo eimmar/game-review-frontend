@@ -1,6 +1,7 @@
 export const ltTranslations = {
     'common.websiteName': 'Žaisk',
     'common.notFoundMessage': '404: Puslapis neegzistuoja :/',
+    'common.resetLinkExpired': 'Ši nuoroda yra neteisinga arba jos galiojimo laikas yra pasibaigęs.',
 
     'user.alreadyHaveAccount': 'Esate registruotas narys? Prisijunkite',
     'user.register': 'Registruotis',

@@ -1,12 +1,13 @@
 import * as React from 'react'
 
-import NotFound404Content from '../../components/Error/NotFound404Content'
+import ErrorContent from '../../components/Error/ErrorContent'
 import { ErrorLayout } from '../../layouts/ErrorLayout/ErrorLayout'
+import { t } from '../../i18n'
 
 export default function NotFound404() {
     return (
         <ErrorLayout>
-            <NotFound404Content />
+            <ErrorContent>{t`common.notFoundMessage`}</ErrorContent>
         </ErrorLayout>
     )
 }

@@ -53,7 +53,7 @@ class AuthService {
         return axios.post(`${backendUrl}/api/auth/forgot-password`, params)
     }
 
-    checkResetPassword(guid: string): Promise<any> {
+    checkResetPassword(guid: string): Promise<boolean> {
         return axios.post(`${backendUrl}/api/auth/reset-password-check`, { guid })
     }
 
