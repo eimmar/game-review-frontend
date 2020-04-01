@@ -86,7 +86,8 @@ class ForgotPasswordForm extends Component<Props> {
                     initialValues={this.initialValues}
                     validationSchema={this.validationSchema}
                     onSubmit={this.handleSubmit}
-                    render={({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
+                >
+                    {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
                         <Form className={classes.form} noValidate>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
@@ -117,14 +118,14 @@ class ForgotPasswordForm extends Component<Props> {
 
                             <Grid container>
                                 <Grid item>
-                                    <Link href={routes.register} variant="body2">
-                                        <RouterLink to={routes.register}>{t`user.registerIfNoAccount`}</RouterLink>
+                                    <Link variant="body2" component={RouterLink} to={routes.register}>
+                                        {t`user.registerIfNoAccount`}
                                     </Link>
                                 </Grid>
                             </Grid>
                         </Form>
                     )}
-                />
+                </Formik>
             </div>
         )
     }

@@ -10,9 +10,7 @@ export default function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="">
-                <RouterLink to={routes.homePage}>{t`common.websiteName`}</RouterLink>
-            </Link>{' '}
+            <Link color="inherit" component={RouterLink} to={routes.homePage}>{t`common.websiteName`}</Link>{' '}
             {new Date().getFullYear()}.
         </Typography>
     )

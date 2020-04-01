@@ -87,7 +87,8 @@ class ForgotPasswordForm extends Component<Props> {
                     initialValues={this.initialValues}
                     validationSchema={this.validationSchema}
                     onSubmit={this.handleSubmit}
-                    render={({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
+                >
+                    {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
                         <Form className={classes.form} noValidate>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
@@ -135,7 +136,7 @@ class ForgotPasswordForm extends Component<Props> {
                             </Button>
                         </Form>
                     )}
-                />
+                </Formik>
             </div>
         )
     }

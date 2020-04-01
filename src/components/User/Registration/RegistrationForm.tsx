@@ -168,8 +168,8 @@ class RegistrationForm extends Component<Props> {
                             </Button>
                             <Grid container justify="flex-end">
                                 <Grid item>
-                                    <Link variant="body2">
-                                        <RouterLink to={routes.login}>{t`user.alreadyHaveAccount`}</RouterLink>
+                                    <Link variant="body2" component={RouterLink} to={routes.login}>
+                                        {t`user.alreadyHaveAccount`}
                                     </Link>
                                 </Grid>
                             </Grid>
