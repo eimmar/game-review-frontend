@@ -1,7 +1,7 @@
-import axios from 'axios'
 import JwtDecode from 'jwt-decode'
+import cookie from 'react-cookies'
 
-import { backendUrl } from '../parameters'
+import { requestService } from './RequestService'
 
 export interface User {
     email: string
@@ -32,41 +32,60 @@ export interface ResetPasswordRequest {
 
 class AuthService {
     login(params: LogInRequest) {
-        return axios.post(`${backendUrl}/api/auth/login`, params).then((response) => {
+        // return axios.post(`${backendUrl}/api/auth/login`, params).then((response) => {
+        //     if (response.status === 200 && response.data.token) {
+        //         const { token } = response.data
+        //         const currentUser = JwtDecode(token) as User
+        //
+        //         currentUser.accessToken = token
+        //         localStorage.setItem('currentUser', JSON.stringify(currentUser))
+        //     } else {
+        //         throw new DOMException('Could not authenticate.')
+        //     }
+        // })
+
+        return requestService.performRequest('POST', '/api/auth/login', params).then((response) => {
             if (response.status === 200 && response.data.token) {
                 const { token } = response.data
                 const currentUser = JwtDecode(token) as User
 
                 currentUser.accessToken = token
-                localStorage.setItem('currentUser', JSON.stringify(currentUser))
-            } else {
-                throw new DOMException('Could not authenticate.')
+
+                cookie.save('currentUser', currentUser.email, {})
+                localStorage.clear()
+                localStorage.setItem(currentUser.email, JSON.stringify(currentUser))
+
+                return currentUser
             }
+            throw new DOMException('Could not authenticate.')
         })
     }
 
     register(params: RegistrationRequest): Promise<any> {
-        return axios.post(`${backendUrl}/api/auth/register`, params)
+        return requestService.performRequest('POST', '/api/auth/register', params)
     }
 
     forgotPassword(params: ForgotPasswordRequest): Promise<any> {
-        return axios.post(`${backendUrl}/api/auth/forgot-password`, params)
+        return requestService.performRequest('POST', '/api/auth/forgot-password', params)
     }
 
     checkResetPassword(guid: string): Promise<boolean> {
-        return axios.post(`${backendUrl}/api/auth/reset-password-check`, { guid })
+        return requestService.performRequest('POST', '/api/auth/reset-password-check', { guid })
     }
 
     resetPassword(params: ResetPasswordRequest): Promise<any> {
-        return axios.post(`${backendUrl}/api/auth/reset-password`, params)
+        return requestService.performRequest('POST', '/api/auth/reset-password', params)
     }
 
     logout() {
-        localStorage.removeItem('current_user')
+        localStorage.removeItem('currentUser')
+        cookie.remove('user')
     }
 
     getCurrentUser() {
-        return localStorage.getItem('current_user') ? JSON.parse(localStorage.getItem('current_user') as string) : null
+        const userCookie = localStorage.getItem(cookie.load('currentUser'))
+
+        return userCookie ? JSON.parse(userCookie) : null
     }
 
     getAuthHeaders() {

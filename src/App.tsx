@@ -12,6 +12,7 @@ import Login from './views/User/Login'
 import ForgotPassword from './views/User/ForgotPassword'
 import ResetPassword from './views/User/ResetPassword'
 import NotFound404 from './views/Error/NotFound404'
+import GameList from './views/Game/GameList'
 
 const HomePage = lazyComponent(import('./views/HomePage'))
 
@@ -25,6 +26,8 @@ function App() {
                 <PublicRoute exact path={routes.login} component={Login} />
                 <PublicRoute exact path={routes.forgotPassword} component={ForgotPassword} />
                 <PublicRoute exact path={`${routes.resetPassword}/:guid`} component={ResetPassword} />
+
+                <PublicRoute exact path={`${routes.game.list}`} component={GameList} />
 
                 <PublicRoute component={NotFound404} />
             </Switch>

@@ -32,10 +32,12 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-toastify": "^5.5.0",
-    "yup": "latest"
+    "yup": "latest",
+    "react-cookies": "latest"
   },
   "devDependencies": {
     "@types/jwt-decode": "^2.2.1",
+    "@types/react-cookies": "^0.1.0",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
     "autoprefixer": "^9.7.4",

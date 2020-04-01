@@ -6,4 +6,9 @@ export const routes = {
     login: '/login',
     forgotPassword: '/forgot-password',
     resetPassword: '/reset-password',
+
+    game: {
+        list: '/games',
+        view: '/game',
+    },
 }

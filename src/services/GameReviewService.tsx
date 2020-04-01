@@ -1,30 +1,24 @@
-import { dataApi } from './DataApi'
+import { requestService } from './RequestService'
 
-const baseUrl = '/review/'
+export interface GameReview extends Timestampable {
+    id: string
+    commend: string
+    rating: number
+}
 
 class ReviewService {
-    getAll() {
-        return dataApi.get(baseUrl)
+    baseUrl = '/review/'
+
+    getAll(): Promise<GameReview[]> {
+        return requestService.performRequest('GET', this.baseUrl)
     }
 
     get(id: string) {
-        return dataApi.get(baseUrl + id)
-    }
-
-    getByVehicle(vehicleId: string) {
-        return dataApi.get(`${baseUrl}vehicle/${vehicleId}`)
+        return requestService.performRequest('GET', this.baseUrl + id)
     }
 
     create(data: any) {
-        return dataApi.post(baseUrl, this.prepareReviewData(data))
-    }
-
-    update(id: string, data: any) {
-        return dataApi.put(baseUrl + id, this.prepareReviewData(data))
-    }
-
-    delete(id: string) {
-        return dataApi.delete(baseUrl + id)
+        return requestService.performAuthenticatedRequest('POST', this.baseUrl, this.prepareReviewData(data))
     }
 
     prepareReviewData(data: any) {
