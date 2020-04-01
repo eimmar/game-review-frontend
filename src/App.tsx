@@ -5,7 +5,6 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import { PublicRoute } from './routes/PublicRoute'
-import { Header } from './components/Header/Header'
 import { routes } from './parameters'
 import { lazyComponent } from './services/Util/PageSpeed'
 import Registration from './views/User/Registration'
