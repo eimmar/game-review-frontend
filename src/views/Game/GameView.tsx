@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { MainLayout } from '../../layouts/MainLayout/MainLayout'
-import ResetPasswordForm from '../../components/User/ResetPassword/ResetPasswordForm'
+import GameViewContent from '../../components/Game/GameViewContent/GameViewContent'
 import NotFound404 from '../../components/Error/ErrorContent'
-import { authService } from '../../services/AuthService'
-import ResetPasswordExpired from '../Error/ResetPasswordExpired'
+import { GameLoaded, gameService } from '../../services/GameService'
 import PageLoader from '../../components/Page/PageLoader'
 
-export default function Login() {
+export default function GameView() {
     const { guid } = useParams()
     const [loading, setLoading] = useState(true)
-    const [valid, setValid] = useState(false)
+    const [game, setGame] = useState({} as GameLoaded)
 
     useEffect(() => {
         if (guid) {
-            authService
-                .checkResetPassword(guid)
-                .then((isValid) => setValid(isValid))
+            gameService
+                .get(guid)
+                .then((gameResponse) => setGame(gameResponse))
                 .finally(() => setLoading(false))
         } else {
             setLoading(false)
@@ -32,17 +31,13 @@ export default function Login() {
         )
     }
 
-    if (!guid) {
+    if (!guid || !game) {
         return <NotFound404 />
     }
 
-    if (!valid) {
-        return <ResetPasswordExpired />
-    }
-
     return (
-        <MainLayout maxWidth="xs">
-            <ResetPasswordForm guid={guid} />
+        <MainLayout>
+            <GameViewContent game={game} />
         </MainLayout>
     )
 }
