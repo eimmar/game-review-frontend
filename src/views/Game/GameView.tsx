@@ -6,6 +6,9 @@ import GameViewContent from '../../components/Game/GameViewContent/GameViewConte
 import NotFound404 from '../../components/Error/ErrorContent'
 import { GameLoaded, gameService, ScreenshotSize } from '../../services/GameService'
 import PageLoader from '../../components/Page/PageLoader'
+import { ContentLayout } from '../../layouts/ContentLayout/ContentLayout'
+import MainSection from '../../components/Game/GameViewContent/MainSection'
+import { Header } from '../../components/Header/Header'
 
 export default function GameView() {
     const { guid } = useParams()
@@ -37,8 +40,14 @@ export default function GameView() {
     }
 
     return (
-        <MainLayout>
-            <GameViewContent game={game} />
-        </MainLayout>
+        <>
+            <ContentLayout>
+                <Header />
+                <MainSection game={game} />
+            </ContentLayout>
+            <MainLayout hideHeader>
+                <GameViewContent game={game} />
+            </MainLayout>
+        </>
     )
 }

@@ -23,7 +23,6 @@ import 'react-multi-carousel/lib/styles.css'
 
 import Sidebar from './Sidebar'
 import { GameLoaded } from '../../../services/GameService'
-import MainSection from './MainSection'
 import GameImage from './GameImage'
 import Reviews from './Reviews'
 import { t } from '../../../i18n'
@@ -137,7 +136,6 @@ class GameViewContent extends Component<Props> {
                 <CssBaseline />
                 <Container>
                     <main>
-                        <MainSection game={game} />
                         {this.listInfo}
 
                         {game.screenshots && (

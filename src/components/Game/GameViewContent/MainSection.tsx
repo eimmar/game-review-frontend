@@ -10,17 +10,26 @@ import { placeholderImg } from '../../../services/Util/AssetsProvider'
 import { t } from '../../../i18n'
 import sStyles from './MainSection.module.scss'
 import { flattenClasses } from '../../../services/Util/StyleUtils'
+import { MainLayout } from '../../../layouts/MainLayout/MainLayout'
 
 const styles = ({ palette, spacing, breakpoints }: Theme) =>
     createStyles({
         mainSection: {
             position: 'relative',
-            backgroundColor: palette.grey[800],
             color: palette.common.white,
-            marginBottom: spacing(4),
+            marginBottom: spacing(0),
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
+            borderRadius: 0,
+            boxShadow: 'none',
+            maxHeight: 1000,
+            [breakpoints.up('md')]: {
+                maxHeight: 500,
+            },
+        },
+        mainLayout: {
+            paddingBottom: 0,
         },
         overlay: {
             position: 'absolute',
@@ -45,6 +54,14 @@ const styles = ({ palette, spacing, breakpoints }: Theme) =>
             width: '264px',
             height: '374px',
         },
+        cover: {
+            maxWidth: 264,
+            margin: 'auto',
+            [breakpoints.up('md')]: {
+                margin: 0,
+                marginRight: 16,
+            },
+        },
     })
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
@@ -54,6 +71,8 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
         mainSectionContent: string
         overlay: string
         cardMedia: string
+        cover: string
+        mainLayout: string
     }
 }
 
@@ -88,42 +107,44 @@ class MainSection extends Component<Props> {
         return (
             <Paper className={classes.mainSection}>
                 <div className={classes.overlay} style={bg ? { backgroundImage: `url(${bg})` } : {}} />
-                <Grid container className={classes.mainSectionContent}>
-                    <Grid item md={3}>
-                        <CardMedia className={classes.cardMedia} image={game.coverImage || placeholderImg} />
-                    </Grid>
-                    <Grid item md={9} className={classes.mainSectionContent}>
-                        {game.rating && game.ratingCount && (
-                            <>
-                                <Typography color="inherit">
-                                    {t('game.ratingBasedOn', {
-                                        rating: game.rating?.toPrecision(2),
-                                        count: game.ratingCount,
-                                    })}
-                                </Typography>
-                                {this.renderRatingIndicator(game.rating)}
-                            </>
-                        )}
-
-                        <div>
-                            <Typography component="h1" variant="h4" color="inherit" gutterBottom>
-                                {game.name}
-                            </Typography>
-                            {game.releaseDate && (
-                                <Typography variant="h5" color="inherit" gutterBottom>
-                                    {game.releaseDate}
-                                </Typography>
+                <MainLayout hideFooter hideHeader className={classes.mainLayout}>
+                    <Grid container className={classes.mainSectionContent}>
+                        <Grid item md={2} className={classes.cover}>
+                            <CardMedia className={classes.cardMedia} image={game.coverImage || placeholderImg} />
+                        </Grid>
+                        <Grid item md={8} className={classes.mainSectionContent}>
+                            {game.rating && game.ratingCount && (
+                                <>
+                                    <Typography color="inherit">
+                                        {t('game.ratingBasedOn', {
+                                            rating: game.rating?.toPrecision(2),
+                                            count: game.ratingCount,
+                                        })}
+                                    </Typography>
+                                    {this.renderRatingIndicator(game.rating)}
+                                </>
                             )}
-                            <Typography variant="h6" color="inherit" paragraph>
-                                {game.companies.map((it) => it.name).join(', ')}
-                            </Typography>
 
-                            <Typography variant="subtitle1" color="inherit" paragraph>
-                                {game.summary}
-                            </Typography>
-                        </div>
+                            <div>
+                                <Typography component="h1" variant="h4" color="inherit" gutterBottom>
+                                    {game.name}
+                                </Typography>
+                                {game.releaseDate && (
+                                    <Typography variant="h5" color="inherit" gutterBottom>
+                                        {game.releaseDate}
+                                    </Typography>
+                                )}
+                                <Typography variant="h6" color="inherit" paragraph>
+                                    {game.companies.map((it) => it.name).join(', ')}
+                                </Typography>
+
+                                <Typography variant="subtitle1" color="inherit" paragraph>
+                                    {game.summary}
+                                </Typography>
+                            </div>
+                        </Grid>
                     </Grid>
-                </Grid>
+                </MainLayout>
             </Paper>
         )
     }
