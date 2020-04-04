@@ -1,16 +1,30 @@
 import React, { Component } from 'react'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { Grid, CssBaseline, Container } from '@material-ui/core'
-import GitHubIcon from '@material-ui/icons/GitHub'
-import TwitterIcon from '@material-ui/icons/Twitter'
-import FacebookIcon from '@material-ui/icons/Facebook'
+import {
+    Grid,
+    CssBaseline,
+    Container,
+    Link,
+    Typography,
+    Divider,
+    List,
+    ListItem,
+    ListItemAvatar,
+    Avatar,
+    ListItemText,
+    Box,
+} from '@material-ui/core'
+import VideogameAssetOutlinedIcon from '@material-ui/icons/VideogameAssetOutlined'
+import ComputerIcon from '@material-ui/icons/Computer'
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
 
 import Sidebar from './Sidebar'
 import { GameLoaded } from '../../../services/GameService'
 import MainSection from './MainSection'
 import GameImage from './GameImage'
 import Reviews from './Reviews'
+import { t } from '../../../i18n'
 
 const styles = ({ spacing }: Theme) =>
     createStyles({
@@ -19,14 +33,6 @@ const styles = ({ spacing }: Theme) =>
         },
     })
 
-interface Post {
-    title: string
-    date: string
-    description: string
-    image: string
-    imageTitle: string
-}
-
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     game: GameLoaded
     classes: {
@@ -34,34 +40,74 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     }
 }
 
-// eslint-disable-next-line react/prefer-stateless-function
 class GameViewContent extends Component<Props> {
+    get listInfo() {
+        const { game } = this.props
+
+        return (
+            <List>
+                <ListItem>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <VideogameAssetOutlinedIcon />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary={t`game.genres`}
+                        secondary={game.genres.map((genre) => (
+                            <Box mr={1} key={genre.id} display="inline" component="span">
+                                <Link variant="body1" href={genre.url}>
+                                    {genre.name}
+                                </Link>
+                            </Box>
+                        ))}
+                    />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+                <ListItem>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <ComputerIcon />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary={t`game.platforms`}
+                        secondary={game.platforms.map((platform) => (
+                            <Box mr={1} key={platform.id} display="inline" component="span">
+                                <Link variant="body1" href={platform.url}>
+                                    {platform.name}
+                                </Link>
+                            </Box>
+                        ))}
+                    />
+                </ListItem>
+
+                {game.storyLine && (
+                    <>
+                        <Divider variant="inset" component="li" />
+                        <ListItem>
+                            <ListItemAvatar>
+                                <Avatar>
+                                    <LibraryBooksIcon />
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                                primary={t`game.storyLine`}
+                                secondary={
+                                    <Typography variant="subtitle1" color="inherit" paragraph component="span">
+                                        {game.storyLine}
+                                    </Typography>
+                                }
+                            />
+                        </ListItem>
+                    </>
+                )}
+            </List>
+        )
+    }
+
     render() {
         const { classes, game } = this.props
-
-        const sidebar = {
-            title: 'About',
-            description:
-                'Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.',
-            archives: [
-                { title: 'March 2020', url: '#' },
-                { title: 'February 2020', url: '#' },
-                { title: 'January 2020', url: '#' },
-                { title: 'November 1999', url: '#' },
-                { title: 'October 1999', url: '#' },
-                { title: 'September 1999', url: '#' },
-                { title: 'August 1999', url: '#' },
-                { title: 'July 1999', url: '#' },
-                { title: 'June 1999', url: '#' },
-                { title: 'May 1999', url: '#' },
-                { title: 'April 1999', url: '#' },
-            ],
-            social: [
-                { name: 'GitHub', icon: GitHubIcon },
-                { name: 'Twitter', icon: TwitterIcon },
-                { name: 'Facebook', icon: FacebookIcon },
-            ],
-        }
 
         return (
             <>
@@ -69,20 +115,21 @@ class GameViewContent extends Component<Props> {
                 <Container>
                     <main>
                         <MainSection game={game} />
+                        {this.listInfo}
+
                         <Grid container spacing={4}>
                             {game.screenshots.map((screenshot) => (
                                 <GameImage key={screenshot.id} image={screenshot} title={game.name} />
                             ))}
                         </Grid>
+
                         <Grid container spacing={5} className={classes.mainGrid}>
+                            <Typography variant="subtitle1" color="inherit" paragraph>
+                                {game.storyLine}
+                            </Typography>
+
                             <Reviews gameId={game.id} />
-                            <Sidebar
-                                ageRatings={game.ageRatings}
-                                themes={game.themes}
-                                gameModes={game.gameModes}
-                                websites={game.websites}
-                                companies={game.companies}
-                            />
+                            <Sidebar game={game} />
                         </Grid>
                     </main>
                 </Container>

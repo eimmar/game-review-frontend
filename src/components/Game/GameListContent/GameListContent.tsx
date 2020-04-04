@@ -3,12 +3,12 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
-import { RouteComponentProps, withRouter, Link } from 'react-router-dom'
-import { CssBaseline, CardMedia, CardContent, Card, Container, CardActions, AppBar, Toolbar } from '@material-ui/core'
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
+import { AppBar, Card, CardActions, CardContent, CardMedia, Container, CssBaseline, Toolbar } from '@material-ui/core'
 import CameraIcon from '@material-ui/icons/PhotoCamera'
 
 import { t } from '../../../i18n'
-import { Game, gameService } from '../../../services/GameService'
+import { Game, gameService, ScreenshotSize } from '../../../services/GameService'
 import { routes } from '../../../parameters'
 import PageLoader from '../../Page/PageLoader'
 import { placeholderImg } from '../../../services/Util/AssetsProvider'
@@ -68,7 +68,12 @@ class GameListContent extends Component<Props, State> {
     state = { games: [] as Game[], loading: true }
 
     componentDidMount() {
-        gameService.getAll().then((games) => this.setState({ games: gameService.withBigCover(games), loading: false }))
+        gameService.getAll().then((games) =>
+            this.setState({
+                games: games.map((game) => gameService.withCover(game, ScreenshotSize.CoverBig)),
+                loading: false,
+            }),
+        )
     }
 
     render() {

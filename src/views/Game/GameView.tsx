@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { MainLayout } from '../../layouts/MainLayout/MainLayout'
 import GameViewContent from '../../components/Game/GameViewContent/GameViewContent'
 import NotFound404 from '../../components/Error/ErrorContent'
-import { GameLoaded, gameService } from '../../services/GameService'
+import { GameLoaded, gameService, ScreenshotSize } from '../../services/GameService'
 import PageLoader from '../../components/Page/PageLoader'
 
 export default function GameView() {
@@ -16,6 +16,7 @@ export default function GameView() {
         if (guid) {
             gameService
                 .get(guid)
+                .then((gameResponse) => gameService.withCover(gameResponse, ScreenshotSize.CoverBig))
                 .then((gameResponse) => setGame(gameResponse))
                 .finally(() => setLoading(false))
         } else {

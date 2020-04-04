@@ -3,18 +3,22 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { Badge, Link, Paper } from '@material-ui/core'
+import { Badge, Link, Paper, Tooltip, IconButton } from '@material-ui/core'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
+import LanguageIcon from '@material-ui/icons/Language'
+import SportsEsportsIcon from '@material-ui/icons/SportsEsports'
+import LocalLibraryIcon from '@material-ui/icons/LocalLibrary'
+import MenuBookIcon from '@material-ui/icons/MenuBook'
+import FacebookIcon from '@material-ui/icons/Facebook'
+import TwitterIcon from '@material-ui/icons/Twitter'
+import InstagramIcon from '@material-ui/icons/Instagram'
+import YouTubeIcon from '@material-ui/icons/YouTube'
+import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone'
+import AndroidIcon from '@material-ui/icons/Android'
+import RedditIcon from '@material-ui/icons/Reddit'
 
-import {
-    AgeRating,
-    Company,
-    GameMode,
-    gameService,
-    GameWebsite,
-    Theme as GameTheme,
-} from '../../../services/GameService'
 import { t } from '../../../i18n'
+import { GameLoaded, gameService, GameWebsiteCategory } from '../../../services/GameService'
 
 const styles = ({ palette, spacing }: Theme) =>
     createStyles({
@@ -28,12 +32,7 @@ const styles = ({ palette, spacing }: Theme) =>
     })
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
-    ageRatings: AgeRating[]
-    themes: GameTheme[]
-    gameModes: GameMode[]
-    websites: GameWebsite[]
-    companies: Company[]
-
+    game: GameLoaded
     classes: {
         sidebarAboutBox: string
         sidebarSection: string
@@ -42,31 +41,109 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Sidebar extends Component<Props> {
+    getWebsiteIcon(category: GameWebsiteCategory) {
+        let icon: React.ReactNode
+
+        switch (category) {
+            case GameWebsiteCategory.Official:
+                icon = <SportsEsportsIcon />
+                break
+
+            case GameWebsiteCategory.Wikia:
+                icon = <LocalLibraryIcon />
+                break
+
+            case GameWebsiteCategory.Wikipedia:
+                icon = <MenuBookIcon />
+                break
+
+            case GameWebsiteCategory.Facebook:
+                icon = <FacebookIcon />
+                break
+
+            case GameWebsiteCategory.Twitter:
+                icon = <TwitterIcon />
+                break
+
+            case GameWebsiteCategory.Twitch:
+                icon = <LanguageIcon />
+                break
+
+            case GameWebsiteCategory.Instagram:
+                icon = <InstagramIcon />
+                break
+
+            case GameWebsiteCategory.Youtube:
+                icon = <YouTubeIcon />
+                break
+
+            case GameWebsiteCategory.Iphone:
+                icon = <PhoneIphoneIcon />
+                break
+
+            case GameWebsiteCategory.Ipad:
+                icon = <LanguageIcon />
+                break
+
+            case GameWebsiteCategory.Android:
+                icon = <AndroidIcon />
+                break
+
+            case GameWebsiteCategory.Steam:
+                icon = <LanguageIcon />
+                break
+
+            case GameWebsiteCategory.Reddit:
+                icon = <RedditIcon />
+                break
+
+            case GameWebsiteCategory.Itch:
+                icon = <LanguageIcon />
+                break
+
+            case GameWebsiteCategory.EpicGames:
+                icon = <LanguageIcon />
+                break
+
+            case GameWebsiteCategory.Gog:
+                icon = <LanguageIcon />
+                break
+
+            default:
+                icon = <LanguageIcon />
+                break
+        }
+
+        return icon
+    }
+
     render() {
-        const { classes, ageRatings, themes, gameModes, websites, companies } = this.props
+        const { classes, game } = this.props
 
         return (
             <Grid item xs={12} md={4}>
-                <Paper elevation={0} className={classes.sidebarAboutBox}>
-                    <Typography variant="h6" gutterBottom>
-                        {t`game.information`}
-                    </Typography>
-                    <Typography>{t`some info`}</Typography>
-                </Paper>
+                {game.category !== 0 && (
+                    <Paper elevation={0} className={classes.sidebarAboutBox}>
+                        <Typography variant="h6" gutterBottom>
+                            {t`game.category`}
+                        </Typography>
+                        <Typography>{t(`gameCategory.${game.category}`)}</Typography>
+                    </Paper>
+                )}
 
                 <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
                     {t`game.ageRatings`}
                 </Typography>
-                {ageRatings.map((ageRating) => (
-                    <Link display="block" variant="body1" href="#" key={ageRating.id}>
-                        {ageRating.rating}
-                    </Link>
+                {game.ageRatings.map((ageRating) => (
+                    <Typography display="block" variant="body1" key={ageRating.id}>
+                        {t(`ageRating.category_${ageRating.category}`)} {t(`ageRating.${ageRating.rating}`)}
+                    </Typography>
                 ))}
 
                 <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
                     {t`game.themes`}
                 </Typography>
-                {themes.map((theme) => (
+                {game.themes.map((theme) => (
                     <Link display="block" variant="body1" href={theme.url} key={theme.id}>
                         {theme.name}
                     </Link>
@@ -75,7 +152,7 @@ class Sidebar extends Component<Props> {
                 <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
                     {t`game.gameModes`}
                 </Typography>
-                {gameModes.map((gameMode) => (
+                {game.gameModes.map((gameMode) => (
                     <Link display="block" variant="body1" href={gameMode.url} key={gameMode.id}>
                         {gameMode.name}
                     </Link>
@@ -84,33 +161,38 @@ class Sidebar extends Component<Props> {
                 <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
                     {t`game.companies`}
                 </Typography>
-                {companies.map((company) => (
+                {game.companies.map((company) => (
                     <div key={company.id}>
                         <Link display="block" variant="body1" href={company.url}>
-                            {company.name} - {company.description}
+                            {company.name}
                         </Link>
-                        {company.websites.map((companyWebsite) => '')}
                     </div>
                 ))}
 
-                <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
-                    {t`game.websites`}
-                </Typography>
-                {websites.map((website) => (
-                    <Link display="block" variant="body1" href={website.url} key={website.id}>
-                        <Grid container direction="row" spacing={1} alignItems="center">
-                            <Grid item>{gameService.getWebsiteIcon(website.category)}</Grid>
-                            <Grid item>
-                                {website.category}
-                                {website.trusted && (
-                                    <Badge>
-                                        <VerifiedUserIcon />
-                                    </Badge>
-                                )}
-                            </Grid>
-                        </Grid>
-                    </Link>
-                ))}
+                {game.websites.length > 0 && (
+                    <>
+                        <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
+                            {t`game.websites`}
+                        </Typography>
+                        {game.websites.map((website) => (
+                            <Link display="block" variant="body1" href={website.url} key={website.id} target="_blank">
+                                <Grid container direction="row" spacing={1} alignItems="center">
+                                    <Grid item>{this.getWebsiteIcon(website.category)}</Grid>
+                                    <Grid item>
+                                        {t(`gameWebsite.cateogry_${website.category}`)}
+                                        {website.trusted && (
+                                            <Tooltip title={t`gameWebsite.trusted`}>
+                                                <Badge>
+                                                    <VerifiedUserIcon />
+                                                </Badge>
+                                            </Tooltip>
+                                        )}
+                                    </Grid>
+                                </Grid>
+                            </Link>
+                        ))}
+                    </>
+                )}
             </Grid>
         )
     }

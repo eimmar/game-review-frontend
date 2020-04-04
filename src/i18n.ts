@@ -16,11 +16,11 @@ i18n.use(LanguageDetector).init({
     interpolation: {
         format: (value, format) => {
             if (format === 'date') {
-                return moment(value).format('DD.MM.YYYY')
+                return moment(value).format('YYYY.MM.DD')
             }
 
             if (format === 'fullDate') {
-                return moment(value).format('dddd MMMM Do, YYYY - HH:mm')
+                return moment(value).format('YYYY MMMM Do, dddd - HH:mm')
             }
 
             return value

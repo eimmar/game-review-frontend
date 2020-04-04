@@ -1,15 +1,3 @@
-import LanguageIcon from '@material-ui/icons/Language'
-import FacebookIcon from '@material-ui/icons/Facebook'
-import TwitterIcon from '@material-ui/icons/Twitter'
-import InstagramIcon from '@material-ui/icons/Instagram'
-import YouTubeIcon from '@material-ui/icons/YouTube'
-import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone'
-import AndroidIcon from '@material-ui/icons/Android'
-import RedditIcon from '@material-ui/icons/Reddit'
-import MenuBookIcon from '@material-ui/icons/MenuBook'
-import LocalLibraryIcon from '@material-ui/icons/LocalLibrary'
-import SportsEsportsIcon from '@material-ui/icons/SportsEsports'
-
 import { requestService } from './RequestService'
 
 export enum GameCategory {
@@ -41,7 +29,7 @@ export enum GameWebsiteCategory {
     Facebook,
     Twitter,
     Twitch,
-    Instagram,
+    Instagram = 8,
     Youtube,
     Iphone,
     Ipad,
@@ -51,6 +39,19 @@ export enum GameWebsiteCategory {
     Itch,
     EpicGames,
     Gog,
+}
+
+export enum ScreenshotSize {
+    CoverSmall = 't_cover_small',
+    ScreenshotMed = 't_screenshot_med',
+    CoverBig = 't_cover_big',
+    LogoMed = 't_logo_med',
+    ScreenshotBig = 't_screenshot_big',
+    ScreenshotHuge = 't_screenshot_huge',
+    Thumb = 't_thumb',
+    Micro = 't_micro',
+    P720 = 't_720p',
+    P1080 = 't_1080p',
 }
 
 export interface AgeRating extends ExternalEntity {
@@ -146,86 +147,12 @@ class GameService {
         return requestService.performRequest('GET', this.baseUrl + id)
     }
 
-    withBigCover(games: Game[]) {
-        return games.map((game) => {
-            return { ...game, coverImage: game.coverImage ? game.coverImage?.replace('t_thumb', 't_cover_big') : null }
-        })
+    withCover<T extends Game>(game: T, size: ScreenshotSize): T {
+        return { ...game, coverImage: game.coverImage ? game.coverImage?.replace(ScreenshotSize.Thumb, size) : null }
     }
 
-    getWebsiteIcon(category: GameWebsiteCategory) {
-        let icon = LanguageIcon
-
-        switch (category) {
-            case GameWebsiteCategory.Official:
-                icon = SportsEsportsIcon
-                break
-
-            case GameWebsiteCategory.Wikia:
-                icon = LocalLibraryIcon
-                break
-
-            case GameWebsiteCategory.Wikipedia:
-                icon = MenuBookIcon
-                break
-
-            case GameWebsiteCategory.Facebook:
-                icon = FacebookIcon
-                break
-
-            case GameWebsiteCategory.Twitter:
-                icon = TwitterIcon
-                break
-
-            case GameWebsiteCategory.Twitch:
-                icon = LanguageIcon
-                break
-
-            case GameWebsiteCategory.Instagram:
-                icon = InstagramIcon
-                break
-
-            case GameWebsiteCategory.Youtube:
-                icon = YouTubeIcon
-                break
-
-            case GameWebsiteCategory.Iphone:
-                icon = PhoneIphoneIcon
-                break
-
-            case GameWebsiteCategory.Ipad:
-                icon = LanguageIcon
-                break
-
-            case GameWebsiteCategory.Android:
-                icon = AndroidIcon
-                break
-
-            case GameWebsiteCategory.Steam:
-                icon = LanguageIcon
-                break
-
-            case GameWebsiteCategory.Reddit:
-                icon = RedditIcon
-                break
-
-            case GameWebsiteCategory.Itch:
-                icon = LanguageIcon
-                break
-
-            case GameWebsiteCategory.EpicGames:
-                icon = LanguageIcon
-                break
-
-            case GameWebsiteCategory.Gog:
-                icon = LanguageIcon
-                break
-
-            default:
-                icon = LanguageIcon
-                break
-        }
-
-        return icon
+    getScreenshots(game: GameLoaded, size: ScreenshotSize): Screenshot[] {
+        return game.screenshots.map((it) => ({ ...it, url: it.url.replace(ScreenshotSize.Thumb, size) }))
     }
 }
 
