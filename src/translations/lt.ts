@@ -40,6 +40,11 @@ export const ltTranslations = {
     'game.storyLine': 'Žaidimo istorija',
     'game.noInfo': 'Nėra informacijos',
     'game.screenshots': 'Nuotraukos',
+    'game.gameDeals': 'Pasiūlymai',
+
+    'gameDeal.more': 'Daugiau pasiūlymų',
+    'gameDeal.getDeals': 'Gauti pasiūlimus',
+    'gameDeal.noDealsFound': 'Pasiūlimų nerasta.',
 
     'gameWebsite.cateogry_1': 'Oficiali svetainė',
     'gameWebsite.cateogry_2': 'Wikia',

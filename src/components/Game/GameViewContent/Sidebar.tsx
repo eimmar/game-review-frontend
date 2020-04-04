@@ -18,7 +18,7 @@ import AndroidIcon from '@material-ui/icons/Android'
 import RedditIcon from '@material-ui/icons/Reddit'
 
 import { t } from '../../../i18n'
-import { GameLoaded, gameService, GameWebsiteCategory } from '../../../services/GameService'
+import { GameLoaded, GameWebsiteCategory } from '../../../services/GameService'
 
 const styles = ({ palette, spacing }: Theme) =>
     createStyles({
@@ -120,7 +120,7 @@ class Sidebar extends Component<Props> {
         const { classes, game } = this.props
 
         return (
-            <Grid item xs={12} md={4}>
+            <>
                 {game.category !== 0 && (
                     <Paper elevation={0} className={classes.sidebarAboutBox}>
                         <Typography variant="h6" gutterBottom>
@@ -192,7 +192,7 @@ class Sidebar extends Component<Props> {
                         ))}
                     </>
                 )}
-            </Grid>
+            </>
         )
     }
 }

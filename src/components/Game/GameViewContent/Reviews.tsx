@@ -24,10 +24,8 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
 // eslint-disable-next-line react/prefer-stateless-function
 class Reviews extends Component<Props> {
     render() {
-        const { classes } = this.props
-
         return (
-            <Grid item xs={12} md={8}>
+            <>
                 <Typography variant="h6" gutterBottom>{t`game.userReviews`}</Typography>
                 <Divider />
                 {/* {posts.map((post) => ( */}
@@ -35,7 +33,7 @@ class Reviews extends Component<Props> {
                 {/*        {post} */}
                 {/*    // </Markdown> */}
                 {/* ))} */}
-            </Grid>
+            </>
         )
     }
 }

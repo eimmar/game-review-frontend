@@ -26,6 +26,7 @@ import { GameLoaded } from '../../../services/GameService'
 import GameImage from './GameImage'
 import Reviews from './Reviews'
 import { t } from '../../../i18n'
+import PriceDeal from '../PriceDeal/PriceDeal'
 
 const styles = ({ spacing }: Theme) =>
     createStyles({
@@ -152,8 +153,13 @@ class GameViewContent extends Component<Props> {
                         )}
 
                         <Grid container spacing={5} className={classes.mainGrid}>
-                            <Reviews gameId={game.id} />
-                            <Sidebar game={game} />
+                            <Grid item xs={12} md={8}>
+                                <PriceDeal query={game.name} />
+                                <Reviews gameId={game.id} />
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <Sidebar game={game} />
+                            </Grid>
                         </Grid>
                     </main>
                 </Container>

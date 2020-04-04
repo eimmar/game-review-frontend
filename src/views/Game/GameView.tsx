@@ -7,7 +7,7 @@ import NotFound404 from '../../components/Error/ErrorContent'
 import { GameLoaded, gameService, ScreenshotSize } from '../../services/GameService'
 import PageLoader from '../../components/Page/PageLoader'
 import { ContentLayout } from '../../layouts/ContentLayout/ContentLayout'
-import MainSection from '../../components/Game/GameViewContent/MainSection'
+import GameTopCard from '../../components/Game/GameTopCard/GameTopCard'
 import { Header } from '../../components/Header/Header'
 
 export default function GameView() {
@@ -43,7 +43,7 @@ export default function GameView() {
         <>
             <ContentLayout>
                 <Header />
-                <MainSection game={game} />
+                <GameTopCard game={game} />
             </ContentLayout>
             <MainLayout hideHeader>
                 <GameViewContent game={game} />
