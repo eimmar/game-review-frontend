@@ -13,7 +13,7 @@ import { flattenClasses } from '../../../services/Util/StyleUtils'
 
 const styles = ({ palette, spacing, breakpoints }: Theme) =>
     createStyles({
-        mainFeaturedPost: {
+        mainSection: {
             position: 'relative',
             backgroundColor: palette.grey[800],
             color: palette.common.white,
@@ -24,14 +24,16 @@ const styles = ({ palette, spacing, breakpoints }: Theme) =>
         },
         overlay: {
             position: 'absolute',
+            filter: 'blur(8px)',
             top: 0,
             bottom: 0,
             right: 0,
             left: 0,
             backgroundColor: 'rgba(0,0,0,.3)',
         },
-        mainFeaturedPostContent: {
+        mainSectionContent: {
             position: 'relative',
+            filter: 'none',
             padding: spacing(1),
             [breakpoints.up('md')]: {
                 padding: spacing(1),
@@ -48,14 +50,13 @@ const styles = ({ palette, spacing, breakpoints }: Theme) =>
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     game: GameLoaded
     classes: {
-        mainFeaturedPost: string
-        mainFeaturedPostContent: string
+        mainSection: string
+        mainSectionContent: string
         overlay: string
         cardMedia: string
     }
 }
 
-// eslint-disable-next-line react/prefer-stateless-function
 class MainSection extends Component<Props> {
     get backgroundImage() {
         const { game } = this.props
@@ -85,13 +86,13 @@ class MainSection extends Component<Props> {
         const bg = this.backgroundImage
 
         return (
-            <Paper className={classes.mainFeaturedPost} style={bg ? { backgroundImage: `url(${bg})` } : {}}>
-                <div className={classes.overlay} />
-                <Grid container>
+            <Paper className={classes.mainSection}>
+                <div className={classes.overlay} style={bg ? { backgroundImage: `url(${bg})` } : {}} />
+                <Grid container className={classes.mainSectionContent}>
                     <Grid item md={3}>
                         <CardMedia className={classes.cardMedia} image={game.coverImage || placeholderImg} />
                     </Grid>
-                    <Grid item md={9}>
+                    <Grid item md={9} className={classes.mainSectionContent}>
                         {game.rating && game.ratingCount && (
                             <>
                                 <Typography color="inherit">
@@ -104,7 +105,7 @@ class MainSection extends Component<Props> {
                             </>
                         )}
 
-                        <div className={classes.mainFeaturedPostContent}>
+                        <div>
                             <Typography component="h1" variant="h4" color="inherit" gutterBottom>
                                 {game.name}
                             </Typography>

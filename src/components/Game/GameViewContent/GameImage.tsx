@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import Typography from '@material-ui/core/Typography'
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { Grid, CardActionArea, Card, CardContent, Hidden, CardMedia } from '@material-ui/core'
+import { CardActionArea, CardMedia, Grid, Dialog, DialogContent } from '@material-ui/core'
 
-import { Screenshot } from '../../../services/GameService'
+import { gameService, Screenshot, ScreenshotSize } from '../../../services/GameService'
 
 const styles = () =>
     createStyles({
@@ -14,8 +13,13 @@ const styles = () =>
         cardDetails: {
             flex: 1,
         },
-        cardMedia: {
-            width: 160,
+        image: {
+            width: '100%',
+            height: 'auto',
+        },
+        modalContent: {
+            maxWidth: 960,
+            maxHeight: 540,
         },
     })
 
@@ -25,35 +29,52 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     classes: {
         card: string
         cardDetails: string
-        cardMedia: string
+        image: string
+        modalContent: string
     }
 }
 
-// eslint-disable-next-line react/prefer-stateless-function
-class GameImage extends Component<Props> {
+interface State {
+    modalOpen: boolean
+}
+
+class GameImage extends Component<Props, State> {
+    state = {
+        modalOpen: false,
+    }
+
+    toggleModal = () => this.setState((prevState) => ({ modalOpen: !prevState.modalOpen }))
+
     render() {
         const { image, title, classes } = this.props
+        const { modalOpen } = this.state
 
         return (
-            <Grid item xs={12} md={6}>
-                <CardActionArea component="a" href="#">
-                    <Card className={classes.card}>
-                        {/* <div className={classes.cardDetails}> */}
-                        {/*    <CardContent> */}
-                        {/*        <Typography component="h2" variant="h5"> */}
-                        {/*            {image.title} */}
-                        {/*        </Typography> */}
-                        {/*        <Typography variant="subtitle1" color="textSecondary"> */}
-                        {/*            {image.date} */}
-                        {/*        </Typography> */}
-                        {/*        <Typography variant="subtitle1" paragraph> */}
-                        {/*            {image.description} */}
-                        {/*        </Typography> */}
-                        {/*    </CardContent> */}
-                        {/* </div> */}
-                        <CardMedia className={classes.cardMedia} image={image.url} title={title} />
-                    </Card>
+            <Grid item>
+                <CardActionArea component="a" onClick={this.toggleModal}>
+                    <CardMedia>
+                        <img
+                            className={classes.image}
+                            alt={title}
+                            src={gameService.transformImage(
+                                image.url,
+                                ScreenshotSize.Thumb,
+                                ScreenshotSize.ScreenshotMed,
+                            )}
+                        />
+                    </CardMedia>
                 </CardActionArea>
+                <Dialog open={modalOpen} onClose={this.toggleModal} maxWidth="xl">
+                    <DialogContent className={classes.modalContent}>
+                        <CardMedia>
+                            <img
+                                className={classes.image}
+                                src={gameService.transformImage(image.url, ScreenshotSize.Thumb, ScreenshotSize.P1080)}
+                                alt={title}
+                            />
+                        </CardMedia>
+                    </DialogContent>
+                </Dialog>
             </Grid>
         )
     }

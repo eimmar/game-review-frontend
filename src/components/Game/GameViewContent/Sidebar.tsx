@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { Badge, Link, Paper, Tooltip, IconButton } from '@material-ui/core'
+import { Badge, Link, Paper, Tooltip } from '@material-ui/core'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
 import LanguageIcon from '@material-ui/icons/Language'
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports'
@@ -39,7 +39,6 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     }
 }
 
-// eslint-disable-next-line react/prefer-stateless-function
 class Sidebar extends Component<Props> {
     getWebsiteIcon(category: GameWebsiteCategory) {
         let icon: React.ReactNode

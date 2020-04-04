@@ -18,6 +18,8 @@ import {
 import VideogameAssetOutlinedIcon from '@material-ui/icons/VideogameAssetOutlined'
 import ComputerIcon from '@material-ui/icons/Computer'
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
+import Carousel from 'react-multi-carousel'
+import 'react-multi-carousel/lib/styles.css'
 
 import Sidebar from './Sidebar'
 import { GameLoaded } from '../../../services/GameService'
@@ -106,6 +108,27 @@ class GameViewContent extends Component<Props> {
         )
     }
 
+    get carouselConfig() {
+        return {
+            superLargeDesktop: {
+                breakpoint: { max: 4000, min: 3000 },
+                items: 5,
+            },
+            desktop: {
+                breakpoint: { max: 3000, min: 1024 },
+                items: 3,
+            },
+            tablet: {
+                breakpoint: { max: 1024, min: 464 },
+                items: 2,
+            },
+            mobile: {
+                breakpoint: { max: 464, min: 0 },
+                items: 1,
+            },
+        }
+    }
+
     render() {
         const { classes, game } = this.props
 
@@ -117,17 +140,20 @@ class GameViewContent extends Component<Props> {
                         <MainSection game={game} />
                         {this.listInfo}
 
-                        <Grid container spacing={4}>
-                            {game.screenshots.map((screenshot) => (
-                                <GameImage key={screenshot.id} image={screenshot} title={game.name} />
-                            ))}
-                        </Grid>
+                        {game.screenshots && (
+                            <>
+                                <Grid item md={10}>
+                                    <Typography variant="h6">{t`game.screenshots`}</Typography>
+                                </Grid>
+                                <Carousel responsive={this.carouselConfig}>
+                                    {game.screenshots.map((screenshot) => (
+                                        <GameImage key={screenshot.id} image={screenshot} title={game.name} />
+                                    ))}
+                                </Carousel>
+                            </>
+                        )}
 
                         <Grid container spacing={5} className={classes.mainGrid}>
-                            <Typography variant="subtitle1" color="inherit" paragraph>
-                                {game.storyLine}
-                            </Typography>
-
                             <Reviews gameId={game.id} />
                             <Sidebar game={game} />
                         </Grid>

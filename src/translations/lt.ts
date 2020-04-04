@@ -39,6 +39,7 @@ export const ltTranslations = {
     'game.platforms': 'Platformos',
     'game.storyLine': 'Žaidimo istorija',
     'game.noInfo': 'Nėra informacijos',
+    'game.screenshots': 'Nuotraukos',
 
     'gameWebsite.cateogry_1': 'Oficiali svetainė',
     'gameWebsite.cateogry_2': 'Wikia',

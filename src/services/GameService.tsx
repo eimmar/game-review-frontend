@@ -154,6 +154,10 @@ class GameService {
     getScreenshots(game: GameLoaded, size: ScreenshotSize): Screenshot[] {
         return game.screenshots.map((it) => ({ ...it, url: it.url.replace(ScreenshotSize.Thumb, size) }))
     }
+
+    transformImage(imageUrl: string, fromSize: ScreenshotSize, toSize: ScreenshotSize) {
+        return imageUrl.replace(fromSize, toSize)
+    }
 }
 
 export const gameService = new GameService()
