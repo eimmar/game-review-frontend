@@ -133,7 +133,7 @@ class GameSpotVideos extends Component<Props, State> {
                     <Button
                         variant="outlined"
                         onClick={this.activate}
-                        color="secondary"
+                        color="primary"
                     >{t`gameSpotVideos.getItems`}</Button>
                 )}
             </Box>

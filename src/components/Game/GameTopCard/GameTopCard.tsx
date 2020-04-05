@@ -8,7 +8,7 @@ import { CardMedia, Paper, LinearProgress } from '@material-ui/core'
 import { GameLoaded, gameService, ScreenshotSize } from '../../../services/GameService'
 import { placeholderImg } from '../../../services/Util/AssetsProvider'
 import { t } from '../../../i18n'
-import sStyles from '../GameViewContent/MainSection.module.scss'
+import sStyles from './GameTopCard.module.scss'
 import { flattenClasses } from '../../../services/Util/StyleUtils'
 import { MainLayout } from '../../../layouts/MainLayout/MainLayout'
 

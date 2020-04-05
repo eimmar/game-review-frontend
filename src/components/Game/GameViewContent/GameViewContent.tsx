@@ -14,6 +14,8 @@ import {
     Avatar,
     ListItemText,
     Box,
+    Tab,
+    Tabs,
 } from '@material-ui/core'
 import VideogameAssetOutlinedIcon from '@material-ui/icons/VideogameAssetOutlined'
 import ComputerIcon from '@material-ui/icons/Computer'
@@ -27,7 +29,6 @@ import GameImage from './GameImage'
 import Reviews from './Reviews'
 import { t } from '../../../i18n'
 import PriceDeal from '../PriceDeal/PriceDeal'
-import GameSpotArticles from '../GameSpot/GameSpotArticles'
 import GameSpotVideos from '../GameSpot/GameSpotVideos'
 import GameSpotReviews from '../GameSpot/GameSpotReviews'
 
@@ -36,16 +37,50 @@ const styles = ({ spacing }: Theme) =>
         mainGrid: {
             marginTop: spacing(3),
         },
+        tab: {
+            textTransform: 'initial',
+            textAlign: 'left',
+            color: 'inherit',
+            paddingLeft: 0,
+        },
     })
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     game: GameLoaded
     classes: {
         mainGrid: string
+        tab: string
     }
 }
 
-class GameViewContent extends Component<Props> {
+interface TabPanelProps {
+    children?: React.ReactNode
+    index: any
+    value: any
+    renderedTabs: Set<number>
+}
+
+interface State {
+    tabIndex: number
+    renderedTabs: Set<number>
+}
+
+function TabPanel(props: TabPanelProps) {
+    const { children, value, index, renderedTabs, ...other } = props
+
+    return (
+        <Typography component="div" role="tabpanel" hidden={value !== index} {...other}>
+            {(value === index || renderedTabs.has(index)) && children}
+        </Typography>
+    )
+}
+
+class GameViewContent extends Component<Props, State> {
+    state = {
+        tabIndex: 0,
+        renderedTabs: new Set<number>(),
+    }
+
     get listInfo() {
         const { game } = this.props
 
@@ -111,6 +146,33 @@ class GameViewContent extends Component<Props> {
         )
     }
 
+    get reviewTabs() {
+        const { tabIndex, renderedTabs } = this.state
+        const { game, classes } = this.props
+
+        return (
+            <>
+                <Tabs value={tabIndex} indicatorColor="primary" textColor="primary" onChange={this.handleTabChange}>
+                    <Tab
+                        className={classes.tab}
+                        label={<Typography variant="h6" gutterBottom>{t`game.userReviews`}</Typography>}
+                    />
+                    <Tab
+                        className={classes.tab}
+                        label={<Typography variant="h6" gutterBottom>{t`gameSpotReview.items`}</Typography>}
+                    />
+                </Tabs>
+                <Divider />
+                <TabPanel value={tabIndex} index={0} renderedTabs={renderedTabs}>
+                    <Reviews gameId={game.id} />
+                </TabPanel>
+                <TabPanel value={tabIndex} index={1} renderedTabs={renderedTabs}>
+                    <GameSpotReviews gameId={game.id} />
+                </TabPanel>
+            </>
+        )
+    }
+
     get carouselConfig() {
         return {
             superLargeDesktop: {
@@ -130,6 +192,10 @@ class GameViewContent extends Component<Props> {
                 items: 1,
             },
         }
+    }
+
+    handleTabChange = (event: React.ChangeEvent<{}>, tabIndex: number) => {
+        this.setState((prevState) => ({ tabIndex, renderedTabs: prevState.renderedTabs.add(tabIndex) }))
     }
 
     render() {
@@ -160,8 +226,7 @@ class GameViewContent extends Component<Props> {
                         <Grid container spacing={5} className={classes.mainGrid}>
                             <Grid item xs={12} md={8}>
                                 <PriceDeal query={game.name} />
-                                <Reviews gameId={game.id} />
-                                <GameSpotReviews gameId={game.id} />
+                                {this.reviewTabs}
                             </Grid>
                             <Grid item xs={12} md={4}>
                                 <Sidebar game={game} />

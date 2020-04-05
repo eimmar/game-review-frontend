@@ -26,8 +26,6 @@ class Reviews extends Component<Props> {
     render() {
         return (
             <>
-                <Typography variant="h6" gutterBottom>{t`game.userReviews`}</Typography>
-                <Divider />
                 {/* {posts.map((post) => ( */}
                 {/*    // <Markdown className={classes.markdown} key={post.substring(0, 40)}> */}
                 {/*        {post} */}

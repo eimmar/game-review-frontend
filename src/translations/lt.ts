@@ -3,6 +3,8 @@ export const ltTranslations = {
     'common.notFoundMessage': '404: Puslapis neegzistuoja :/',
     'common.resetLinkExpired': 'Ši nuoroda yra neteisinga arba jos galiojimo laikas yra pasibaigęs.',
     'common.more': 'Daugiau',
+    'common.showMore': 'Rodyti daugiau',
+    'common.showLess': 'Rodyti mažiau',
 
     'user.alreadyHaveAccount': 'Esate registruotas narys? Prisijunkite',
     'user.register': 'Registruotis',
@@ -43,12 +45,16 @@ export const ltTranslations = {
     'game.screenshots': 'Nuotraukos',
     'game.gameDeals': 'Pasiūlymai',
 
+    'review.rating': 'Įvertinimas',
+    'review.good': 'Žaidimo privalumai',
+    'review.bad': 'Žaidimo trūkumai',
+
     'gameDeal.more': 'Daugiau pasiūlymų',
     'gameDeal.getDeals': 'Gauti pasiūlimus',
     'gameDeal.noDealsFound': 'Pasiūlimų nerasta.',
 
     'gameSpotReview.noItems': 'Atsiliepimų nėra.',
-    'gameSpotReview.items': 'Kiti atsiliepimai',
+    'gameSpotReview.items': 'Kritikų atsiliepimai',
 
     'gameSpotArticle.noItems': 'Straipsnių nėra.',
     'gameSpotArticle.items': 'Susiję straipsniai',

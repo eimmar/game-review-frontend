@@ -1,0 +1,46 @@
+.inline {
+    display: inline;
+}
+
+.thumbUp {
+    fill: #1b5e20 !important;
+}
+
+.reviewContent {
+    figure {
+        margin-top: 16px;
+        width: auto !important;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    figcaption {
+        margin: 8px 0 16px 0;
+        font-style: italic;
+    }
+
+    iframe {
+        display: none;
+    }
+
+    blockquote {
+        font-style: italic;
+        font-weight: bold;
+        margin: 16px 0;
+        font-size: 16px;
+        display: flex;
+    }
+
+    blockquote::before {
+        content: '"';
+        color: red;
+        font-size: 32px;
+        padding-right: 16px;
+    }
+
+    p {
+        margin-bottom: 8px;
+    }
+}

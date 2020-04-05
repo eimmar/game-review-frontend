@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { CardActionArea, CardMedia, Grid, Dialog, DialogContent, Button } from '@material-ui/core'
 
 import { Video } from '../../../services/GameSpotService'
@@ -33,7 +32,7 @@ const styles = () =>
         },
     })
 
-interface Props extends WithStyles<typeof styles>, RouteComponentProps {
+interface Props extends WithStyles<typeof styles> {
     video: Video
     loadMoreCallback?: () => void
     classes: {
@@ -98,4 +97,4 @@ class GameSpotVideo extends Component<Props, State> {
     }
 }
 
-export default withRouter(withStyles(styles)(GameSpotVideo))
+export default withStyles(styles)(GameSpotVideo)

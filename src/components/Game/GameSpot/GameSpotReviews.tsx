@@ -1,61 +1,37 @@
 import React, { Component } from 'react'
-import Typography from '@material-ui/core/Typography'
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles'
 import {
-    Grid,
     List,
     Box,
     CircularProgress,
-    ExpansionPanel,
-    ExpansionPanelSummary,
-    ExpansionPanelDetails,
     Link,
+    Divider,
+    ListItem,
+    Typography,
+    ListItemAvatar,
+    Avatar,
+    ListItemText,
+    ListItemIcon,
+    Button,
 } from '@material-ui/core'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Rating from '@material-ui/lab/Rating'
+import ThumbDownIcon from '@material-ui/icons/ThumbDown'
+import ThumbUpIcon from '@material-ui/icons/ThumbUp'
+import CheckIcon from '@material-ui/icons/Check'
+import ClearIcon from '@material-ui/icons/Clear'
+import ShowMore from 'react-show-more'
 
 import { t } from '../../../i18n'
 import { gameSpotService, Pagination, Review } from '../../../services/GameSpotService'
+import styles from './GameSpotReviews.module.scss'
 
-const styles = () =>
-    createStyles({
-        classes: {
-            review: {
-                h1: {
-                    component: Typography,
-                    props: {
-                        gutterBottom: true,
-                        variant: 'h5',
-                    },
-                },
-                h2: { component: Typography, props: { gutterBottom: true, variant: 'h6' } },
-                h3: { component: Typography, props: { gutterBottom: true, variant: 'subtitle1' } },
-                h4: {
-                    component: Typography,
-                    props: { gutterBottom: true, variant: 'caption', paragraph: true },
-                },
-                p: { component: Typography, props: { paragraph: true } },
-                a: { component: Link },
-                li: {
-                    component: ({ ...props }) => (
-                        <li>
-                            <Typography component="span" {...props} />
-                        </li>
-                    ),
-                },
-            },
-        },
-    })
-
-interface Props extends WithStyles<typeof styles> {
+interface Props {
     gameId: string
-    classes: Record<'classes', string>
 }
 
 interface State {
     reviews: Review[]
     pagination: Pagination
     loading: boolean
-    wasExpanded: boolean
 }
 
 class GameSpotReviews extends Component<Props, State> {
@@ -64,20 +40,31 @@ class GameSpotReviews extends Component<Props, State> {
         pagination: {
             page: 1,
             totalResults: 0,
-            pageSize: 10,
+            pageSize: 5,
         },
         loading: true,
-        wasExpanded: false,
     }
 
-    expandPanel = () => {
-        const { wasExpanded, pagination } = this.state
+    componentDidMount(): void {
+        const { pagination } = this.state
 
-        !wasExpanded && this.fetchData(pagination)
+        this.fetchData(pagination)
+    }
+
+    get hasNextPage() {
+        const { pagination } = this.state
+
+        return pagination.page * pagination.pageSize < pagination.totalResults
+    }
+
+    get nextPage() {
+        const { pagination } = this.state
+
+        return { ...pagination, page: pagination.page + 1 }
     }
 
     fetchData = (pagination: Pagination) => {
-        this.setState({ wasExpanded: true, loading: true })
+        this.setState({ loading: true })
 
         const { gameId } = this.props
 
@@ -85,6 +72,7 @@ class GameSpotReviews extends Component<Props, State> {
             .reviews(gameId, {
                 format: 'json',
                 limit: pagination.pageSize,
+                fieldList: ['publish_date', 'id', 'authors', 'title', 'image', 'score', 'deck', 'good', 'bad', 'body'],
                 offset: pagination.pageSize * pagination.page,
                 sort: 'publish_date:desc',
             })
@@ -101,93 +89,148 @@ class GameSpotReviews extends Component<Props, State> {
             .finally(() => this.setState({ loading: false }))
     }
 
-    renderReviews() {
-        const { reviews, loading } = this.state
-
+    renderRatingIndicator = (rating: number) => {
         return (
-            <List>
-                {reviews.map((it) => this.renderReview(it))}
-                {!loading && reviews?.length === 0 && t`gameSpotReview.noReviewsFound`}
-            </List>
+            <>
+                <Typography variant="h6">{rating}/10</Typography>
+                <Rating value={rating} max={10} readOnly />
+            </>
         )
     }
 
     renderReview(review: Review) {
-        const { classes } = this.props
-
         return (
-            <div className={classes.classes}>
-                <h1 id="sample-blog-post">{review.title}</h1>
-                <h4 id="april-1-2020-by-olivier">
-                    April 1, 2020 by <a href="/">Olivier</a>
-                </h4>
-                <p>
-                    This blog post shows a few different types of content that are supported and styled with Material
-                    styles. Basic typography, images, and code are all supported. You can extend these by modifying{' '}
-                    <code>Markdown.js</code>.
-                </p>
-                <p>
-                    Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eu leo
-                    quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at
-                    lobortis. Cras mattis consectetur purus sit amet fermentum.
-                </p>
-                <p>
-                    Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel
-                    eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                </p>
-                <p>
-                    Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum.
-                    Aenean lacinia bibendum nulla sed consectetur.
-                </p>
-                <h2 id="heading">Heading</h2>
-                <p>
-                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo
-                    luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac
-                    consectetur ac, vestibulum at eros.
-                </p>
-                <h3 id="sub-heading">Sub-heading</h3>
-                <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                <h3 id="sub-heading-1">Sub-heading</h3>
-                <p>
-                    Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia
-                    bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus,
-                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                </p>
-                <ul>
-                    <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-                    <li>Donec id elit non mi porta gravida at eget metus.</li>
-                    <li>Nulla vitae elit libero, a pharetra augue.</li>
-                </ul>
-                <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-                <ol>
-                    <li>Vestibulum id ligula porta felis euismod semper.</li>
-                    <li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
-                    <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-                </ol>
-                <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
-            </div>
+            <Box mt={0} mb={2} key={review.id}>
+                <Typography variant="h5" gutterBottom>
+                    {review.title}
+                </Typography>
+
+                <Typography variant="caption" paragraph gutterBottom>
+                    {review.publishDate} by{' '}
+                    <Link href={`https://www.google.com/search?q=${review.authors}`} target="_blank">
+                        {review.authors}
+                    </Link>
+                </Typography>
+
+                {review.score && this.renderRatingIndicator(Number(review.score))}
+
+                <List>
+                    <ListItem alignItems="flex-start">
+                        <ListItemAvatar>
+                            <Avatar alt={review.title} src={review.image?.screenTiny} />
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={review.deck}
+                            secondary={
+                                <Box mt={1} style={{ color: 'initial' }} component="span">
+                                    <ShowMore
+                                        lines={6}
+                                        more={
+                                            <Typography
+                                                display="block"
+                                                component="span"
+                                                variant="subtitle1"
+                                                className={styles.inline}
+                                                color="primary"
+                                            >{t`common.showMore`}</Typography>
+                                        }
+                                        less={
+                                            <Typography
+                                                display="block"
+                                                component="span"
+                                                variant="subtitle1"
+                                                className={styles.inline}
+                                                color="primary"
+                                            >{t`common.showLess`}</Typography>
+                                        }
+                                    >
+                                        <Typography
+                                            component="span"
+                                            variant="body2"
+                                            className={styles.inline}
+                                            color="textPrimary"
+                                        >
+                                            <Box
+                                                component="span"
+                                                className={styles.reviewContent}
+                                                dangerouslySetInnerHTML={{ __html: review.body as string }}
+                                            />
+                                        </Typography>
+                                    </ShowMore>
+                                </Box>
+                            }
+                        />
+                    </ListItem>
+
+                    {review.good && (
+                        <>
+                            <Divider variant="inset" component="li" />
+                            <ListItem alignItems="flex-start">
+                                <ListItemAvatar>
+                                    <ThumbUpIcon className={styles.thumbUp} />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={t`review.good`}
+                                    secondary={this.renderTakeawayList(review.good, <CheckIcon />)}
+                                />
+                            </ListItem>
+                        </>
+                    )}
+
+                    {review.bad && (
+                        <>
+                            <Divider variant="inset" component="li" />
+                            <ListItem alignItems="flex-start">
+                                <ListItemAvatar>
+                                    <ThumbDownIcon color="error" />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={t`review.bad`}
+                                    secondary={this.renderTakeawayList(review.bad, <ClearIcon />)}
+                                />
+                            </ListItem>
+                        </>
+                    )}
+                </List>
+            </Box>
+        )
+    }
+
+    renderTakeawayList = (content: string, icon: React.ReactElement) => {
+        return (
+            <Typography component="span" variant="body2" className={styles.inline} color="textPrimary">
+                <List dense>
+                    {content?.split('|').map((it) => (
+                        <ListItem key={it}>
+                            <ListItemIcon>{icon}</ListItemIcon>
+                            <ListItemText primary={it} />
+                        </ListItem>
+                    ))}
+                </List>
+            </Typography>
         )
     }
 
     render() {
-        const { loading } = this.state
+        const { loading, reviews } = this.state
 
         return (
-            <Grid item>
-                <ExpansionPanel onChange={this.expandPanel}>
-                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography variant="h6" gutterBottom>{t`gameSpotReview.reviews`}</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        <Box mt={2} mb={2}>
-                            {this.renderReviews()}
-                            {loading && <CircularProgress />}
-                        </Box>
-                    </ExpansionPanelDetails>
-                </ExpansionPanel>
-            </Grid>
+            <Box mt={0} mb={2}>
+                <List>
+                    {reviews.map((it) => this.renderReview(it))}
+                    {!loading && reviews?.length === 0 && t`gameSpotReview.noItems`}
+                    {loading && <CircularProgress />}
+                    {!loading && this.hasNextPage && (
+                        <Button
+                            variant="contained"
+                            onClick={() => this.fetchData(this.nextPage)}
+                            color="primary"
+                        >{t`common.more`}</Button>
+                    )}
+                </List>
+            </Box>
         )
     }
 }
 
-export default withStyles(styles)(GameSpotReviews)
+export default GameSpotReviews

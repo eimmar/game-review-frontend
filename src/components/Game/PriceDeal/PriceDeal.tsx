@@ -146,7 +146,7 @@ class PriceDeal extends Component<Props, State> {
                         <Button
                             variant="outlined"
                             onClick={this.fetchDeals}
-                            color="secondary"
+                            color="primary"
                         >{t`gameDeal.getDeals`}</Button>
                     )}
                     {fetched && loading && <CircularProgress />}
