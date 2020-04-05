@@ -29,6 +29,7 @@ import { t } from '../../../i18n'
 import PriceDeal from '../PriceDeal/PriceDeal'
 import GameSpotArticles from '../GameSpot/GameSpotArticles'
 import GameSpotVideos from '../GameSpot/GameSpotVideos'
+import GameSpotReviews from '../GameSpot/GameSpotReviews'
 
 const styles = ({ spacing }: Theme) =>
     createStyles({
@@ -160,7 +161,7 @@ class GameViewContent extends Component<Props> {
                             <Grid item xs={12} md={8}>
                                 <PriceDeal query={game.name} />
                                 <Reviews gameId={game.id} />
-                                <GameSpotArticles gameId={game.id} />
+                                <GameSpotReviews gameId={game.id} />
                             </Grid>
                             <Grid item xs={12} md={4}>
                                 <Sidebar game={game} />
