@@ -2,6 +2,7 @@ export const ltTranslations = {
     'common.websiteName': 'Žaisk',
     'common.notFoundMessage': '404: Puslapis neegzistuoja :/',
     'common.resetLinkExpired': 'Ši nuoroda yra neteisinga arba jos galiojimo laikas yra pasibaigęs.',
+    'common.more': 'Daugiau',
 
     'user.alreadyHaveAccount': 'Esate registruotas narys? Prisijunkite',
     'user.register': 'Registruotis',
@@ -45,6 +46,16 @@ export const ltTranslations = {
     'gameDeal.more': 'Daugiau pasiūlymų',
     'gameDeal.getDeals': 'Gauti pasiūlimus',
     'gameDeal.noDealsFound': 'Pasiūlimų nerasta.',
+
+    'gameSpotReview.noItems': 'Atsiliepimų nėra.',
+    'gameSpotReview.items': 'Kiti atsiliepimai',
+
+    'gameSpotArticle.noItems': 'Straipsnių nėra.',
+    'gameSpotArticle.items': 'Susiję straipsniai',
+
+    'gameSpotVideos.getItems': 'Žiūrėti vaizdo įrašus',
+    'gameSpotVideos.items': 'Vaizdo įrašai',
+    'gameSpotVideos.noItems': 'Vaizdo įrašų nėra',
 
     'gameWebsite.cateogry_1': 'Oficiali svetainė',
     'gameWebsite.cateogry_2': 'Wikia',

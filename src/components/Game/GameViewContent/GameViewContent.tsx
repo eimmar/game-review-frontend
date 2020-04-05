@@ -27,6 +27,8 @@ import GameImage from './GameImage'
 import Reviews from './Reviews'
 import { t } from '../../../i18n'
 import PriceDeal from '../PriceDeal/PriceDeal'
+import GameSpotArticles from '../GameSpot/GameSpotArticles'
+import GameSpotVideos from '../GameSpot/GameSpotVideos'
 
 const styles = ({ spacing }: Theme) =>
     createStyles({
@@ -140,22 +142,25 @@ class GameViewContent extends Component<Props> {
                         {this.listInfo}
 
                         {game.screenshots && (
-                            <>
-                                <Grid item md={10}>
-                                    <Typography variant="h6">{t`game.screenshots`}</Typography>
-                                </Grid>
+                            <Box mb={2}>
+                                <Typography variant="h6">{t`game.screenshots`}</Typography>
+                                <Box mb={1}>
+                                    <Divider />
+                                </Box>
                                 <Carousel responsive={this.carouselConfig}>
                                     {game.screenshots.map((screenshot) => (
                                         <GameImage key={screenshot.id} image={screenshot} title={game.name} />
                                     ))}
                                 </Carousel>
-                            </>
+                            </Box>
                         )}
+                        <GameSpotVideos gameId={game.id} />
 
                         <Grid container spacing={5} className={classes.mainGrid}>
                             <Grid item xs={12} md={8}>
                                 <PriceDeal query={game.name} />
                                 <Reviews gameId={game.id} />
+                                <GameSpotArticles gameId={game.id} />
                             </Grid>
                             <Grid item xs={12} md={4}>
                                 <Sidebar game={game} />
