@@ -5,6 +5,10 @@ export const ltTranslations = {
     'common.more': 'Daugiau',
     'common.showMore': 'Rodyti daugiau',
     'common.showLess': 'Rodyti mažiau',
+    'common.submit': 'Pateikti',
+    'common.cancel': 'Atšaukti',
+    'common.close': 'Uždaryti',
+    'common.reviewBy': 'parašė',
 
     'user.alreadyHaveAccount': 'Esate registruotas narys? Prisijunkite',
     'user.register': 'Registruotis',
@@ -44,6 +48,15 @@ export const ltTranslations = {
     'game.noInfo': 'Nėra informacijos',
     'game.screenshots': 'Nuotraukos',
     'game.gameDeals': 'Pasiūlymai',
+
+    'gameReview.successCreate': 'Atsiliepimas sukurtas',
+    'gameReview.rating': 'Įvertinimas',
+    'gameReview.comment': 'Atsiliepimas',
+    'gameReview.title': 'Antraštė',
+    'gameReview.pros': 'Žaidimo privalumai',
+    'gameReview.cons': 'Žaidimo trūkumai',
+    'gameReview.create': 'Naujas atsiliepimas',
+    'gameReview.noItems': 'Atsiliepimų nėra.',
 
     'review.rating': 'Įvertinimas',
     'review.good': 'Žaidimo privalumai',
@@ -105,4 +118,5 @@ export const ltTranslations = {
     'errors.validation.required': 'Šis laukas yra privalomas',
     'errors.validation.email': 'Netinkamas el. paštas',
     'errors.validation.passwordsMustMatch': 'Slaptažodžiai turi sutapti',
+    'error.validation.tooLong': 'Telkstas neturi būti ilgesnis nei {{number}} symboliai.',
 }

@@ -92,12 +92,6 @@ export interface Video {
     associations?: object
 }
 
-export interface Pagination {
-    page: number
-    totalResults: number
-    pageSize: number
-}
-
 class GameSpotService {
     baseUrl = '/game-spot/'
 

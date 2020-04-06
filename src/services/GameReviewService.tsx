@@ -1,32 +1,41 @@
-import { requestService } from './RequestService'
+import { PaginatedList, Pagination, requestService } from './RequestService'
+import { Game } from './GameService'
+import { User } from './AuthService'
 
 export interface GameReview extends Timestampable {
     id: string
-    commend: string
+    game: Game
+    user: User
+    title: string
+    comment: string
+    pros: string | null
+    cons: string | null
+    rating: number
+}
+
+export interface GameReviewRequest {
+    gameId: string
+    userId: string
+    title: string
+    comment: string
+    pros: string | null
+    cons: string | null
     rating: number
 }
 
 class ReviewService {
     baseUrl = '/review/'
 
-    getAll(): Promise<GameReview[]> {
-        return requestService.performRequest('GET', this.baseUrl)
+    getAllForGame(gameId: string, pagination: Pagination): Promise<PaginatedList<GameReview>> {
+        return requestService.performRequest('GET', this.baseUrl + gameId, pagination)
     }
 
     get(id: string) {
         return requestService.performRequest('GET', this.baseUrl + id)
     }
 
-    create(data: any) {
-        return requestService.performAuthenticatedRequest('POST', this.baseUrl, this.prepareReviewData(data))
-    }
-
-    prepareReviewData(data: any) {
-        return {
-            comment: data.comment,
-            vehicle: data.vehicle.id,
-            rating: data.rating,
-        }
+    create(data: GameReviewRequest) {
+        return requestService.performAuthenticatedRequest('POST', this.baseUrl, data)
     }
 }
 

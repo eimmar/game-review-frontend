@@ -39,7 +39,7 @@ const styles = ({ palette, spacing }: Theme) =>
         },
     })
 
-interface Props extends WithStyles<typeof styles>, RouteComponentProps {
+interface Props extends WithStyles<typeof styles>, RouteComponentProps<{}, {}, { referer: Referer<any> | null }> {
     classes: {
         paper: string
         avatar: string
@@ -64,13 +64,15 @@ class LoginForm extends Component<Props> {
     }
 
     handleSubmit = (values: LogInRequest, actions: FormikHelpers<LogInRequest>) => {
-        const { history } = this.props
+        const { history, location } = this.props
 
         authService
             .login(values)
             .then(() => {
                 toast.success(t('user.successLogIn'))
-                history.push({ pathname: routes.homePage })
+                location.state && location.state.referer
+                    ? history.push({ pathname: location.state.referer.url, state: location.state.referer.state })
+                    : history.push({ pathname: routes.homePage })
             })
             .catch((error) => {
                 actions.setStatus({ msg: error.message, error: true })

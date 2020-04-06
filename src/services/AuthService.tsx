@@ -4,8 +4,12 @@ import cookie from 'react-cookies'
 import { requestService } from './RequestService'
 
 export interface User {
+    id: string
+    firstName: string
+    lastName: string | null
     email: string
     accessToken: string
+    roles: string[]
 }
 
 export interface LogInRequest {
@@ -15,7 +19,7 @@ export interface LogInRequest {
 
 export interface RegistrationRequest {
     firstName: string
-    lastName: string
+    lastName: string | null
     email: string
     password: string
 }
@@ -82,7 +86,7 @@ class AuthService {
         cookie.remove('user')
     }
 
-    getCurrentUser() {
+    getCurrentUser(): User | null {
         const userCookie = localStorage.getItem(cookie.load('currentUser'))
 
         return userCookie ? JSON.parse(userCookie) : null
@@ -93,7 +97,7 @@ class AuthService {
 
         return {
             headers: {
-                Authorization: currentUser ? `Bearer ${currentUser.access_token}` : '',
+                Authorization: currentUser ? `Bearer ${currentUser.accessToken}` : '',
             },
         }
     }

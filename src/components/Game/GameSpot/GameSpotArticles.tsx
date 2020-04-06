@@ -15,7 +15,8 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import { t } from '../../../i18n'
-import { Article, gameSpotService, Pagination } from '../../../services/GameSpotService'
+import { Article, gameSpotService } from '../../../services/GameSpotService'
+import { Pagination } from '../../../services/RequestService'
 
 const styles = () =>
     createStyles({

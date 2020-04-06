@@ -17,6 +17,19 @@ export interface FetchRequest {
     filters: object
 }
 
+export interface Pagination {
+    page: number
+    totalResults: number
+    pageSize: number
+}
+
+export interface PaginatedList<T> {
+    page: number
+    totalResults: number
+    pageSize: number
+    items: T[]
+}
+
 class RequestService {
     getRequestOptions(method: string, body: BodyInit): RequestInit {
         const requestOptions: RequestInit = {

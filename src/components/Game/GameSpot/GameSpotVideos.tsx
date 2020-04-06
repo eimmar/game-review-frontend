@@ -5,8 +5,9 @@ import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 
 import { t } from '../../../i18n'
-import { gameSpotService, Pagination, Video } from '../../../services/GameSpotService'
+import { gameSpotService, Video } from '../../../services/GameSpotService'
 import GameSpotVideo from './GameSpotVideo'
+import { Pagination } from '../../../services/RequestService'
 
 interface Props {
     gameId: string
@@ -128,7 +129,7 @@ class GameSpotVideos extends Component<Props, State> {
                     </Carousel>
                 )}
                 {loading && <CircularProgress />}
-                {wasActivated && !loading && videos?.length === 0 && t`gameSpotVideos.noResults`}
+                {wasActivated && !loading && videos?.length === 0 && t`gameSpotVideos.noItems`}
                 {!wasActivated && (
                     <Button
                         variant="outlined"

@@ -1,42 +1,42 @@
 import React, { Component } from 'react'
+import Typography from '@material-ui/core/Typography'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import {
-    List,
-    Box,
-    CircularProgress,
-    Link,
     Divider,
+    Box,
+    List,
+    CircularProgress,
+    Button,
     ListItem,
-    Typography,
     ListItemAvatar,
-    Avatar,
     ListItemText,
     ListItemIcon,
-    Button,
 } from '@material-ui/core'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import ClearIcon from '@material-ui/icons/Clear'
 import Rating from '@material-ui/lab/Rating'
-import ThumbDownIcon from '@material-ui/icons/ThumbDown'
+import ShowMore from 'react-show-more'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp'
 import CheckIcon from '@material-ui/icons/Check'
-import ClearIcon from '@material-ui/icons/Clear'
-import ShowMore from 'react-show-more'
-import DOMPurify from 'dompurify'
+import ThumbDownIcon from '@material-ui/icons/ThumbDown'
 
-import { t } from '../../../i18n'
-import { gameSpotService, Review } from '../../../services/GameSpotService'
-import styles from './GameSpotReviews.module.scss'
-import { Pagination } from '../../../services/RequestService'
+import { Pagination } from '../../../../services/RequestService'
+import { GameReview, reviewService } from '../../../../services/GameReviewService'
+import ReviewFormModal from '../../Review/ReviewFormModal'
+import { t } from '../../../../i18n'
+import styles from './Reviews.module.scss'
 
-interface Props {
+interface Props extends RouteComponentProps {
     gameId: string
 }
 
 interface State {
-    reviews: Review[]
+    reviews: GameReview[]
     pagination: Pagination
     loading: boolean
 }
 
-class GameSpotReviews extends Component<Props, State> {
+class Reviews extends Component<Props, State> {
     state: State = {
         reviews: [],
         pagination: {
@@ -70,19 +70,13 @@ class GameSpotReviews extends Component<Props, State> {
 
         const { gameId } = this.props
 
-        gameSpotService
-            .reviews(gameId, {
-                format: 'json',
-                limit: pagination.pageSize,
-                fieldList: ['publish_date', 'id', 'authors', 'title', 'image', 'score', 'deck', 'good', 'bad', 'body'],
-                offset: pagination.pageSize * pagination.page,
-                sort: 'publish_date:desc',
-            })
+        reviewService
+            .getAllForGame(gameId, pagination)
             .then((response) => {
                 this.setState((prevState) => ({
-                    reviews: prevState.reviews.concat(response.results),
+                    reviews: prevState.reviews.concat(response.items),
                     pagination: {
-                        totalResults: response.numberOfTotalResults,
+                        totalResults: response.totalResults,
                         page: pagination.page,
                         pageSize: pagination.pageSize,
                     },
@@ -100,7 +94,7 @@ class GameSpotReviews extends Component<Props, State> {
         )
     }
 
-    renderReview(review: Review) {
+    renderReview(review: GameReview) {
         return (
             <Box mt={0} mb={2} key={review.id}>
                 <Typography variant="h5" gutterBottom>
@@ -108,21 +102,18 @@ class GameSpotReviews extends Component<Props, State> {
                 </Typography>
 
                 <Typography variant="caption" paragraph gutterBottom>
-                    {review.publishDate} by{' '}
-                    <Link href={`https://www.google.com/search?q=${review.authors}`} target="_blank">
-                        {review.authors}
-                    </Link>
+                    {review.createdAt} {t`common.reviewBy`} {review.user.firstName} {review.user.lastName}
                 </Typography>
 
-                {review.score && this.renderRatingIndicator(Number(review.score))}
+                {review.rating && this.renderRatingIndicator(review.rating)}
 
                 <List>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
-                            <Avatar alt={review.title} src={review.image?.screenTiny} />
+                            <AccountCircleIcon />
                         </ListItemAvatar>
                         <ListItemText
-                            primary={review.deck}
+                            primary={review.title}
                             secondary={
                                 <Box mt={1} style={{ color: 'initial' }} component="span">
                                     <ShowMore
@@ -152,13 +143,7 @@ class GameSpotReviews extends Component<Props, State> {
                                             className={styles.inline}
                                             color="textPrimary"
                                         >
-                                            <Box
-                                                component="span"
-                                                className={styles.reviewContent}
-                                                dangerouslySetInnerHTML={{
-                                                    __html: DOMPurify.sanitize(review.body as string),
-                                                }}
-                                            />
+                                            {review.comment}
                                         </Typography>
                                     </ShowMore>
                                 </Box>
@@ -166,7 +151,7 @@ class GameSpotReviews extends Component<Props, State> {
                         />
                     </ListItem>
 
-                    {review.good && (
+                    {review.pros && (
                         <>
                             <Divider variant="inset" component="li" />
                             <ListItem alignItems="flex-start">
@@ -175,13 +160,13 @@ class GameSpotReviews extends Component<Props, State> {
                                 </ListItemAvatar>
                                 <ListItemText
                                     primary={t`review.good`}
-                                    secondary={this.renderTakeawayList(review.good, <CheckIcon />)}
+                                    secondary={this.renderTakeawayList(review.pros, <CheckIcon />)}
                                 />
                             </ListItem>
                         </>
                     )}
 
-                    {review.bad && (
+                    {review.cons && (
                         <>
                             <Divider variant="inset" component="li" />
                             <ListItem alignItems="flex-start">
@@ -190,7 +175,7 @@ class GameSpotReviews extends Component<Props, State> {
                                 </ListItemAvatar>
                                 <ListItemText
                                     primary={t`review.bad`}
-                                    secondary={this.renderTakeawayList(review.bad, <ClearIcon />)}
+                                    secondary={this.renderTakeawayList(review.cons, <ClearIcon />)}
                                 />
                             </ListItem>
                         </>
@@ -216,25 +201,29 @@ class GameSpotReviews extends Component<Props, State> {
     }
 
     render() {
+        const { gameId } = this.props
         const { loading, reviews } = this.state
 
         return (
-            <Box mt={0} mb={2}>
-                <List>
-                    {reviews.map((it) => this.renderReview(it))}
-                    {!loading && reviews?.length === 0 && t`gameSpotReview.noItems`}
-                    {loading && <CircularProgress />}
-                    {!loading && this.hasNextPage && (
-                        <Button
-                            variant="contained"
-                            onClick={() => this.fetchData(this.nextPage)}
-                            color="primary"
-                        >{t`common.more`}</Button>
-                    )}
-                </List>
-            </Box>
+            <>
+                <Box mt={0} mb={2}>
+                    <List>
+                        {reviews.map((it) => this.renderReview(it))}
+                        {!loading && reviews?.length === 0 && t`gameReview.noItems`}
+                        {loading && <CircularProgress />}
+                        {!loading && this.hasNextPage && (
+                            <Button
+                                variant="contained"
+                                onClick={() => this.fetchData(this.nextPage)}
+                                color="primary"
+                            >{t`common.more`}</Button>
+                        )}
+                    </List>
+                </Box>
+                <ReviewFormModal gameId={gameId} />
+            </>
         )
     }
 }
 
-export default GameSpotReviews
+export default withRouter(Reviews)

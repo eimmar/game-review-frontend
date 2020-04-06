@@ -34,3 +34,8 @@ declare interface Timestampable {
 declare interface ExternalEntity {
     externalId: number
 }
+
+declare interface Referer<S = null> {
+    url: string
+    state?: S
+}
