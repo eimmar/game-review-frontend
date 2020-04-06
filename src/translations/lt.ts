@@ -118,5 +118,6 @@ export const ltTranslations = {
     'errors.validation.required': 'Šis laukas yra privalomas',
     'errors.validation.email': 'Netinkamas el. paštas',
     'errors.validation.passwordsMustMatch': 'Slaptažodžiai turi sutapti',
-    'error.validation.tooLong': 'Telkstas neturi būti ilgesnis nei {{number}} symboliai.',
+    'error.validation.tooLong': 'Laukas neturi būti ilgesnis nei {{number}} symboliai.',
+    'error.validation.tooShort': 'Laukas turi būti ilgesnis nei {{number}} symboliai.',
 }

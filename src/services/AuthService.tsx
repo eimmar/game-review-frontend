@@ -1,6 +1,7 @@
 import JwtDecode from 'jwt-decode'
 import cookie from 'react-cookies'
 
+// eslint-disable-next-line import/no-cycle
 import { requestService } from './RequestService'
 
 export interface User {
@@ -10,11 +11,18 @@ export interface User {
     email: string
     accessToken: string
     roles: string[]
+    iat: number
+    exp: number
 }
 
 export interface LogInRequest {
     email: string
     password: string
+    rememberMe: boolean
+}
+
+interface LogInResponse {
+    token?: string
 }
 
 export interface RegistrationRequest {
@@ -36,33 +44,22 @@ export interface ResetPasswordRequest {
 
 class AuthService {
     login(params: LogInRequest) {
-        // return axios.post(`${backendUrl}/api/auth/login`, params).then((response) => {
-        //     if (response.status === 200 && response.data.token) {
-        //         const { token } = response.data
-        //         const currentUser = JwtDecode(token) as User
-        //
-        //         currentUser.accessToken = token
-        //         localStorage.setItem('currentUser', JSON.stringify(currentUser))
-        //     } else {
-        //         throw new DOMException('Could not authenticate.')
-        //     }
-        // })
+        return requestService
+            .performRequest('POST', '/api/auth/login', { ...params, username: params.email })
+            .then((response: LogInResponse) => {
+                if (response.token) {
+                    const currentUser = JwtDecode(response.token) as User
 
-        return requestService.performRequest('POST', '/api/auth/login', params).then((response) => {
-            if (response.status === 200 && response.data.token) {
-                const { token } = response.data
-                const currentUser = JwtDecode(token) as User
+                    currentUser.accessToken = response.token
 
-                currentUser.accessToken = token
+                    cookie.save('currentUser', currentUser.email, {})
+                    localStorage.clear()
+                    localStorage.setItem(currentUser.email, JSON.stringify(currentUser))
 
-                cookie.save('currentUser', currentUser.email, {})
-                localStorage.clear()
-                localStorage.setItem(currentUser.email, JSON.stringify(currentUser))
-
-                return currentUser
-            }
-            throw new DOMException('Could not authenticate.')
-        })
+                    return currentUser
+                }
+                throw new DOMException('Could not authenticate.')
+            })
     }
 
     register(params: RegistrationRequest): Promise<any> {
@@ -82,24 +79,14 @@ class AuthService {
     }
 
     logout() {
-        localStorage.removeItem('currentUser')
-        cookie.remove('user')
+        localStorage.removeItem(cookie.load('currentUser') || '')
+        cookie.remove('currentUser')
     }
 
     getCurrentUser(): User | null {
         const userCookie = localStorage.getItem(cookie.load('currentUser'))
 
         return userCookie ? JSON.parse(userCookie) : null
-    }
-
-    getAuthHeaders() {
-        const currentUser = this.getCurrentUser()
-
-        return {
-            headers: {
-                Authorization: currentUser ? `Bearer ${currentUser.accessToken}` : '',
-            },
-        }
     }
 
     hasRole(role: string) {

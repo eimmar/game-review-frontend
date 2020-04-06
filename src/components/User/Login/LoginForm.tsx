@@ -60,6 +60,7 @@ class LoginForm extends Component<Props> {
         return {
             email: '',
             password: '',
+            rememberMe: false,
         }
     }
 
@@ -75,10 +76,9 @@ class LoginForm extends Component<Props> {
                     : history.push({ pathname: routes.homePage })
             })
             .catch((error) => {
-                actions.setStatus({ msg: error.message, error: true })
                 toast.error(t(error.message))
+                actions.setSubmitting(false)
             })
-            .finally(() => actions.setSubmitting(false))
     }
 
     render() {
@@ -129,7 +129,15 @@ class LoginForm extends Component<Props> {
                                 </Grid>
                             </Grid>
                             <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
+                                control={
+                                    <Checkbox
+                                        value="remember"
+                                        color="primary"
+                                        name="rememberMe"
+                                        onChange={handleChange}
+                                        checked={values.rememberMe}
+                                    />
+                                }
                                 label={t`user.rememberMe`}
                             />
                             <Button

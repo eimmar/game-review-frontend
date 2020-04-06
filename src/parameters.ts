@@ -12,3 +12,5 @@ export const routes = {
         view: '/game',
     },
 }
+
+export const phpDebug = '?XDEBUG_SESSION_START=PHPSTORM'

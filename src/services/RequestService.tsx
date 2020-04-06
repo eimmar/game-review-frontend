@@ -2,6 +2,8 @@ import cookie from 'react-cookies'
 
 import { backendUrl } from '../parameters'
 import { errorService } from './ErrorService'
+// eslint-disable-next-line import/no-cycle
+import { authService } from './AuthService'
 
 interface RequestOptions {
     method: string
@@ -47,14 +49,13 @@ class RequestService {
     }
 
     getRequestOptionsWithAuth(method: string, body: BodyInit): RequestInit {
-        const userJson = localStorage.getItem(cookie.load('currentUser'))
-        const currentUser = JSON.parse(userJson || '')
+        const currentUser = authService.getCurrentUser()
 
         const requestOptions: RequestInit = {
             method,
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
-                Authorization: `Bearer ${currentUser.token}`,
+                ...(currentUser && { Authorization: `Bearer ${currentUser.accessToken}` }),
             },
         }
 

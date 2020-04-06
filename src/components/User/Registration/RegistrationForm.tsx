@@ -50,7 +50,9 @@ class RegistrationForm extends Component<Props> {
     validationSchema = Yup.object().shape({
         firstName: Yup.string().required(t`errors.validation.required`),
         lastName: Yup.string().required(t`errors.validation.required`),
-        password: Yup.string().required(t`errors.validation.required`),
+        password: Yup.string()
+            .required(t`errors.validation.required`)
+            .min(4, t('error.validation.tooShort', { number: 4 })),
         email: Yup.string()
             .required(t`errors.validation.required`)
             .email(t`errors.validation.email`),
@@ -75,10 +77,9 @@ class RegistrationForm extends Component<Props> {
                 history.push({ pathname: routes.homePage })
             })
             .catch((error) => {
-                actions.setStatus({ msg: error.message, error: true })
                 toast.error(t(error.message))
+                actions.setSubmitting(false)
             })
-            .finally(() => actions.setSubmitting(false))
     }
 
     render() {

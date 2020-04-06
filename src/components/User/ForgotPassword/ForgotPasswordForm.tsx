@@ -67,10 +67,9 @@ class ForgotPasswordForm extends Component<Props> {
                 history.push({ pathname: routes.homePage })
             })
             .catch((error) => {
-                actions.setStatus({ msg: error.message, error: true })
                 toast.error(t(error.message))
+                actions.setSubmitting(false)
             })
-            .finally(() => actions.setSubmitting(false))
     }
 
     render() {

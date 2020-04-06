@@ -14,6 +14,7 @@ import ResetPassword from './views/User/ResetPassword'
 import NotFound404 from './views/Error/NotFound404'
 import GameList from './views/Game/GameList'
 import GameView from './views/Game/GameView'
+import { PublicOnlyRoute } from './routes/PublicOnlyRoute'
 
 const HomePage = lazyComponent(import('./views/HomePage'))
 
@@ -22,11 +23,12 @@ function App() {
         <BrowserRouter>
             <ToastContainer />
             <Switch>
+                <PublicOnlyRoute exact path={routes.register} component={Registration} />
+                <PublicOnlyRoute exact path={routes.login} component={Login} />
+                <PublicOnlyRoute exact path={routes.forgotPassword} component={ForgotPassword} />
+                <PublicOnlyRoute exact path={`${routes.resetPassword}/:guid`} component={ResetPassword} />
+
                 <PublicRoute exact path={routes.homePage} component={HomePage} />
-                <PublicRoute exact path={routes.register} component={Registration} />
-                <PublicRoute exact path={routes.login} component={Login} />
-                <PublicRoute exact path={routes.forgotPassword} component={ForgotPassword} />
-                <PublicRoute exact path={`${routes.resetPassword}/:guid`} component={ResetPassword} />
 
                 <PublicRoute exact path={`${routes.game.list}`} component={GameList} />
                 <PublicRoute exact path={`${routes.game.view}/:guid`} component={GameView} />

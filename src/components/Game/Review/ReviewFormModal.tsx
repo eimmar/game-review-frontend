@@ -72,10 +72,10 @@ class ReviewFormModal extends Component<Props, State> {
             .max(10),
         pros: Yup.string()
             .nullable()
-            .max(10000, t('error.validation.tooLong', { number: 10000 })),
+            .max(1000, t('error.validation.tooLong', { number: 1000 })),
         cons: Yup.string()
             .nullable()
-            .max(10000, t('error.validation.tooLong', { number: 10000 })),
+            .max(1000, t('error.validation.tooLong', { number: 1000 })),
     })
 
     state = {
