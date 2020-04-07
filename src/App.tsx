@@ -26,7 +26,7 @@ function App() {
                 <PublicOnlyRoute exact path={routes.register} component={Registration} />
                 <PublicOnlyRoute exact path={routes.login} component={Login} />
                 <PublicOnlyRoute exact path={routes.forgotPassword} component={ForgotPassword} />
-                <PublicOnlyRoute exact path={`${routes.resetPassword}/:guid`} component={ResetPassword} />
+                <PublicOnlyRoute exact path={`${routes.resetPassword}/:token`} component={ResetPassword} />
 
                 <PublicRoute exact path={routes.homePage} component={HomePage} />
 

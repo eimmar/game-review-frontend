@@ -70,8 +70,8 @@ class AuthService {
         return requestService.performRequest('POST', '/api/auth/forgot-password', params)
     }
 
-    checkResetPassword(guid: string): Promise<boolean> {
-        return requestService.performRequest('POST', '/api/auth/reset-password-check', { guid })
+    checkResetPassword(token: string): Promise<boolean> {
+        return requestService.performRequest('POST', `/api/auth/reset-password-check/${token}`)
     }
 
     resetPassword(params: ResetPasswordRequest): Promise<any> {

@@ -49,7 +49,7 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
 class RegistrationForm extends Component<Props> {
     validationSchema = Yup.object().shape({
         firstName: Yup.string().required(t`errors.validation.required`),
-        lastName: Yup.string().required(t`errors.validation.required`),
+        lastName: Yup.string(),
         password: Yup.string()
             .required(t`errors.validation.required`)
             .min(4, t('error.validation.tooShort', { number: 4 })),

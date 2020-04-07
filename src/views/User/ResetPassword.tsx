@@ -8,16 +8,17 @@ import { authService } from '../../services/AuthService'
 import ResetPasswordExpired from '../Error/ResetPasswordExpired'
 import PageLoader from '../../components/Page/PageLoader'
 
-export default function Login() {
-    const { guid } = useParams()
+export default function ResetPassword() {
+    const { token } = useParams()
     const [loading, setLoading] = useState(true)
     const [valid, setValid] = useState(false)
 
     useEffect(() => {
-        if (guid) {
+        if (token) {
             authService
-                .checkResetPassword(guid)
-                .then((isValid) => setValid(isValid))
+                .checkResetPassword(token)
+                .then(() => setValid(true))
+                .catch(() => setValid(false))
                 .finally(() => setLoading(false))
         } else {
             setLoading(false)
@@ -32,7 +33,7 @@ export default function Login() {
         )
     }
 
-    if (!guid) {
+    if (!token) {
         return <NotFound404 />
     }
 
@@ -42,7 +43,7 @@ export default function Login() {
 
     return (
         <MainLayout maxWidth="xs">
-            <ResetPasswordForm guid={guid} />
+            <ResetPasswordForm guid={token} />
         </MainLayout>
     )
 }
