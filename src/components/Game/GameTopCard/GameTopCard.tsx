@@ -4,6 +4,8 @@ import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { CardMedia, Paper, LinearProgress } from '@material-ui/core'
+import Moment from 'react-moment'
+import i18next from 'i18next'
 
 import { GameLoaded, gameService, ScreenshotSize } from '../../../services/GameService'
 import { placeholderImg } from '../../../services/Util/AssetsProvider'
@@ -131,7 +133,9 @@ class GameTopCard extends Component<Props> {
                                 </Typography>
                                 {game.releaseDate && (
                                     <Typography variant="h5" color="inherit" gutterBottom>
-                                        {game.releaseDate}
+                                        <Moment locale={i18next.language} format="MMMM Do, YYYY">
+                                            {game.releaseDate}
+                                        </Moment>
                                     </Typography>
                                 )}
                                 <Typography variant="h6" color="inherit" paragraph>

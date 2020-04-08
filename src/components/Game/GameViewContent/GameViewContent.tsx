@@ -78,7 +78,7 @@ function TabPanel(props: TabPanelProps) {
 class GameViewContent extends Component<Props, State> {
     state = {
         tabIndex: 0,
-        renderedTabs: new Set<number>(),
+        renderedTabs: new Set([0]),
     }
 
     get listInfo() {

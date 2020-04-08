@@ -123,6 +123,7 @@ export interface Game extends Timestampable, ExternalEntity {
     category: GameCategory
     rating: number | null
     ratingCount: number | null
+    gameSpotAssociation: string | null
 }
 
 export interface GameLoaded extends Game {

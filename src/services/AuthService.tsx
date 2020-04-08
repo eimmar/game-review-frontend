@@ -9,8 +9,11 @@ export interface User {
     firstName: string
     lastName: string | null
     email: string
-    accessToken: string
     roles: string[]
+}
+
+export interface LoggedInUser extends User {
+    accessToken: string
     iat: number
     exp: number
 }
@@ -47,7 +50,7 @@ class AuthService {
             .performRequest('POST', '/api/auth/login', { ...params, username: params.email })
             .then((response: LogInResponse) => {
                 if (response.token) {
-                    const currentUser = JwtDecode(response.token) as User
+                    const currentUser = JwtDecode(response.token) as LoggedInUser
 
                     currentUser.accessToken = response.token
 
@@ -87,7 +90,7 @@ class AuthService {
         cookie.remove('currentUser')
     }
 
-    getCurrentUser(): User | null {
+    getCurrentUser(): LoggedInUser | null {
         const userCookie = localStorage.getItem(cookie.load('currentUser'))
 
         return userCookie ? JSON.parse(userCookie) : null

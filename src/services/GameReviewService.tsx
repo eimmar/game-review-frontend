@@ -14,8 +14,8 @@ export interface GameReview extends Timestampable {
 }
 
 export interface GameReviewRequest {
-    gameId: string
-    userId: string
+    game: string
+    user: string
     title: string
     comment: string
     pros: string | null
@@ -27,7 +27,7 @@ class ReviewService {
     baseUrl = '/review/'
 
     getAllForGame(gameId: string, pagination: Pagination): Promise<PaginatedList<GameReview>> {
-        return requestService.performRequest('GET', this.baseUrl + gameId, pagination)
+        return requestService.performRequest('POST', `${this.baseUrl}game/${gameId}`, pagination)
     }
 
     get(id: string) {

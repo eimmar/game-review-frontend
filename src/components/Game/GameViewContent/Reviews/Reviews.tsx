@@ -11,6 +11,7 @@ import {
     ListItemAvatar,
     ListItemText,
     ListItemIcon,
+    Avatar,
 } from '@material-ui/core'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import ClearIcon from '@material-ui/icons/Clear'
@@ -19,6 +20,8 @@ import ShowMore from 'react-show-more'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp'
 import CheckIcon from '@material-ui/icons/Check'
 import ThumbDownIcon from '@material-ui/icons/ThumbDown'
+import Moment from 'react-moment'
+import i18next from 'i18next'
 
 import { Pagination } from '../../../../services/RequestService'
 import { GameReview, reviewService } from '../../../../services/GameReviewService'
@@ -102,7 +105,10 @@ class Reviews extends Component<Props, State> {
                 </Typography>
 
                 <Typography variant="caption" paragraph gutterBottom>
-                    {review.createdAt} {t`common.reviewBy`} {review.user.firstName} {review.user.lastName}
+                    <Moment locale={i18next.language} format="hh:mm, MMMM Do, YYYY">
+                        {review.createdAt}
+                    </Moment>{' '}
+                    {t`common.reviewBy`} {review.user.firstName} {review.user.lastName}
                 </Typography>
 
                 {review.rating && this.renderRatingIndicator(review.rating)}
@@ -110,7 +116,9 @@ class Reviews extends Component<Props, State> {
                 <List>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
-                            <AccountCircleIcon />
+                            <Avatar alt={review.title}>
+                                <AccountCircleIcon />
+                            </Avatar>
                         </ListItemAvatar>
                         <ListItemText
                             primary={review.title}

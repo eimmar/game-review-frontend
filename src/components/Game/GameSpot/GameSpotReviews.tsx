@@ -20,6 +20,8 @@ import CheckIcon from '@material-ui/icons/Check'
 import ClearIcon from '@material-ui/icons/Clear'
 import ShowMore from 'react-show-more'
 import DOMPurify from 'dompurify'
+import Moment from 'react-moment'
+import i18next from 'i18next'
 
 import { t } from '../../../i18n'
 import { gameSpotService, Review } from '../../../services/GameSpotService'
@@ -108,7 +110,10 @@ class GameSpotReviews extends Component<Props, State> {
                 </Typography>
 
                 <Typography variant="caption" paragraph gutterBottom>
-                    {review.publishDate} by{' '}
+                    <Moment locale={i18next.language} format="hh:mm, MMMM Do, YYYY">
+                        {review.publishDate}
+                    </Moment>{' '}
+                    {t`common.reviewBy`}{' '}
                     <Link href={`https://www.google.com/search?q=${review.authors}`} target="_blank">
                         {review.authors}
                     </Link>

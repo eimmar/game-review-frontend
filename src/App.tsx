@@ -3,6 +3,7 @@ import { withTranslation } from 'react-i18next'
 import { BrowserRouter, Switch } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import 'moment/locale/lt'
 
 import { PublicRoute } from './routes/PublicRoute'
 import { routes } from './parameters'

@@ -59,7 +59,8 @@ interface State {
 
 class ReviewFormModal extends Component<Props, State> {
     validationSchema = Yup.object().shape({
-        gameId: Yup.string().required(t`errors.validation.required`),
+        game: Yup.string().required(t`errors.validation.required`),
+        user: Yup.string().required(t`errors.validation.required`),
         comment: Yup.string()
             .required(t`errors.validation.required`)
             .max(10000, t('error.validation.tooLong', { number: 10000 })),
@@ -87,8 +88,8 @@ class ReviewFormModal extends Component<Props, State> {
         const user = authService.getCurrentUser()
 
         return {
-            gameId,
-            userId: user ? user.id : '',
+            game: gameId,
+            user: user ? user.id : '',
             title: '',
             comment: '',
             rating: 0,
