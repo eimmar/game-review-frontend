@@ -43,7 +43,7 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
         form: string
         submit: string
     }
-    guid: string
+    token: string
 }
 
 class ForgotPasswordForm extends Component<Props> {
@@ -57,14 +57,14 @@ class ForgotPasswordForm extends Component<Props> {
     })
 
     get initialValues(): ResetPasswordRequest {
-        return { password: '', repeatPassword: '', guid: '' }
+        return { password: '', repeatPassword: '' }
     }
 
     handleSubmit = (values: ResetPasswordRequest, actions: FormikHelpers<ResetPasswordRequest>) => {
-        const { history, guid } = this.props
+        const { history, token } = this.props
 
         authService
-            .resetPassword({ ...values, guid })
+            .resetPassword(token, values)
             .then(() => {
                 toast.success(t('user.passwordResetSuccess'))
                 history.push({ pathname: routes.login })

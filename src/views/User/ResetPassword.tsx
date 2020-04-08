@@ -43,7 +43,7 @@ export default function ResetPassword() {
 
     return (
         <MainLayout maxWidth="xs">
-            <ResetPasswordForm guid={token} />
+            <ResetPasswordForm token={token} />
         </MainLayout>
     )
 }

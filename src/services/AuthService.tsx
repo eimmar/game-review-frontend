@@ -39,7 +39,6 @@ export interface ForgotPasswordRequest {
 export interface ResetPasswordRequest {
     password: string
     repeatPassword: string
-    guid: string
 }
 
 class AuthService {
@@ -74,8 +73,13 @@ class AuthService {
         return requestService.performRequest('POST', `/api/auth/reset-password-check/${token}`)
     }
 
-    resetPassword(params: ResetPasswordRequest): Promise<any> {
-        return requestService.performRequest('POST', '/api/auth/reset-password', params)
+    resetPassword(token: string, params: ResetPasswordRequest): Promise<any> {
+        return requestService.performRequest('POST', `/api/auth/reset-password/${token}`, {
+            plainPassword: {
+                first: params.password,
+                second: params.repeatPassword,
+            },
+        })
     }
 
     logout() {
