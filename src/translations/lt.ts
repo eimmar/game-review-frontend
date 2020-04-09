@@ -8,6 +8,7 @@ export const ltTranslations = {
     'common.submit': 'Pateikti',
     'common.cancel': 'Atšaukti',
     'common.close': 'Uždaryti',
+    'common.noResults': 'Nieko nerasta.',
     'common.reviewBy': 'parašė',
 
     'user.alreadyHaveAccount': 'Esate registruotas narys? Prisijunkite',
@@ -30,10 +31,8 @@ export const ltTranslations = {
     'user.passwordResetSuccess': 'Slaptažodis pakeistas sėkmingai! Galite prisijungti.',
 
     'game.listHeader': 'Žaidimai',
-    'game.listMainDescription':
-        'Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don&apos;t simply skip over it entirely.',
-    'game.mainCta': 'Main call to action',
-    'game.secondaryCta': 'Secondary action',
+    'game.mainCta': 'Naujausi žaidimai',
+    'game.secondaryCta': 'Detali žaidimų paieška',
     'game.userReviews': 'Žaidėjų atsiliepimai',
     'game.category': 'Tipas',
     'game.ageRatings': 'Amžiaus vertinimas',

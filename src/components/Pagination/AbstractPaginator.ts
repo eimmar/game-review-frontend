@@ -19,4 +19,16 @@ export abstract class AbstractPaginator<P = {}, S = {}> extends Component<P, Abs
 
         return { ...pagination, page: pagination.page + 1 }
     }
+
+    get totalPages() {
+        const { pagination } = this.state
+
+        return Math.ceil(pagination.totalResults / pagination.pageSize)
+    }
+
+    get currentPage() {
+        const { pagination } = this.state
+
+        return pagination.page
+    }
 }

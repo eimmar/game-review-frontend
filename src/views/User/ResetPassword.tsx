@@ -6,7 +6,7 @@ import ResetPasswordForm from '../../components/User/ResetPassword/ResetPassword
 import NotFound404 from '../../components/Error/ErrorContent'
 import { authService } from '../../services/AuthService'
 import ResetPasswordExpired from '../Error/ResetPasswordExpired'
-import PageLoader from '../../components/Page/PageLoader'
+import PageLoader from '../../components/Global/PageLoader/PageLoader'
 
 export default function ResetPassword() {
     const { token } = useParams()

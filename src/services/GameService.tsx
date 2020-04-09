@@ -1,4 +1,4 @@
-import { PaginatedList, Pagination, requestService } from './RequestService'
+import { PaginatedList, requestService } from './RequestService'
 
 export enum GameCategory {
     MainGame,
@@ -156,7 +156,7 @@ interface Filters {
 class GameService {
     baseUrl = '/game/'
 
-    getAll(pagination: Pagination, search: string): Promise<PaginatedList<Game>> {
+    getAll(search: string, pageSize: number, totalResults: number): Promise<PaginatedList<Game>> {
         const {
             page,
             name,
@@ -174,7 +174,8 @@ class GameService {
         } = requestService.getFilters(search) as Filters
 
         return requestService.performRequest('POST', this.baseUrl, {
-            ...pagination,
+            totalResults,
+            pageSize,
             page: Number(page || 1),
             filters: {
                 name,
