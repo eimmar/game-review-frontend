@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
     List,
     Box,
@@ -27,18 +27,17 @@ import { t } from '../../../i18n'
 import { gameSpotService, Review } from '../../../services/GameSpotService'
 import styles from './GameSpotReviews.module.scss'
 import { Pagination } from '../../../services/RequestService'
+import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
 
 interface Props {
     gameId: string
 }
 
-interface State {
+interface State extends AbstractPaginatorState {
     reviews: Review[]
-    pagination: Pagination
-    loading: boolean
 }
 
-class GameSpotReviews extends Component<Props, State> {
+class GameSpotReviews extends AbstractPaginator<Props, State> {
     state: State = {
         reviews: [],
         pagination: {
@@ -53,18 +52,6 @@ class GameSpotReviews extends Component<Props, State> {
         const { pagination } = this.state
 
         this.fetchData(pagination)
-    }
-
-    get hasNextPage() {
-        const { pagination } = this.state
-
-        return pagination.page * pagination.pageSize < pagination.totalResults
-    }
-
-    get nextPage() {
-        const { pagination } = this.state
-
-        return { ...pagination, page: pagination.page + 1 }
     }
 
     fetchData = (pagination: Pagination) => {

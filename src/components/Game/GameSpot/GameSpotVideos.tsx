@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { Box, CircularProgress, Button, Divider } from '@material-ui/core'
 import Carousel from 'react-multi-carousel'
@@ -8,20 +8,19 @@ import { t } from '../../../i18n'
 import { gameSpotService, Video } from '../../../services/GameSpotService'
 import GameSpotVideo from './GameSpotVideo'
 import { Pagination } from '../../../services/RequestService'
+import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
 
 interface Props {
     gameId: string
     defaultActive?: boolean
 }
 
-interface State {
+interface State extends AbstractPaginatorState {
     videos: Video[]
-    pagination: Pagination
-    loading: boolean
     wasActivated: boolean
 }
 
-class GameSpotVideos extends Component<Props, State> {
+class GameSpotVideos extends AbstractPaginator<Props, State> {
     state: State = {
         videos: [],
         pagination: {
@@ -58,18 +57,6 @@ class GameSpotVideos extends Component<Props, State> {
                 items: 1,
             },
         }
-    }
-
-    get hasNextPage() {
-        const { pagination } = this.state
-
-        return pagination.page * pagination.pageSize < pagination.totalResults
-    }
-
-    get nextPage() {
-        const { pagination } = this.state
-
-        return { ...pagination, page: pagination.page + 1 }
     }
 
     activate = () => {

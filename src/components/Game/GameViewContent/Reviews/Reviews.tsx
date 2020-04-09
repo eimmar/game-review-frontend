@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import {
@@ -28,18 +28,17 @@ import { GameReview, reviewService } from '../../../../services/GameReviewServic
 import ReviewFormModal from '../../Review/ReviewFormModal'
 import { t } from '../../../../i18n'
 import styles from './Reviews.module.scss'
+import { AbstractPaginator, AbstractPaginatorState } from '../../../Pagination/AbstractPaginator'
 
 interface Props extends RouteComponentProps {
     gameId: string
 }
 
-interface State {
+interface State extends AbstractPaginatorState {
     reviews: GameReview[]
-    pagination: Pagination
-    loading: boolean
 }
 
-class Reviews extends Component<Props, State> {
+class Reviews extends AbstractPaginator<Props, State> {
     state: State = {
         reviews: [],
         pagination: {
@@ -54,18 +53,6 @@ class Reviews extends Component<Props, State> {
         const { pagination } = this.state
 
         this.fetchData(pagination)
-    }
-
-    get hasNextPage() {
-        const { pagination } = this.state
-
-        return pagination.page * pagination.pageSize < pagination.totalResults
-    }
-
-    get nextPage() {
-        const { pagination } = this.state
-
-        return { ...pagination, page: pagination.page + 1 }
     }
 
     fetchData = (pagination: Pagination) => {

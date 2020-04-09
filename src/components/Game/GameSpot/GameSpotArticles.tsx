@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
@@ -17,6 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { t } from '../../../i18n'
 import { Article, gameSpotService } from '../../../services/GameSpotService'
 import { Pagination } from '../../../services/RequestService'
+import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
 
 const styles = () =>
     createStyles({
@@ -53,14 +54,12 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     classes: Record<'classes', string>
 }
 
-interface State {
+interface State extends AbstractPaginatorState {
     articles: Article[]
-    pagination: Pagination
-    loading: boolean
     wasExpanded: boolean
 }
 
-class GameSpotArticles extends Component<Props, State> {
+class GameSpotArticles extends AbstractPaginator<Props, State> {
     state: State = {
         articles: [],
         pagination: {
