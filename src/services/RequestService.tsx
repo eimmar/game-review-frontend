@@ -35,21 +35,14 @@ class RequestService {
                     // @ts-ignore
                     const valAsArray = Array.isArray(obj[key]) ? obj[key] : [obj[key]]
 
+                    valAsArray.push(value)
                     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore
-                    value = [...valAsArray, value]
+                    value = [...new Set(valAsArray)]
                 }
 
                 return { ...obj, [key]: value }
             }, {}) as Filter[]
-
-        // console.log(filters)
-        //         return {
-        //             page: Number(filters.page || 1),
-        //             totalResults,
-        //             pageSize,
-        //             filters.map(),
-        //         }
     }
 
     getRequestOptions(method: string, body: BodyInit): RequestInit {

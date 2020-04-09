@@ -137,20 +137,29 @@ export interface GameLoaded extends Game {
     companies: Company[]
 }
 
-interface Filters {
+export interface GamesFilterRequest {
     page?: string
-    name?: string | string[]
-    releaseDate?: string | string[]
+    query?: string
+    releaseDateFrom?: string | string[]
+    releaseDateTo?: string | string[]
     category?: string | string[]
-    rating?: string | string[]
-    ratingCount?: string | string[]
-    ageRating?: string | string[]
+    ratingFrom?: string | string[]
+    ratingTo?: string | string[]
+    ratingCountFrom?: string | string[]
+    ratingCountTo?: string | string[]
     genre?: string | string[]
     theme?: string | string[]
     platform?: string | string[]
     gameMode?: string | string[]
-    website?: string | string[]
     company?: string | string[]
+}
+
+export interface GameEntityFilterValues {
+    genres: Genre[]
+    themes: Theme[]
+    platforms: Platform[]
+    gameModes: GameMode[]
+    companies: Company[]
 }
 
 class GameService {
@@ -159,36 +168,34 @@ class GameService {
     getAll(search: string, pageSize: number, totalResults: number): Promise<PaginatedList<Game>> {
         const {
             page,
-            name,
-            releaseDate,
+            query,
+            releaseDateFrom,
+            releaseDateTo,
             category,
-            rating,
-            ratingCount,
-            ageRating,
+            ratingFrom,
+            ratingTo,
             genre,
             theme,
             platform,
             gameMode,
-            website,
             company,
-        } = requestService.getFilters(search) as Filters
+        } = requestService.getFilters(search) as GamesFilterRequest
 
         return requestService.performRequest('POST', this.baseUrl, {
             totalResults,
             pageSize,
             page: Number(page || 1),
             filters: {
-                name,
-                releaseDate,
+                query,
+                releaseDateFrom,
+                releaseDateTo,
                 category,
-                rating,
-                ratingCount,
-                ageRating,
+                ratingFrom,
+                ratingTo,
                 genre,
                 theme,
                 platform,
                 gameMode,
-                website,
                 company,
             },
         })
@@ -208,6 +215,10 @@ class GameService {
 
     transformImage(imageUrl: string, fromSize: ScreenshotSize, toSize: ScreenshotSize) {
         return imageUrl.replace(fromSize, toSize)
+    }
+
+    getAllFilterEntities(): Promise<GameEntityFilterValues> {
+        return requestService.performRequest('POST', `${this.baseUrl}entity-filter-values`)
     }
 }
 
