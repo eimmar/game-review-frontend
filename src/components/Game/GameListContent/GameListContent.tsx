@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
@@ -12,6 +12,7 @@ import { Game, gameService, ScreenshotSize } from '../../../services/GameService
 import { routes } from '../../../parameters'
 import PageLoader from '../../Page/PageLoader'
 import { placeholderImg } from '../../../services/Util/AssetsProvider'
+import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
 
 const styles = ({ palette, spacing }: Theme) =>
     createStyles({
@@ -59,19 +60,34 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     }
 }
 
-interface State {
+interface State extends AbstractPaginatorState {
     games: Game[]
-    loading: boolean
 }
 
-class GameListContent extends Component<Props, State> {
-    state = { games: [] as Game[], loading: true }
+class GameListContent extends AbstractPaginator<Props, State> {
+    state: State = {
+        games: [],
+        pagination: {
+            page: 1,
+            totalResults: 0,
+            pageSize: 5,
+        },
+        loading: false,
+    }
 
     componentDidMount() {
-        gameService.getAll().then((games) =>
+        const { location } = this.props
+        const { pagination } = this.state
+
+        gameService.getAll(pagination, location.search).then((response) =>
             this.setState({
-                games: games.map((game) => gameService.withCover(game, ScreenshotSize.CoverBig)),
+                games: response.items.map((game) => gameService.withCover(game, ScreenshotSize.CoverBig)),
                 loading: false,
+                pagination: {
+                    totalResults: response.totalResults,
+                    page: pagination.page,
+                    pageSize: pagination.pageSize,
+                },
             }),
         )
     }

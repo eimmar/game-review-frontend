@@ -5,34 +5,53 @@ import { errorService } from './ErrorService'
 // eslint-disable-next-line import/no-cycle
 import { authService } from './AuthService'
 
-interface RequestOptions {
-    method: string
-    headers: object
-    body?: object
-}
-
-export interface FetchRequest {
-    page: number
-    sizePerPage: number
-    sortField: string
-    sortOrder: string
-    filters: object
-}
-
 export interface Pagination {
     page: number
     totalResults: number
     pageSize: number
 }
 
-export interface PaginatedList<T> {
-    page: number
-    totalResults: number
-    pageSize: number
+export interface Filter {
+    [key: string]: string
+}
+
+export interface PaginatedList<T> extends Pagination {
     items: T[]
 }
 
 class RequestService {
+    getFilters(search: string): Filter[] {
+        return search
+            .slice(1)
+            .split('&')
+            .map((p) => p.split('='))
+            .reduce((obj, pair) => {
+                // eslint-disable-next-line prefer-const
+                let [key, value] = pair.map(decodeURIComponent)
+
+                // eslint-disable-next-line no-prototype-builtins
+                if (obj.hasOwnProperty(key) && key !== 'page') {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    const valAsArray = Array.isArray(obj[key]) ? obj[key] : [obj[key]]
+
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    value = [...valAsArray, value]
+                }
+
+                return { ...obj, [key]: value }
+            }, {}) as Filter[]
+
+        // console.log(filters)
+        //         return {
+        //             page: Number(filters.page || 1),
+        //             totalResults,
+        //             pageSize,
+        //             filters.map(),
+        //         }
+    }
+
     getRequestOptions(method: string, body: BodyInit): RequestInit {
         const requestOptions: RequestInit = {
             method,
