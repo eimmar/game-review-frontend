@@ -23,11 +23,11 @@ import DOMPurify from 'dompurify'
 import Moment from 'react-moment'
 import i18next from 'i18next'
 
-import { t } from '../../../i18n'
-import { gameSpotService, Review } from '../../../services/GameSpotService'
+import { t } from '../../../../i18n'
+import { gameSpotService, Review } from '../../../../services/GameSpotService'
 import styles from './GameSpotReviews.module.scss'
-import { Pagination } from '../../../services/RequestService'
-import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
+import { Pagination } from '../../../../services/RequestService'
+import { AbstractPaginator, AbstractPaginatorState } from '../../../Pagination/AbstractPaginator'
 
 interface Props {
     gameId: string

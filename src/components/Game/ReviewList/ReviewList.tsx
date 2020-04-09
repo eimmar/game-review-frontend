@@ -23,12 +23,12 @@ import ThumbDownIcon from '@material-ui/icons/ThumbDown'
 import Moment from 'react-moment'
 import i18next from 'i18next'
 
-import { Pagination } from '../../../../services/RequestService'
-import { GameReview, reviewService } from '../../../../services/GameReviewService'
-import ReviewFormModal from '../../Review/ReviewFormModal'
-import { t } from '../../../../i18n'
-import styles from './Reviews.module.scss'
-import { AbstractPaginator, AbstractPaginatorState } from '../../../Pagination/AbstractPaginator'
+import { Pagination } from '../../../services/RequestService'
+import { GameReview, reviewService } from '../../../services/GameReviewService'
+import ReviewFormModal from '../Review/ReviewFormModal'
+import { t } from '../../../i18n'
+import styles from './ReviewList.module.scss'
+import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
 
 interface Props extends RouteComponentProps {
     gameId: string
@@ -38,7 +38,7 @@ interface State extends AbstractPaginatorState {
     reviews: GameReview[]
 }
 
-class Reviews extends AbstractPaginator<Props, State> {
+class ReviewList extends AbstractPaginator<Props, State> {
     state: State = {
         reviews: [],
         pagination: {
@@ -221,4 +221,4 @@ class Reviews extends AbstractPaginator<Props, State> {
     }
 }
 
-export default withRouter(Reviews)
+export default withRouter(ReviewList)

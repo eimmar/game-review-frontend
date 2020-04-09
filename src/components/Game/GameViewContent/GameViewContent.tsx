@@ -26,11 +26,11 @@ import 'react-multi-carousel/lib/styles.css'
 import Sidebar from './Sidebar'
 import { GameLoaded } from '../../../services/GameService'
 import GameImage from './GameImage'
-import Reviews from './Reviews/Reviews'
+import Reviews from '../ReviewList/ReviewList'
 import { t } from '../../../i18n'
 import PriceDeal from '../PriceDeal/PriceDeal'
 import GameSpotVideos from '../GameSpot/GameSpotVideos'
-import GameSpotReviews from '../GameSpot/GameSpotReviews'
+import GameSpotReviews from '../GameSpot/GameSpotReviews/GameSpotReviews'
 
 const styles = ({ spacing }: Theme) =>
     createStyles({
