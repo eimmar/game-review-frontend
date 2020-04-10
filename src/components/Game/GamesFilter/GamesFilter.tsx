@@ -60,6 +60,15 @@ class GamesFilter extends Component<Props, State> {
         history.push(`${location.pathname}?${currentUrlParams.toString()}`)
     }, 800)
 
+    sort = [
+        { orderBy: 'name', order: 'ASC', label: t`game.sortByNameAsc` },
+        { orderBy: 'name', order: 'DESC', label: t`game.sortByNameDesc` },
+        { orderBy: 'releaseDate', order: 'ASC', label: t`game.sortByReleaseDateAsc` },
+        { orderBy: 'releaseDate', order: 'DESC', label: t`game.sortByReleaseDateDesc` },
+        { orderBy: 'rating', order: 'ASC', label: t`game.sortByRatingAsc` },
+        { orderBy: 'rating', order: 'DESC', label: t`game.sortByRatingDesc` },
+    ]
+
     constructor(props: Props) {
         super(props)
 
@@ -82,6 +91,14 @@ class GamesFilter extends Component<Props, State> {
         }
     }
 
+    get selectedSort() {
+        const { filters } = this.state
+        const selected =
+            this.sort.find((it) => it.order === filters.order && it.orderBy === filters.orderBy) || this.sort[3]
+
+        return selected ? selected.label : ''
+    }
+
     valueAsArray = (value?: unknown | unknown[]) => {
         if (!value) {
             return []
@@ -98,6 +115,19 @@ class GamesFilter extends Component<Props, State> {
         if (event.target.name) {
             currentUrlParams.delete(event.target.name)
             value.forEach((it) => event.target.name && currentUrlParams.append(event.target.name, String(it)))
+            currentUrlParams.set('page', '1')
+            history.push(`${location.pathname}?${currentUrlParams.toString()}`)
+        }
+    }
+
+    handleSortChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>, child: React.ReactNode) => {
+        const { location, history } = this.props
+        const currentUrlParams = new URLSearchParams(location.search)
+        const selected = this.sort.find((it) => it.label === event.target.value) || this.sort[3]
+
+        if (selected) {
+            currentUrlParams.set('orderBy', selected.orderBy)
+            currentUrlParams.set('order', selected.order)
             currentUrlParams.set('page', '1')
             history.push(`${location.pathname}?${currentUrlParams.toString()}`)
         }
@@ -384,12 +414,27 @@ class GamesFilter extends Component<Props, State> {
                         </FormControl>
                     </Grid>
 
-                    <Grid item xs={12} sm={6}>
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            onClick={this.handleResetFilters}
-                        >{t`filters.reset`}</Button>
+                    <Grid item xs={12} sm={3}>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel>{t`common.sort`}</InputLabel>
+                            <Select name="sort" native value={this.selectedSort} onChange={this.handleSortChange}>
+                                {this.sort.map((it) => (
+                                    <option key={it.label} value={it.label}>
+                                        {it.label}
+                                    </option>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={3}>
+                        <FormControl className={classes.formControl}>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                onClick={this.handleResetFilters}
+                            >{t`filters.reset`}</Button>
+                        </FormControl>
                     </Grid>
                 </Grid>
             </Container>

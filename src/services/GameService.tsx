@@ -1,4 +1,5 @@
 import { PaginatedList, requestService } from './RequestService'
+import { phpDebug } from '../parameters'
 
 export enum GameCategory {
     MainGame,
@@ -140,18 +141,20 @@ export interface GameLoaded extends Game {
 export interface GamesFilterRequest {
     page?: string
     query?: string
-    releaseDateFrom?: string | string[]
-    releaseDateTo?: string | string[]
+    releaseDateFrom?: string
+    releaseDateTo?: string
     category?: string | string[]
-    ratingFrom?: string | string[]
-    ratingTo?: string | string[]
-    ratingCountFrom?: string | string[]
-    ratingCountTo?: string | string[]
+    ratingFrom?: string
+    ratingTo?: string
+    ratingCountFrom?: string
+    ratingCountTo?: string
     genre?: string | string[]
     theme?: string | string[]
     platform?: string | string[]
     gameMode?: string | string[]
     company?: string | string[]
+    orderBy?: string
+    order?: string
 }
 
 export interface GameEntityFilterValues {
@@ -179,12 +182,16 @@ class GameService {
             platform,
             gameMode,
             company,
+            orderBy,
+            order,
         } = requestService.getFilters(search) as GamesFilterRequest
 
-        return requestService.performRequest('POST', this.baseUrl, {
+        return requestService.performRequest('POST', this.baseUrl + phpDebug, {
             totalResults,
             pageSize,
             page: Number(page || 1),
+            orderBy,
+            order,
             filters: {
                 query,
                 releaseDateFrom,

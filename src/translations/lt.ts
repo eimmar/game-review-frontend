@@ -10,6 +10,7 @@ export const ltTranslations = {
     'common.close': 'Uždaryti',
     'common.noResults': 'Nieko nerasta.',
     'common.reviewBy': 'parašė',
+    'common.sort': 'Rikiavimas',
 
     'filters.reset': 'Išvalyti filtrus',
 
@@ -58,6 +59,12 @@ export const ltTranslations = {
     'game.releaseDateTo': 'Išleista iki',
     'game.ratingFrom': 'Įvertinta nuo',
     'game.ratingTo': 'Įvertinta iki',
+    'game.sortByNameAsc': 'Pagal pavadinimą A-Z',
+    'game.sortByNameDesc': 'Pagal pavadinimą Z-A',
+    'game.sortByReleaseDateAsc': 'Seniausi',
+    'game.sortByReleaseDateDesc': 'Naujausi',
+    'game.sortByRatingAsc': 'Geriausiai įvertinti',
+    'game.sortByRatingDesc': 'Blogiausiai įvertinti',
 
     'gameReview.successCreate': 'Atsiliepimas sukurtas',
     'gameReview.rating': 'Įvertinimas',
