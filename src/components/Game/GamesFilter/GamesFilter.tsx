@@ -2,13 +2,24 @@ import React, { ChangeEvent, Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { Container, FormControl, InputLabel, Select, Input, Chip, MenuItem, TextField, Button } from '@material-ui/core'
+import {
+    Container,
+    FormControl,
+    InputLabel,
+    Select,
+    Input,
+    Chip,
+    MenuItem,
+    TextField,
+    Button,
+    debounce,
+} from '@material-ui/core'
 
 import { t } from '../../../i18n'
 import { GameEntityFilterValues, GamesFilterRequest } from '../../../services/GameService'
 import { requestService } from '../../../services/RequestService'
 
-const styles = ({ palette, spacing, breakpoints }: Theme) =>
+const styles = ({ spacing }: Theme) =>
     createStyles({
         formControl: {
             margin: spacing(1),
@@ -40,6 +51,15 @@ interface State {
 }
 
 class GamesFilter extends Component<Props, State> {
+    handleInputChange = debounce((name: string, value: string) => {
+        const { location, history } = this.props
+        const currentUrlParams = new URLSearchParams(location.search)
+
+        currentUrlParams.set(name, value)
+        currentUrlParams.set('page', '1')
+        history.push(`${location.pathname}?${currentUrlParams.toString()}`)
+    }, 800)
+
     constructor(props: Props) {
         super(props)
 
@@ -68,17 +88,6 @@ class GamesFilter extends Component<Props, State> {
         }
 
         return Array.isArray(value) ? value : [String(value)]
-    }
-
-    handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const { location, history } = this.props
-        const currentUrlParams = new URLSearchParams(location.search)
-
-        if (event.target.name) {
-            currentUrlParams.set(event.target.name, event.target.value)
-            currentUrlParams.set('page', '1')
-            history.push(`${location.pathname}?${currentUrlParams.toString()}`)
-        }
     }
 
     handleMultiSelectChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>, child: React.ReactNode) => {
@@ -321,61 +330,61 @@ class GamesFilter extends Component<Props, State> {
                         </FormControl>
                     </Grid>
 
-                    <Grid container xs={12} sm={6}>
-                        <Grid item xs={12} sm={6}>
-                            <FormControl className={classes.formControl}>
-                                <TextField
-                                    label={t`game.releaseDateFrom`}
-                                    name="releaseDateFrom"
-                                    type="date"
-                                    defaultValue={filters.releaseDateFrom}
-                                    onChange={this.handleInputChange}
-                                    InputLabelProps={{ shrink: true }}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <FormControl className={classes.formControl}>
-                                <TextField
-                                    label={t`game.releaseDateTo`}
-                                    name="releaseDateTo"
-                                    type="date"
-                                    defaultValue={filters.releaseDateTo}
-                                    onChange={this.handleInputChange}
-                                    InputLabelProps={{ shrink: true }}
-                                />
-                            </FormControl>
-                        </Grid>
+                    <Grid item xs={12} sm={3}>
+                        <FormControl className={classes.formControl}>
+                            <TextField
+                                label={t`game.releaseDateFrom`}
+                                name="releaseDateFrom"
+                                type="date"
+                                defaultValue={filters.releaseDateFrom}
+                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
+                                InputLabelProps={{ shrink: true }}
+                            />
+                        </FormControl>
                     </Grid>
 
-                    <Grid container xs={12} sm={6}>
-                        <Grid item xs={12} sm={6}>
-                            <FormControl className={classes.formControl}>
-                                <TextField
-                                    label={t`game.ratingFrom`}
-                                    name="ratingFrom"
-                                    type="date"
-                                    defaultValue={filters.ratingFrom}
-                                    onChange={this.handleInputChange}
-                                    InputLabelProps={{ shrink: true }}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <FormControl className={classes.formControl}>
-                                <TextField
-                                    label={t`game.ratingTo`}
-                                    name="ratingTo"
-                                    type="date"
-                                    defaultValue={filters.ratingTo}
-                                    onChange={this.handleInputChange}
-                                    InputLabelProps={{ shrink: true }}
-                                />
-                            </FormControl>
-                        </Grid>
+                    <Grid item xs={12} sm={3}>
+                        <FormControl className={classes.formControl}>
+                            <TextField
+                                label={t`game.releaseDateTo`}
+                                name="releaseDateTo"
+                                type="date"
+                                defaultValue={filters.releaseDateTo}
+                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
+                                InputLabelProps={{ shrink: true }}
+                            />
+                        </FormControl>
                     </Grid>
 
-                    <Grid container xs={12} sm={6}>
+                    <Grid item xs={12} sm={3}>
+                        <FormControl className={classes.formControl}>
+                            <TextField
+                                label={t`game.ratingFrom`}
+                                name="ratingFrom"
+                                type="number"
+                                inputProps={{ min: 0, max: 100, step: 1 }}
+                                defaultValue={filters.ratingFrom}
+                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
+                                InputLabelProps={{ shrink: true }}
+                            />
+                        </FormControl>
+                    </Grid>
+
+                    <Grid item xs={12} sm={3}>
+                        <FormControl className={classes.formControl}>
+                            <TextField
+                                label={t`game.ratingTo`}
+                                name="ratingTo"
+                                type="number"
+                                inputProps={{ min: 0, max: 100, step: 1 }}
+                                defaultValue={filters.ratingTo}
+                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
+                                InputLabelProps={{ shrink: true }}
+                            />
+                        </FormControl>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
                         <Button
                             variant="contained"
                             color="secondary"
