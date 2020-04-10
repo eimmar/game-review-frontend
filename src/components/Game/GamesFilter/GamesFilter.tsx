@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Component } from 'react'
+import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
@@ -13,14 +13,20 @@ import {
     TextField,
     Button,
     debounce,
+    Typography,
+    CssBaseline,
 } from '@material-ui/core'
 
 import { t } from '../../../i18n'
 import { GameEntityFilterValues, GamesFilterRequest } from '../../../services/GameService'
 import { requestService } from '../../../services/RequestService'
 
-const styles = ({ spacing }: Theme) =>
+const styles = ({ spacing, palette }: Theme) =>
     createStyles({
+        heroContent: {
+            backgroundColor: palette.background.paper,
+            padding: spacing(8, 0, 6),
+        },
         formControl: {
             margin: spacing(1),
             width: '100%',
@@ -39,6 +45,7 @@ const styles = ({ spacing }: Theme) =>
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps, GameEntityFilterValues {
     classes: {
+        heroContent: string
         formControl: string
         chips: string
         chip: string
@@ -144,300 +151,315 @@ class GamesFilter extends Component<Props, State> {
         const { filters } = this.state
 
         return (
-            <Container>
-                <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>{t`game.theme`}</InputLabel>
-                            <Select
-                                multiple
-                                name="theme"
-                                value={this.valueAsArray(filters.theme)}
-                                onChange={this.handleMultiSelectChange}
-                                input={<Input />}
-                                renderValue={(selected) => (
-                                    <div className={classes.chips}>
-                                        {(selected as string[]).map((id) => {
-                                            const theme = themes.find((it) => it.id === id)
+            <>
+                <CssBaseline />
+                <div className={classes.heroContent}>
+                    <Container maxWidth="sm">
+                        <Typography component="h1" variant="h4" align="center" color="textPrimary" gutterBottom>
+                            {t`game.listHeader`}
+                        </Typography>
+                    </Container>
+                    <Container>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6} md={3}>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel>{t`game.theme`}</InputLabel>
+                                    <Select
+                                        multiple
+                                        name="theme"
+                                        value={this.valueAsArray(filters.theme)}
+                                        onChange={this.handleMultiSelectChange}
+                                        input={<Input />}
+                                        renderValue={(selected) => (
+                                            <div className={classes.chips}>
+                                                {(selected as string[]).map((id) => {
+                                                    const theme = themes.find((it) => it.id === id)
 
-                                            return (
-                                                <Chip
-                                                    color="primary"
-                                                    key={id}
-                                                    label={theme ? theme.name : ''}
-                                                    className={classes.chip}
-                                                />
-                                            )
-                                        })}
-                                    </div>
-                                )}
-                                MenuProps={this.multiSelectMenuProps}
-                            >
-                                {themes.map((it) => (
-                                    <MenuItem key={it.id} value={it.id}>
-                                        {it.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </Grid>
+                                                    return (
+                                                        <Chip
+                                                            color="primary"
+                                                            key={id}
+                                                            label={theme ? theme.name : ''}
+                                                            className={classes.chip}
+                                                        />
+                                                    )
+                                                })}
+                                            </div>
+                                        )}
+                                        MenuProps={this.multiSelectMenuProps}
+                                    >
+                                        {themes.map((it) => (
+                                            <MenuItem key={it.id} value={it.id}>
+                                                {it.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
 
-                    <Grid item xs={12} sm={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>{t`game.genre`}</InputLabel>
-                            <Select
-                                multiple
-                                name="genre"
-                                value={this.valueAsArray(filters.genre)}
-                                onChange={this.handleMultiSelectChange}
-                                input={<Input />}
-                                renderValue={(selected) => (
-                                    <div className={classes.chips}>
-                                        {(selected as string[]).map((id) => {
-                                            const genre = genres.find((it) => it.id === id)
+                            <Grid item xs={12} sm={6} md={3}>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel>{t`game.genre`}</InputLabel>
+                                    <Select
+                                        multiple
+                                        name="genre"
+                                        value={this.valueAsArray(filters.genre)}
+                                        onChange={this.handleMultiSelectChange}
+                                        input={<Input />}
+                                        renderValue={(selected) => (
+                                            <div className={classes.chips}>
+                                                {(selected as string[]).map((id) => {
+                                                    const genre = genres.find((it) => it.id === id)
 
-                                            return (
-                                                <Chip
-                                                    color="primary"
-                                                    key={id}
-                                                    label={genre ? genre.name : ''}
-                                                    className={classes.chip}
-                                                />
-                                            )
-                                        })}
-                                    </div>
-                                )}
-                                MenuProps={this.multiSelectMenuProps}
-                            >
-                                {genres.map((it) => (
-                                    <MenuItem key={it.id} value={it.id}>
-                                        {it.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </Grid>
+                                                    return (
+                                                        <Chip
+                                                            color="primary"
+                                                            key={id}
+                                                            label={genre ? genre.name : ''}
+                                                            className={classes.chip}
+                                                        />
+                                                    )
+                                                })}
+                                            </div>
+                                        )}
+                                        MenuProps={this.multiSelectMenuProps}
+                                    >
+                                        {genres.map((it) => (
+                                            <MenuItem key={it.id} value={it.id}>
+                                                {it.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
 
-                    <Grid item xs={12} sm={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>{t`game.platform`}</InputLabel>
-                            <Select
-                                multiple
-                                name="platform"
-                                value={this.valueAsArray(filters.platform)}
-                                onChange={this.handleMultiSelectChange}
-                                input={<Input />}
-                                renderValue={(selected) => (
-                                    <div className={classes.chips}>
-                                        {(selected as string[]).map((id) => {
-                                            const platform = platforms.find((it) => it.id === id)
+                            <Grid item xs={12} sm={6} md={3}>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel>{t`game.platform`}</InputLabel>
+                                    <Select
+                                        multiple
+                                        name="platform"
+                                        value={this.valueAsArray(filters.platform)}
+                                        onChange={this.handleMultiSelectChange}
+                                        input={<Input />}
+                                        renderValue={(selected) => (
+                                            <div className={classes.chips}>
+                                                {(selected as string[]).map((id) => {
+                                                    const platform = platforms.find((it) => it.id === id)
 
-                                            return (
-                                                <Chip
-                                                    color="primary"
-                                                    key={id}
-                                                    label={platform ? platform.name : ''}
-                                                    className={classes.chip}
-                                                />
-                                            )
-                                        })}
-                                    </div>
-                                )}
-                                MenuProps={this.multiSelectMenuProps}
-                            >
-                                {platforms.map((it) => (
-                                    <MenuItem key={it.id} value={it.id}>
-                                        {it.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </Grid>
+                                                    return (
+                                                        <Chip
+                                                            color="primary"
+                                                            key={id}
+                                                            label={platform ? platform.name : ''}
+                                                            className={classes.chip}
+                                                        />
+                                                    )
+                                                })}
+                                            </div>
+                                        )}
+                                        MenuProps={this.multiSelectMenuProps}
+                                    >
+                                        {platforms.map((it) => (
+                                            <MenuItem key={it.id} value={it.id}>
+                                                {it.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
 
-                    <Grid item xs={12} sm={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>{t`game.gameMode`}</InputLabel>
-                            <Select
-                                multiple
-                                name="gameMode"
-                                value={this.valueAsArray(filters.gameMode)}
-                                onChange={this.handleMultiSelectChange}
-                                input={<Input />}
-                                renderValue={(selected) => (
-                                    <div className={classes.chips}>
-                                        {(selected as string[]).map((id) => {
-                                            const gameMode = gameModes.find((it) => it.id === id)
+                            <Grid item xs={12} sm={6} md={3}>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel>{t`game.gameMode`}</InputLabel>
+                                    <Select
+                                        multiple
+                                        name="gameMode"
+                                        value={this.valueAsArray(filters.gameMode)}
+                                        onChange={this.handleMultiSelectChange}
+                                        input={<Input />}
+                                        renderValue={(selected) => (
+                                            <div className={classes.chips}>
+                                                {(selected as string[]).map((id) => {
+                                                    const gameMode = gameModes.find((it) => it.id === id)
 
-                                            return (
-                                                <Chip
-                                                    color="primary"
-                                                    key={id}
-                                                    label={gameMode ? gameMode.name : ''}
-                                                    className={classes.chip}
-                                                />
-                                            )
-                                        })}
-                                    </div>
-                                )}
-                                MenuProps={this.multiSelectMenuProps}
-                            >
-                                {gameModes.map((it) => (
-                                    <MenuItem key={it.id} value={it.id}>
-                                        {it.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </Grid>
+                                                    return (
+                                                        <Chip
+                                                            color="primary"
+                                                            key={id}
+                                                            label={gameMode ? gameMode.name : ''}
+                                                            className={classes.chip}
+                                                        />
+                                                    )
+                                                })}
+                                            </div>
+                                        )}
+                                        MenuProps={this.multiSelectMenuProps}
+                                    >
+                                        {gameModes.map((it) => (
+                                            <MenuItem key={it.id} value={it.id}>
+                                                {it.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
 
-                    <Grid item xs={12} sm={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>{t`game.company`}</InputLabel>
-                            <Select
-                                multiple
-                                name="company"
-                                value={this.valueAsArray(filters.company)}
-                                onChange={this.handleMultiSelectChange}
-                                input={<Input />}
-                                renderValue={(selected) => (
-                                    <div className={classes.chips}>
-                                        {(selected as string[]).map((id) => {
-                                            const company = companies.find((it) => it.id === id)
+                            <Grid item xs={12} sm={6} md={3}>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel>{t`game.company`}</InputLabel>
+                                    <Select
+                                        multiple
+                                        name="company"
+                                        value={this.valueAsArray(filters.company)}
+                                        onChange={this.handleMultiSelectChange}
+                                        input={<Input />}
+                                        renderValue={(selected) => (
+                                            <div className={classes.chips}>
+                                                {(selected as string[]).map((id) => {
+                                                    const company = companies.find((it) => it.id === id)
 
-                                            return (
-                                                <Chip
-                                                    color="primary"
-                                                    key={id}
-                                                    label={company ? company.name : ''}
-                                                    className={classes.chip}
-                                                />
-                                            )
-                                        })}
-                                    </div>
-                                )}
-                                MenuProps={this.multiSelectMenuProps}
-                            >
-                                {companies.map((it) => (
-                                    <MenuItem key={it.id} value={it.id}>
-                                        {it.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </Grid>
+                                                    return (
+                                                        <Chip
+                                                            color="primary"
+                                                            key={id}
+                                                            label={company ? company.name : ''}
+                                                            className={classes.chip}
+                                                        />
+                                                    )
+                                                })}
+                                            </div>
+                                        )}
+                                        MenuProps={this.multiSelectMenuProps}
+                                    >
+                                        {companies.map((it) => (
+                                            <MenuItem key={it.id} value={it.id}>
+                                                {it.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
 
-                    <Grid item xs={12} sm={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>{t`game.category`}</InputLabel>
-                            <Select
-                                multiple
-                                name="category"
-                                value={this.valueAsArray(filters.category)}
-                                onChange={this.handleMultiSelectChange}
-                                input={<Input />}
-                                renderValue={(selected) => (
-                                    <div className={classes.chips}>
-                                        {(selected as string[]).map((it) => {
-                                            return (
-                                                <Chip
-                                                    color="primary"
-                                                    key={it}
-                                                    label={t(`gameCategory.${it}`)}
-                                                    className={classes.chip}
-                                                />
-                                            )
-                                        })}
-                                    </div>
-                                )}
-                                MenuProps={this.multiSelectMenuProps}
-                            >
-                                {['0', '1', '2', '3', '4'].map((it) => (
-                                    <MenuItem key={it} value={it}>
-                                        {t(`gameCategory.${it}`)}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </Grid>
+                            <Grid item xs={12} sm={6} md={3}>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel>{t`game.category`}</InputLabel>
+                                    <Select
+                                        multiple
+                                        name="category"
+                                        value={this.valueAsArray(filters.category)}
+                                        onChange={this.handleMultiSelectChange}
+                                        input={<Input />}
+                                        renderValue={(selected) => (
+                                            <div className={classes.chips}>
+                                                {(selected as string[]).map((it) => {
+                                                    return (
+                                                        <Chip
+                                                            color="primary"
+                                                            key={it}
+                                                            label={t(`gameCategory.${it}`)}
+                                                            className={classes.chip}
+                                                        />
+                                                    )
+                                                })}
+                                            </div>
+                                        )}
+                                        MenuProps={this.multiSelectMenuProps}
+                                    >
+                                        {['0', '1', '2', '3', '4'].map((it) => (
+                                            <MenuItem key={it} value={it}>
+                                                {t(`gameCategory.${it}`)}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
 
-                    <Grid item xs={12} sm={3}>
-                        <FormControl className={classes.formControl}>
-                            <TextField
-                                label={t`game.releaseDateFrom`}
-                                name="releaseDateFrom"
-                                type="date"
-                                defaultValue={filters.releaseDateFrom}
-                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
-                                InputLabelProps={{ shrink: true }}
-                            />
-                        </FormControl>
-                    </Grid>
+                            <Grid item xs={12} sm={3}>
+                                <FormControl className={classes.formControl}>
+                                    <TextField
+                                        label={t`game.releaseDateFrom`}
+                                        name="releaseDateFrom"
+                                        type="date"
+                                        defaultValue={filters.releaseDateFrom}
+                                        onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
+                                        InputLabelProps={{ shrink: true }}
+                                    />
+                                </FormControl>
+                            </Grid>
 
-                    <Grid item xs={12} sm={3}>
-                        <FormControl className={classes.formControl}>
-                            <TextField
-                                label={t`game.releaseDateTo`}
-                                name="releaseDateTo"
-                                type="date"
-                                defaultValue={filters.releaseDateTo}
-                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
-                                InputLabelProps={{ shrink: true }}
-                            />
-                        </FormControl>
-                    </Grid>
+                            <Grid item xs={12} sm={3}>
+                                <FormControl className={classes.formControl}>
+                                    <TextField
+                                        label={t`game.releaseDateTo`}
+                                        name="releaseDateTo"
+                                        type="date"
+                                        defaultValue={filters.releaseDateTo}
+                                        onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
+                                        InputLabelProps={{ shrink: true }}
+                                    />
+                                </FormControl>
+                            </Grid>
 
-                    <Grid item xs={12} sm={3}>
-                        <FormControl className={classes.formControl}>
-                            <TextField
-                                label={t`game.ratingFrom`}
-                                name="ratingFrom"
-                                type="number"
-                                inputProps={{ min: 0, max: 100, step: 1 }}
-                                defaultValue={filters.ratingFrom}
-                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
-                                InputLabelProps={{ shrink: true }}
-                            />
-                        </FormControl>
-                    </Grid>
+                            <Grid item xs={12} sm={3}>
+                                <FormControl className={classes.formControl}>
+                                    <TextField
+                                        label={t`game.ratingFrom`}
+                                        name="ratingFrom"
+                                        type="number"
+                                        inputProps={{ min: 0, max: 100, step: 1 }}
+                                        defaultValue={filters.ratingFrom}
+                                        onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
+                                        InputLabelProps={{ shrink: true }}
+                                    />
+                                </FormControl>
+                            </Grid>
 
-                    <Grid item xs={12} sm={3}>
-                        <FormControl className={classes.formControl}>
-                            <TextField
-                                label={t`game.ratingTo`}
-                                name="ratingTo"
-                                type="number"
-                                inputProps={{ min: 0, max: 100, step: 1 }}
-                                defaultValue={filters.ratingTo}
-                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
-                                InputLabelProps={{ shrink: true }}
-                            />
-                        </FormControl>
-                    </Grid>
+                            <Grid item xs={12} sm={3}>
+                                <FormControl className={classes.formControl}>
+                                    <TextField
+                                        label={t`game.ratingTo`}
+                                        name="ratingTo"
+                                        type="number"
+                                        inputProps={{ min: 0, max: 100, step: 1 }}
+                                        defaultValue={filters.ratingTo}
+                                        onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
+                                        InputLabelProps={{ shrink: true }}
+                                    />
+                                </FormControl>
+                            </Grid>
 
-                    <Grid item xs={12} sm={3}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>{t`common.sort`}</InputLabel>
-                            <Select name="sort" native value={this.selectedSort} onChange={this.handleSortChange}>
-                                {this.sort.map((it) => (
-                                    <option key={it.label} value={it.label}>
-                                        {it.label}
-                                    </option>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </Grid>
+                            <Grid item xs={12} sm={3}>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel>{t`common.sort`}</InputLabel>
+                                    <Select
+                                        name="sort"
+                                        native
+                                        value={this.selectedSort}
+                                        onChange={this.handleSortChange}
+                                    >
+                                        {this.sort.map((it) => (
+                                            <option key={it.label} value={it.label}>
+                                                {it.label}
+                                            </option>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
 
-                    <Grid item xs={12} sm={6} md={3}>
-                        <FormControl className={classes.formControl}>
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                onClick={this.handleResetFilters}
-                            >{t`filters.reset`}</Button>
-                        </FormControl>
-                    </Grid>
-                </Grid>
-            </Container>
+                            <Grid item xs={12} sm={6} md={3}>
+                                <FormControl className={classes.formControl}>
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={this.handleResetFilters}
+                                    >{t`filters.reset`}</Button>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                </div>
+            </>
         )
     }
 }

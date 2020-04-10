@@ -1,19 +1,9 @@
 import React from 'react'
-import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
-import {
-    CardMedia,
-    Container,
-    CssBaseline,
-    ListItem,
-    ListItemAvatar,
-    ListItemText,
-    List,
-    Divider,
-} from '@material-ui/core'
+import { CardMedia, Container, ListItem, ListItemAvatar, ListItemText, List, Divider } from '@material-ui/core'
 import { Pagination } from '@material-ui/lab'
 
 import { t } from '../../../i18n'
@@ -28,13 +18,6 @@ const styles = ({ palette, spacing, breakpoints }: Theme) =>
     createStyles({
         icon: {
             marginRight: spacing(2),
-        },
-        heroContent: {
-            backgroundColor: palette.background.paper,
-            padding: spacing(8, 0, 6),
-        },
-        heroButtons: {
-            marginTop: spacing(4),
         },
         cardGrid: {
             padding: 0,
@@ -77,8 +60,6 @@ const styles = ({ palette, spacing, breakpoints }: Theme) =>
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     classes: {
         icon: string
-        heroContent: string
-        heroButtons: string
         cardGrid: string
         cardMedia: string
         footer: string
@@ -151,28 +132,6 @@ class GameListContent extends AbstractPaginator<Props, State> {
 
         return (
             <>
-                <CssBaseline />
-                <div className={classes.heroContent}>
-                    <Container maxWidth="sm">
-                        <Typography component="h1" variant="h4" align="center" color="textPrimary" gutterBottom>
-                            {t`game.listHeader`}
-                        </Typography>
-                        <div className={classes.heroButtons}>
-                            <Grid container spacing={2} justify="center">
-                                <Grid item>
-                                    <Button variant="contained" color="primary">
-                                        {t`game.mainCta`}
-                                    </Button>
-                                </Grid>
-                                <Grid item>
-                                    <Button variant="outlined" color="primary">
-                                        {t`game.secondaryCta`}
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </div>
-                    </Container>
-                </div>
                 <Container className={classes.cardGrid}>
                     <Grid container spacing={0}>
                         <List className={classes.list}>
