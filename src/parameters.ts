@@ -11,6 +11,10 @@ export const routes = {
         list: '/games',
         view: '/game',
     },
+
+    user: {
+        profile: '/profile',
+    },
 }
 
 export const phpDebug = '?XDEBUG_SESSION_START=PHPSTORM'

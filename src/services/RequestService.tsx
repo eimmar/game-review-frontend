@@ -1,6 +1,6 @@
 import cookie from 'react-cookies'
 
-import { backendUrl, phpDebug, routes } from '../parameters'
+import { backendUrl, routes } from '../parameters'
 import { errorService } from './ErrorService'
 // eslint-disable-next-line import/no-cycle
 import { authService } from './AuthService'

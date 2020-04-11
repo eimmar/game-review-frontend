@@ -3,8 +3,8 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
-import { CardMedia, Container, ListItem, ListItemAvatar, ListItemText, List, Divider } from '@material-ui/core'
-import { Pagination } from '@material-ui/lab'
+import { CardMedia, Container, ListItem, ListItemAvatar, ListItemText, List, Divider, Button } from '@material-ui/core'
+import { Pagination as PaginationComponent } from '@material-ui/lab'
 
 import { t } from '../../../i18n'
 import { Game, gameService, ScreenshotSize } from '../../../services/GameService'
@@ -13,6 +13,7 @@ import PageLoader from '../../Global/PageLoader/PageLoader'
 import { placeholderImg } from '../../../services/Util/AssetsProvider'
 import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
 import Centered from '../../Global/Centered/Centered'
+import { PaginatedList, Pagination } from '../../../services/RequestService'
 
 const styles = ({ palette, spacing, breakpoints }: Theme) =>
     createStyles({
@@ -58,6 +59,8 @@ const styles = ({ palette, spacing, breakpoints }: Theme) =>
     })
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
+    dataFunction: (search: string, pagination: Pagination) => Promise<PaginatedList<Game>>
+    infiniteScroll?: boolean
     classes: {
         icon: string
         cardGrid: string
@@ -84,29 +87,34 @@ class GameListContent extends AbstractPaginator<Props, State> {
             pagination: {
                 page: Number(currentUrlParams.get('page') || 1),
                 totalResults: 0,
-                pageSize: 5,
+                pageSize: 10,
             },
             loading: true,
         }
     }
 
     componentDidMount() {
-        this.fetchData()
-    }
-
-    fetchData = () => {
-        const { location } = this.props
         const { pagination } = this.state
 
-        gameService.getAll(location.search, pagination.pageSize, pagination.totalResults).then((response) =>
-            this.setState({
-                games: response.items.map((game) => gameService.withCover(game, ScreenshotSize.CoverSmall)),
-                loading: false,
-                pagination: {
-                    totalResults: response.totalResults,
-                    page: pagination.page,
-                    pageSize: pagination.pageSize,
-                },
+        this.fetchData(pagination)
+    }
+
+    fetchData = (pagination: Pagination) => {
+        const { location, dataFunction, infiniteScroll } = this.props
+
+        dataFunction(location.search, pagination).then((response) =>
+            this.setState((prevState) => {
+                const games = response.items.map((game) => gameService.withCover(game, ScreenshotSize.CoverSmall))
+
+                return {
+                    games: infiniteScroll ? prevState.games.concat(games) : games,
+                    loading: false,
+                    pagination: {
+                        totalResults: response.totalResults,
+                        page: pagination.page,
+                        pageSize: pagination.pageSize,
+                    },
+                }
             }),
         )
     }
@@ -127,7 +135,7 @@ class GameListContent extends AbstractPaginator<Props, State> {
     }
 
     render() {
-        const { classes } = this.props
+        const { classes, infiniteScroll } = this.props
         const { games, loading } = this.state
 
         return (
@@ -143,7 +151,7 @@ class GameListContent extends AbstractPaginator<Props, State> {
                                     </Typography>
                                 </Centered>
                             )}
-                            {!loading &&
+                            {(!loading || infiniteScroll) &&
                                 games.map((game) => (
                                     <div key={game.id}>
                                         <ListItem alignItems="flex-start" className={classes.listItem}>
@@ -179,15 +187,25 @@ class GameListContent extends AbstractPaginator<Props, State> {
                 </Container>
 
                 <Grid container justify="center">
-                    <Pagination
-                        color="primary"
-                        variant="outlined"
-                        page={this.currentPage}
-                        count={this.totalPages}
-                        onChange={this.handlePageChange}
-                        showFirstButton
-                        showLastButton
-                    />
+                    {infiniteScroll && this.hasNextPage && !loading && (
+                        <Button
+                            variant="contained"
+                            onClick={() => this.fetchData(this.nextPage)}
+                            color="primary"
+                        >{t`common.more`}</Button>
+                    )}
+
+                    {!infiniteScroll && (
+                        <PaginationComponent
+                            color="primary"
+                            variant="outlined"
+                            page={this.currentPage}
+                            count={this.totalPages}
+                            onChange={this.handlePageChange}
+                            showFirstButton
+                            showLastButton
+                        />
+                    )}
                 </Grid>
             </>
         )

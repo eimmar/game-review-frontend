@@ -1,5 +1,4 @@
 import { PaginatedList, requestService } from './RequestService'
-import { phpDebug } from '../parameters'
 
 export enum GameCategory {
     MainGame,
@@ -168,7 +167,7 @@ export interface GameEntityFilterValues {
 class GameService {
     baseUrl = '/game/'
 
-    getAll(search: string, pageSize: number, totalResults: number): Promise<PaginatedList<Game>> {
+    getAll(search: string, pageSize: number): Promise<PaginatedList<Game>> {
         const {
             page,
             query,
@@ -186,8 +185,7 @@ class GameService {
             order,
         } = requestService.getFilters(search) as GamesFilterRequest
 
-        return requestService.performRequest('POST', this.baseUrl + phpDebug, {
-            totalResults,
+        return requestService.performRequest('POST', this.baseUrl, {
             pageSize,
             page: Number(page || 1),
             orderBy,
@@ -206,6 +204,10 @@ class GameService {
                 company,
             },
         })
+    }
+
+    getAllForList(listId: string, page: number, pageSize: number): Promise<PaginatedList<Game>> {
+        return requestService.performRequest('POST', `${this.baseUrl}list/${listId}`, { pageSize, page })
     }
 
     get(id: string): Promise<GameLoaded> {

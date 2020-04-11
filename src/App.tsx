@@ -17,6 +17,8 @@ import GameList from './views/Game/GameList'
 import GameView from './views/Game/GameView'
 import { PublicOnlyRoute } from './routes/PublicOnlyRoute'
 import history from './services/History'
+import { PrivateRoute } from './routes/PrivateRoute'
+import Profile from './views/User/Profile'
 
 const HomePage = lazyComponent(import('./views/HomePage'))
 
@@ -34,6 +36,8 @@ function App() {
 
                 <PublicRoute exact path={`${routes.game.list}`} component={GameList} />
                 <PublicRoute exact path={`${routes.game.view}/:guid`} component={GameView} />
+
+                <PrivateRoute exact path={`${routes.user.profile}`} component={Profile} />
 
                 <PublicRoute component={NotFound404} />
             </Switch>

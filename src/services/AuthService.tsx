@@ -10,6 +10,13 @@ export interface User {
     lastName: string | null
     email: string
     roles: string[]
+    createdAt: DateTimeObj
+}
+
+interface DateTimeObj {
+    date: string
+    timezone_type: number
+    timezone: string
 }
 
 export interface LoggedInUser extends User {

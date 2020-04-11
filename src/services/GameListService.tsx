@@ -56,8 +56,8 @@ class GameListService {
         return requestService.performRequest('GET', `${this.baseUrl}containing/${gameId}`)
     }
 
-    getAll() {
-        return requestService.performRequest('GET', this.baseUrl)
+    getAllForUser(userId: string): Promise<GameList[]> {
+        return requestService.performRequest('GET', `${this.baseUrl}user/${userId}`)
     }
 
     delete(id: string) {

@@ -45,7 +45,9 @@ class GameList extends Component<Props, State> {
                     gameModes={gameModes}
                     platforms={platforms}
                 />
-                <GameListContent />
+                <GameListContent
+                    dataFunction={(search, pagination) => gameService.getAll(search, pagination.pageSize)}
+                />
             </MainLayout>
         )
     }

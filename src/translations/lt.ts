@@ -32,6 +32,11 @@ export const ltTranslations = {
     'user.sendResetPasswordRequest': 'Siųsti',
     'user.passwordResetLinkSent': 'Slaptažodžio keitimo nurodymai buvo nusiųsti į Jusų elektroninio pašto paskyrą.',
     'user.passwordResetSuccess': 'Slaptažodis pakeistas sėkmingai! Galite prisijungti.',
+    'user.memberSince': 'Narys nuo',
+    'user.gameLists': 'Žaidimai',
+    'user.favorites': 'Mėgstamiausi',
+    'user.wishList': 'Norimi',
+    'user.played': 'Žaisti',
 
     'game.listHeader': 'Žaidimai',
     'game.mainCta': 'Naujausi žaidimai',
