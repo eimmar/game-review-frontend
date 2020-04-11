@@ -1,6 +1,6 @@
 import React from 'react'
 import { withTranslation } from 'react-i18next'
-import { BrowserRouter, Switch } from 'react-router-dom'
+import { Switch, Router } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import 'moment/locale/lt'
@@ -16,12 +16,13 @@ import NotFound404 from './views/Error/NotFound404'
 import GameList from './views/Game/GameList'
 import GameView from './views/Game/GameView'
 import { PublicOnlyRoute } from './routes/PublicOnlyRoute'
+import history from './services/History'
 
 const HomePage = lazyComponent(import('./views/HomePage'))
 
 function App() {
     return (
-        <BrowserRouter>
+        <Router history={history}>
             <ToastContainer />
             <Switch>
                 <PublicOnlyRoute exact path={routes.register} component={Registration} />
@@ -36,7 +37,7 @@ function App() {
 
                 <PublicRoute component={NotFound404} />
             </Switch>
-        </BrowserRouter>
+        </Router>
     )
 }
 

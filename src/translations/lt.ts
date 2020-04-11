@@ -66,6 +66,13 @@ export const ltTranslations = {
     'game.sortByRatingAsc': 'Geriausiai įvertinti',
     'game.sortByRatingDesc': 'Blogiausiai įvertinti',
 
+    'gameList.addToFavorites': 'Pridėti į mėgstamiausius',
+    'gameList.addToWishList': 'Pridėti į norimus',
+    'gameList.addToPlayed': 'Pridėti į žaistus',
+    'gameList.removeFromFavorites': 'Šalinti iš mėgstamiausių',
+    'gameList.removeFromWishList': 'Šalinti iš norimų',
+    'gameList.removeFromPlayed': 'Šalinti iš žaistų',
+
     'gameReview.successCreate': 'Atsiliepimas sukurtas',
     'gameReview.rating': 'Įvertinimas',
     'gameReview.comment': 'Atsiliepimas',

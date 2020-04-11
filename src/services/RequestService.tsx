@@ -1,9 +1,10 @@
 import cookie from 'react-cookies'
 
-import { backendUrl } from '../parameters'
+import { backendUrl, phpDebug, routes } from '../parameters'
 import { errorService } from './ErrorService'
 // eslint-disable-next-line import/no-cycle
 import { authService } from './AuthService'
+import history from './History'
 
 export interface Pagination {
     page: number
@@ -46,21 +47,6 @@ class RequestService {
     }
 
     getRequestOptions(method: string, body: BodyInit): RequestInit {
-        const requestOptions: RequestInit = {
-            method,
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-            },
-        }
-
-        if (method !== 'GET') {
-            requestOptions.body = body
-        }
-
-        return requestOptions
-    }
-
-    getRequestOptionsWithAuth(method: string, body: BodyInit): RequestInit {
         const currentUser = authService.getCurrentUser()
 
         const requestOptions: RequestInit = {
@@ -84,7 +70,7 @@ class RequestService {
 
             if (!response.ok && response.status === 401) {
                 cookie.remove('currentUser')
-                window.location.hash = '#/login'
+                history.push(routes.login, { referer: { url: history.location.pathname } })
             }
 
             if (response.ok) {
@@ -95,13 +81,6 @@ class RequestService {
 
             return Promise.reject(error)
         })
-    }
-
-    performAuthenticatedRequest(method: 'POST' | 'GET' | 'DELETE', action: string, body?: object) {
-        return fetch(
-            backendUrl + action,
-            this.getRequestOptionsWithAuth(method, body ? JSON.stringify(body) : ''),
-        ).then(this.handleResponse)
     }
 
     performRequest(method: 'POST' | 'GET' | 'DELETE', action: string, body?: object) {

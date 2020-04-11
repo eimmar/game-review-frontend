@@ -35,7 +35,7 @@ class ReviewService {
     }
 
     create(data: GameReviewRequest) {
-        return requestService.performAuthenticatedRequest('POST', this.baseUrl, data)
+        return requestService.performRequest('POST', this.baseUrl, data)
     }
 }
 

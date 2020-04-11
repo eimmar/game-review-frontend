@@ -1,11 +1,17 @@
 // eslint-disable-next-line import/no-cycle
-import { Game } from './GameService'
 import { requestService } from './RequestService'
+import { authService } from './AuthService'
 
 export enum GameListPrivacyType {
     Private = 1,
     FriendsOnly,
     Public,
+}
+
+export enum PredefinedListType {
+    Favorites = 1,
+    Wishlist,
+    Played,
 }
 
 export enum GameListType {
@@ -17,7 +23,6 @@ export enum GameListType {
 
 export interface GameList extends Timestampable {
     id: string
-    games: Game[]
     privacyType: GameListPrivacyType
     type: GameListType
     name: string
@@ -27,12 +32,36 @@ export interface GameList extends Timestampable {
 class GameListService {
     baseUrl = '/game-list/'
 
-    getAll(): Promise<GameList[]> {
-        return requestService.performRequest('GET', this.baseUrl)
+    addToPredefined(gameId: string, type: PredefinedListType): Promise<GameList> {
+        return requestService.performRequest('POST', `${this.baseUrl}add/${type}/${gameId}`)
+    }
+
+    removeFromPredefined(gameId: string, type: PredefinedListType): Promise<GameList> {
+        return requestService.performRequest('POST', `${this.baseUrl}remove/${type}/${gameId}`)
+    }
+
+    create(data: GameList) {
+        return requestService.performRequest('POST', `${this.baseUrl}new`, data)
     }
 
     get(id: string) {
         return requestService.performRequest('GET', this.baseUrl + id)
+    }
+
+    getListsContaining(gameId: string): Promise<GameList[]> {
+        if (authService.getCurrentUser()) {
+            return requestService.performRequest('GET', `${this.baseUrl}containing/${gameId}`)
+        }
+
+        return requestService.performRequest('GET', `${this.baseUrl}containing/${gameId}`)
+    }
+
+    getAll() {
+        return requestService.performRequest('GET', this.baseUrl)
+    }
+
+    delete(id: string) {
+        return requestService.performRequest('DELETE', this.baseUrl + id)
     }
 }
 
