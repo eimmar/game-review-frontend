@@ -1,6 +1,6 @@
 import { PaginatedList, Pagination, requestService } from './RequestService'
 import { Game } from './GameService'
-import { User } from './AuthService'
+import { User } from './UserService'
 
 export interface GameReview extends Timestampable {
     id: string

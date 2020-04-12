@@ -14,6 +14,7 @@ export const routes = {
 
     user: {
         profile: '/profile',
+        view: '/user',
     },
 }
 

@@ -3,21 +3,8 @@ import cookie from 'react-cookies'
 
 // eslint-disable-next-line import/no-cycle
 import { requestService } from './RequestService'
-
-export interface User {
-    id: string
-    firstName: string
-    lastName: string | null
-    email: string
-    roles: string[]
-    createdAt: DateTimeObj
-}
-
-interface DateTimeObj {
-    date: string
-    timezone_type: number
-    timezone: string
-}
+// eslint-disable-next-line import/no-cycle
+import { User } from './UserService'
 
 export interface LoggedInUser extends User {
     accessToken: string

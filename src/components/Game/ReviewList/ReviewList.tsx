@@ -12,6 +12,7 @@ import {
     ListItemText,
     ListItemIcon,
     Avatar,
+    Link,
 } from '@material-ui/core'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import ClearIcon from '@material-ui/icons/Clear'
@@ -29,6 +30,7 @@ import ReviewFormModal from '../Review/ReviewFormModal'
 import { t } from '../../../i18n'
 import styles from './ReviewList.module.scss'
 import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
+import { routes } from '../../../parameters'
 
 interface Props extends RouteComponentProps {
     gameId: string
@@ -95,7 +97,10 @@ class ReviewList extends AbstractPaginator<Props, State> {
                     <Moment locale={i18next.language} format="hh:mm, MMMM Do, YYYY">
                         {review.createdAt}
                     </Moment>{' '}
-                    {t`common.reviewBy`} {review.user.firstName} {review.user.lastName}
+                    {t`common.reviewBy`}{' '}
+                    <Link href={`${routes.user.view}/${review.user.id}`} target="_blank">
+                        {review.user.firstName} {review.user.lastName}({review.user.email})
+                    </Link>
                 </Typography>
 
                 {review.rating && this.renderRatingIndicator(review.rating)}

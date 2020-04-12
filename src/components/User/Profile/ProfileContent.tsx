@@ -27,13 +27,14 @@ import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
 import GamesIcon from '@material-ui/icons/Games'
 
 import { t } from '../../../i18n'
-import { LoggedInUser, User } from '../../../services/AuthService'
+import { LoggedInUser } from '../../../services/AuthService'
 import sStyles from './ProfileContent.module.scss'
 import GameListContent from '../../Game/GameListContent/GameListContent'
 import { GameList, gameListService, GameListType } from '../../../services/GameListService'
 import { gameService } from '../../../services/GameService'
 import Centered from '../../Global/Centered/Centered'
 import ReviewList from '../ReviewList/ReviewList'
+import { User } from '../../../services/UserService'
 
 const styles = ({ spacing, palette }: Theme) =>
     createStyles({

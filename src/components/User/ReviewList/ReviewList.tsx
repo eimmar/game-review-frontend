@@ -12,6 +12,7 @@ import {
     ListItemText,
     ListItemIcon,
     Avatar,
+    Link,
 } from '@material-ui/core'
 import ClearIcon from '@material-ui/icons/Clear'
 import Rating from '@material-ui/lab/Rating'
@@ -28,6 +29,7 @@ import { t } from '../../../i18n'
 import styles from './ReviewList.module.scss'
 import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
 import { placeholderImg } from '../../../services/Util/AssetsProvider'
+import { routes } from '../../../parameters'
 
 interface Props extends RouteComponentProps {
     userId: string
@@ -101,10 +103,16 @@ class ReviewList extends AbstractPaginator<Props, State> {
                 <List>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
-                            <Avatar alt={review.title} src={review.game.coverImage || placeholderImg} />
+                            <Link href={`${routes.game.view}/${review.game.id}`} target="_blank">
+                                <Avatar alt={review.title} src={review.game.coverImage || placeholderImg} />
+                            </Link>
                         </ListItemAvatar>
                         <ListItemText
-                            primary={review.game.name}
+                            primary={
+                                <Link href={`${routes.game.view}/${review.game.id}`} target="_blank">
+                                    {review.game.name}
+                                </Link>
+                            }
                             secondary={
                                 <Box mt={1} style={{ color: 'initial' }} component="span">
                                     <ShowMore
