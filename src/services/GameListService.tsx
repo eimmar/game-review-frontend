@@ -11,13 +11,13 @@ export enum GameListPrivacyType {
 export enum PredefinedListType {
     Favorites = 1,
     Wishlist,
-    Played,
+    Playing,
 }
 
 export enum GameListType {
     Favorites = 1,
     Wishlist,
-    Played,
+    Playing,
     Custom,
 }
 

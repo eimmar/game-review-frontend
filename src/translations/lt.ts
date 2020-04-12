@@ -36,7 +36,8 @@ export const ltTranslations = {
     'user.gameLists': 'Žaidimai',
     'user.favorites': 'Mėgstamiausi',
     'user.wishList': 'Norimi',
-    'user.played': 'Žaisti',
+    'user.playing': 'Žaidžiami',
+    'user.reviews': 'Paskutiniai žaidimų atsiliepimai',
 
     'game.listHeader': 'Žaidimai',
     'game.mainCta': 'Naujausi žaidimai',
@@ -73,10 +74,10 @@ export const ltTranslations = {
 
     'gameList.addToFavorites': 'Pridėti į mėgstamiausius',
     'gameList.addToWishList': 'Pridėti į norimus',
-    'gameList.addToPlayed': 'Pridėti į žaistus',
+    'gameList.addToPlaying': 'Pridėti į žaidžiamus',
     'gameList.removeFromFavorites': 'Šalinti iš mėgstamiausių',
     'gameList.removeFromWishList': 'Šalinti iš norimų',
-    'gameList.removeFromPlayed': 'Šalinti iš žaistų',
+    'gameList.removeFromPlaying': 'Šalinti iš žaidžiamų',
 
     'gameReview.successCreate': 'Atsiliepimas sukurtas',
     'gameReview.rating': 'Įvertinimas',

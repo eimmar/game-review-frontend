@@ -13,7 +13,6 @@ import {
     ListItemIcon,
     Avatar,
 } from '@material-ui/core'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import ClearIcon from '@material-ui/icons/Clear'
 import Rating from '@material-ui/lab/Rating'
 import ShowMore from 'react-show-more'
@@ -25,13 +24,13 @@ import i18next from 'i18next'
 
 import { Pagination } from '../../../services/RequestService'
 import { GameReview, reviewService } from '../../../services/GameReviewService'
-import ReviewFormModal from '../Review/ReviewFormModal'
 import { t } from '../../../i18n'
 import styles from './ReviewList.module.scss'
 import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
+import { placeholderImg } from '../../../services/Util/AssetsProvider'
 
 interface Props extends RouteComponentProps {
-    gameId: string
+    userId: string
 }
 
 interface State extends AbstractPaginatorState {
@@ -58,10 +57,10 @@ class ReviewList extends AbstractPaginator<Props, State> {
     fetchData = (pagination: Pagination) => {
         this.setState({ loading: true })
 
-        const { gameId } = this.props
+        const { userId } = this.props
 
         reviewService
-            .getAllForGame(gameId, pagination)
+            .getAllForUser(userId, pagination)
             .then((response) => {
                 this.setState((prevState) => ({
                     reviews: prevState.reviews.concat(response.items),
@@ -94,8 +93,7 @@ class ReviewList extends AbstractPaginator<Props, State> {
                 <Typography variant="caption" paragraph gutterBottom>
                     <Moment locale={i18next.language} format="hh:mm, MMMM Do, YYYY">
                         {review.createdAt}
-                    </Moment>{' '}
-                    {t`common.reviewBy`} {review.user.firstName} {review.user.lastName}
+                    </Moment>
                 </Typography>
 
                 {review.rating && this.renderRatingIndicator(review.rating)}
@@ -103,11 +101,10 @@ class ReviewList extends AbstractPaginator<Props, State> {
                 <List>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
-                            <Avatar alt={review.title}>
-                                <AccountCircleIcon />
-                            </Avatar>
+                            <Avatar alt={review.title} src={review.game.coverImage || placeholderImg} />
                         </ListItemAvatar>
                         <ListItemText
+                            primary={review.game.name}
                             secondary={
                                 <Box mt={1} style={{ color: 'initial' }} component="span">
                                     <ShowMore
@@ -195,7 +192,6 @@ class ReviewList extends AbstractPaginator<Props, State> {
     }
 
     render() {
-        const { gameId } = this.props
         const { loading, reviews } = this.state
 
         return (
@@ -214,7 +210,6 @@ class ReviewList extends AbstractPaginator<Props, State> {
                         )}
                     </List>
                 </Box>
-                <ReviewFormModal gameId={gameId} />
             </>
         )
     }

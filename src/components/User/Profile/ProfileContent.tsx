@@ -24,7 +24,7 @@ import Moment from 'react-moment'
 import i18next from 'i18next'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
-import DoneAllIcon from '@material-ui/icons/DoneAll'
+import GamesIcon from '@material-ui/icons/Games'
 
 import { t } from '../../../i18n'
 import { LoggedInUser, User } from '../../../services/AuthService'
@@ -33,6 +33,7 @@ import GameListContent from '../../Game/GameListContent/GameListContent'
 import { GameList, gameListService, GameListType } from '../../../services/GameListService'
 import { gameService } from '../../../services/GameService'
 import Centered from '../../Global/Centered/Centered'
+import ReviewList from '../ReviewList/ReviewList'
 
 const styles = ({ spacing, palette }: Theme) =>
     createStyles({
@@ -205,8 +206,8 @@ class ProfileContent extends Component<Props, State> {
                         className={classes.tab}
                         label={
                             <Typography variant="h6" gutterBottom>
-                                <DoneAllIcon className={sStyles.icon} />
-                                {t`user.played`}
+                                <GamesIcon className={sStyles.icon} />
+                                {t`user.playing`}
                             </Typography>
                         }
                     />
@@ -219,7 +220,7 @@ class ProfileContent extends Component<Props, State> {
                     {this.getList(GameListType.Wishlist)}
                 </TabPanel>
                 <TabPanel value={tabIndex} index={2} renderedTabs={renderedTabs}>
-                    {this.getList(GameListType.Played)}
+                    {this.getList(GameListType.Playing)}
                 </TabPanel>
             </>
         )
@@ -277,6 +278,13 @@ class ProfileContent extends Component<Props, State> {
                             </Typography>
                             {gameListsLoading && <CircularProgress />}
                             {!gameListsLoading && this.reviewTabs}
+                        </Grid>
+
+                        <Grid item lg={12} className="width-full">
+                            <Typography variant="h5" align="center">
+                                {t`user.reviews`}
+                            </Typography>
+                            <ReviewList userId={user.id} />
                         </Grid>
                     </Grid>
                 </Container>

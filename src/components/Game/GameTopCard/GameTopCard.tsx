@@ -17,7 +17,7 @@ import Moment from 'react-moment'
 import i18next from 'i18next'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
-import DoneAllIcon from '@material-ui/icons/DoneAll'
+import GamesIcon from '@material-ui/icons/Games'
 
 import { GameLoaded, gameService, ScreenshotSize } from '../../../services/GameService'
 import { placeholderImg } from '../../../services/Util/AssetsProvider'
@@ -93,7 +93,7 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
 interface State {
     inFavorites: boolean
     inWishList: boolean
-    inPlayed: boolean
+    inPlaying: boolean
     loading: boolean
 }
 
@@ -107,7 +107,7 @@ class GameTopCard extends Component<Props, State> {
     state = {
         inFavorites: false,
         inWishList: false,
-        inPlayed: false,
+        inPlaying: false,
         loading: true,
     }
 
@@ -119,9 +119,9 @@ class GameTopCard extends Component<Props, State> {
             .then((lists) => {
                 const inFavorites = !!lists.find((it) => it.type === GameListType.Favorites)
                 const inWishList = !!lists.find((it) => it.type === GameListType.Wishlist)
-                const inPlayed = !!lists.find((it) => it.type === GameListType.Played)
+                const inPlaying = !!lists.find((it) => it.type === GameListType.Playing)
 
-                this.setState({ inFavorites, inWishList, inPlayed })
+                this.setState({ inFavorites, inWishList, inPlaying })
             })
             .finally(() => this.setState({ loading: false }))
     }
@@ -134,7 +134,7 @@ class GameTopCard extends Component<Props, State> {
     }
 
     get gameListActions() {
-        const { loading, inFavorites, inWishList, inPlayed } = this.state
+        const { loading, inFavorites, inWishList, inPlaying } = this.state
         const favorites: ListActionConfig = {
             onClick: () =>
                 inFavorites
@@ -152,11 +152,13 @@ class GameTopCard extends Component<Props, State> {
             color: inWishList ? 'primary' : 'inherit',
             tooltip: inWishList ? t`gameList.removeFromWishList` : t`gameList.addToWishList`,
         }
-        const played: ListActionConfig = {
+        const playing: ListActionConfig = {
             onClick: () =>
-                inPlayed ? this.removeFromList(PredefinedListType.Played) : this.addToList(PredefinedListType.Played),
-            color: inPlayed ? 'primary' : 'inherit',
-            tooltip: inPlayed ? t`gameList.removeFromPlayed` : t`gameList.addToPlayed`,
+                inPlaying
+                    ? this.removeFromList(PredefinedListType.Playing)
+                    : this.addToList(PredefinedListType.Playing),
+            color: inPlaying ? 'primary' : 'inherit',
+            tooltip: inPlaying ? t`gameList.removeFromPlaying` : t`gameList.addToPlaying`,
         }
 
         return (
@@ -176,9 +178,9 @@ class GameTopCard extends Component<Props, State> {
                             </IconButton>
                         </Tooltip>
 
-                        <Tooltip placement="top" title={played.tooltip}>
-                            <IconButton color={played.color} onClick={played.onClick}>
-                                <DoneAllIcon />
+                        <Tooltip placement="top" title={playing.tooltip}>
+                            <IconButton color={playing.color} onClick={playing.onClick}>
+                                <GamesIcon />
                             </IconButton>
                         </Tooltip>
                     </Grid>
@@ -198,8 +200,8 @@ class GameTopCard extends Component<Props, State> {
                     case PredefinedListType.Wishlist:
                         this.setState({ inWishList: true })
                         break
-                    case PredefinedListType.Played:
-                        this.setState({ inPlayed: true })
+                    case PredefinedListType.Playing:
+                        this.setState({ inPlaying: true })
                         break
                     case PredefinedListType.Favorites:
                         this.setState({ inFavorites: true })
@@ -222,8 +224,8 @@ class GameTopCard extends Component<Props, State> {
                     case PredefinedListType.Wishlist:
                         this.setState({ inWishList: false })
                         break
-                    case PredefinedListType.Played:
-                        this.setState({ inPlayed: false })
+                    case PredefinedListType.Playing:
+                        this.setState({ inPlaying: false })
                         break
                     case PredefinedListType.Favorites:
                         this.setState({ inFavorites: false })

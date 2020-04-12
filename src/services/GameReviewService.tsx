@@ -30,6 +30,10 @@ class ReviewService {
         return requestService.performRequest('POST', `${this.baseUrl}game/${gameId}`, pagination)
     }
 
+    getAllForUser(userId: string, pagination: Pagination): Promise<PaginatedList<GameReview>> {
+        return requestService.performRequest('POST', `${this.baseUrl}user/${userId}`, pagination)
+    }
+
     get(id: string) {
         return requestService.performRequest('GET', this.baseUrl + id)
     }
