@@ -26,7 +26,13 @@ export interface GameList extends Timestampable {
     privacyType: GameListPrivacyType
     type: GameListType
     name: string
-    description: string | null
+}
+
+export interface GameListRequest {
+    privacyType: GameListPrivacyType
+    user: string
+    name: string
+    games: string[]
 }
 
 class GameListService {
@@ -40,7 +46,15 @@ class GameListService {
         return requestService.performRequest('POST', `${this.baseUrl}remove/${type}/${gameId}`)
     }
 
-    create(data: GameList) {
+    addToCustom(gameId: string, listId: string): Promise<GameList> {
+        return requestService.performRequest('POST', `${this.baseUrl}${listId}/add/${gameId}`)
+    }
+
+    removeFromCustom(gameId: string, listId: string): Promise<GameList> {
+        return requestService.performRequest('POST', `${this.baseUrl}${listId}/remove/${gameId}`)
+    }
+
+    create(data: GameListRequest): Promise<GameList> {
         return requestService.performRequest('POST', `${this.baseUrl}new`, data)
     }
 

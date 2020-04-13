@@ -3,21 +3,9 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import {
-    Box,
-    CardMedia,
-    CircularProgress,
-    IconButton,
-    LinearProgress,
-    Paper,
-    PropTypes,
-    Tooltip,
-} from '@material-ui/core'
+import { Box, CardMedia, LinearProgress, Paper } from '@material-ui/core'
 import Moment from 'react-moment'
 import i18next from 'i18next'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
-import GamesIcon from '@material-ui/icons/Games'
 
 import { GameLoaded, gameService, ScreenshotSize } from '../../../services/GameService'
 import { placeholderImg } from '../../../services/Util/AssetsProvider'
@@ -25,7 +13,7 @@ import { t } from '../../../i18n'
 import sStyles from './GameTopCard.module.scss'
 import { flattenClasses } from '../../../services/Util/StyleUtils'
 import { MainLayout } from '../../../layouts/MainLayout/MainLayout'
-import { gameListService, GameListType, PredefinedListType } from '../../../services/GameListService'
+import GameListTab from '../../GameListTab/GameListTab'
 
 const styles = ({ palette, spacing, breakpoints }: Theme) =>
     createStyles({
@@ -90,151 +78,12 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     }
 }
 
-interface State {
-    inFavorites: boolean
-    inWishList: boolean
-    inPlaying: boolean
-    loading: boolean
-}
-
-interface ListActionConfig {
-    onClick: () => void
-    color: PropTypes.Color
-    tooltip: string
-}
-
-class GameTopCard extends Component<Props, State> {
-    state = {
-        inFavorites: false,
-        inWishList: false,
-        inPlaying: false,
-        loading: true,
-    }
-
-    componentDidMount() {
-        const { game } = this.props
-
-        gameListService
-            .getListsContaining(game.id)
-            .then((lists) => {
-                const inFavorites = !!lists.find((it) => it.type === GameListType.Favorites)
-                const inWishList = !!lists.find((it) => it.type === GameListType.Wishlist)
-                const inPlaying = !!lists.find((it) => it.type === GameListType.Playing)
-
-                this.setState({ inFavorites, inWishList, inPlaying })
-            })
-            .finally(() => this.setState({ loading: false }))
-    }
-
+class GameTopCard extends Component<Props> {
     get backgroundImage() {
         const { game } = this.props
         const screenshots = gameService.getScreenshots(game, ScreenshotSize.P1080)
 
         return screenshots[0] ? screenshots[0].url : null
-    }
-
-    get gameListActions() {
-        const { loading, inFavorites, inWishList, inPlaying } = this.state
-        const favorites: ListActionConfig = {
-            onClick: () =>
-                inFavorites
-                    ? this.removeFromList(PredefinedListType.Favorites)
-                    : this.addToList(PredefinedListType.Favorites),
-            color: inFavorites ? 'primary' : 'inherit',
-            tooltip: inFavorites ? t`gameList.removeFromFavorites` : t`gameList.addToFavorites`,
-        }
-        const wishList: ListActionConfig = {
-            onClick: () => {
-                inWishList
-                    ? this.removeFromList(PredefinedListType.Wishlist)
-                    : this.addToList(PredefinedListType.Wishlist)
-            },
-            color: inWishList ? 'primary' : 'inherit',
-            tooltip: inWishList ? t`gameList.removeFromWishList` : t`gameList.addToWishList`,
-        }
-        const playing: ListActionConfig = {
-            onClick: () =>
-                inPlaying
-                    ? this.removeFromList(PredefinedListType.Playing)
-                    : this.addToList(PredefinedListType.Playing),
-            color: inPlaying ? 'primary' : 'inherit',
-            tooltip: inPlaying ? t`gameList.removeFromPlaying` : t`gameList.addToPlaying`,
-        }
-
-        return (
-            <>
-                {loading && <CircularProgress />}
-                {!loading && (
-                    <Grid container>
-                        <Tooltip placement="top" title={favorites.tooltip}>
-                            <IconButton color={favorites.color} onClick={favorites.onClick}>
-                                <FavoriteIcon />
-                            </IconButton>
-                        </Tooltip>
-
-                        <Tooltip placement="top" title={wishList.tooltip}>
-                            <IconButton color={wishList.color} onClick={wishList.onClick}>
-                                <PlaylistAddIcon />
-                            </IconButton>
-                        </Tooltip>
-
-                        <Tooltip placement="top" title={playing.tooltip}>
-                            <IconButton color={playing.color} onClick={playing.onClick}>
-                                <GamesIcon />
-                            </IconButton>
-                        </Tooltip>
-                    </Grid>
-                )}
-            </>
-        )
-    }
-
-    addToList = (listType: PredefinedListType) => {
-        const { game } = this.props
-
-        this.setState({ loading: true })
-        gameListService
-            .addToPredefined(game.id, listType)
-            .then(() => {
-                switch (listType) {
-                    case PredefinedListType.Wishlist:
-                        this.setState({ inWishList: true })
-                        break
-                    case PredefinedListType.Playing:
-                        this.setState({ inPlaying: true })
-                        break
-                    case PredefinedListType.Favorites:
-                        this.setState({ inFavorites: true })
-                        break
-                    default:
-                        break
-                }
-            })
-            .finally(() => this.setState({ loading: false }))
-    }
-
-    removeFromList = (listType: PredefinedListType) => {
-        const { game } = this.props
-
-        this.setState({ loading: true })
-        gameListService
-            .removeFromPredefined(game.id, listType)
-            .then(() => {
-                switch (listType) {
-                    case PredefinedListType.Wishlist:
-                        this.setState({ inWishList: false })
-                        break
-                    case PredefinedListType.Playing:
-                        this.setState({ inPlaying: false })
-                        break
-                    case PredefinedListType.Favorites:
-                        this.setState({ inFavorites: false })
-                        break
-                    default:
-                        break
-                }
-            })
-            .finally(() => this.setState({ loading: false }))
     }
 
     renderRatingIndicator = (rating: number) => {
@@ -297,7 +146,7 @@ class GameTopCard extends Component<Props, State> {
                                     <Typography variant="subtitle1" color="inherit" paragraph>
                                         {game.summary}
                                     </Typography>
-                                    {this.gameListActions}
+                                    <GameListTab gameId={game.id} />
                                 </Box>
                             </div>
                         </Grid>
