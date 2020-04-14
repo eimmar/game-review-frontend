@@ -3,8 +3,22 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
-import { CardMedia, Container, ListItem, ListItemAvatar, ListItemText, List, Divider, Button } from '@material-ui/core'
+import {
+    CardMedia,
+    Container,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    List,
+    Divider,
+    Button,
+    ListItemSecondaryAction,
+    IconButton,
+    Tooltip,
+} from '@material-ui/core'
 import { Pagination as PaginationComponent } from '@material-ui/lab'
+import DeleteIcon from '@material-ui/icons/Delete'
+import { toast } from 'react-toastify'
 
 import { t } from '../../../i18n'
 import { Game, gameService, ScreenshotSize } from '../../../services/GameService'
@@ -60,6 +74,7 @@ const styles = ({ palette, spacing, breakpoints }: Theme) =>
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     dataFunction: (search: string, pagination: Pagination) => Promise<PaginatedList<Game>>
+    deleteFunction?: (game: Game) => Promise<any>
     infiniteScroll?: boolean
     classes: {
         icon: string
@@ -134,8 +149,19 @@ class GameListContent extends AbstractPaginator<Props, State> {
         this.setState({ pagination: { ...pagination, page } }, this.changePage)
     }
 
+    removeGameFromState = (game: Game) => {
+        const { games, pagination } = this.state
+
+        this.setState({ games: games.filter((it) => it.id !== game.id) }, () => {
+            toast.success(t`game.successRemove`)
+            if (games.length === 1) {
+                this.fetchData(pagination)
+            }
+        })
+    }
+
     render() {
-        const { classes, infiniteScroll } = this.props
+        const { classes, infiniteScroll, deleteFunction } = this.props
         const { games, loading } = this.state
 
         return (
@@ -178,6 +204,22 @@ class GameListContent extends AbstractPaginator<Props, State> {
                                                     </Typography>
                                                 }
                                             />
+                                            {deleteFunction && (
+                                                <ListItemSecondaryAction>
+                                                    <Tooltip placement="top" title={t`common.delete`}>
+                                                        <IconButton
+                                                            edge="end"
+                                                            onClick={() =>
+                                                                deleteFunction(game)
+                                                                    .then(() => this.removeGameFromState(game))
+                                                                    .catch(() => toast.error(t`game.cantDelete`))
+                                                            }
+                                                        >
+                                                            <DeleteIcon />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </ListItemSecondaryAction>
+                                            )}
                                         </ListItem>
                                         <Divider component="li" />
                                     </div>

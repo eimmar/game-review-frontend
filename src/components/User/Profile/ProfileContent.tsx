@@ -9,25 +9,24 @@ import {
     CssBaseline,
     Divider,
     Grid,
+    IconButton,
     List,
-    ListItem,
-    ListItemAvatar,
-    ListItemText,
     Tab,
     Tabs,
+    Tooltip,
     Typography,
 } from '@material-ui/core'
-import ComputerIcon from '@material-ui/icons/Computer'
-import FaceIcon from '@material-ui/icons/Face'
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail'
 import Moment from 'react-moment'
 import i18next from 'i18next'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
 import GamesIcon from '@material-ui/icons/Games'
+import SportsEsportsIcon from '@material-ui/icons/SportsEsports'
+import EditIcon from '@material-ui/icons/Edit'
 
 import { t } from '../../../i18n'
-import { LoggedInUser } from '../../../services/AuthService'
+import { authService, LoggedInUser } from '../../../services/AuthService'
 import sStyles from './ProfileContent.module.scss'
 import GameListContent from '../../Game/GameListContent/GameListContent'
 import { GameList, gameListService, GameListType } from '../../../services/GameListService'
@@ -117,74 +116,26 @@ class ProfileContent extends Component<Props, State> {
         return (user.firstName.charAt(0) + (user.lastName?.charAt(0) || '')).toUpperCase()
     }
 
-    getList(listType: GameListType) {
-        const { gameLists } = this.state
-        const { classes } = this.props
-        const list = gameLists.find((it) => it.type === listType) || null
-
-        if (!list) {
-            return (
-                <Container className={classes.listNotFoundContainer}>
-                    <Grid container spacing={0}>
-                        <List className={classes.listNotFound}>
-                            <Centered>
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    {t`common.noResults`}
-                                </Typography>
-                            </Centered>
-                        </List>
-                    </Grid>
-                </Container>
-            )
-        }
-
-        return (
-            <GameListContent
-                infiniteScroll
-                dataFunction={(_, pagination) =>
-                    gameService.getAllForList(list.id || '0', pagination.page, pagination.pageSize)
-                }
-            />
-        )
-    }
-
     get customLists() {
         const { gameLists } = this.state
 
         return gameLists.filter((it) => it.type === GameListType.Custom)
     }
 
-    get listInfo() {
-        return (
-            <List>
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <FaceIcon />
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary={t`game.genres`} />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <ComputerIcon />
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary={t`game.platforms`} />
-                </ListItem>
-            </List>
-        )
-    }
-
-    get reviewTabs() {
+    get gameListTabs() {
         const { tabIndex, renderedTabs } = this.state
         const { classes } = this.props
 
         return (
             <>
-                <Tabs value={tabIndex} indicatorColor="primary" textColor="primary" onChange={this.handleTabChange}>
+                <Tabs
+                    value={tabIndex}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    onChange={this.handleTabChange}
+                    variant="scrollable"
+                    scrollButtons="auto"
+                >
                     <Tab
                         className={classes.tab}
                         label={
@@ -212,18 +163,82 @@ class ProfileContent extends Component<Props, State> {
                             </Typography>
                         }
                     />
+                    {this.customLists.map((list) => (
+                        <Tab
+                            key={list.id}
+                            className={classes.tab}
+                            label={
+                                <Typography variant="h6" gutterBottom>
+                                    <SportsEsportsIcon className={sStyles.icon} />
+                                    {list.name}
+                                    <Tooltip placement="top" title={t`common.edit`}>
+                                        <IconButton color="inherit">
+                                            <EditIcon />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Typography>
+                            }
+                        />
+                    ))}
                 </Tabs>
                 <Divider />
+
                 <TabPanel value={tabIndex} index={0} renderedTabs={renderedTabs}>
-                    {this.getList(GameListType.Favorites)}
+                    {this.renderListByType(GameListType.Favorites)}
                 </TabPanel>
                 <TabPanel value={tabIndex} index={1} renderedTabs={renderedTabs}>
-                    {this.getList(GameListType.Wishlist)}
+                    {this.renderListByType(GameListType.Wishlist)}
                 </TabPanel>
                 <TabPanel value={tabIndex} index={2} renderedTabs={renderedTabs}>
-                    {this.getList(GameListType.Playing)}
+                    {this.renderListByType(GameListType.Playing)}
                 </TabPanel>
+                {this.customLists.map((list, index) => (
+                    <TabPanel key={list.id} value={tabIndex} index={3 + index} renderedTabs={renderedTabs}>
+                        {this.renderList(list)}
+                    </TabPanel>
+                ))}
             </>
+        )
+    }
+
+    renderListByType = (listType: GameListType) => {
+        const { gameLists } = this.state
+        const list = gameLists.find((it) => it.type === listType)
+
+        return this.renderList(list)
+    }
+
+    renderList = (list?: GameList) => {
+        const { classes, user } = this.props
+
+        if (!list) {
+            return (
+                <Container className={classes.listNotFoundContainer}>
+                    <Grid container spacing={0}>
+                        <List className={classes.listNotFound}>
+                            <Centered>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                    {t`gameList.noResults`}
+                                </Typography>
+                            </Centered>
+                        </List>
+                    </Grid>
+                </Container>
+            )
+        }
+
+        return (
+            <GameListContent
+                infiniteScroll
+                deleteFunction={
+                    authService.getCurrentUser()?.id === user.id
+                        ? (game) => gameListService.removeFromList(game.id, list?.id)
+                        : undefined
+                }
+                dataFunction={(_, pagination) =>
+                    gameService.getAllForList(list.id || '0', pagination.page, pagination.pageSize)
+                }
+            />
         )
     }
 
@@ -278,7 +293,7 @@ class ProfileContent extends Component<Props, State> {
                                 {t`user.gameLists`}
                             </Typography>
                             {gameListsLoading && <CircularProgress />}
-                            {!gameListsLoading && this.reviewTabs}
+                            {!gameListsLoading && this.gameListTabs}
                         </Grid>
 
                         <Grid item lg={12} className="width-full">

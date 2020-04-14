@@ -11,6 +11,8 @@ export const ltTranslations = {
     'common.noResults': 'Nieko nerasta.',
     'common.reviewBy': 'parašė',
     'common.sort': 'Rikiavimas',
+    'common.edit': 'Redaguoti',
+    'common.delete': 'Šalinti',
 
     'filters.reset': 'Išvalyti filtrus',
 
@@ -71,6 +73,8 @@ export const ltTranslations = {
     'game.sortByReleaseDateDesc': 'Naujausi',
     'game.sortByRatingAsc': 'Geriausiai įvertinti',
     'game.sortByRatingDesc': 'Blogiausiai įvertinti',
+    'game.cantDelete': 'Žaidimo pašalinti nepavyko',
+    'game.successRemove': 'Žaidimas pašalintas',
 
     'gameList.addToFavorites': 'Pridėti į mėgstamiausius',
     'gameList.addToWishList': 'Pridėti į norimus',
@@ -86,6 +90,7 @@ export const ltTranslations = {
     'gameList.public': 'Viešas',
     'gameList.friendsOnly': 'Gali matyti draugai ',
     'gameList.private': 'Privatus',
+    'gameList.noResults': 'Sąrašas tuščias',
 
     'gameReview.successCreate': 'Atsiliepimas sukurtas',
     'gameReview.rating': 'Įvertinimas',

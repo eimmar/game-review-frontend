@@ -46,11 +46,11 @@ class GameListService {
         return requestService.performRequest('POST', `${this.baseUrl}remove/${type}/${gameId}`)
     }
 
-    addToCustom(gameId: string, listId: string): Promise<GameList> {
+    addToList(gameId: string, listId: string): Promise<GameList> {
         return requestService.performRequest('POST', `${this.baseUrl}${listId}/add/${gameId}`)
     }
 
-    removeFromCustom(gameId: string, listId: string): Promise<GameList> {
+    removeFromList(gameId: string, listId: string): Promise<GameList> {
         return requestService.performRequest('POST', `${this.baseUrl}${listId}/remove/${gameId}`)
     }
 

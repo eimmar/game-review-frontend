@@ -157,11 +157,11 @@ class GameListTab extends Component<Props, State> {
 
         if (this.gameInList(list.id)) {
             gameListService
-                .removeFromCustom(gameId, list.id)
+                .removeFromList(gameId, list.id)
                 .then((it) => this.setState({ gameListsWithGame: gameListsWithGame.filter((it2) => it2.id !== it.id) }))
         } else {
             gameListService
-                .addToCustom(gameId, list.id)
+                .addToList(gameId, list.id)
                 .then((it) => this.setState({ gameListsWithGame: gameListsWithGame.concat(it) }))
         }
     }
