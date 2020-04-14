@@ -38,7 +38,7 @@ import { GameList, gameListService, GameListType } from '../../../services/GameL
 import { gameService } from '../../../services/GameService'
 import Centered from '../../Global/Centered/Centered'
 import ReviewList from '../ReviewList/ReviewList'
-import { User } from '../../../services/UserService'
+import { User, userService } from '../../../services/UserService'
 import GameListUpdateForm from '../../GameListForm/GameListUpdateForm'
 
 const styles = ({ spacing, palette }: Theme) =>
@@ -119,12 +119,6 @@ class ProfileContent extends Component<Props, State> {
             .getAllForUser(user.id)
             .then((gameLists) => this.setState({ gameLists }))
             .finally(() => this.setState({ gameListsLoading: false }))
-    }
-
-    get profileInitials() {
-        const { user } = this.props
-
-        return (user.firstName.charAt(0) + (user.lastName?.charAt(0) || '')).toUpperCase()
     }
 
     get customLists() {
@@ -365,10 +359,10 @@ class ProfileContent extends Component<Props, State> {
                     <Grid container spacing={5} className={classes.mainGrid}>
                         <Grid item lg={12} className="width-full">
                             <Avatar className={sStyles.avatar}>
-                                <Typography variant="h3">{this.profileInitials}</Typography>
+                                <Typography variant="h3">{userService.getInitials(user)}</Typography>
                             </Avatar>
                             <Typography variant="h5" align="center">
-                                {[user.firstName, user.lastName].join(' ')}
+                                {userService.getFullName(user)}
                             </Typography>
                         </Grid>
 

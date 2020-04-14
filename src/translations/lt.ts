@@ -13,6 +13,7 @@ export const ltTranslations = {
     'common.sort': 'Rikiavimas',
     'common.edit': 'Redaguoti',
     'common.delete': 'Šalinti',
+    'common.search': 'Ieškoti',
 
     'filters.reset': 'Išvalyti filtrus',
 
@@ -40,6 +41,7 @@ export const ltTranslations = {
     'user.wishList': 'Norimi',
     'user.playing': 'Žaidžiami',
     'user.reviews': 'Paskutiniai žaidimų atsiliepimai',
+    'user.listHeader': 'Bendruomenė',
 
     'game.listHeader': 'Žaidimai',
     'game.mainCta': 'Naujausi žaidimai',

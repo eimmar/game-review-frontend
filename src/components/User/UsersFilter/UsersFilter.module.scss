@@ -1,0 +1,15 @@
+.search {
+    min-width: 400px !important;
+
+    @media screen and (max-width: 600px) {
+        min-width: inherit !important;
+    }
+}
+
+.searchContainer {
+    text-align: right;
+
+    @media screen and (max-width: 600px) {
+        width: 100%;
+    }
+}

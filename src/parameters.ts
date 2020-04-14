@@ -2,19 +2,20 @@ export const backendUrl = 'http://localhost:8000'
 
 export const routes = {
     homePage: '/',
-    register: '/register',
-    login: '/login',
-    forgotPassword: '/forgot-password',
-    resetPassword: '/reset-password',
+    register: '/registracija',
+    login: '/prisijungimas',
+    forgotPassword: '/pamirsau-slaptazodi',
+    resetPassword: '/atstatyti-slaptazodi',
 
     game: {
-        list: '/games',
-        view: '/game',
+        list: '/zaidimai',
+        view: '/zaidimas',
     },
 
     user: {
-        profile: '/profile',
-        view: '/user',
+        profile: '/profilis',
+        view: '/naudotojas',
+        list: '/bendruomene',
     },
 }
 

@@ -20,6 +20,7 @@ import history from './services/History'
 import { PrivateRoute } from './routes/PrivateRoute'
 import Profile from './views/User/Profile'
 import UserView from './views/User/UserView'
+import UserList from './views/User/UserList'
 
 const HomePage = lazyComponent(import('./views/HomePage'))
 
@@ -40,6 +41,7 @@ function App() {
 
                 <PrivateRoute exact path={`${routes.user.profile}`} component={Profile} />
                 <PublicRoute exact path={`${routes.user.view}/:guid`} component={UserView} />
+                <PublicRoute exact path={routes.user.list} component={UserList} />
 
                 <PublicRoute component={NotFound404} />
             </Switch>
