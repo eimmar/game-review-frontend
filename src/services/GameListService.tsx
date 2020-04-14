@@ -28,10 +28,13 @@ export interface GameList extends Timestampable {
     name: string
 }
 
-export interface GameListRequest {
+export interface GameListUpdateRequest {
     privacyType: GameListPrivacyType
-    user: string
     name: string
+}
+
+export interface GameListRequest extends GameListUpdateRequest {
+    user: string
     games: string[]
 }
 
@@ -58,8 +61,8 @@ class GameListService {
         return requestService.performRequest('POST', `${this.baseUrl}new`, data)
     }
 
-    get(id: string) {
-        return requestService.performRequest('GET', this.baseUrl + id)
+    update(id: string, data: GameListUpdateRequest): Promise<GameList> {
+        return requestService.performRequest('POST', `${this.baseUrl}edit/${id}`, data)
     }
 
     getListsContaining(gameId: string): Promise<GameList[]> {

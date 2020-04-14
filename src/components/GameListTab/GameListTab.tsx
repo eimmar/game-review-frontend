@@ -27,7 +27,7 @@ import AddIcon from '@material-ui/icons/Add'
 import { t } from '../../i18n'
 import { GameList, gameListService, GameListType, PredefinedListType } from '../../services/GameListService'
 import { authService } from '../../services/AuthService'
-import GameListForm from '../GameListForm/GameListForm'
+import GameListCreateForm from '../GameListForm/GameListCreateForm'
 import styles from './GameListTab.module.scss'
 
 interface Props extends RouteComponentProps {
@@ -219,7 +219,7 @@ class GameListTab extends Component<Props, State> {
 
                             {formOpen && (
                                 <ListItem>
-                                    <GameListForm
+                                    <GameListCreateForm
                                         gameId={gameId}
                                         onSuccess={this.addList}
                                         onClose={this.handleFormToggle}
