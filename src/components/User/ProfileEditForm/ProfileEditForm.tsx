@@ -5,15 +5,16 @@ import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
-import * as Yup from 'yup'
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles'
 import { Form, Formik, FormikHelpers } from 'formik'
+import * as Yup from 'yup'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import { authService, LoggedInUser } from '../../../services/AuthService'
 import { t } from '../../../i18n'
-import { authService, ResetPasswordRequest } from '../../../services/AuthService'
 import { routes } from '../../../parameters'
+import { userService, UserUpdateRequest } from '../../../services/UserService'
 
 const styles = ({ palette, spacing }: Theme) =>
     createStyles({
@@ -29,7 +30,7 @@ const styles = ({ palette, spacing }: Theme) =>
         },
         form: {
             width: '100%', // Fix IE 11 issue.
-            marginTop: spacing(1),
+            marginTop: spacing(3),
         },
         submit: {
             margin: spacing(3, 0, 2),
@@ -37,43 +38,44 @@ const styles = ({ palette, spacing }: Theme) =>
     })
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
+    initialValues: LoggedInUser
     classes: {
         paper: string
         avatar: string
         form: string
         submit: string
     }
-    token: string
 }
 
-class ResetPasswordForm extends Component<Props> {
+class ProfileEditForm extends Component<Props> {
     validationSchema = Yup.object().shape({
-        password: Yup.string()
-            .required(t`errors.validation.required`)
-            .min(4, t('error.validation.tooShort', { number: 4 })),
-        repeatPassword: Yup.string()
-            .required(t`errors.validation.required`)
-            .oneOf([Yup.ref('password'), null], t`errors.validation.passwordsMustMatch`),
+        firstName: Yup.string().required(t`errors.validation.required`),
+        lastName: Yup.string(),
     })
 
-    get initialValues(): ResetPasswordRequest {
-        return { password: '', repeatPassword: '' }
+    get initialValues(): UserUpdateRequest {
+        const { initialValues } = this.props
+
+        return {
+            firstName: initialValues.firstName,
+            lastName: initialValues.lastName,
+        }
     }
 
-    handleSubmit = (values: ResetPasswordRequest, actions: FormikHelpers<ResetPasswordRequest>) => {
-        const { history, token } = this.props
+    handleSubmit = (values: UserUpdateRequest, actions: FormikHelpers<UserUpdateRequest>) => {
+        const { history, initialValues } = this.props
 
-        authService
-            .resetPassword(token, values)
-            .then(() => {
-                toast.success(t('user.passwordResetSuccess'))
-                history.push({ pathname: routes.login })
+        userService
+            .update(initialValues.id, values)
+            .then((updatedUser) => {
+                toast.success(t('common.successUpdate'))
+                authService.update(updatedUser)
+                history.push({ pathname: routes.user.profile })
             })
             .catch((error) => {
-                actions.setStatus({ msg: error.message, error: true })
                 toast.error(t(error.message))
+                actions.setSubmitting(false)
             })
-            .finally(() => actions.setSubmitting(false))
     }
 
     render() {
@@ -84,28 +86,27 @@ class ResetPasswordForm extends Component<Props> {
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
-                <Typography component="h1" variant="h5">{t`user.resetPassword`}</Typography>
-                <Formik<ResetPasswordRequest>
+                <Typography component="h1" variant="h5">{t`common.updateInfo`}</Typography>
+                <Formik<UserUpdateRequest>
                     initialValues={this.initialValues}
                     validationSchema={this.validationSchema}
                     onSubmit={this.handleSubmit}
-                >
-                    {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
+                    render={({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
                         <Form className={classes.form} noValidate>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
                                     <TextField
+                                        name="firstName"
                                         variant="outlined"
                                         required
                                         fullWidth
-                                        name="password"
-                                        label={t`user.password`}
-                                        type="password"
-                                        value={values.password}
+                                        label={t`user.firstName`}
+                                        autoFocus
+                                        value={values.firstName}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        error={!!errors.password && !!touched.password}
-                                        helperText={errors.password && touched.password && errors.password}
+                                        error={!!errors.firstName && !!touched.firstName}
+                                        helperText={errors.firstName && touched.firstName && errors.firstName}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -113,16 +114,13 @@ class ResetPasswordForm extends Component<Props> {
                                         variant="outlined"
                                         required
                                         fullWidth
-                                        name="repeatPassword"
-                                        label={t`user.repeatPassword`}
-                                        type="password"
-                                        value={values.repeatPassword}
+                                        label={t`user.lastName`}
+                                        name="lastName"
+                                        value={values.lastName}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        error={!!errors.repeatPassword && !!touched.repeatPassword}
-                                        helperText={
-                                            errors.repeatPassword && touched.repeatPassword && errors.repeatPassword
-                                        }
+                                        error={!!errors.lastName && !!touched.lastName}
+                                        helperText={errors.lastName && touched.lastName && errors.lastName}
                                     />
                                 </Grid>
                             </Grid>
@@ -134,14 +132,14 @@ class ResetPasswordForm extends Component<Props> {
                                 className={classes.submit}
                                 disabled={isSubmitting}
                             >
-                                {t`user.changePassword`}
+                                {t`common.update`}
                             </Button>
                         </Form>
                     )}
-                </Formik>
+                />
             </div>
         )
     }
 }
 
-export default withRouter(withStyles(styles)(ResetPasswordForm))
+export default withRouter(withStyles(styles)(ProfileEditForm))

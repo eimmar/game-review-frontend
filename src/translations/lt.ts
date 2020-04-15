@@ -14,6 +14,9 @@ export const ltTranslations = {
     'common.edit': 'Redaguoti',
     'common.delete': 'Šalinti',
     'common.search': 'Ieškoti',
+    'common.update': 'Atnaujinti',
+    'common.successUpdate': 'Duomenys atnaujinti.',
+    'common.updateInfo': 'Atnaujinti informaciją',
 
     'filters.reset': 'Išvalyti filtrus',
 
@@ -23,6 +26,7 @@ export const ltTranslations = {
     'user.lastName': 'Pavardė',
     'user.email': 'El. paštas',
     'user.password': 'Slaptažodis',
+    'user.currentPassword': 'Dabartinis slaptažodis',
     'user.successCreate': 'Registracija sėkminga!',
     'user.signIn': 'Prisijungti',
     'user.rememberMe': 'Prisiminti mane',
@@ -35,6 +39,7 @@ export const ltTranslations = {
     'user.sendResetPasswordRequest': 'Siųsti',
     'user.passwordResetLinkSent': 'Slaptažodžio keitimo nurodymai buvo nusiųsti į Jusų elektroninio pašto paskyrą.',
     'user.passwordResetSuccess': 'Slaptažodis pakeistas sėkmingai! Galite prisijungti.',
+    'user.passwordUpdateSuccess': 'Slaptažodis pakeistas sėkmingai!',
     'user.memberSince': 'Narys nuo',
     'user.gameLists': 'Žaidimai',
     'user.favorites': 'Mėgstamiausi',

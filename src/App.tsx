@@ -21,6 +21,8 @@ import { PrivateRoute } from './routes/PrivateRoute'
 import Profile from './views/User/Profile'
 import UserView from './views/User/UserView'
 import UserList from './views/User/UserList'
+import ProfileEdit from './views/User/ProfileEdit'
+import ChangePassword from './views/User/ChangePassword'
 
 const HomePage = lazyComponent(import('./views/HomePage'))
 
@@ -40,6 +42,8 @@ function App() {
                 <PublicRoute exact path={`${routes.game.view}/:guid`} component={GameView} />
 
                 <PrivateRoute exact path={`${routes.user.profile}`} component={Profile} />
+                <PrivateRoute exact path={`${routes.user.profileEdit}`} component={ProfileEdit} />
+                <PrivateRoute exact path={`${routes.user.changePassword}`} component={ChangePassword} />
                 <PublicRoute exact path={`${routes.user.view}/:guid`} component={UserView} />
                 <PublicRoute exact path={routes.user.list} component={UserList} />
 

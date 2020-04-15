@@ -1,11 +1,11 @@
 import * as React from 'react'
 
 import { MainLayout } from '../../layouts/MainLayout/MainLayout'
-import ProfileContent from '../../components/User/Profile/ProfileContent'
 import { authService } from '../../services/AuthService'
 import NotFound404 from '../Error/NotFound404'
+import ChangePasswordForm from '../../components/User/ChangePasswordForm/ChangePasswordForm'
 
-export default function Profile() {
+export default function ChangePassword() {
     const user = authService.getCurrentUser()
 
     if (!user) {
@@ -13,8 +13,8 @@ export default function Profile() {
     }
 
     return (
-        <MainLayout>
-            <ProfileContent user={user} />
+        <MainLayout maxWidth="xs">
+            <ChangePasswordForm userId={user.id} />
         </MainLayout>
     )
 }

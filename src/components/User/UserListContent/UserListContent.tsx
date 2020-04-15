@@ -176,7 +176,7 @@ class UserListContent extends AbstractPaginator<Props, State> {
                                             </ListItemAvatar>
                                             <ListItemText
                                                 primary={
-                                                    <Link to={`${routes.game.view}/${user.id}`}>
+                                                    <Link to={`${routes.user.view}/${user.id}`}>
                                                         <Typography gutterBottom variant="subtitle1" component="h2">
                                                             <b>{userService.getFullName(user)}</b>
                                                         </Typography>

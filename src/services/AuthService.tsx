@@ -4,7 +4,7 @@ import cookie from 'react-cookies'
 // eslint-disable-next-line import/no-cycle
 import { requestService } from './RequestService'
 // eslint-disable-next-line import/no-cycle
-import { User } from './UserService'
+import { User, UserUpdateRequest } from './UserService'
 
 export interface LoggedInUser extends User {
     accessToken: string
@@ -22,15 +22,17 @@ interface LogInResponse {
     token?: string
 }
 
-export interface RegistrationRequest {
-    firstName: string
-    lastName: string | null
+export interface RegistrationRequest extends UserUpdateRequest {
     email: string
     password: string
 }
 
 export interface ForgotPasswordRequest {
     email: string
+}
+
+export interface ChangePasswordRequest extends ResetPasswordRequest {
+    currentPassword: string
 }
 
 export interface ResetPasswordRequest {
@@ -88,6 +90,17 @@ class AuthService {
         const userCookie = localStorage.getItem(cookie.load('currentUser'))
 
         return userCookie ? JSON.parse(userCookie) : null
+    }
+
+    update(user: User) {
+        const currentUser = this.getCurrentUser()
+
+        if (currentUser && currentUser.id === user.id) {
+            localStorage.setItem(
+                currentUser.email,
+                JSON.stringify({ ...currentUser, firstName: user.firstName, lastName: user.lastName }),
+            )
+        }
     }
 
     hasRole(role: string) {

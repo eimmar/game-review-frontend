@@ -12,8 +12,9 @@ import { Form, Formik, FormikHelpers } from 'formik'
 import { toast } from 'react-toastify'
 
 import { t } from '../../../i18n'
-import { authService, ResetPasswordRequest } from '../../../services/AuthService'
+import { ChangePasswordRequest } from '../../../services/AuthService'
 import { routes } from '../../../parameters'
+import { userService } from '../../../services/UserService'
 
 const styles = ({ palette, spacing }: Theme) =>
     createStyles({
@@ -37,17 +38,18 @@ const styles = ({ palette, spacing }: Theme) =>
     })
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
+    userId: string
     classes: {
         paper: string
         avatar: string
         form: string
         submit: string
     }
-    token: string
 }
 
-class ResetPasswordForm extends Component<Props> {
+class ChangePasswordForm extends Component<Props> {
     validationSchema = Yup.object().shape({
+        currentPassword: Yup.string().required(t`errors.validation.required`),
         password: Yup.string()
             .required(t`errors.validation.required`)
             .min(4, t('error.validation.tooShort', { number: 4 })),
@@ -56,18 +58,18 @@ class ResetPasswordForm extends Component<Props> {
             .oneOf([Yup.ref('password'), null], t`errors.validation.passwordsMustMatch`),
     })
 
-    get initialValues(): ResetPasswordRequest {
-        return { password: '', repeatPassword: '' }
+    get initialValues(): ChangePasswordRequest {
+        return { password: '', repeatPassword: '', currentPassword: '' }
     }
 
-    handleSubmit = (values: ResetPasswordRequest, actions: FormikHelpers<ResetPasswordRequest>) => {
-        const { history, token } = this.props
+    handleSubmit = (values: ChangePasswordRequest, actions: FormikHelpers<ChangePasswordRequest>) => {
+        const { history, userId } = this.props
 
-        authService
-            .resetPassword(token, values)
+        userService
+            .changePassword(userId, values)
             .then(() => {
-                toast.success(t('user.passwordResetSuccess'))
-                history.push({ pathname: routes.login })
+                toast.success(t('user.passwordUpdateSuccess'))
+                history.push({ pathname: routes.user.profile })
             })
             .catch((error) => {
                 actions.setStatus({ msg: error.message, error: true })
@@ -85,7 +87,7 @@ class ResetPasswordForm extends Component<Props> {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">{t`user.resetPassword`}</Typography>
-                <Formik<ResetPasswordRequest>
+                <Formik<ChangePasswordRequest>
                     initialValues={this.initialValues}
                     validationSchema={this.validationSchema}
                     onSubmit={this.handleSubmit}
@@ -93,6 +95,23 @@ class ResetPasswordForm extends Component<Props> {
                     {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
                         <Form className={classes.form} noValidate>
                             <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        name="currentPassword"
+                                        label={t`user.currentPassword`}
+                                        type="password"
+                                        value={values.currentPassword}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={!!errors.currentPassword && !!touched.currentPassword}
+                                        helperText={
+                                            errors.currentPassword && touched.currentPassword && errors.currentPassword
+                                        }
+                                    />
+                                </Grid>
                                 <Grid item xs={12}>
                                     <TextField
                                         variant="outlined"
@@ -144,4 +163,4 @@ class ResetPasswordForm extends Component<Props> {
     }
 }
 
-export default withRouter(withStyles(styles)(ResetPasswordForm))
+export default withRouter(withStyles(styles)(ChangePasswordForm))

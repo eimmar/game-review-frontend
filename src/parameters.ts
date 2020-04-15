@@ -14,6 +14,8 @@ export const routes = {
 
     user: {
         profile: '/profilis',
+        profileEdit: '/profilis/redaguoti',
+        changePassword: '/profilis/keisti-slaptazodi',
         view: '/naudotojas',
         list: '/bendruomene',
     },

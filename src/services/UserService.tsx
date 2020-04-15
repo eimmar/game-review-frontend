@@ -1,14 +1,18 @@
 // eslint-disable-next-line import/no-cycle
 import { PaginatedList, requestService } from './RequestService'
-import { phpDebug } from '../parameters'
+// eslint-disable-next-line import/no-cycle
+import { ChangePasswordRequest } from './AuthService'
 
-export interface User {
+export interface User extends UserUpdateRequest {
     id: string
-    firstName: string
-    lastName: string | null
     email: string
     roles: string[]
     createdAt: DateTimeObj
+}
+
+export interface UserUpdateRequest {
+    firstName: string
+    lastName: string | null
 }
 
 export interface UserFilterRequest {
@@ -34,13 +38,28 @@ class UserService {
     getAll(search: string, pageSize: number): Promise<PaginatedList<User>> {
         const { page, query, orderBy, order } = requestService.getFilters(search) as UserFilterRequest
 
-        return requestService.performRequest('POST', this.baseUrl + phpDebug, {
+        return requestService.performRequest('POST', this.baseUrl, {
             pageSize,
             page: Number(page || 1),
             orderBy,
             order,
             filters: {
                 query,
+            },
+        })
+    }
+
+    update(id: string, data: UserUpdateRequest): Promise<User> {
+        return requestService.performRequest('POST', `${this.baseUrl}edit/${id}`, data)
+    }
+
+    changePassword(userId: string, params: ChangePasswordRequest): Promise<any> {
+        return requestService.performRequest('POST', `${this.baseUrl}change-password/${userId}`, {
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            current_password: params.currentPassword,
+            plainPassword: {
+                first: params.password,
+                second: params.repeatPassword,
             },
         })
     }
