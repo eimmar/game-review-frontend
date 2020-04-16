@@ -103,7 +103,7 @@ export const ltTranslations = {
     'gameList.deleteSuccess': 'Sąrašas ištrintas sėkmingai',
     'gameList.deleteError': 'Klaida! Sąrašo negalima išstrinti.',
 
-    'gameReview.successCreate': 'Atsiliepimas sukurtas',
+    'gameReview.successCreate': 'Atsiliepimas pateiktas peržiūrai.',
     'gameReview.rating': 'Įvertinimas',
     'gameReview.comment': 'Atsiliepimas',
     'gameReview.title': 'Antraštė',
