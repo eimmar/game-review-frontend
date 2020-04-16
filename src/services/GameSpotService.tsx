@@ -93,7 +93,7 @@ export interface Video {
 }
 
 class GameSpotService {
-    baseUrl = '/game-spot/'
+    baseUrl = '/api/game-spot/'
 
     reviews(id: string, request: Request): Promise<Response<Review>> {
         return requestService.performRequest('POST', `${this.baseUrl}reviews/${id}`, request)

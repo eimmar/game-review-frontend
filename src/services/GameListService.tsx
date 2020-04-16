@@ -1,6 +1,4 @@
-// eslint-disable-next-line import/no-cycle
 import { requestService } from './RequestService'
-import { authService } from './AuthService'
 
 export enum GameListPrivacyType {
     Private = 1,
@@ -33,7 +31,7 @@ export interface GameListRequest extends GameListUpdateRequest {
 }
 
 class GameListService {
-    baseUrl = '/game-list/'
+    baseUrl = '/api/game-list/'
 
     addToList(gameId: string, listId: string): Promise<GameList> {
         return requestService.performRequest('POST', `${this.baseUrl}${listId}/add/${gameId}`)

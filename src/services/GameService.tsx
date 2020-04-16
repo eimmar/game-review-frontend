@@ -165,7 +165,7 @@ export interface GameEntityFilterValues {
 }
 
 class GameService {
-    baseUrl = '/game/'
+    baseUrl = '/api/game/'
 
     getAll(search: string, pageSize: number): Promise<PaginatedList<Game>> {
         const {

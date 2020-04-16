@@ -29,7 +29,7 @@ interface DateTimeObj {
 }
 
 class UserService {
-    baseUrl = '/user/'
+    baseUrl = '/api/user/'
 
     get(id: string): Promise<User> {
         return requestService.performRequest('GET', this.baseUrl + id)

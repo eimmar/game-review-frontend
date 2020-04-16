@@ -86,7 +86,7 @@ export interface GameDeal {
 }
 
 class GameDealService {
-    baseUrl = '/any-deal/'
+    baseUrl = '/api/any-deal/'
 
     prices(request: PriceRequest): Promise<PriceResponse> {
         return requestService.performRequest('POST', `${this.baseUrl}game-prices`, request)
