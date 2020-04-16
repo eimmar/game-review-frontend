@@ -8,12 +8,6 @@ export enum GameListPrivacyType {
     Public,
 }
 
-export enum PredefinedListType {
-    Favorites = 1,
-    Wishlist,
-    Playing,
-}
-
 export enum GameListType {
     Favorites = 1,
     Wishlist,
@@ -41,14 +35,6 @@ export interface GameListRequest extends GameListUpdateRequest {
 class GameListService {
     baseUrl = '/game-list/'
 
-    addToPredefined(gameId: string, type: PredefinedListType): Promise<GameList> {
-        return requestService.performRequest('POST', `${this.baseUrl}add/${type}/${gameId}`)
-    }
-
-    removeFromPredefined(gameId: string, type: PredefinedListType): Promise<GameList> {
-        return requestService.performRequest('POST', `${this.baseUrl}remove/${type}/${gameId}`)
-    }
-
     addToList(gameId: string, listId: string): Promise<GameList> {
         return requestService.performRequest('POST', `${this.baseUrl}${listId}/add/${gameId}`)
     }
@@ -65,12 +51,8 @@ class GameListService {
         return requestService.performRequest('POST', `${this.baseUrl}edit/${id}`, data)
     }
 
-    getListsContaining(gameId: string): Promise<GameList[]> {
-        if (authService.getCurrentUser()) {
-            return requestService.performRequest('GET', `${this.baseUrl}containing/${gameId}`)
-        }
-
-        return requestService.performRequest('GET', `${this.baseUrl}containing/${gameId}`)
+    getUserListsContainingGame(userId: string, gameId: string): Promise<GameList[]> {
+        return requestService.performRequest('GET', `${this.baseUrl}containing/game/${gameId}/user/${userId}`)
     }
 
     getAllForUser(userId: string): Promise<GameList[]> {

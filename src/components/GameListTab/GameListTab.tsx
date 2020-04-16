@@ -25,7 +25,7 @@ import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 
 import { t } from '../../i18n'
-import { GameList, gameListService, GameListType, PredefinedListType } from '../../services/GameListService'
+import { GameList, gameListService, GameListType } from '../../services/GameListService'
 import { authService } from '../../services/AuthService'
 import GameListCreateForm from '../GameListForm/GameListCreateForm'
 import styles from './GameListTab.module.scss'
@@ -68,18 +68,18 @@ class GameListTab extends Component<Props, State> {
     componentDidMount() {
         const { gameId } = this.props
 
-        gameListService
-            .getListsContaining(gameId)
-            .then((gameListsWithGame) => {
-                const inFavorites = !!gameListsWithGame.find((it) => it.type === GameListType.Favorites)
-                const inWishList = !!gameListsWithGame.find((it) => it.type === GameListType.Wishlist)
-                const inPlaying = !!gameListsWithGame.find((it) => it.type === GameListType.Playing)
-
-                this.setState({ inFavorites, inWishList, inPlaying, gameListsWithGame })
-            })
-            .finally(() => this.setState({ loading: false }))
-
         if (this.user) {
+            gameListService
+                .getUserListsContainingGame(this.user.id, gameId)
+                .then((gameListsWithGame) => {
+                    const inFavorites = !!gameListsWithGame.find((it) => it.type === GameListType.Favorites)
+                    const inWishList = !!gameListsWithGame.find((it) => it.type === GameListType.Wishlist)
+                    const inPlaying = !!gameListsWithGame.find((it) => it.type === GameListType.Playing)
+
+                    this.setState({ inFavorites, inWishList, inPlaying, gameListsWithGame })
+                })
+                .finally(() => this.setState({ loading: false }))
+
             gameListService.getAllForUser(this.user.id).then((userGameLists) => this.setState({ userGameLists }))
         }
     }
@@ -90,21 +90,28 @@ class GameListTab extends Component<Props, State> {
         return userGameLists.filter((it) => it.type === GameListType.Custom)
     }
 
-    addToList = (listType: PredefinedListType) => {
+    getPredefinedList = (listType: GameListType) => {
+        const { userGameLists } = this.state
+
+        return userGameLists.find((it) => it.type === listType) as GameList
+    }
+
+    addToList = (listType: GameListType) => {
         const { gameId } = this.props
+        const list = this.getPredefinedList(listType)
 
         this.setState({ loading: true })
         gameListService
-            .addToPredefined(gameId, listType)
+            .addToList(gameId, list.id)
             .then(() => {
                 switch (listType) {
-                    case PredefinedListType.Wishlist:
+                    case GameListType.Wishlist:
                         this.setState({ inWishList: true })
                         break
-                    case PredefinedListType.Playing:
+                    case GameListType.Playing:
                         this.setState({ inPlaying: true })
                         break
-                    case PredefinedListType.Favorites:
+                    case GameListType.Favorites:
                         this.setState({ inFavorites: true })
                         break
                     default:
@@ -114,21 +121,22 @@ class GameListTab extends Component<Props, State> {
             .finally(() => this.setState({ loading: false }))
     }
 
-    removeFromList = (listType: PredefinedListType) => {
+    removeFromList = (listType: GameListType) => {
         const { gameId } = this.props
+        const list = this.getPredefinedList(listType)
 
         this.setState({ loading: true })
         gameListService
-            .removeFromPredefined(gameId, listType)
+            .removeFromList(gameId, list.id)
             .then(() => {
                 switch (listType) {
-                    case PredefinedListType.Wishlist:
+                    case GameListType.Wishlist:
                         this.setState({ inWishList: false })
                         break
-                    case PredefinedListType.Playing:
+                    case GameListType.Playing:
                         this.setState({ inPlaying: false })
                         break
-                    case PredefinedListType.Favorites:
+                    case GameListType.Favorites:
                         this.setState({ inFavorites: false })
                         break
                     default:
@@ -144,7 +152,7 @@ class GameListTab extends Component<Props, State> {
         return !!gameListsWithGame.find((it) => it.id === listId)
     }
 
-    addList = (list: GameList) => {
+    handleListCreateSuccess = (list: GameList) => {
         this.setState((prevState) => ({
             gameListsWithGame: prevState.gameListsWithGame.concat(list),
             userGameLists: prevState.userGameLists.concat(list),
@@ -221,7 +229,7 @@ class GameListTab extends Component<Props, State> {
                                 <ListItem>
                                     <GameListCreateForm
                                         gameId={gameId}
-                                        onSuccess={this.addList}
+                                        onSuccess={this.handleListCreateSuccess}
                                         onClose={this.handleFormToggle}
                                     />
                                 </ListItem>
@@ -242,26 +250,20 @@ class GameListTab extends Component<Props, State> {
         const { loading, inFavorites, inWishList, inPlaying } = this.state
         const favorites: ListActionConfig = {
             onClick: () =>
-                inFavorites
-                    ? this.removeFromList(PredefinedListType.Favorites)
-                    : this.addToList(PredefinedListType.Favorites),
+                inFavorites ? this.removeFromList(GameListType.Favorites) : this.addToList(GameListType.Favorites),
             color: inFavorites ? 'primary' : 'inherit',
             tooltip: inFavorites ? t`gameList.removeFromFavorites` : t`gameList.addToFavorites`,
         }
         const wishList: ListActionConfig = {
             onClick: () => {
-                inWishList
-                    ? this.removeFromList(PredefinedListType.Wishlist)
-                    : this.addToList(PredefinedListType.Wishlist)
+                inWishList ? this.removeFromList(GameListType.Wishlist) : this.addToList(GameListType.Wishlist)
             },
             color: inWishList ? 'primary' : 'inherit',
             tooltip: inWishList ? t`gameList.removeFromWishList` : t`gameList.addToWishList`,
         }
         const playing: ListActionConfig = {
             onClick: () =>
-                inPlaying
-                    ? this.removeFromList(PredefinedListType.Playing)
-                    : this.addToList(PredefinedListType.Playing),
+                inPlaying ? this.removeFromList(GameListType.Playing) : this.addToList(GameListType.Playing),
             color: inPlaying ? 'primary' : 'inherit',
             tooltip: inPlaying ? t`gameList.removeFromPlaying` : t`gameList.addToPlaying`,
         }
