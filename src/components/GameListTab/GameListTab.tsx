@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
 import {
     CircularProgress,
     DialogActions,
@@ -26,11 +25,11 @@ import AddIcon from '@material-ui/icons/Add'
 
 import { t } from '../../i18n'
 import { GameList, gameListService, GameListType } from '../../services/GameListService'
-import { authService } from '../../services/AuthService'
+import { authenticatedAction, authService } from '../../services/AuthService'
 import GameListCreateForm from '../GameListForm/GameListCreateForm'
 import styles from './GameListTab.module.scss'
 
-interface Props extends RouteComponentProps {
+interface Props {
     gameId: string
 }
 
@@ -65,38 +64,7 @@ class GameListTab extends Component<Props, State> {
         formOpen: false,
     }
 
-    componentDidMount() {
-        const { gameId } = this.props
-
-        if (this.user) {
-            gameListService
-                .getUserListsContainingGame(this.user.id, gameId)
-                .then((gameListsWithGame) => {
-                    const inFavorites = !!gameListsWithGame.find((it) => it.type === GameListType.Favorites)
-                    const inWishList = !!gameListsWithGame.find((it) => it.type === GameListType.Wishlist)
-                    const inPlaying = !!gameListsWithGame.find((it) => it.type === GameListType.Playing)
-
-                    this.setState({ inFavorites, inWishList, inPlaying, gameListsWithGame })
-                })
-                .finally(() => this.setState({ loading: false }))
-
-            gameListService.getAllForUser(this.user.id).then((userGameLists) => this.setState({ userGameLists }))
-        }
-    }
-
-    get customLists() {
-        const { userGameLists } = this.state
-
-        return userGameLists.filter((it) => it.type === GameListType.Custom)
-    }
-
-    getPredefinedList = (listType: GameListType) => {
-        const { userGameLists } = this.state
-
-        return userGameLists.find((it) => it.type === listType) as GameList
-    }
-
-    addToList = (listType: GameListType) => {
+    addToList = authenticatedAction((listType: GameListType) => {
         const { gameId } = this.props
         const list = this.getPredefinedList(listType)
 
@@ -119,9 +87,9 @@ class GameListTab extends Component<Props, State> {
                 }
             })
             .finally(() => this.setState({ loading: false }))
-    }
+    })
 
-    removeFromList = (listType: GameListType) => {
+    removeFromList = authenticatedAction((listType: GameListType) => {
         const { gameId } = this.props
         const list = this.getPredefinedList(listType)
 
@@ -144,6 +112,56 @@ class GameListTab extends Component<Props, State> {
                 }
             })
             .finally(() => this.setState({ loading: false }))
+    })
+
+    toggleGameInList = authenticatedAction((list: GameList) => {
+        const { gameListsWithGame } = this.state
+        const { gameId } = this.props
+
+        if (this.gameInList(list.id)) {
+            gameListService
+                .removeFromList(gameId, list.id)
+                .then((it) => this.setState({ gameListsWithGame: gameListsWithGame.filter((it2) => it2.id !== it.id) }))
+        } else {
+            gameListService
+                .addToList(gameId, list.id)
+                .then((it) => this.setState({ gameListsWithGame: gameListsWithGame.concat(it) }))
+        }
+    })
+
+    handleModalToggle = authenticatedAction(() => this.setState((prevState) => ({ modalOpen: !prevState.modalOpen })))
+
+    componentDidMount() {
+        const { gameId } = this.props
+
+        if (this.user) {
+            gameListService
+                .getUserListsContainingGame(this.user.id, gameId)
+                .then((gameListsWithGame) => {
+                    const inFavorites = !!gameListsWithGame.find((it) => it.type === GameListType.Favorites)
+                    const inWishList = !!gameListsWithGame.find((it) => it.type === GameListType.Wishlist)
+                    const inPlaying = !!gameListsWithGame.find((it) => it.type === GameListType.Playing)
+
+                    this.setState({ inFavorites, inWishList, inPlaying, gameListsWithGame })
+                })
+                .finally(() => this.setState({ loading: false }))
+
+            gameListService.getAllForUser(this.user.id).then((userGameLists) => this.setState({ userGameLists }))
+        } else {
+            this.setState({ loading: false })
+        }
+    }
+
+    get customLists() {
+        const { userGameLists } = this.state
+
+        return userGameLists.filter((it) => it.type === GameListType.Custom)
+    }
+
+    getPredefinedList = (listType: GameListType) => {
+        const { userGameLists } = this.state
+
+        return userGameLists.find((it) => it.type === listType) as GameList
     }
 
     gameInList = (listId: string) => {
@@ -158,23 +176,6 @@ class GameListTab extends Component<Props, State> {
             userGameLists: prevState.userGameLists.concat(list),
         }))
     }
-
-    toggleCustomListStatus = (list: GameList) => {
-        const { gameListsWithGame } = this.state
-        const { gameId } = this.props
-
-        if (this.gameInList(list.id)) {
-            gameListService
-                .removeFromList(gameId, list.id)
-                .then((it) => this.setState({ gameListsWithGame: gameListsWithGame.filter((it2) => it2.id !== it.id) }))
-        } else {
-            gameListService
-                .addToList(gameId, list.id)
-                .then((it) => this.setState({ gameListsWithGame: gameListsWithGame.concat(it) }))
-        }
-    }
-
-    handleModalToggle = () => this.setState((prevState) => ({ modalOpen: !prevState.modalOpen }))
 
     handleFormToggle = () => this.setState((prevState) => ({ formOpen: !prevState.formOpen }))
 
@@ -202,7 +203,7 @@ class GameListTab extends Component<Props, State> {
                     <DialogContent className={styles.dialog}>
                         <List>
                             {lists.map((list) => (
-                                <ListItem button key={list.id} onClick={() => this.toggleCustomListStatus(list)}>
+                                <ListItem button key={list.id} onClick={() => this.toggleGameInList(list)}>
                                     <ListItemIcon>
                                         <Checkbox
                                             color="primary"
@@ -299,4 +300,4 @@ class GameListTab extends Component<Props, State> {
     }
 }
 
-export default withRouter(GameListTab)
+export default GameListTab

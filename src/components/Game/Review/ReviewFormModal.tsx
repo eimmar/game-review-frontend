@@ -12,12 +12,10 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import { DialogActions, FormHelperText, InputLabel } from '@material-ui/core'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import { GameReviewRequest, reviewService } from '../../../services/GameReviewService'
 import { t } from '../../../i18n'
-import { authService } from '../../../services/AuthService'
-import { routes } from '../../../parameters'
+import { authenticatedAction, authService } from '../../../services/AuthService'
 
 const styles = ({ palette, spacing }: Theme) =>
     createStyles({
@@ -42,7 +40,7 @@ const styles = ({ palette, spacing }: Theme) =>
         },
     })
 
-interface Props extends WithStyles<typeof styles>, RouteComponentProps {
+interface Props extends WithStyles<typeof styles> {
     gameId: string
     classes: {
         paper: string
@@ -83,6 +81,8 @@ class ReviewFormModal extends Component<Props, State> {
         open: false,
     }
 
+    handleModalToggle = authenticatedAction(() => this.setState((prevState) => ({ open: !prevState.open })))
+
     get initialValues(): GameReviewRequest {
         const { gameId } = this.props
         const user = authService.getCurrentUser()
@@ -112,25 +112,13 @@ class ReviewFormModal extends Component<Props, State> {
             .finally(() => actions.setSubmitting(false))
     }
 
-    handleButtonClick = () => {
-        if (!authService.getCurrentUser()) {
-            const { history, location } = this.props
-
-            history.push(routes.login, { referer: { url: location.pathname } })
-        } else {
-            this.handleModalToggle()
-        }
-    }
-
-    handleModalToggle = () => this.setState((prevState) => ({ open: !prevState.open }))
-
     render() {
         const { classes } = this.props
         const { open } = this.state
 
         return (
             <>
-                <Button variant="outlined" color="primary" onClick={this.handleButtonClick}>
+                <Button variant="outlined" color="primary" onClick={this.handleModalToggle}>
                     {t`gameReview.create`}
                 </Button>
                 <div className={classes.paper}>
@@ -263,4 +251,4 @@ class ReviewFormModal extends Component<Props, State> {
     }
 }
 
-export default withRouter(withStyles(styles)(ReviewFormModal))
+export default withStyles(styles)(ReviewFormModal)

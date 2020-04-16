@@ -5,6 +5,8 @@ import cookie from 'react-cookies'
 import { requestService } from './RequestService'
 // eslint-disable-next-line import/no-cycle
 import { User, UserUpdateRequest } from './UserService'
+import history from './History'
+import { routes } from '../parameters'
 
 export interface LoggedInUser extends User {
     accessToken: string
@@ -123,3 +125,13 @@ class AuthService {
 }
 
 export const authService = new AuthService()
+
+export function authenticatedAction<Params extends any[]>(func: (...args: Params) => any): (...args: Params) => void {
+    return (...args: Params) => {
+        if (!authService.getCurrentUser()) {
+            return history.push(routes.login, { referer: { url: history.location.pathname } })
+        }
+
+        return func(...args)
+    }
+}
