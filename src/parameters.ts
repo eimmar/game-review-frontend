@@ -12,6 +12,10 @@ export const routes = {
         view: '/zaidimas',
     },
 
+    gameList: {
+        view: '/zaidimu-sarasas',
+    },
+
     user: {
         profile: '/profilis',
         profileEdit: '/profilis/redaguoti',

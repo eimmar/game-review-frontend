@@ -39,7 +39,7 @@ import { gameService } from '../../../services/GameService'
 import Centered from '../../Global/Centered/Centered'
 import ReviewList from '../ReviewList/ReviewList'
 import { User, userService } from '../../../services/UserService'
-import GameListUpdateForm from '../../GameListForm/GameListUpdateForm'
+import GameListUpdateForm from '../../GameList/GameListForm/GameListUpdateForm'
 
 const styles = ({ spacing, palette }: Theme) =>
     createStyles({

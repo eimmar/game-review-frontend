@@ -41,6 +41,10 @@ class GameListService {
         return requestService.performRequest('POST', `${this.baseUrl}${listId}/remove/${gameId}`)
     }
 
+    get(id: string): Promise<GameList> {
+        return requestService.performRequest('GET', this.baseUrl + id)
+    }
+
     create(data: GameListRequest): Promise<GameList> {
         return requestService.performRequest('POST', `${this.baseUrl}new`, data)
     }

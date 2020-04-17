@@ -13,7 +13,7 @@ import { t } from '../../../i18n'
 import sStyles from './GameTopCard.module.scss'
 import { flattenClasses } from '../../../services/Util/StyleUtils'
 import { MainLayout } from '../../../layouts/MainLayout/MainLayout'
-import GameListTab from '../../GameListTab/GameListTab'
+import GameListTab from '../../GameList/GameListTab/GameListTab'
 
 const styles = ({ palette, spacing, breakpoints }: Theme) =>
     createStyles({

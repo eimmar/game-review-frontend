@@ -8,46 +8,43 @@ import { toast } from 'react-toastify'
 import { FormHelperText, Select, MenuItem } from '@material-ui/core'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-import { GameList, GameListPrivacyType, GameListRequest, gameListService } from '../../services/GameListService'
-import { t } from '../../i18n'
-import { authService } from '../../services/AuthService'
+import {
+    GameList,
+    GameListPrivacyType,
+    gameListService,
+    GameListUpdateRequest,
+} from '../../../services/GameListService'
+import { t } from '../../../i18n'
 
 interface Props extends RouteComponentProps {
-    gameId: string
+    initialValues: GameList
     onSuccess: (list: GameList) => void
     onClose: () => void
 }
 
-class GameListForm extends Component<Props> {
+class GameListUpdateForm extends Component<Props> {
     validationSchema = Yup.object().shape({
         privacyType: Yup.string().required(t`errors.validation.required`),
-        user: Yup.string().required(t`errors.validation.required`),
-        games: Yup.string()
-            .required(t`errors.validation.required`)
-            .min(1, t`errors.validation.required`),
         name: Yup.string().required(t`errors.validation.required`),
     })
 
-    get initialValues(): GameListRequest {
-        const user = authService.getCurrentUser()
-        const { gameId } = this.props
+    get initialValues(): GameListUpdateRequest {
+        const { initialValues } = this.props
 
         return {
-            user: user ? user.id : '',
-            games: [gameId],
-            name: '',
-            privacyType: GameListPrivacyType.Private,
+            name: initialValues.name,
+            privacyType: initialValues.privacyType,
         }
     }
 
-    handleSubmit = (values: GameListRequest, actions: FormikHelpers<GameListRequest>) => {
-        const { onSuccess, onClose } = this.props
+    handleSubmit = (values: GameListUpdateRequest, actions: FormikHelpers<GameListUpdateRequest>) => {
+        const { onSuccess, onClose, initialValues } = this.props
 
         gameListService
-            .create(values)
+            .update(initialValues.id, values)
             .then((list) => {
                 onSuccess(list)
-                toast.success(t('gameList.successCreate'))
+                toast.success(t('gameList.successUpdate'))
                 onClose()
             })
             .catch((error) => {
@@ -61,7 +58,7 @@ class GameListForm extends Component<Props> {
         const { onClose } = this.props
 
         return (
-            <Formik<GameListRequest>
+            <Formik<GameListUpdateRequest>
                 initialValues={this.initialValues}
                 validationSchema={this.validationSchema}
                 onSubmit={this.handleSubmit}
@@ -126,4 +123,4 @@ class GameListForm extends Component<Props> {
     }
 }
 
-export default withRouter(GameListForm)
+export default withRouter(GameListUpdateForm)

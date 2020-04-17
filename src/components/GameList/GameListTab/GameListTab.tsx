@@ -23,9 +23,9 @@ import DialogContent from '@material-ui/core/DialogContent'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 
-import { t } from '../../i18n'
-import { GameList, gameListService, GameListType } from '../../services/GameListService'
-import { authenticatedAction, authService } from '../../services/AuthService'
+import { t } from '../../../i18n'
+import { GameList, gameListService, GameListType } from '../../../services/GameListService'
+import { authenticatedAction, authService } from '../../../services/AuthService'
 import GameListCreateForm from '../GameListForm/GameListCreateForm'
 import styles from './GameListTab.module.scss'
 
