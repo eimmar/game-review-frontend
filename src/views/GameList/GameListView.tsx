@@ -5,12 +5,13 @@ import { useEffect, useState } from 'react'
 import { MainLayout } from '../../layouts/MainLayout/MainLayout'
 import NotFound404 from '../Error/NotFound404'
 import PageLoader from '../../components/Global/PageLoader/PageLoader'
-import { GameList, gameListService } from '../../services/GameListService'
+import { GameList, gameListService, WithUser } from '../../services/GameListService'
+import GameListViewContent from '../../components/GameList/GameListViewContent/GameListViewContent'
 
 export default function GameListView() {
     const { guid } = useParams()
     const [loading, setLoading] = useState(true)
-    const [gameList, setGameList] = useState(null as GameList | null)
+    const [gameList, setGameList] = useState(null as GameList<WithUser> | null)
 
     useEffect(() => {
         if (guid) {
@@ -37,7 +38,7 @@ export default function GameListView() {
 
     return (
         <MainLayout>
-            <div />
+            <GameListViewContent gameList={gameList} />
         </MainLayout>
     )
 }

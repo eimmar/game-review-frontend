@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import {
     Avatar,
     Button,
@@ -29,6 +29,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { toast } from 'react-toastify'
+import PageviewIcon from '@material-ui/icons/Pageview'
 
 import { t } from '../../../i18n'
 import { authService, LoggedInUser } from '../../../services/AuthService'
@@ -40,6 +41,7 @@ import Centered from '../../Global/Centered/Centered'
 import ReviewList from '../ReviewList/ReviewList'
 import { User, userService } from '../../../services/UserService'
 import GameListUpdateForm from '../../GameList/GameListForm/GameListUpdateForm'
+import { routes } from '../../../parameters'
 
 const styles = ({ spacing, palette }: Theme) =>
     createStyles({
@@ -196,6 +198,7 @@ class ProfileContent extends Component<Props, State> {
                     <TabPanel key={list.id} value={tabIndex} index={3 + index} renderedTabs={renderedTabs}>
                         {this.isCurrentUser && (
                             <>
+                                {this.renderGameListViewButton(list)}
                                 <Button
                                     className={sStyles.editAction}
                                     onClick={() => this.setGameListInEdit(list)}
@@ -299,6 +302,10 @@ class ProfileContent extends Component<Props, State> {
             .catch(() => toast.error(t`gameList.deleteError`))
     }
 
+    handleTabChange = (event: React.ChangeEvent<{}>, tabIndex: number) => {
+        this.setState((prevState) => ({ tabIndex, renderedTabs: prevState.renderedTabs.add(tabIndex) }))
+    }
+
     updateListState = (list: GameList) => {
         const { gameLists } = this.state
 
@@ -306,14 +313,9 @@ class ProfileContent extends Component<Props, State> {
     }
 
     renderListByType = (listType: GameListType) => {
+        const { classes } = this.props
         const { gameLists } = this.state
         const list = gameLists.find((it) => it.type === listType)
-
-        return this.renderList(list)
-    }
-
-    renderList = (list?: GameList) => {
-        const { classes } = this.props
 
         if (!list) {
             return (
@@ -332,6 +334,30 @@ class ProfileContent extends Component<Props, State> {
         }
 
         return (
+            <>
+                {this.renderGameListViewButton(list)}
+                {this.renderList(list)}
+            </>
+        )
+    }
+
+    renderGameListViewButton = (list: GameList) => {
+        return (
+            <Button
+                component={Link}
+                to={`${routes.gameList.view}/${list.id}`}
+                className={sStyles.viewAction}
+                variant="contained"
+                color="default"
+                startIcon={<PageviewIcon />}
+            >
+                {t`common.view`}
+            </Button>
+        )
+    }
+
+    renderList = (list: GameList) => {
+        return (
             <GameListContent
                 infiniteScroll
                 deleteFunction={
@@ -342,10 +368,6 @@ class ProfileContent extends Component<Props, State> {
                 }
             />
         )
-    }
-
-    handleTabChange = (event: React.ChangeEvent<{}>, tabIndex: number) => {
-        this.setState((prevState) => ({ tabIndex, renderedTabs: prevState.renderedTabs.add(tabIndex) }))
     }
 
     render() {

@@ -13,10 +13,12 @@ export const ltTranslations = {
     'common.sort': 'Rikiavimas',
     'common.edit': 'Redaguoti',
     'common.delete': 'Šalinti',
+    'common.view': 'Peržiūrėti',
     'common.search': 'Ieškoti',
     'common.update': 'Atnaujinti',
     'common.successUpdate': 'Duomenys atnaujinti.',
     'common.updateInfo': 'Atnaujinti informaciją',
+    'common.createdBy': 'Sukūrė',
 
     'filters.reset': 'Išvalyti filtrus',
 

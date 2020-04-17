@@ -1,0 +1,13 @@
+@import '../../../scss/variables';
+
+.avatar {
+    margin: auto;
+    width: 120px !important;
+    height: 120px !important;
+    background-color: $color-primary !important;
+
+    .icon {
+        height: 3em;
+        width: 3em;
+    }
+}

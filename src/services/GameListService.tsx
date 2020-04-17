@@ -1,4 +1,5 @@
 import { requestService } from './RequestService'
+import { User } from './UserService'
 
 export enum GameListPrivacyType {
     Private = 1,
@@ -13,11 +14,14 @@ export enum GameListType {
     Custom,
 }
 
-export interface GameList extends Timestampable {
+export type WithUser = User
+
+export interface GameList<T = WithUser | null> extends Timestampable {
     id: string
     privacyType: GameListPrivacyType
     type: GameListType
     name: string
+    user: T
 }
 
 export interface GameListUpdateRequest {
@@ -41,7 +45,7 @@ class GameListService {
         return requestService.performRequest('POST', `${this.baseUrl}${listId}/remove/${gameId}`)
     }
 
-    get(id: string): Promise<GameList> {
+    get(id: string): Promise<GameList<WithUser>> {
         return requestService.performRequest('GET', this.baseUrl + id)
     }
 
