@@ -199,15 +199,7 @@ class ProfileContent extends Component<Props, State> {
                         {this.isCurrentUser && (
                             <>
                                 {this.renderGameListViewButton(list)}
-                                <Button
-                                    className={sStyles.editAction}
-                                    onClick={() => this.setGameListInEdit(list)}
-                                    variant="contained"
-                                    color="primary"
-                                    startIcon={<EditIcon />}
-                                >
-                                    {t`common.edit`}
-                                </Button>
+                                {this.renderGameListEditButton(list)}
                                 <Button
                                     className={sStyles.deleteAction}
                                     onClick={() => this.setGameListInDelete(list)}
@@ -240,7 +232,12 @@ class ProfileContent extends Component<Props, State> {
         }
 
         return (
-            <Dialog open={!!gameListInEdit} onClose={() => this.setGameListInEdit(null)} scroll="body">
+            <Dialog
+                open={!!gameListInEdit}
+                onClose={() => this.setGameListInEdit(null)}
+                scroll="body"
+                classes={{ paper: 'width-full' }}
+            >
                 <DialogTitle>
                     <Typography variant="h5">{t`common.edit`}</Typography>
                 </DialogTitle>
@@ -336,6 +333,7 @@ class ProfileContent extends Component<Props, State> {
         return (
             <>
                 {this.renderGameListViewButton(list)}
+                {this.renderGameListEditButton(list)}
                 {this.renderList(list)}
             </>
         )
@@ -352,6 +350,20 @@ class ProfileContent extends Component<Props, State> {
                 startIcon={<PageviewIcon />}
             >
                 {t`common.view`}
+            </Button>
+        )
+    }
+
+    renderGameListEditButton = (list: GameList) => {
+        return (
+            <Button
+                className={sStyles.editAction}
+                onClick={() => this.setGameListInEdit(list)}
+                variant="contained"
+                color="primary"
+                startIcon={<EditIcon />}
+            >
+                {t`common.edit`}
             </Button>
         )
     }

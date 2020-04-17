@@ -12,6 +12,7 @@ import {
     GameList,
     GameListPrivacyType,
     gameListService,
+    GameListType,
     GameListUpdateRequest,
 } from '../../../services/GameListService'
 import { t } from '../../../i18n'
@@ -55,7 +56,7 @@ class GameListUpdateForm extends Component<Props> {
     }
 
     render() {
-        const { onClose } = this.props
+        const { onClose, initialValues } = this.props
 
         return (
             <Formik<GameListUpdateRequest>
@@ -65,21 +66,23 @@ class GameListUpdateForm extends Component<Props> {
                 render={({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
                     <Form className="width-full" noValidate>
                         <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <TextField
-                                    name="name"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label={t`gameList.name`}
-                                    autoFocus
-                                    value={values.name || ''}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    error={!!errors.name && !!touched.name}
-                                    helperText={errors.name && touched.name && errors.name}
-                                />
-                            </Grid>
+                            {initialValues.type === GameListType.Custom && (
+                                <Grid item xs={12}>
+                                    <TextField
+                                        name="name"
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        label={t`gameList.name`}
+                                        autoFocus
+                                        value={values.name || ''}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={!!errors.name && !!touched.name}
+                                        helperText={errors.name && touched.name && errors.name}
+                                    />
+                                </Grid>
+                            )}
 
                             <Grid item xs={12}>
                                 <Select
