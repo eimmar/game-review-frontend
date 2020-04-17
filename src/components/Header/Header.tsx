@@ -1,12 +1,15 @@
 import * as React from 'react'
-import { Button, IconButton, Link, Toolbar } from '@material-ui/core'
+import { Button, IconButton, Link as UiLink, Toolbar } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import SearchIcon from '@material-ui/icons/Search'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom'
 
 import { ContentLayout } from '../../layouts/ContentLayout/ContentLayout'
 import sStyles from './Header.module.scss'
+import { t } from '../../i18n'
+import { routes } from '../../parameters'
+import { authService } from '../../services/AuthService'
 
 const styles = ({ palette, spacing }: Theme) =>
     createStyles({
@@ -43,6 +46,8 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
 }
 
 class Header extends React.PureComponent<Props> {
+    user = authService.getCurrentUser()
+
     render() {
         const { sections, title, classes } = this.props
 
@@ -64,14 +69,22 @@ class Header extends React.PureComponent<Props> {
                         <IconButton>
                             <SearchIcon />
                         </IconButton>
-                        <Button variant="outlined" size="small">
-                            Sign up
-                        </Button>
+                        {!this.user && (
+                            <Button variant="text" component={Link} to={routes.login}>
+                                {t`header.signIn`}
+                            </Button>
+                        )}
+
+                        {this.user && (
+                            <Button variant="text" component={Link} to={routes.logout}>
+                                {t`header.logOut`}
+                            </Button>
+                        )}
                     </Toolbar>
                     <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
                         {sections &&
                             sections.map((section) => (
-                                <Link
+                                <UiLink
                                     color="inherit"
                                     noWrap
                                     key={section.title}
@@ -80,7 +93,7 @@ class Header extends React.PureComponent<Props> {
                                     className={classes.toolbarLink}
                                 >
                                     {section.title}
-                                </Link>
+                                </UiLink>
                             ))}
                     </Toolbar>
                 </ContentLayout>

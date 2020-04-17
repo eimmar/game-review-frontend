@@ -176,4 +176,7 @@ export const ltTranslations = {
     'errors.validation.passwordsMustMatch': 'Slaptažodžiai turi sutapti',
     'error.validation.tooLong': 'Laukas neturi būti ilgesnis nei {{number}} symboliai.',
     'error.validation.tooShort': 'Laukas turi būti ilgesnis nei {{number}} symboliai.',
+
+    'header.signIn': 'Prisijungti',
+    'header.logOut': 'Atsijungti',
 }

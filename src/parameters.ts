@@ -4,6 +4,7 @@ export const routes = {
     homePage: '/',
     register: '/registracija',
     login: '/prisijungimas',
+    logout: '/atsijungti',
     forgotPassword: '/pamirsau-slaptazodi',
     resetPassword: '/atstatyti-slaptazodi',
 

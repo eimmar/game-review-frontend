@@ -9,10 +9,10 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { PublicRoute } from './routes/PublicRoute'
 import { routes } from './parameters'
 import { lazyComponent } from './services/Util/PageSpeed'
-import Registration from './views/User/Registration'
-import Login from './views/User/Login'
-import ForgotPassword from './views/User/ForgotPassword'
-import ResetPassword from './views/User/ResetPassword'
+import Registration from './views/Auth/Registration'
+import Login from './views/Auth/Login'
+import ForgotPassword from './views/Auth/ForgotPassword'
+import ResetPassword from './views/Auth/ResetPassword'
 import NotFound404 from './views/Error/NotFound404'
 import GameList from './views/Game/GameList'
 import GameView from './views/Game/GameView'
@@ -23,8 +23,9 @@ import Profile from './views/User/Profile'
 import UserView from './views/User/UserView'
 import UserList from './views/User/UserList'
 import ProfileEdit from './views/User/ProfileEdit'
-import ChangePassword from './views/User/ChangePassword'
+import ChangePassword from './views/Auth/ChangePassword'
 import GameListView from './views/GameList/GameListView'
+import LogOut from './views/Auth/LogOut'
 
 const HomePage = lazyComponent(import('./views/HomePage'))
 
@@ -50,6 +51,7 @@ function App() {
                     <PublicOnlyRoute exact path={routes.login} component={Login} />
                     <PublicOnlyRoute exact path={routes.forgotPassword} component={ForgotPassword} />
                     <PublicOnlyRoute exact path={`${routes.resetPassword}/:token`} component={ResetPassword} />
+                    <PrivateRoute exact path={`${routes.logout}`} component={LogOut} />
 
                     <PublicRoute exact path={routes.homePage} component={HomePage} />
 
