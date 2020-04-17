@@ -116,7 +116,7 @@ class GameSpotReviews extends AbstractPaginator<Props, State> {
                         <ListItemText
                             primary={review.deck}
                             secondary={
-                                <Box mt={1} style={{ color: 'initial' }} component="span">
+                                <Box mt={1} component="span">
                                     <ShowMore
                                         lines={6}
                                         more={

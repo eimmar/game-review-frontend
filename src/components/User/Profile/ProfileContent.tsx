@@ -196,9 +196,9 @@ class ProfileContent extends Component<Props, State> {
                 </TabPanel>
                 {this.customLists.map((list, index) => (
                     <TabPanel key={list.id} value={tabIndex} index={3 + index} renderedTabs={renderedTabs}>
+                        {this.renderGameListViewButton(list)}
                         {this.isCurrentUser && (
                             <>
-                                {this.renderGameListViewButton(list)}
                                 {this.renderGameListEditButton(list)}
                                 <Button
                                     className={sStyles.deleteAction}

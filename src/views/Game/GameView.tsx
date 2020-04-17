@@ -7,8 +7,8 @@ import { GameLoaded, gameService, ScreenshotSize } from '../../services/GameServ
 import PageLoader from '../../components/Global/PageLoader/PageLoader'
 import { ContentLayout } from '../../layouts/ContentLayout/ContentLayout'
 import GameTopCard from '../../components/Game/GameTopCard/GameTopCard'
-import { Header } from '../../components/Header/Header'
 import NotFound404 from '../Error/NotFound404'
+import Header from '../../components/Header/Header'
 
 export default function GameView() {
     const { guid } = useParams()

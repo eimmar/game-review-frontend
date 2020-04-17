@@ -89,7 +89,7 @@ class GameTopCard extends Component<Props> {
     renderRatingIndicator = (rating: number) => {
         const colorPrimary = flattenClasses([
             rating > 79 && sStyles.greenColorPrimary,
-            rating < 41 && sStyles.redBarColorPrimary,
+            rating < 41 && sStyles.redColorPrimary,
             rating > 39 && rating < 80 && sStyles.yellowColorPrimary,
         ])
 

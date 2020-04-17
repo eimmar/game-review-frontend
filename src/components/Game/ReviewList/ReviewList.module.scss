@@ -1,7 +1,9 @@
+@import '../../../scss/variables';
+
 .inline {
     display: inline;
 }
 
 .thumbUp {
-    fill: #1b5e20 !important;
+    fill: $color-success !important;
 }

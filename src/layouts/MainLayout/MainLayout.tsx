@@ -5,8 +5,8 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 
 import styles from './MainLayout.module.scss'
 import Copyright from '../../components/Copyright/Copyright'
-import { Header } from '../../components/Header/Header'
 import { flattenClasses } from '../../services/Util/StyleUtils'
+import Header from '../../components/Header/Header'
 
 interface Props {
     maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false

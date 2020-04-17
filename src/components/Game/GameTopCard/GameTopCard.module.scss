@@ -1,22 +1,24 @@
+@import '../../../scss/variables';
+
 .redColorPrimary {
     background-color: #ffcdd2 !important;
 }
 .redBarColorPrimary {
-    background-color: #b71c1c !important;
+    background-color: $color-danger !important;
 }
 
 .yellowColorPrimary {
     background-color: #fff9c4 !important;
 }
 .yellowBarColorPrimary {
-    background-color: #f9a825 !important;
+    background-color: $color-warning !important;
 }
 
 .greenColorPrimary {
     background-color: #c8e6c9 !important;
 }
 .greenBarColorPrimary {
-    background-color: #1b5e20 !important;
+    background-color: $color-success !important;
 }
 
 .contentOverlay {
