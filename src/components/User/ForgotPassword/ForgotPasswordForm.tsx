@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import VpnKeyIcon from '@material-ui/icons/VpnKey'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import { RouteComponentProps, withRouter, Link as RouterLink } from 'react-router-dom'
@@ -26,7 +26,7 @@ const styles = ({ palette, spacing }: Theme) =>
         },
         avatar: {
             margin: spacing(1),
-            backgroundColor: palette.secondary.main,
+            backgroundColor: palette.info.main,
         },
         form: {
             width: '100%', // Fix IE 11 issue.
@@ -78,7 +78,7 @@ class ForgotPasswordForm extends Component<Props> {
         return (
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
+                    <VpnKeyIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">{t`user.resetPassword`}</Typography>
                 <Formik<ForgotPasswordRequest>

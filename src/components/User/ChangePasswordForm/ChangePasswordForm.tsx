@@ -26,7 +26,7 @@ const styles = ({ palette, spacing }: Theme) =>
         },
         avatar: {
             margin: spacing(1),
-            backgroundColor: palette.secondary.main,
+            backgroundColor: palette.info.main,
         },
         form: {
             width: '100%', // Fix IE 11 issue.

@@ -26,13 +26,16 @@ const styles = ({ spacing, typography, palette }: Theme) =>
             ...typography.body2,
             padding: spacing(3, 0),
         },
+        avatar: {
+            backgroundColor: palette.warning.main,
+        },
         oldPrice: {
             textDecoration: 'line-through',
             color: palette.text.secondary,
             textDecorationColor: palette.text.secondary,
         },
         discount: {
-            color: palette.success.dark,
+            color: palette.success.main,
         },
     })
 
@@ -40,6 +43,7 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     query: string
     classes: {
         markdown: string
+        avatar: string
         oldPrice: string
         discount: string
     }
@@ -78,6 +82,7 @@ class PriceDeal extends Component<Props, State> {
 
     renderDeals() {
         const { deals, moreDealsUrl } = this.state
+        const { classes } = this.props
 
         return (
             <List>
@@ -85,7 +90,7 @@ class PriceDeal extends Component<Props, State> {
                     deals.map((it) => (
                         <ListItem key={it.plain} button href={it.urls.buy} component="a" target="_blank">
                             <ListItemAvatar>
-                                <Avatar>
+                                <Avatar className={classes.avatar}>
                                     <LocalOfferIcon />
                                 </Avatar>
                             </ListItemAvatar>
@@ -95,7 +100,7 @@ class PriceDeal extends Component<Props, State> {
                 {moreDealsUrl && (
                     <ListItem button href={moreDealsUrl} target="_blank" component="a">
                         <ListItemAvatar>
-                            <Avatar>
+                            <Avatar className={classes.avatar}>
                                 <MoreIcon />
                             </Avatar>
                         </ListItemAvatar>

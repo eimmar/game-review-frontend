@@ -419,16 +419,13 @@ class ProfileContent extends Component<Props, State> {
                         <Grid item lg={12} className="width-full">
                             <Typography align="center">
                                 {t`user.memberSince`}{' '}
-                                <Moment locale={i18next.language} format="hh:mm, MMMM Do, YYYY">
+                                <Moment locale={i18next.language} format="MMMM Do, YYYY">
                                     {user.createdAt.date}
                                 </Moment>
                             </Typography>
                         </Grid>
 
                         <Grid item lg={12} className="width-full">
-                            <Typography variant="h5" align="center">
-                                {t`user.gameLists`}
-                            </Typography>
                             {gameListsLoading && <CircularProgress />}
                             {!gameListsLoading && this.gameListTabs}
                         </Grid>

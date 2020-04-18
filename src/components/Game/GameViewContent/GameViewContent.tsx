@@ -81,7 +81,7 @@ class GameViewContent extends Component<Props, State> {
         renderedTabs: new Set([0]),
     }
 
-    get listInfo() {
+    get mainInfo() {
         const { game } = this.props
 
         return (
@@ -94,13 +94,19 @@ class GameViewContent extends Component<Props, State> {
                     </ListItemAvatar>
                     <ListItemText
                         primary={t`game.genres`}
-                        secondary={game.genres.map((genre) => (
-                            <Box mr={1} key={genre.id} display="inline" component="span">
-                                <Link variant="body1" href={genre.url}>
-                                    {genre.name}
-                                </Link>
-                            </Box>
-                        ))}
+                        secondary={
+                            <>
+                                {game.genres.length > 0 &&
+                                    game.genres.map((genre) => (
+                                        <Box mr={1} key={genre.id} display="inline" component="span">
+                                            <Link variant="body1" href={genre.url}>
+                                                {genre.name}
+                                            </Link>
+                                        </Box>
+                                    ))}
+                                {game.genres.length === 0 && t`game.noInfo`}
+                            </>
+                        }
                     />
                 </ListItem>
                 <Divider variant="inset" component="li" />
@@ -112,13 +118,19 @@ class GameViewContent extends Component<Props, State> {
                     </ListItemAvatar>
                     <ListItemText
                         primary={t`game.platforms`}
-                        secondary={game.platforms.map((platform) => (
-                            <Box mr={1} key={platform.id} display="inline" component="span">
-                                <Link variant="body1" href={platform.url}>
-                                    {platform.name}
-                                </Link>
-                            </Box>
-                        ))}
+                        secondary={
+                            <>
+                                {game.platforms.length > 0 &&
+                                    game.platforms.map((platform) => (
+                                        <Box mr={1} key={platform.id} display="inline" component="span">
+                                            <Link variant="body1" href={platform.url}>
+                                                {platform.name}
+                                            </Link>
+                                        </Box>
+                                    ))}
+                                {game.platforms.length === 0 && t`game.noInfo`}
+                            </>
+                        }
                     />
                 </ListItem>
 
@@ -206,30 +218,30 @@ class GameViewContent extends Component<Props, State> {
                 <CssBaseline />
                 <Container>
                     <main>
-                        {this.listInfo}
+                        {this.mainInfo}
 
-                        {game.screenshots && (
-                            <Box mb={2}>
-                                <Typography variant="h6">{t`game.screenshots`}</Typography>
-                                <Box mb={1}>
-                                    <Divider />
-                                </Box>
-                                <Carousel responsive={this.carouselConfig}>
-                                    {game.screenshots.map((screenshot) => (
+                        <Box mb={2}>
+                            <Typography variant="h6">{t`game.screenshots`}</Typography>
+                            <Box mb={1}>
+                                <Divider />
+                            </Box>
+                            <Carousel responsive={this.carouselConfig}>
+                                {game.screenshots.length > 0 &&
+                                    game.screenshots.map((screenshot) => (
                                         <GameImage key={screenshot.id} image={screenshot} title={game.name} />
                                     ))}
-                                </Carousel>
-                            </Box>
-                        )}
+                                {game.screenshots.length === 0 && t`game.noPhotos`}
+                            </Carousel>
+                        </Box>
                         <GameSpotVideos gameId={game.id} />
 
-                        <Grid container spacing={5} className={classes.mainGrid}>
+                        <Grid container spacing={5} className={classes.mainGrid} direction="row-reverse">
+                            <Grid item xs={12} md={4}>
+                                <Sidebar game={game} />
+                            </Grid>
                             <Grid item xs={12} md={8}>
                                 <PriceDeal query={game.name} />
                                 {this.reviewTabs}
-                            </Grid>
-                            <Grid item xs={12} md={4}>
-                                <Sidebar game={game} />
                             </Grid>
                         </Grid>
                     </main>

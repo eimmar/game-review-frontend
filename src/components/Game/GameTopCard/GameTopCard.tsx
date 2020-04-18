@@ -110,45 +110,43 @@ class GameTopCard extends Component<Props> {
             <Paper className={classes.mainSection}>
                 <div className={classes.overlay} style={bg ? { backgroundImage: `url(${bg})` } : {}} />
                 <MainLayout hideFooter hideHeader className={classes.mainLayout}>
-                    <Grid container className={classes.mainSectionContent}>
+                    <Grid container className={flattenClasses([classes.mainSectionContent, sStyles.contentOverlay])}>
                         <Grid item md={2} className={classes.cover}>
                             <CardMedia className={classes.cardMedia} image={game.coverImage || placeholderImg} />
                         </Grid>
                         <Grid item md={8} className={classes.mainSectionContent}>
-                            <div className={sStyles.contentOverlay}>
-                                <Box m={2}>
-                                    {game.rating && game.ratingCount && (
-                                        <>
-                                            <Typography color="inherit" className={sStyles.ratingText}>
-                                                {t('game.ratingBasedOn', {
-                                                    rating: game.rating?.toPrecision(2),
-                                                    count: game.ratingCount,
-                                                })}
-                                            </Typography>
-                                            {this.renderRatingIndicator(game.rating)}
-                                        </>
-                                    )}
-
-                                    <Typography component="h1" variant="h4" color="inherit" gutterBottom>
-                                        {game.name}
-                                    </Typography>
-                                    {game.releaseDate && (
-                                        <Typography variant="h5" color="inherit" gutterBottom>
-                                            <Moment locale={i18next.language} format="MMMM Do, YYYY">
-                                                {game.releaseDate}
-                                            </Moment>
+                            <Box m={2}>
+                                {game.rating && game.ratingCount && (
+                                    <>
+                                        <Typography color="inherit" className={sStyles.ratingText}>
+                                            {t('game.ratingBasedOn', {
+                                                rating: game.rating?.toPrecision(2),
+                                                count: game.ratingCount,
+                                            })}
                                         </Typography>
-                                    )}
-                                    <Typography variant="h6" color="inherit" paragraph>
-                                        {game.companies.map((it) => it.name).join(', ')}
-                                    </Typography>
+                                        {this.renderRatingIndicator(game.rating)}
+                                    </>
+                                )}
 
-                                    <Typography variant="subtitle1" color="inherit" paragraph>
-                                        {game.summary}
+                                <Typography component="h1" variant="h4" color="inherit" gutterBottom>
+                                    {game.name}
+                                </Typography>
+                                {game.releaseDate && (
+                                    <Typography variant="h5" color="inherit" gutterBottom>
+                                        <Moment locale={i18next.language} format="MMMM Do, YYYY">
+                                            {game.releaseDate}
+                                        </Moment>
                                     </Typography>
-                                    <GameListTab gameId={game.id} />
-                                </Box>
-                            </div>
+                                )}
+                                <Typography variant="h6" color="inherit" paragraph>
+                                    {game.companies.map((it) => it.name).join(', ')}
+                                </Typography>
+
+                                <Typography variant="subtitle1" color="inherit" paragraph>
+                                    {game.summary}
+                                </Typography>
+                                <GameListTab gameId={game.id} />
+                            </Box>
                         </Grid>
                     </Grid>
                 </MainLayout>

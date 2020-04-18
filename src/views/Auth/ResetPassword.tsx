@@ -38,7 +38,11 @@ export default function ResetPassword() {
     }
 
     if (!valid) {
-        return <ResetPasswordExpired />
+        return (
+            <MainLayout>
+                <ResetPasswordExpired />
+            </MainLayout>
+        )
     }
 
     return (

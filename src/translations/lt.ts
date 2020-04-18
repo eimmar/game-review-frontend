@@ -1,5 +1,6 @@
 export const ltTranslations = {
     'common.websiteName': 'Žaisk',
+    'common.copyright': 'Visos teisės saugomos ©',
     'common.notFoundMessage': '404: Puslapis neegzistuoja :/',
     'common.resetLinkExpired': 'Ši nuoroda yra neteisinga arba jos galiojimo laikas yra pasibaigęs.',
     'common.more': 'Daugiau',
@@ -69,7 +70,8 @@ export const ltTranslations = {
     'game.platforms': 'Platformos',
     'game.platform': 'Platforma',
     'game.storyLine': 'Žaidimo istorija',
-    'game.noInfo': 'Nėra informacijos',
+    'game.noInfo': 'Nėra informacijos.',
+    'game.noPhotos': 'Nautraukų nėra.',
     'game.screenshots': 'Nuotraukos',
     'game.gameDeals': 'Pasiūlymai',
     'game.releaseDateFrom': 'Išleista nuo',
@@ -100,7 +102,7 @@ export const ltTranslations = {
     'gameList.public': 'Viešas',
     'gameList.friendsOnly': 'Gali matyti draugai ',
     'gameList.private': 'Privatus',
-    'gameList.noResults': 'Sąrašas tuščias',
+    'gameList.noResults': 'Sąrašas tuščias.',
     'gameList.confirmDelete': 'Ar tikrai norite ištrinti šį sąrašą?',
     'gameList.deleteSuccess': 'Sąrašas ištrintas sėkmingai',
     'gameList.deleteError': 'Klaida! Sąrašo negalima išstrinti.',
@@ -130,7 +132,7 @@ export const ltTranslations = {
 
     'gameSpotVideos.getItems': 'Žiūrėti vaizdo įrašus',
     'gameSpotVideos.items': 'Vaizdo įrašai',
-    'gameSpotVideos.noItems': 'Vaizdo įrašų nėra',
+    'gameSpotVideos.noItems': 'Vaizdo įrašų nėra.',
 
     'gameWebsite.cateogry_1': 'Oficiali svetainė',
     'gameWebsite.cateogry_2': 'Wikia',

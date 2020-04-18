@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles'
 import { Form, Formik, FormikHelpers } from 'formik'
@@ -26,7 +26,7 @@ const styles = ({ palette, spacing }: Theme) =>
         },
         avatar: {
             margin: spacing(1),
-            backgroundColor: palette.secondary.main,
+            backgroundColor: palette.info.main,
         },
         form: {
             width: '100%', // Fix IE 11 issue.
@@ -88,7 +88,7 @@ class RegistrationForm extends Component<Props> {
         return (
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
+                    <AccountCircleIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">{t`user.register`}</Typography>
                 <Formik<RegistrationRequest>
@@ -105,7 +105,6 @@ class RegistrationForm extends Component<Props> {
                                         required
                                         fullWidth
                                         label={t`user.firstName`}
-                                        autoFocus
                                         value={values.firstName}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
@@ -167,7 +166,7 @@ class RegistrationForm extends Component<Props> {
                             >
                                 {t`user.register`}
                             </Button>
-                            <Grid container justify="flex-end">
+                            <Grid container justify="flex-start">
                                 <Grid item>
                                     <Link variant="body2" component={RouterLink} to={routes.login}>
                                         {t`user.alreadyHaveAccount`}

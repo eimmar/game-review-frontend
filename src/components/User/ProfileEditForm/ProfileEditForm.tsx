@@ -101,7 +101,6 @@ class ProfileEditForm extends Component<Props> {
                                         required
                                         fullWidth
                                         label={t`user.firstName`}
-                                        autoFocus
                                         value={values.firstName}
                                         onChange={handleChange}
                                         onBlur={handleBlur}

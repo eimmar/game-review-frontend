@@ -108,11 +108,12 @@ class ReviewList extends AbstractPaginator<Props, State> {
                 <List>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
-                            <Avatar alt={review.title}>
+                            <Avatar alt={review.title} className={styles.avatar}>
                                 <AccountCircleIcon />
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText
+                            classes={{ secondary: styles.reviewContent }}
                             secondary={
                                 <Box mt={1} component="span">
                                     <ShowMore

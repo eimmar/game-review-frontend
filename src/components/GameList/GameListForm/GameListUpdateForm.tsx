@@ -74,7 +74,6 @@ class GameListUpdateForm extends Component<Props> {
                                         required
                                         fullWidth
                                         label={t`gameList.name`}
-                                        autoFocus
                                         value={values.name || ''}
                                         onChange={handleChange}
                                         onBlur={handleBlur}

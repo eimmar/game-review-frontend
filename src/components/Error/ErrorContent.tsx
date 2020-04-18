@@ -11,7 +11,7 @@ export default class ErrorContent extends React.PureComponent {
 
         return (
             <div className={classes}>
-                <Typography variant="h4" className={styles.header}>
+                <Typography variant="h6" className={styles.header}>
                     {children}
                 </Typography>
             </div>

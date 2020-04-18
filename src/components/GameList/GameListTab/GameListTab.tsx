@@ -238,7 +238,7 @@ class GameListTab extends Component<Props, State> {
                         </List>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleModalToggle} color="primary" variant="outlined">
+                        <Button onClick={this.handleModalToggle} color="secondary" variant="contained">
                             {t`common.close`}
                         </Button>
                     </DialogActions>

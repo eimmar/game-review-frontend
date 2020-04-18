@@ -133,40 +133,48 @@ class Sidebar extends Component<Props> {
                 <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
                     {t`game.ageRatings`}
                 </Typography>
-                {game.ageRatings.map((ageRating) => (
-                    <Typography display="block" variant="body1" key={ageRating.id}>
-                        {t(`ageRating.category_${ageRating.category}`)} {t(`ageRating.${ageRating.rating}`)}
-                    </Typography>
-                ))}
+                {game.ageRatings.length > 0 &&
+                    game.ageRatings.map((ageRating) => (
+                        <Typography display="block" variant="body1" key={ageRating.id}>
+                            {t(`ageRating.category_${ageRating.category}`)} {t(`ageRating.${ageRating.rating}`)}
+                        </Typography>
+                    ))}
+                {game.ageRatings.length === 0 && t`game.noInfo`}
 
                 <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
                     {t`game.themes`}
                 </Typography>
-                {game.themes.map((theme) => (
-                    <Link display="block" variant="body1" href={theme.url} key={theme.id}>
-                        {theme.name}
-                    </Link>
-                ))}
+                {game.themes.length > 0 &&
+                    game.themes.map((theme) => (
+                        <Link display="block" variant="body1" href={theme.url} key={theme.id}>
+                            {theme.name}
+                        </Link>
+                    ))}
+                {game.themes.length === 0 && t`game.noInfo`}
 
                 <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
                     {t`game.gameModes`}
                 </Typography>
-                {game.gameModes.map((gameMode) => (
-                    <Link display="block" variant="body1" href={gameMode.url} key={gameMode.id}>
-                        {gameMode.name}
-                    </Link>
-                ))}
+                {game.gameModes.length > 0 &&
+                    game.gameModes.map((gameMode) => (
+                        <Link display="block" variant="body1" href={gameMode.url} key={gameMode.id}>
+                            {gameMode.name}
+                        </Link>
+                    ))}
+                {game.gameModes.length === 0 && t`game.noInfo`}
 
                 <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
                     {t`game.companies`}
                 </Typography>
-                {game.companies.map((company) => (
-                    <div key={company.id}>
-                        <Link display="block" variant="body1" href={company.url}>
-                            {company.name}
-                        </Link>
-                    </div>
-                ))}
+                {game.companies.length > 0 &&
+                    game.companies.map((company) => (
+                        <div key={company.id}>
+                            <Link display="block" variant="body1" href={company.url}>
+                                {company.name}
+                            </Link>
+                        </div>
+                    ))}
+                {game.companies.length === 0 && t`game.noInfo`}
 
                 {game.websites.length > 0 && (
                     <>

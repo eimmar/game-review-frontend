@@ -107,26 +107,6 @@ class GameListViewContent extends Component<Props> {
 
                         <Grid item lg={12} className="width-full">
                             <Typography align="center">
-                                <Chip
-                                    component="span"
-                                    size="medium"
-                                    avatar={
-                                        <Avatar component="span">
-                                            <AlternateEmailIcon />
-                                        </Avatar>
-                                    }
-                                    label={
-                                        <Link to={`${routes.user.view}/${gameList.user.id}`}>
-                                            {gameList.user.email}
-                                        </Link>
-                                    }
-                                    color="primary"
-                                />
-                            </Typography>
-                        </Grid>
-
-                        <Grid item lg={12} className="width-full">
-                            <Typography align="center">
                                 {t`common.createdBy`}{' '}
                                 <Link to={`${routes.user.view}/${gameList.user.id}`}>
                                     <b>{userService.getFullName(gameList.user)}</b>
@@ -139,9 +119,6 @@ class GameListViewContent extends Component<Props> {
                         </Grid>
 
                         <Grid item lg={12} className="width-full">
-                            <Typography variant="h5" align="center">
-                                {t`user.gameLists`}
-                            </Typography>
                             <GameListContent
                                 infiniteScroll
                                 dataFunction={(_, pagination) =>

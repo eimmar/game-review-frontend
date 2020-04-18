@@ -115,6 +115,7 @@ class GameSpotReviews extends AbstractPaginator<Props, State> {
                         </ListItemAvatar>
                         <ListItemText
                             primary={review.deck}
+                            classes={{ secondary: styles.reviewContent }}
                             secondary={
                                 <Box mt={1} component="span">
                                     <ShowMore
@@ -142,7 +143,7 @@ class GameSpotReviews extends AbstractPaginator<Props, State> {
                                             component="span"
                                             variant="body2"
                                             className={styles.inline}
-                                            color="textPrimary"
+                                            color="textSecondary"
                                         >
                                             <Box
                                                 component="span"

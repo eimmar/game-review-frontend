@@ -9,9 +9,9 @@ import { routes } from '../../parameters'
 export default function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
+            {t`common.copyright`}{' '}
             <Link color="inherit" component={RouterLink} to={routes.homePage}>{t`common.websiteName`}</Link>{' '}
-            {new Date().getFullYear()}.
+            {new Date().getFullYear()}
         </Typography>
     )
 }

@@ -69,7 +69,7 @@ class UserService {
     }
 
     getFullName(user: User) {
-        return [user.firstName, user.lastName].join(' ')
+        return [user.firstName, user.lastName].join(' ').trim()
     }
 }
 

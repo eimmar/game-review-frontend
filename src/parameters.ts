@@ -21,7 +21,7 @@ export const routes = {
         profile: '/profilis',
         profileEdit: '/profilis/redaguoti',
         changePassword: '/profilis/keisti-slaptazodi',
-        view: '/naudotojas',
+        view: '/zaidejas',
         list: '/bendruomene',
     },
 }

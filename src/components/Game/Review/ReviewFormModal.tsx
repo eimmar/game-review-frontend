@@ -17,17 +17,13 @@ import { GameReviewRequest, reviewService } from '../../../services/GameReviewSe
 import { t } from '../../../i18n'
 import { authenticatedAction, authService } from '../../../services/AuthService'
 
-const styles = ({ palette, spacing }: Theme) =>
+const styles = ({ spacing }: Theme) =>
     createStyles({
         paper: {
             marginTop: spacing(8),
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-        },
-        avatar: {
-            margin: spacing(1),
-            backgroundColor: palette.secondary.main,
         },
         form: {
             width: '100%', // Fix IE 11 issue.
@@ -44,7 +40,6 @@ interface Props extends WithStyles<typeof styles> {
     gameId: string
     classes: {
         paper: string
-        avatar: string
         form: string
         submit: string
         ratingLabel: string
@@ -122,12 +117,7 @@ class ReviewFormModal extends Component<Props, State> {
                     {t`gameReview.create`}
                 </Button>
                 <div className={classes.paper}>
-                    <Dialog
-                        open={open}
-                        onClose={this.handleModalToggle}
-                        aria-labelledby="form-dialog-title"
-                        scroll="body"
-                    >
+                    <Dialog open={open} onClose={this.handleModalToggle} scroll="body">
                         <DialogTitle>
                             <Typography variant="h5">{t`gameReview.create`}</Typography>
                         </DialogTitle>
@@ -147,7 +137,6 @@ class ReviewFormModal extends Component<Props, State> {
                                                     required
                                                     fullWidth
                                                     label={t`gameReview.title`}
-                                                    autoFocus
                                                     value={values.title || ''}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
@@ -186,7 +175,6 @@ class ReviewFormModal extends Component<Props, State> {
                                                     required
                                                     fullWidth
                                                     label={t`gameReview.comment`}
-                                                    autoFocus
                                                     value={values.comment || ''}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
@@ -202,7 +190,6 @@ class ReviewFormModal extends Component<Props, State> {
                                                     variant="outlined"
                                                     fullWidth
                                                     label={t`gameReview.pros`}
-                                                    autoFocus
                                                     value={values.pros || ''}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
@@ -218,7 +205,6 @@ class ReviewFormModal extends Component<Props, State> {
                                                     variant="outlined"
                                                     fullWidth
                                                     label={t`gameReview.cons`}
-                                                    autoFocus
                                                     value={values.cons || ''}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
