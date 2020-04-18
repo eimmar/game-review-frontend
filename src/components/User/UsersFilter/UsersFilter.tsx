@@ -69,22 +69,30 @@ class UsersFilter extends Component<Props, State> {
                     </Container>
                     <Container>
                         <Grid container spacing={2}>
-                            <Grid item sm={12} className={sStyles.searchContainer}>
+                            <Grid item xs={12} sm={4} md={8} />
+                            <Grid item xs={12} sm={8} md={4}>
                                 <form action="" onSubmit={(e) => e.preventDefault()}>
-                                    <TextField
-                                        className={sStyles.search}
-                                        name="userQuery"
-                                        label={t`common.search`}
-                                        value={(filters.user || '').replace(/\+/g, ' ')}
-                                        onChange={this.handleQueryChange}
-                                    />
-                                    <Button
-                                        type="submit"
-                                        style={{ verticalAlign: 'bottom' }}
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={this.handleSearchSubmit}
-                                    >{t`common.search`}</Button>
+                                    <Grid container>
+                                        <Grid item xs={9}>
+                                            <TextField
+                                                fullWidth
+                                                name="userQuery"
+                                                label={t`common.search`}
+                                                value={(filters.user || '').replace(/\+/g, ' ')}
+                                                onChange={this.handleQueryChange}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={3}>
+                                            <Button
+                                                className={sStyles.searchBtn}
+                                                type="submit"
+                                                style={{ verticalAlign: 'bottom' }}
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={this.handleSearchSubmit}
+                                            >{t`common.search`}</Button>
+                                        </Grid>
+                                    </Grid>
                                 </form>
                             </Grid>
                         </Grid>
