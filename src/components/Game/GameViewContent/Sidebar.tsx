@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter, Link as RouterLink } from 'react-router-dom'
 import { Badge, Link, Paper, Tooltip } from '@material-ui/core'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
 import LanguageIcon from '@material-ui/icons/Language'
@@ -146,18 +146,35 @@ class Sidebar extends Component<Props> {
                 </Typography>
                 {game.themes.length > 0 &&
                     game.themes.map((theme) => (
-                        <Link display="block" variant="body1" href={theme.url} key={theme.id}>
+                        <Link display="block" variant="body1" component={RouterLink} to={theme.url} key={theme.id}>
                             {theme.name}
                         </Link>
                     ))}
                 {game.themes.length === 0 && t`game.noInfo`}
 
                 <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
+                    {t`game.genres`}
+                </Typography>
+                {game.genres.length > 0 &&
+                    game.genres.map((genre) => (
+                        <Link display="block" variant="body1" component={RouterLink} to={genre.url} key={genre.id}>
+                            {genre.name}
+                        </Link>
+                    ))}
+                {game.genres.length === 0 && t`game.noInfo`}
+
+                <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
                     {t`game.gameModes`}
                 </Typography>
                 {game.gameModes.length > 0 &&
                     game.gameModes.map((gameMode) => (
-                        <Link display="block" variant="body1" href={gameMode.url} key={gameMode.id}>
+                        <Link
+                            display="block"
+                            variant="body1"
+                            component={RouterLink}
+                            to={gameMode.url}
+                            key={gameMode.id}
+                        >
                             {gameMode.name}
                         </Link>
                     ))}
@@ -169,7 +186,7 @@ class Sidebar extends Component<Props> {
                 {game.companies.length > 0 &&
                     game.companies.map((company) => (
                         <div key={company.id}>
-                            <Link display="block" variant="body1" href={company.url}>
+                            <Link display="block" variant="body1" href={company.url} target="_blank">
                                 {company.name}
                             </Link>
                         </div>
