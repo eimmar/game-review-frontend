@@ -1,48 +1,12 @@
 import { requestService } from './RequestService'
 
-interface PriceRequest {
-    plains: string[]
-    region?: string
-    country?: string
-    shops?: string[]
-    exclude?: string[]
-    added?: number
-}
-
 interface ResponseMeta {
     currency: string
-}
-
-interface ListUrl {
-    game: string
-}
-
-interface ResponsePlainData {
-    list: PriceDeal[]
-    urls: ListUrl
-}
-
-interface ResponsePlain {
-    [key: string]: ResponsePlainData
-}
-
-interface PriceResponse {
-    '.meta': ResponseMeta
-    data: ResponsePlain
 }
 
 interface Shop {
     id: string
     name: string
-}
-
-export interface PriceDeal {
-    priceNew: number
-    priceOld: number
-    priceCut: number
-    url: string
-    shop: Shop
-    drm: string[]
 }
 
 interface SearchRequest {
@@ -87,10 +51,6 @@ export interface GameDeal {
 
 class GameDealService {
     baseUrl = '/api/any-deal/'
-
-    prices(request: PriceRequest): Promise<PriceResponse> {
-        return requestService.performRequest('POST', `${this.baseUrl}game-prices`, request)
-    }
 
     search(request: SearchRequest): Promise<SearchResponse> {
         return requestService.performRequest('POST', `${this.baseUrl}search`, request)

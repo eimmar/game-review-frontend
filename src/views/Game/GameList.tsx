@@ -5,15 +5,7 @@ import { Component } from 'react'
 import { MainLayout } from '../../layouts/MainLayout/MainLayout'
 import GameListContent from '../../components/Game/GameListContent/GameListContent'
 import GamesFilter from '../../components/Game/GamesFilter/GamesFilter'
-import {
-    Company,
-    GameEntityFilterValues,
-    GameMode,
-    gameService,
-    Genre,
-    Platform,
-    Theme,
-} from '../../services/GameService'
+import { GameEntityFilterValues, GameMode, gameService, Genre, Platform, Theme } from '../../services/GameService'
 
 interface State extends GameEntityFilterValues {}
 
@@ -25,7 +17,6 @@ class GameList extends Component<Props, State> {
         themes: [] as Theme[],
         platforms: [] as Platform[],
         gameModes: [] as GameMode[],
-        companies: [] as Company[],
     }
 
     componentDidMount(): void {
@@ -34,17 +25,11 @@ class GameList extends Component<Props, State> {
 
     render() {
         const { location } = this.props
-        const { genres, themes, platforms, gameModes, companies } = this.state
+        const { genres, themes, platforms, gameModes } = this.state
 
         return (
             <MainLayout key={location.key}>
-                <GamesFilter
-                    genres={genres}
-                    themes={themes}
-                    companies={companies}
-                    gameModes={gameModes}
-                    platforms={platforms}
-                />
+                <GamesFilter genres={genres} themes={themes} gameModes={gameModes} platforms={platforms} />
                 <GameListContent
                     dataFunction={(search, pagination) => gameService.getAll(search, pagination.pageSize)}
                 />

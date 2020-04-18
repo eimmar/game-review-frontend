@@ -46,35 +46,6 @@ export interface Review {
     reviewType?: 'primary' | 'secondary' | 'second_take'
 }
 
-export interface Article {
-    id?: number
-    authors?: string
-    title?: string
-    deck?: string
-    lede?: string
-    body?: string
-    image?: AssocImage
-    categories?: object[]
-    associations?: object[]
-    publishDate?: string
-    videosApiUrl?: string
-    siteDetailUrl?: string
-}
-
-export interface Image {
-    siteDetailUrl?: string
-    iconUrl?: string
-    mediumUrl?: string
-    screenUrl?: string
-    smallUrl?: string
-    superUrl?: string
-    thumbUrl?: string
-    tinyUrl?: string
-    screenTiny?: string
-    squareTiny?: string
-    original?: string
-}
-
 export interface Video {
     id?: string
     title?: string
@@ -97,14 +68,6 @@ class GameSpotService {
 
     reviews(id: string, request: Request): Promise<Response<Review>> {
         return requestService.performRequest('POST', `${this.baseUrl}reviews/${id}`, request)
-    }
-
-    articles(id: string, request: Request): Promise<Response<Article>> {
-        return requestService.performRequest('POST', `${this.baseUrl}articles/${id}`, request)
-    }
-
-    images(id: string, request: Request): Promise<Response<Image>> {
-        return requestService.performRequest('POST', `${this.baseUrl}images/${id}`, request)
     }
 
     videos(id: string, request: Request): Promise<Response<Video>> {

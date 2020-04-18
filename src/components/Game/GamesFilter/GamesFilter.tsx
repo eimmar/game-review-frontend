@@ -147,7 +147,7 @@ class GamesFilter extends Component<Props, State> {
     }
 
     render() {
-        const { classes, genres, themes, gameModes, companies, platforms } = this.props
+        const { classes, genres, themes, gameModes, platforms } = this.props
         const { filters } = this.state
 
         return (
@@ -172,13 +172,13 @@ class GamesFilter extends Component<Props, State> {
                                         input={<Input />}
                                         renderValue={(selected) => (
                                             <div className={classes.chips}>
-                                                {(selected as string[]).map((id) => {
-                                                    const theme = themes.find((it) => it.id === id)
+                                                {(selected as string[]).map((slug) => {
+                                                    const theme = themes.find((it) => it.slug === slug)
 
                                                     return (
                                                         <Chip
                                                             color="primary"
-                                                            key={id}
+                                                            key={slug}
                                                             label={theme ? theme.name : ''}
                                                             className={classes.chip}
                                                         />
@@ -189,7 +189,7 @@ class GamesFilter extends Component<Props, State> {
                                         MenuProps={this.selectMenuProps}
                                     >
                                         {themes.map((it) => (
-                                            <MenuItem key={it.id} value={it.id}>
+                                            <MenuItem key={it.slug} value={it.slug}>
                                                 {it.name}
                                             </MenuItem>
                                         ))}
@@ -208,13 +208,13 @@ class GamesFilter extends Component<Props, State> {
                                         input={<Input />}
                                         renderValue={(selected) => (
                                             <div className={classes.chips}>
-                                                {(selected as string[]).map((id) => {
-                                                    const genre = genres.find((it) => it.id === id)
+                                                {(selected as string[]).map((slug) => {
+                                                    const genre = genres.find((it) => it.slug === slug)
 
                                                     return (
                                                         <Chip
                                                             color="primary"
-                                                            key={id}
+                                                            key={slug}
                                                             label={genre ? genre.name : ''}
                                                             className={classes.chip}
                                                         />
@@ -225,7 +225,7 @@ class GamesFilter extends Component<Props, State> {
                                         MenuProps={this.selectMenuProps}
                                     >
                                         {genres.map((it) => (
-                                            <MenuItem key={it.id} value={it.id}>
+                                            <MenuItem key={it.slug} value={it.slug}>
                                                 {it.name}
                                             </MenuItem>
                                         ))}
@@ -244,13 +244,13 @@ class GamesFilter extends Component<Props, State> {
                                         input={<Input />}
                                         renderValue={(selected) => (
                                             <div className={classes.chips}>
-                                                {(selected as string[]).map((id) => {
-                                                    const platform = platforms.find((it) => it.id === id)
+                                                {(selected as string[]).map((slug) => {
+                                                    const platform = platforms.find((it) => it.slug === slug)
 
                                                     return (
                                                         <Chip
                                                             color="primary"
-                                                            key={id}
+                                                            key={slug}
                                                             label={platform ? platform.name : ''}
                                                             className={classes.chip}
                                                         />
@@ -261,7 +261,7 @@ class GamesFilter extends Component<Props, State> {
                                         MenuProps={this.selectMenuProps}
                                     >
                                         {platforms.map((it) => (
-                                            <MenuItem key={it.id} value={it.id}>
+                                            <MenuItem key={it.slug} value={it.slug}>
                                                 {it.name}
                                             </MenuItem>
                                         ))}
@@ -280,13 +280,13 @@ class GamesFilter extends Component<Props, State> {
                                         input={<Input />}
                                         renderValue={(selected) => (
                                             <div className={classes.chips}>
-                                                {(selected as string[]).map((id) => {
-                                                    const gameMode = gameModes.find((it) => it.id === id)
+                                                {(selected as string[]).map((slug) => {
+                                                    const gameMode = gameModes.find((it) => it.slug === slug)
 
                                                     return (
                                                         <Chip
                                                             color="primary"
-                                                            key={id}
+                                                            key={slug}
                                                             label={gameMode ? gameMode.name : ''}
                                                             className={classes.chip}
                                                         />
@@ -297,43 +297,7 @@ class GamesFilter extends Component<Props, State> {
                                         MenuProps={this.selectMenuProps}
                                     >
                                         {gameModes.map((it) => (
-                                            <MenuItem key={it.id} value={it.id}>
-                                                {it.name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-
-                            <Grid item xs={12} sm={6} md={3}>
-                                <FormControl className={classes.formControl}>
-                                    <InputLabel>{t`game.company`}</InputLabel>
-                                    <Select
-                                        multiple
-                                        name="company"
-                                        value={this.valueAsArray(filters.company)}
-                                        onChange={this.handleMultiSelectChange}
-                                        input={<Input />}
-                                        renderValue={(selected) => (
-                                            <div className={classes.chips}>
-                                                {(selected as string[]).map((id) => {
-                                                    const company = companies.find((it) => it.id === id)
-
-                                                    return (
-                                                        <Chip
-                                                            color="primary"
-                                                            key={id}
-                                                            label={company ? company.name : ''}
-                                                            className={classes.chip}
-                                                        />
-                                                    )
-                                                })}
-                                            </div>
-                                        )}
-                                        MenuProps={this.selectMenuProps}
-                                    >
-                                        {companies.map((it) => (
-                                            <MenuItem key={it.id} value={it.id}>
+                                            <MenuItem key={it.slug} value={it.slug}>
                                                 {it.name}
                                             </MenuItem>
                                         ))}

@@ -156,7 +156,6 @@ export interface GamesFilterRequest {
     theme?: string | string[]
     platform?: string | string[]
     gameMode?: string | string[]
-    company?: string | string[]
     orderBy?: string
     order?: string
 }
@@ -166,7 +165,6 @@ export interface GameEntityFilterValues {
     themes: Theme[]
     platforms: Platform[]
     gameModes: GameMode[]
-    companies: Company[]
 }
 
 class GameService {
@@ -185,7 +183,6 @@ class GameService {
             theme,
             platform,
             gameMode,
-            company,
             orderBy,
             order,
         } = requestService.getFilters(search) as GamesFilterRequest
@@ -206,7 +203,6 @@ class GameService {
                 theme,
                 platform,
                 gameMode,
-                company,
             },
         })
     }
