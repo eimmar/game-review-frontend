@@ -7,6 +7,7 @@ import NotFound404 from '../../components/Error/ErrorContent'
 import { authService } from '../../services/AuthService'
 import ResetPasswordExpired from '../Error/ResetPasswordExpired'
 import PageLoader from '../../components/Global/PageLoader'
+import { t } from '../../i18n'
 
 export default function ResetPassword() {
     const { token } = useParams()
@@ -44,6 +45,7 @@ export default function ResetPassword() {
             </MainLayout>
         )
     }
+    document.title = `${t`pageTitle.resetPassword`} - ${t`common.websiteName`}`
 
     return (
         <MainLayout maxWidth="xs">

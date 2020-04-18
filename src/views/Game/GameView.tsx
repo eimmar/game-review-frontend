@@ -9,6 +9,7 @@ import { ContentLayout } from '../../layouts/ContentLayout/ContentLayout'
 import GameTopCard from '../../components/Game/GameTopCard/GameTopCard'
 import NotFound404 from '../Error/NotFound404'
 import Header from '../../components/Header/Header'
+import { t } from '../../i18n'
 
 export default function GameView() {
     const { slug } = useParams()
@@ -37,6 +38,7 @@ export default function GameView() {
     if (!slug || !game) {
         return <NotFound404 />
     }
+    document.title = `${game.name} - ${t`common.websiteName`}`
 
     return (
         <>

@@ -17,7 +17,7 @@ export interface UserUpdateRequest {
 
 export interface UserFilterRequest {
     page?: string
-    query?: string
+    user?: string
     orderBy?: string
     order?: string
 }
@@ -36,7 +36,7 @@ class UserService {
     }
 
     getAll(search: string, pageSize: number): Promise<PaginatedList<User>> {
-        const { page, query, orderBy, order } = requestService.getFilters(search) as UserFilterRequest
+        const { page, user, orderBy, order } = requestService.getFilters(search) as UserFilterRequest
 
         return requestService.performRequest('POST', this.baseUrl, {
             pageSize,
@@ -44,7 +44,7 @@ class UserService {
             orderBy,
             order,
             filters: {
-                query,
+                query: user,
             },
         })
     }

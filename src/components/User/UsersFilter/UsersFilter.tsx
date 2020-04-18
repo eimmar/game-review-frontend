@@ -39,17 +39,20 @@ class UsersFilter extends Component<Props, State> {
     handleQueryChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
         const { filters } = this.state
 
-        event.target !== null && this.setState({ filters: { ...filters, query: event.target.value as string } })
+        event.target !== null && this.setState({ filters: { ...filters, user: event.target.value as string } })
     }
 
     handleSearchSubmit = () => {
         const { location, history } = this.props
         const { filters } = this.state
-        const currentUrlParams = new URLSearchParams(location.search)
 
-        currentUrlParams.set('query', filters.query || '')
-        currentUrlParams.set('page', '1')
-        history.push(`${location.pathname}?${currentUrlParams.toString()}`)
+        if (filters.user?.trim()) {
+            const currentUrlParams = new URLSearchParams(location.search)
+
+            currentUrlParams.set('user', filters.user?.trim() || '')
+            currentUrlParams.set('page', '1')
+            history.push(`${location.pathname}?${currentUrlParams.toString()}`)
+        }
     }
 
     render() {
@@ -72,7 +75,7 @@ class UsersFilter extends Component<Props, State> {
                                     className={sStyles.search}
                                     name="userQuery"
                                     label={t`common.search`}
-                                    value={(filters.query || '').replace(/\+/g, ' ')}
+                                    value={(filters.user || '').replace(/\+/g, ' ')}
                                     onChange={this.handleQueryChange}
                                 />
                                 <Button

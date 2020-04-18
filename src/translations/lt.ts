@@ -188,4 +188,16 @@ export const ltTranslations = {
     'header.changePassword': 'Keisti slaptažodį',
     'header.search': 'Paieška',
     'header.gameList': 'Žaidimai',
+
+    'pageTitle.changePassword': 'Slaptažodžio keitimas',
+    'pageTitle.forgotPassword': 'Pamiršau slaptažodį',
+    'pageTitle.login': 'Prisijungimas',
+    'pageTitle.registration': 'Registracija',
+    'pageTitle.resetPassword': 'Naujas slaptažodis',
+    'pageTitle.pageNotFound': 'Puslapis nerastas',
+    'pageTitle.error': 'Klaida',
+    'pageTitle.gameList': 'Žaidimai',
+    'pageTitle.gameListView': 'Žaidimų sąrašas',
+    'pageTitle.profileEdit': 'Paskyros atnaujinimas',
+    'pageTitle.userList': 'Bendruomenė',
 }

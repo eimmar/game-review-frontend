@@ -108,7 +108,7 @@ class Header extends React.PureComponent<Props> {
         const { query } = this.state
         const currentUrlParams = new URLSearchParams(location.search)
 
-        if (query.trim()) {
+        if (query.trim() || currentUrlParams.get('query')) {
             currentUrlParams.set('query', query.trim())
             currentUrlParams.set('page', '1')
             history.push(`${routes.game.list}?${currentUrlParams.toString()}`)
@@ -287,7 +287,7 @@ class Header extends React.PureComponent<Props> {
                         </IconButton>
                         <div className={classes.spacer} />
 
-                        <form action="" style={{ display: 'contents' }}>
+                        <form action="" style={{ display: 'contents' }} onSubmit={(e) => e.preventDefault()}>
                             <TextField
                                 className={sStyles.search}
                                 placeholder={t`header.search`}

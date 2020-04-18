@@ -27,6 +27,7 @@ class GameList extends Component<Props, State> {
     }
 
     componentDidMount(): void {
+        document.title = `${t`pageTitle.gameList`} - ${t`common.websiteName`}`
         gameService.getAllFilterEntities().then((response) => this.setState(response))
     }
 

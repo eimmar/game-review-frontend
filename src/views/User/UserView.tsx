@@ -6,6 +6,7 @@ import ProfileContent from '../../components/User/Profile/ProfileContent'
 import PageLoader from '../../components/Global/PageLoader'
 import { User, userService } from '../../services/UserService'
 import NotFound404 from '../Error/NotFound404'
+import { t } from '../../i18n'
 
 export default function UserView() {
     const { guid } = useParams()
@@ -34,6 +35,7 @@ export default function UserView() {
     if (!guid || !user) {
         return <NotFound404 />
     }
+    document.title = `${userService.getFullName(user)} - ${t`common.websiteName`}`
 
     return (
         <MainLayout>
