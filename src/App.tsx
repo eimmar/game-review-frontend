@@ -56,7 +56,7 @@ function App() {
                     <PublicRoute exact path={routes.homePage} component={HomePage} />
 
                     <PublicRoute exact path={`${routes.game.list}`} component={GameList} />
-                    <PublicRoute exact path={`${routes.game.view}/:guid`} component={GameView} />
+                    <PublicRoute exact path={`${routes.game.view}/:slug`} component={GameView} />
 
                     <PublicRoute exact path={`${routes.gameList.view}/:guid`} component={GameListView} />
 

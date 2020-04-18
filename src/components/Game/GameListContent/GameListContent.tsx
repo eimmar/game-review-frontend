@@ -182,7 +182,7 @@ class GameListContent extends AbstractPaginator<Props, State> {
                                     <div key={game.id}>
                                         <ListItem alignItems="flex-start" className={classes.listItem}>
                                             <ListItemAvatar className={classes.listAvatar}>
-                                                <Link to={`${routes.game.view}/${game.id}`}>
+                                                <Link to={`${routes.game.view}/${game.slug}`}>
                                                     <CardMedia
                                                         className={classes.cardMedia}
                                                         image={game.coverImage || placeholderImg}
@@ -192,7 +192,7 @@ class GameListContent extends AbstractPaginator<Props, State> {
                                             </ListItemAvatar>
                                             <ListItemText
                                                 primary={
-                                                    <Link to={`${routes.game.view}/${game.id}`}>
+                                                    <Link to={`${routes.game.view}/${game.slug}`}>
                                                         <Typography gutterBottom variant="subtitle1" component="h2">
                                                             <b>{game.name}</b>
                                                         </Typography>

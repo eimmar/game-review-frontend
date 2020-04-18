@@ -103,13 +103,13 @@ class ReviewList extends AbstractPaginator<Props, State> {
                 <List>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
-                            <Link href={`${routes.game.view}/${review.game.id}`} target="_blank">
+                            <Link href={`${routes.game.view}/${review.game.slug}`} target="_blank">
                                 <Avatar alt={review.title} src={review.game.coverImage || placeholderImg} />
                             </Link>
                         </ListItemAvatar>
                         <ListItemText
                             primary={
-                                <Link href={`${routes.game.view}/${review.game.id}`} target="_blank">
+                                <Link href={`${routes.game.view}/${review.game.slug}`} target="_blank">
                                     {review.game.name}
                                 </Link>
                             }

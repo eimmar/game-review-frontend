@@ -11,14 +11,14 @@ import NotFound404 from '../Error/NotFound404'
 import Header from '../../components/Header/Header'
 
 export default function GameView() {
-    const { guid } = useParams()
+    const { slug } = useParams()
     const [loading, setLoading] = useState(true)
     const [game, setGame] = useState(null as GameLoaded | null)
 
     useEffect(() => {
-        if (guid) {
+        if (slug) {
             gameService
-                .get(guid)
+                .get(slug)
                 .then((response) => setGame(gameService.withCover(response, ScreenshotSize.CoverBig)))
                 .finally(() => setLoading(false))
         } else {
@@ -34,7 +34,7 @@ export default function GameView() {
         )
     }
 
-    if (!guid || !game) {
+    if (!slug || !game) {
         return <NotFound404 />
     }
 

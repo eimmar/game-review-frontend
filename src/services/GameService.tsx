@@ -64,6 +64,7 @@ export interface AgeRating extends ExternalEntity {
 export interface Genre extends Timestampable, ExternalEntity {
     id: string
     name: string
+    slug: string
     url: string
 }
 
@@ -78,12 +79,14 @@ export interface Screenshot extends Timestampable, ExternalEntity {
 export interface Theme extends Timestampable, ExternalEntity {
     id: string
     name: string
+    slug: string
     url: string
 }
 
 export interface Platform extends Timestampable, ExternalEntity {
     id: string
     name: string
+    slug: string
     abbreviation: string
     summary: string | null
     url: string
@@ -93,6 +96,7 @@ export interface Platform extends Timestampable, ExternalEntity {
 export interface GameMode extends Timestampable, ExternalEntity {
     id: string
     name: string
+    slug: string
     url: string
 }
 
@@ -116,6 +120,7 @@ export interface Company extends Timestampable, ExternalEntity {
 export interface Game extends Timestampable, ExternalEntity {
     id: string
     name: string
+    slug: string
     coverImage: string | null
     summary: string | null
     storyLine: string | null
@@ -210,8 +215,8 @@ class GameService {
         return requestService.performRequest('POST', `${this.baseUrl}list/${listId}`, { pageSize, page })
     }
 
-    get(id: string): Promise<GameLoaded> {
-        return requestService.performRequest('GET', this.baseUrl + id)
+    get(slug: string): Promise<GameLoaded> {
+        return requestService.performRequest('GET', this.baseUrl + slug)
     }
 
     withCover<T extends Game>(game: T, size: ScreenshotSize): T {
