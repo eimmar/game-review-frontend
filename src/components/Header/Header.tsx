@@ -9,6 +9,8 @@ import {
     Tooltip,
     TextField,
     Hidden,
+    Drawer,
+    Divider,
 } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import SearchIcon from '@material-ui/icons/Search'
@@ -23,6 +25,7 @@ import SportsEsportsIcon from '@material-ui/icons/SportsEsports'
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import CloseIcon from '@material-ui/icons/Close'
 
 import { ContentLayout } from '../../layouts/ContentLayout/ContentLayout'
 import sStyles from './Header.module.scss'
@@ -69,9 +72,8 @@ class Header extends React.PureComponent<Props> {
 
     state = {
         profileMenuAnchor: null as HTMLElement | null,
-        mobileMainMenuAnchor: null as HTMLElement | null,
-        mobileUnregisteredUserMenuAnchor: null as HTMLElement | null,
         query: '',
+        mobileDrawerOpen: false,
     }
 
     componentDidMount(): void {
@@ -86,15 +88,16 @@ class Header extends React.PureComponent<Props> {
 
     handleProfileMenuClose = () => this.setState({ profileMenuAnchor: null })
 
-    handleMobileMainMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) =>
-        this.setState({ mobileMainMenuAnchor: event.target })
+    handleMobileDrawerToggle = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+        if (
+            event.type === 'keydown' &&
+            ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
+        ) {
+            return
+        }
 
-    handleMobileMainMenuClose = () => this.setState({ mobileMainMenuAnchor: null })
-
-    handleMobileUnregisteredUserMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) =>
-        this.setState({ mobileUnregisteredUserMenuAnchor: event.target })
-
-    handleMobileUnregisteredUserMenuClose = () => this.setState({ mobileUnregisteredUserMenuAnchor: null })
+        this.setState({ mobileDrawerOpen: open })
+    }
 
     handleSearchType = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
         this.setState({ query: event.target.value })
@@ -119,132 +122,105 @@ class Header extends React.PureComponent<Props> {
             <>
                 {!this.user && (
                     <>
-                        <Hidden smUp>{this.renderMobileUnregisteredUserMenuSection()}</Hidden>
-                        <Hidden xsDown>
+                        <Hidden smDown>
                             <Tooltip title={t`header.signIn`}>
                                 <IconButton component={Link} to={routes.login}>
                                     <LockOpenIcon />
                                 </IconButton>
                             </Tooltip>
 
-                            <Hidden mdUp>
-                                <Tooltip title={t`user.register`}>
-                                    <IconButton color="primary" component={Link} to={routes.register}>
-                                        <AccountCircleIcon />
-                                    </IconButton>
-                                </Tooltip>
-                            </Hidden>
+                            <Button variant="outlined" color="primary" component={Link} to={routes.register}>
+                                <AccountCircleIcon className="m-r-8" />
+                                {t`user.register`}
+                            </Button>
+                        </Hidden>
 
-                            <Hidden smDown>
-                                <Button variant="outlined" color="primary" component={Link} to={routes.register}>
-                                    <AccountCircleIcon className="m-r-8" />
-                                    {t`user.register`}
-                                </Button>
-                            </Hidden>
+                        <Hidden mdUp>
+                            <MenuItem component={Link} to={routes.register} className={sStyles.drawerItem}>
+                                <AccountCircleIcon className="m-r-32" color="primary" />
+                                {t`user.register`}
+                            </MenuItem>
+                            <MenuItem component={Link} to={routes.login} className={sStyles.drawerItem}>
+                                <LockOpenIcon className="m-r-32" />
+                                {t`header.signIn`}
+                            </MenuItem>
                         </Hidden>
                     </>
                 )}
 
                 {this.user && (
                     <>
-                        <Tooltip title={t`header.myProfile`}>
-                            <IconButton color="primary" onClick={this.handleProfileMenuOpen}>
-                                <Hidden xsDown>
+                        <Hidden smDown>
+                            <Tooltip title={t`header.myProfile`}>
+                                <IconButton color="primary" onClick={this.handleProfileMenuOpen}>
                                     <AccountCircleIcon fontSize="large" />
-                                </Hidden>
-                                <Hidden smUp>
-                                    <AccountCircleIcon />
-                                </Hidden>
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            anchorEl={profileMenuAnchor}
-                            keepMounted
-                            open={!!profileMenuAnchor}
-                            onClose={this.handleProfileMenuClose}
-                        >
-                            <MenuItem onClick={this.handleProfileMenuClose} component={Link} to={routes.user.profile}>
-                                <ContactMailIcon className="m-r-16" />
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                anchorEl={profileMenuAnchor}
+                                keepMounted
+                                open={!!profileMenuAnchor}
+                                onClose={this.handleProfileMenuClose}
+                            >
+                                <MenuItem
+                                    onClick={this.handleProfileMenuClose}
+                                    component={Link}
+                                    to={routes.user.profile}
+                                >
+                                    <ContactMailIcon className="m-r-16" />
+                                    {t`header.profileInfo`}
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={this.handleProfileMenuClose}
+                                    component={Link}
+                                    to={routes.user.profileEdit}
+                                >
+                                    <EditIcon className="m-r-16" />
+                                    {t`header.updateProfile`}
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={this.handleProfileMenuClose}
+                                    component={Link}
+                                    to={routes.user.changePassword}
+                                >
+                                    <LockIcon className="m-r-16" />
+                                    {t`header.changePassword`}
+                                </MenuItem>
+                                <MenuItem onClick={this.handleProfileMenuClose} component={Link} to={routes.logout}>
+                                    <ExitToAppIcon className="m-r-16" />
+                                    {t`header.logOut`}
+                                </MenuItem>
+                            </Menu>
+                        </Hidden>
+
+                        <Hidden mdUp>
+                            <MenuItem component={Link} to={routes.user.profile} className={sStyles.drawerItem}>
+                                <ContactMailIcon className="m-r-32" />
                                 {t`header.profileInfo`}
                             </MenuItem>
-                            <MenuItem
-                                onClick={this.handleProfileMenuClose}
-                                component={Link}
-                                to={routes.user.profileEdit}
-                            >
-                                <EditIcon className="m-r-16" />
+                            <MenuItem component={Link} to={routes.user.profileEdit} className={sStyles.drawerItem}>
+                                <EditIcon className="m-r-32" />
                                 {t`header.updateProfile`}
                             </MenuItem>
-                            <MenuItem
-                                onClick={this.handleProfileMenuClose}
-                                component={Link}
-                                to={routes.user.changePassword}
-                            >
-                                <LockIcon className="m-r-16" />
+                            <MenuItem component={Link} to={routes.user.changePassword} className={sStyles.drawerItem}>
+                                <LockIcon className="m-r-32" />
                                 {t`header.changePassword`}
                             </MenuItem>
-                            <MenuItem onClick={this.handleProfileMenuClose} component={Link} to={routes.logout}>
-                                <ExitToAppIcon className="m-r-16" />
+                            <MenuItem component={Link} to={routes.logout} className={sStyles.drawerItem}>
+                                <ExitToAppIcon className="m-r-32" />
                                 {t`header.logOut`}
                             </MenuItem>
-                        </Menu>
+                        </Hidden>
                     </>
                 )}
             </>
         )
     }
 
-    renderMobileUnregisteredUserMenuSection = () => {
-        const { mobileUnregisteredUserMenuAnchor } = this.state
-
-        return (
-            <>
-                <IconButton onClick={this.handleMobileUnregisteredUserMenuOpen} color="primary">
-                    <AccountCircleIcon />
-                </IconButton>
-                <Menu
-                    anchorEl={mobileUnregisteredUserMenuAnchor}
-                    keepMounted
-                    open={!!mobileUnregisteredUserMenuAnchor}
-                    onClose={this.handleMobileUnregisteredUserMenuClose}
-                >
-                    <MenuItem onClick={this.handleMobileUnregisteredUserMenuClose} component={Link} to={routes.login}>
-                        <LockOpenIcon className="m-r-16" />
-                        {t`header.signIn`}
-                    </MenuItem>
-                    <MenuItem
-                        onClick={this.handleMobileUnregisteredUserMenuClose}
-                        component={Link}
-                        to={routes.register}
-                    >
-                        <AccountCircleIcon className="m-r-16" />
-                        {t`user.register`}
-                    </MenuItem>
-                </Menu>
-            </>
-        )
-    }
-
     renderMainMenuSection = () => {
-        const { query } = this.state
-
         return (
             <>
-                <form action="" style={{ display: 'contents' }}>
-                    <TextField
-                        className={sStyles.search}
-                        placeholder={t`header.search`}
-                        variant="outlined"
-                        size="small"
-                        value={query}
-                        onChange={this.handleSearchType}
-                    />
-                    <IconButton className={sStyles.searchButton} onClick={this.handleSearch} type="submit">
-                        <SearchIcon />
-                    </IconButton>
-                </form>
-
-                <Hidden xsDown>
+                <Hidden smDown>
                     <Tooltip title={t`user.listHeader`}>
                         <IconButton component={Link} to={routes.user.list}>
                             <PeopleAltIcon />
@@ -257,39 +233,47 @@ class Header extends React.PureComponent<Props> {
                         </IconButton>
                     </Tooltip>
                 </Hidden>
+
+                <Hidden mdUp>
+                    <MenuItem component={Link} to={routes.user.list} className={sStyles.drawerItem}>
+                        <PeopleAltIcon className="m-r-32" />
+                        {t`user.listHeader`}
+                    </MenuItem>
+                    <MenuItem component={Link} to={routes.game.list} className={sStyles.drawerItem}>
+                        <SportsEsportsIcon className="m-r-32" />
+                        {t`header.gameList`}
+                    </MenuItem>
+                </Hidden>
             </>
         )
     }
 
-    renderMobileMainMenuSection = () => {
-        const { mobileMainMenuAnchor } = this.state
+    renderMobileMenuDrawer = () => {
+        const { mobileDrawerOpen } = this.state
 
         return (
             <>
-                <IconButton onClick={this.handleMobileMainMenuOpen}>
+                <IconButton onClick={this.handleMobileDrawerToggle(true)}>
                     <MoreVertIcon />
                 </IconButton>
-                <Menu
-                    anchorEl={mobileMainMenuAnchor}
-                    keepMounted
-                    open={!!mobileMainMenuAnchor}
-                    onClose={this.handleMobileMainMenuClose}
-                >
-                    <MenuItem onClick={this.handleMobileMainMenuClose} component={Link} to={routes.user.list}>
-                        <ContactMailIcon className="m-r-16" />
-                        {t`user.listHeader`}
+                <Drawer anchor="right" open={mobileDrawerOpen} onClose={this.handleMobileDrawerToggle(false)}>
+                    {this.renderUserMenuSection()}
+                    <Divider />
+                    {this.renderMainMenuSection()}
+                    <Divider />
+                    <MenuItem onClick={this.handleMobileDrawerToggle(false)} className={sStyles.drawerItem}>
+                        <CloseIcon className="m-r-32" />
+                        {t`common.close`}
                     </MenuItem>
-                    <MenuItem onClick={this.handleMobileMainMenuClose} component={Link} to={routes.game.list}>
-                        <EditIcon className="m-r-16" />
-                        {t`header.gameList`}
-                    </MenuItem>
-                </Menu>
+                    <Divider />
+                </Drawer>
             </>
         )
     }
 
     render() {
         const { sections, classes } = this.props
+        const { query } = this.state
 
         return (
             <header className={sStyles.header}>
@@ -302,9 +286,27 @@ class Header extends React.PureComponent<Props> {
                             </Hidden>
                         </IconButton>
                         <div className={classes.spacer} />
-                        {this.renderMainMenuSection()}
-                        <Hidden smUp>{this.renderMobileMainMenuSection()}</Hidden>
-                        {this.renderUserMenuSection()}
+
+                        <form action="" style={{ display: 'contents' }}>
+                            <TextField
+                                className={sStyles.search}
+                                placeholder={t`header.search`}
+                                variant="outlined"
+                                size="small"
+                                value={query}
+                                onChange={this.handleSearchType}
+                            />
+                            <IconButton className={sStyles.searchButton} onClick={this.handleSearch} type="submit">
+                                <SearchIcon />
+                            </IconButton>
+                        </form>
+
+                        <Hidden smDown>
+                            {this.renderMainMenuSection()}
+                            {this.renderUserMenuSection()}
+                        </Hidden>
+
+                        <Hidden mdUp>{this.renderMobileMenuDrawer()}</Hidden>
                     </Toolbar>
                     <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
                         {sections &&

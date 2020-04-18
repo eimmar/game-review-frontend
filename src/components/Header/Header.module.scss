@@ -4,12 +4,22 @@
     margin-right: 16px !important;
 }
 
+.search {
+    width: 360px;
+}
+
+@media (max-width: 959px) {
+    .searchButton {
+        margin: 0 !important;
+    }
+}
+
 @media (max-width: 600px) {
     .search {
         width: 100%;
     }
+}
 
-    .searchButton {
-        margin: 0 !important;
-    }
+.drawerItem {
+    padding: 14px 16px !important;
 }

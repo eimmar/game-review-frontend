@@ -20,6 +20,7 @@ export const ltTranslations = {
     'common.successUpdate': 'Duomenys atnaujinti.',
     'common.updateInfo': 'Atnaujinti informaciją',
     'common.createdBy': 'Sukūrė',
+    'common.filters': 'Filtrai',
 
     'filters.reset': 'Išvalyti filtrus',
 

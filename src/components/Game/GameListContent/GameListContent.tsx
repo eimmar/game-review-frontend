@@ -36,7 +36,6 @@ const styles = ({ palette, spacing, breakpoints }: Theme) =>
         },
         cardGrid: {
             padding: 0,
-            paddingTop: spacing(4),
         },
         cardMedia: {
             width: 90,

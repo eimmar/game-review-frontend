@@ -6,7 +6,7 @@ class ScrollToTop extends Component<RouteComponentProps> {
         const { location } = this.props
 
         if (location !== prevProps.location) {
-            window.scrollTo(0, 0)
+            window.scrollTo({ top: 0, behavior: 'smooth' })
         }
     }
 

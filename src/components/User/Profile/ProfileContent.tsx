@@ -370,15 +370,17 @@ class ProfileContent extends Component<Props, State> {
 
     renderList = (list: GameList) => {
         return (
-            <GameListContent
-                infiniteScroll
-                deleteFunction={
-                    this.isCurrentUser ? (game) => gameListService.removeFromList(game.id, list?.id) : undefined
-                }
-                dataFunction={(_, pagination) =>
-                    gameService.getAllForList(list.id || '0', pagination.page, pagination.pageSize)
-                }
-            />
+            <div className="m-t-24">
+                <GameListContent
+                    infiniteScroll
+                    deleteFunction={
+                        this.isCurrentUser ? (game) => gameListService.removeFromList(game.id, list?.id) : undefined
+                    }
+                    dataFunction={(_, pagination) =>
+                        gameService.getAllForList(list.id || '0', pagination.page, pagination.pageSize)
+                    }
+                />
+            </div>
         )
     }
 
