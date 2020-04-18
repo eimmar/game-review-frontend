@@ -83,8 +83,8 @@ export const ltTranslations = {
     'game.sortByNameDesc': 'Pagal pavadinimą Z-A',
     'game.sortByReleaseDateAsc': 'Seniausi',
     'game.sortByReleaseDateDesc': 'Naujausi',
-    'game.sortByRatingAsc': 'Geriausiai įvertinti',
-    'game.sortByRatingDesc': 'Blogiausiai įvertinti',
+    'game.sortByRatingDesc': 'Geriausiai įvertinti',
+    'game.sortByRatingAsc': 'Blogiausiai įvertinti',
     'game.cantDelete': 'Žaidimo pašalinti nepavyko',
     'game.successRemove': 'Žaidimas pašalintas',
 

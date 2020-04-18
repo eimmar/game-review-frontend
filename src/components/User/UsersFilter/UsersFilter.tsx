@@ -45,10 +45,9 @@ class UsersFilter extends Component<Props, State> {
     handleSearchSubmit = () => {
         const { location, history } = this.props
         const { filters } = this.state
+        const currentUrlParams = new URLSearchParams(location.search)
 
-        if (filters.user?.trim()) {
-            const currentUrlParams = new URLSearchParams(location.search)
-
+        if (filters.user?.trim() || currentUrlParams.get('user')) {
             currentUrlParams.set('user', filters.user?.trim() || '')
             currentUrlParams.set('page', '1')
             history.push(`${location.pathname}?${currentUrlParams.toString()}`)
@@ -71,19 +70,22 @@ class UsersFilter extends Component<Props, State> {
                     <Container>
                         <Grid container spacing={2}>
                             <Grid item sm={12} className={sStyles.searchContainer}>
-                                <TextField
-                                    className={sStyles.search}
-                                    name="userQuery"
-                                    label={t`common.search`}
-                                    value={(filters.user || '').replace(/\+/g, ' ')}
-                                    onChange={this.handleQueryChange}
-                                />
-                                <Button
-                                    style={{ verticalAlign: 'bottom' }}
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={this.handleSearchSubmit}
-                                >{t`common.search`}</Button>
+                                <form action="" onSubmit={(e) => e.preventDefault()}>
+                                    <TextField
+                                        className={sStyles.search}
+                                        name="userQuery"
+                                        label={t`common.search`}
+                                        value={(filters.user || '').replace(/\+/g, ' ')}
+                                        onChange={this.handleQueryChange}
+                                    />
+                                    <Button
+                                        type="submit"
+                                        style={{ verticalAlign: 'bottom' }}
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={this.handleSearchSubmit}
+                                    >{t`common.search`}</Button>
+                                </form>
                             </Grid>
                         </Grid>
                     </Container>
