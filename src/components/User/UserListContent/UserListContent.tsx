@@ -21,7 +21,7 @@ import AlternateEmailIcon from '@material-ui/icons/AlternateEmail'
 
 import { t } from '../../../i18n'
 import { routes } from '../../../parameters'
-import PageLoader from '../../Global/PageLoader/PageLoader'
+import PageLoader from '../../Global/PageLoader'
 import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
 import Centered from '../../Global/Centered/Centered'
 import { Pagination } from '../../../services/RequestService'

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { MainLayout } from '../../layouts/MainLayout/MainLayout'
 import NotFound404 from '../Error/NotFound404'
-import PageLoader from '../../components/Global/PageLoader/PageLoader'
+import PageLoader from '../../components/Global/PageLoader'
 import { GameList, gameListService, WithUser } from '../../services/GameListService'
 import GameListViewContent from '../../components/GameList/GameListViewContent/GameListViewContent'
 

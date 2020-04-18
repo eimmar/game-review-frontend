@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter, Link as RouterLink } from 'react-router-dom'
 import {
     Grid,
     CssBaseline,
@@ -31,6 +31,7 @@ import { t } from '../../../i18n'
 import PriceDeal from '../PriceDeal/PriceDeal'
 import GameSpotVideos from '../GameSpot/GameSpotVideos'
 import GameSpotReviews from '../GameSpot/GameSpotReviews/GameSpotReviews'
+import { routes } from '../../../parameters'
 
 const styles = ({ spacing }: Theme) =>
     createStyles({
@@ -99,7 +100,11 @@ class GameViewContent extends Component<Props, State> {
                                 {game.genres.length > 0 &&
                                     game.genres.map((genre) => (
                                         <Box mr={1} key={genre.id} display="inline" component="span">
-                                            <Link variant="body1" href={genre.url}>
+                                            <Link
+                                                variant="body1"
+                                                component={RouterLink}
+                                                to={`${routes.game.list}?genre=${genre.slug}`}
+                                            >
                                                 {genre.name}
                                             </Link>
                                         </Box>
@@ -123,7 +128,11 @@ class GameViewContent extends Component<Props, State> {
                                 {game.platforms.length > 0 &&
                                     game.platforms.map((platform) => (
                                         <Box mr={1} key={platform.id} display="inline" component="span">
-                                            <Link variant="body1" href={platform.url}>
+                                            <Link
+                                                variant="body1"
+                                                component={RouterLink}
+                                                to={`${routes.game.list}?platform=${platform.slug}`}
+                                            >
                                                 {platform.name}
                                             </Link>
                                         </Box>

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { MainLayout } from '../../layouts/MainLayout/MainLayout'
 import ProfileContent from '../../components/User/Profile/ProfileContent'
-import PageLoader from '../../components/Global/PageLoader/PageLoader'
+import PageLoader from '../../components/Global/PageLoader'
 import { User, userService } from '../../services/UserService'
 import NotFound404 from '../Error/NotFound404'
 

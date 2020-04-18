@@ -26,6 +26,7 @@ import ProfileEdit from './views/User/ProfileEdit'
 import ChangePassword from './views/Auth/ChangePassword'
 import GameListView from './views/GameList/GameListView'
 import LogOut from './views/Auth/LogOut'
+import ScrollToTop from './components/Global/ScrollToTop'
 
 const HomePage = lazyComponent(import('./views/HomePage'))
 
@@ -35,7 +36,7 @@ function App() {
             type: 'dark',
             primary: { light: '#3ea6ff', main: '#3ea6ff', dark: '#3ea6ff', contrastText: '#030303' },
             secondary: { light: '#7045af', main: '#7045af', dark: '#7045af', contrastText: '#fff' },
-            error: { light: '#c00', main: '#c00', dark: '#c00', contrastText: '' },
+            error: { light: '#c00', main: '#c00', dark: '#c00' },
             info: { light: '#927fbf', main: '#927fbf', dark: '#927fbf' },
             success: { light: '#2ba640', main: '#2ba640', dark: '#2ba640' },
             background: { default: '#181818', paper: '#212121' },
@@ -45,29 +46,31 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <Router history={history}>
-                <ToastContainer />
-                <Switch>
-                    <PublicOnlyRoute exact path={routes.register} component={Registration} />
-                    <PublicOnlyRoute exact path={routes.login} component={Login} />
-                    <PublicOnlyRoute exact path={routes.forgotPassword} component={ForgotPassword} />
-                    <PublicOnlyRoute exact path={`${routes.resetPassword}/:token`} component={ResetPassword} />
-                    <PrivateRoute exact path={`${routes.logout}`} component={LogOut} />
+                <ScrollToTop>
+                    <ToastContainer />
+                    <Switch>
+                        <PublicOnlyRoute exact path={routes.register} component={Registration} />
+                        <PublicOnlyRoute exact path={routes.login} component={Login} />
+                        <PublicOnlyRoute exact path={routes.forgotPassword} component={ForgotPassword} />
+                        <PublicOnlyRoute exact path={`${routes.resetPassword}/:token`} component={ResetPassword} />
+                        <PrivateRoute exact path={`${routes.logout}`} component={LogOut} />
 
-                    <PublicRoute exact path={routes.homePage} component={HomePage} />
+                        <PublicRoute exact path={routes.homePage} component={HomePage} />
 
-                    <PublicRoute exact path={`${routes.game.list}`} component={GameList} />
-                    <PublicRoute exact path={`${routes.game.view}/:slug`} component={GameView} />
+                        <PublicRoute exact path={`${routes.game.list}`} component={GameList} />
+                        <PublicRoute exact path={`${routes.game.view}/:slug`} component={GameView} />
 
-                    <PublicRoute exact path={`${routes.gameList.view}/:guid`} component={GameListView} />
+                        <PublicRoute exact path={`${routes.gameList.view}/:guid`} component={GameListView} />
 
-                    <PrivateRoute exact path={`${routes.user.profile}`} component={Profile} />
-                    <PrivateRoute exact path={`${routes.user.profileEdit}`} component={ProfileEdit} />
-                    <PrivateRoute exact path={`${routes.user.changePassword}`} component={ChangePassword} />
-                    <PublicRoute exact path={`${routes.user.view}/:guid`} component={UserView} />
-                    <PublicRoute exact path={routes.user.list} component={UserList} />
+                        <PrivateRoute exact path={`${routes.user.profile}`} component={Profile} />
+                        <PrivateRoute exact path={`${routes.user.profileEdit}`} component={ProfileEdit} />
+                        <PrivateRoute exact path={`${routes.user.changePassword}`} component={ChangePassword} />
+                        <PublicRoute exact path={`${routes.user.view}/:guid`} component={UserView} />
+                        <PublicRoute exact path={routes.user.list} component={UserList} />
 
-                    <PublicRoute component={NotFound404} />
-                </Switch>
+                        <PublicRoute component={NotFound404} />
+                    </Switch>
+                </ScrollToTop>
             </Router>
         </ThemeProvider>
     )

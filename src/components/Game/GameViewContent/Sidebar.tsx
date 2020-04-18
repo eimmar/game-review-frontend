@@ -19,6 +19,7 @@ import RedditIcon from '@material-ui/icons/Reddit'
 
 import { t } from '../../../i18n'
 import { GameLoaded, GameWebsiteCategory } from '../../../services/GameService'
+import { routes } from '../../../parameters'
 
 const styles = ({ palette, spacing }: Theme) =>
     createStyles({
@@ -126,7 +127,16 @@ class Sidebar extends Component<Props> {
                         <Typography variant="h6" gutterBottom>
                             {t`game.category`}
                         </Typography>
-                        <Typography>{t(`gameCategory.${game.category}`)}</Typography>
+                        <Typography>
+                            <Link
+                                display="block"
+                                variant="body1"
+                                component={RouterLink}
+                                to={`${routes.game.list}?gameCategory=${game.category}`}
+                            >
+                                {t(`gameCategory.${game.category}`)}
+                            </Link>
+                        </Typography>
                     </Paper>
                 )}
 
@@ -146,7 +156,13 @@ class Sidebar extends Component<Props> {
                 </Typography>
                 {game.themes.length > 0 &&
                     game.themes.map((theme) => (
-                        <Link display="block" variant="body1" component={RouterLink} to={theme.url} key={theme.id}>
+                        <Link
+                            display="block"
+                            variant="body1"
+                            component={RouterLink}
+                            to={`${routes.game.list}?theme=${theme.slug}`}
+                            key={theme.id}
+                        >
                             {theme.name}
                         </Link>
                     ))}
@@ -157,7 +173,13 @@ class Sidebar extends Component<Props> {
                 </Typography>
                 {game.genres.length > 0 &&
                     game.genres.map((genre) => (
-                        <Link display="block" variant="body1" component={RouterLink} to={genre.url} key={genre.id}>
+                        <Link
+                            display="block"
+                            variant="body1"
+                            component={RouterLink}
+                            to={`${routes.game.list}?genre=${genre.slug}`}
+                            key={genre.id}
+                        >
                             {genre.name}
                         </Link>
                     ))}
@@ -172,7 +194,7 @@ class Sidebar extends Component<Props> {
                             display="block"
                             variant="body1"
                             component={RouterLink}
-                            to={gameMode.url}
+                            to={`${routes.game.list}?gameMode=${gameMode.slug}`}
                             key={gameMode.id}
                         >
                             {gameMode.name}
