@@ -21,7 +21,7 @@ $offset-helpers: (
 
 @each $class, $property in $offset-helpers {
     $helperMaxValue: 100;
-    $helperStep: 5;
+    $helperStep: 4;
     @while $helperMaxValue >= 0 {
         .#{$class + '-' + $helperMaxValue} {
             #{$property}: #{$helperMaxValue}px !important;

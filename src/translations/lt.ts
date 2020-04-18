@@ -50,7 +50,7 @@ export const ltTranslations = {
     'user.reviews': 'Paskutiniai žaidimų atsiliepimai',
     'user.listHeader': 'Bendruomenė',
 
-    'game.listHeader': 'Žaidimai',
+    'game.listHeader': 'Žaidimų paieška',
     'game.mainCta': 'Naujausi žaidimai',
     'game.secondaryCta': 'Detali žaidimų paieška',
     'game.userReviews': 'Žaidėjų atsiliepimai',
@@ -179,4 +179,10 @@ export const ltTranslations = {
 
     'header.signIn': 'Prisijungti',
     'header.logOut': 'Atsijungti',
+    'header.myProfile': 'Mano paskyra',
+    'header.profileInfo': 'Informacija',
+    'header.updateProfile': 'Atnaujinti informaciją',
+    'header.changePassword': 'Keisti slaptažodį',
+    'header.search': 'Paieška',
+    'header.gameList': 'Žaidimai',
 }

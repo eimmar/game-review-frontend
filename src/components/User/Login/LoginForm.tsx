@@ -70,7 +70,6 @@ class LoginForm extends Component<Props> {
         authService
             .login(values)
             .then(() => {
-                toast.success(t('user.successLogIn'))
                 location.state && location.state.referer
                     ? history.push({ pathname: location.state.referer.url, state: location.state.referer.state })
                     : history.push({ pathname: routes.homePage })

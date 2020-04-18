@@ -1,4 +1,15 @@
 @import "src/scss/base.scss";
 
-.header {
+.searchButton {
+    margin-right: 16px !important;
+}
+
+@media (max-width: 600px) {
+    .search {
+        width: 100%;
+    }
+
+    .searchButton {
+        margin: 0 !important;
+    }
 }

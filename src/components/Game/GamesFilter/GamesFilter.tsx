@@ -84,7 +84,7 @@ class GamesFilter extends Component<Props, State> {
         }
     }
 
-    get multiSelectMenuProps() {
+    get selectMenuProps() {
         const ITEM_HEIGHT = 48
         const ITEM_PADDING_TOP = 8
 
@@ -186,7 +186,7 @@ class GamesFilter extends Component<Props, State> {
                                                 })}
                                             </div>
                                         )}
-                                        MenuProps={this.multiSelectMenuProps}
+                                        MenuProps={this.selectMenuProps}
                                     >
                                         {themes.map((it) => (
                                             <MenuItem key={it.id} value={it.id}>
@@ -222,7 +222,7 @@ class GamesFilter extends Component<Props, State> {
                                                 })}
                                             </div>
                                         )}
-                                        MenuProps={this.multiSelectMenuProps}
+                                        MenuProps={this.selectMenuProps}
                                     >
                                         {genres.map((it) => (
                                             <MenuItem key={it.id} value={it.id}>
@@ -258,7 +258,7 @@ class GamesFilter extends Component<Props, State> {
                                                 })}
                                             </div>
                                         )}
-                                        MenuProps={this.multiSelectMenuProps}
+                                        MenuProps={this.selectMenuProps}
                                     >
                                         {platforms.map((it) => (
                                             <MenuItem key={it.id} value={it.id}>
@@ -294,7 +294,7 @@ class GamesFilter extends Component<Props, State> {
                                                 })}
                                             </div>
                                         )}
-                                        MenuProps={this.multiSelectMenuProps}
+                                        MenuProps={this.selectMenuProps}
                                     >
                                         {gameModes.map((it) => (
                                             <MenuItem key={it.id} value={it.id}>
@@ -330,7 +330,7 @@ class GamesFilter extends Component<Props, State> {
                                                 })}
                                             </div>
                                         )}
-                                        MenuProps={this.multiSelectMenuProps}
+                                        MenuProps={this.selectMenuProps}
                                     >
                                         {companies.map((it) => (
                                             <MenuItem key={it.id} value={it.id}>
@@ -364,7 +364,7 @@ class GamesFilter extends Component<Props, State> {
                                                 })}
                                             </div>
                                         )}
-                                        MenuProps={this.multiSelectMenuProps}
+                                        MenuProps={this.selectMenuProps}
                                     >
                                         {['0', '1', '2', '3', '4'].map((it) => (
                                             <MenuItem key={it} value={it}>
@@ -434,14 +434,14 @@ class GamesFilter extends Component<Props, State> {
                                     <InputLabel>{t`common.sort`}</InputLabel>
                                     <Select
                                         name="sort"
-                                        native
                                         value={this.selectedSort}
                                         onChange={this.handleSortChange}
+                                        MenuProps={this.selectMenuProps}
                                     >
                                         {this.sort.map((it) => (
-                                            <option key={it.label} value={it.label}>
+                                            <MenuItem key={it.label} value={it.label}>
                                                 {it.label}
-                                            </option>
+                                            </MenuItem>
                                         ))}
                                     </Select>
                                 </FormControl>
