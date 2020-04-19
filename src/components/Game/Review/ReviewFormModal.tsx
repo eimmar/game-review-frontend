@@ -212,6 +212,7 @@ class ReviewFormModal extends Component<Props, State> {
                                                     multiline
                                                     name="title"
                                                     variant="outlined"
+                                                    size="small"
                                                     required
                                                     fullWidth
                                                     label={t`gameReview.title`}
@@ -250,6 +251,7 @@ class ReviewFormModal extends Component<Props, State> {
                                                     multiline
                                                     name="comment"
                                                     variant="outlined"
+                                                    size="small"
                                                     required
                                                     fullWidth
                                                     label={t`gameReview.comment`}
