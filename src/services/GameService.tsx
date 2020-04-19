@@ -158,6 +158,7 @@ export interface GamesFilterRequest {
     gameMode?: string | string[]
     orderBy?: string
     order?: string
+    [key: string]: string | string[] | undefined
 }
 
 export interface GameEntityFilterValues {
@@ -185,7 +186,7 @@ class GameService {
             gameMode,
             orderBy,
             order,
-        } = requestService.getFilters(search) as GamesFilterRequest
+        } = (requestService.getFilters(search) as unknown) as GamesFilterRequest
 
         return requestService.performRequest('POST', this.baseUrl, {
             pageSize,

@@ -1,0 +1,30 @@
+@import "src/scss/variables";
+
+.red {
+    color: $color-danger !important;
+}
+
+.yellow {
+    color: $color-warning !important;
+}
+
+.green {
+    color: $color-success !important;
+}
+
+.rating {
+    position: absolute;
+    background: rgba(0,0,0,0.8);
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    right: 10px;
+    top: 4px;
+
+    .value {
+        position: absolute;
+        display: inline-block;
+        left: 8px;
+        top: 4px;
+    }
+}

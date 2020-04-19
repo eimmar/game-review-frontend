@@ -87,6 +87,7 @@ export const ltTranslations = {
     'game.sortByRatingAsc': 'Blogiausiai įvertinti',
     'game.cantDelete': 'Žaidimo pašalinti nepavyko',
     'game.successRemove': 'Žaidimas pašalintas',
+    'game.criticScore': 'Kritikų įvertinimas',
 
     'gameList.addToFavorites': 'Pridėti į mėgstamiausius',
     'gameList.addToWishList': 'Pridėti į norimus',
@@ -200,4 +201,8 @@ export const ltTranslations = {
     'pageTitle.gameListView': 'Žaidimų sąrašas',
     'pageTitle.profileEdit': 'Paskyros atnaujinimas',
     'pageTitle.userList': 'Bendruomenė',
+
+    'homePage.latestGames': 'Naujausi žaidimai',
+    'homePage.topCriticRated': 'Geriausiai kritikų įvertinti',
+    'homePage.newestMembers': 'Naujausi žaidėjai',
 }

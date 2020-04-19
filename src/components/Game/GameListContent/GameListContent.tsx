@@ -28,6 +28,7 @@ import { placeholderImg } from '../../../services/Util/AssetsProvider'
 import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
 import Centered from '../../Global/Centered/Centered'
 import { PaginatedList, Pagination } from '../../../services/RequestService'
+import RatingIndicator from '../RatingIndicator/RatingIndicator'
 
 const styles = ({ palette, spacing, breakpoints }: Theme) =>
     createStyles({
@@ -180,6 +181,7 @@ class GameListContent extends AbstractPaginator<Props, State> {
                                 games.map((game) => (
                                     <div key={game.id}>
                                         <ListItem alignItems="flex-start" className={classes.listItem}>
+                                            {game.rating && <RatingIndicator rating={game.rating} />}
                                             <ListItemAvatar className={classes.listAvatar}>
                                                 <Link to={`${routes.game.view}/${game.slug}`}>
                                                     <CardMedia

@@ -77,7 +77,7 @@ class GamesFilter extends Component<Props, State> {
         super(props)
 
         this.state = {
-            filters: requestService.getFilters(props.location.search) as GamesFilterRequest,
+            filters: (requestService.getFilters(props.location.search) as unknown) as GamesFilterRequest,
         }
     }
 
