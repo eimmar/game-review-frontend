@@ -74,7 +74,7 @@ class GameGridCarousel extends AbstractPaginator<Props, State> {
     fetchData = (pagination: Pagination) => {
         const { query } = this.props
         const search = query
-            ? Object.keys(query)
+            ? `?${Object.keys(query)
                   .map((k) => {
                       let string = ''
 
@@ -88,7 +88,7 @@ class GameGridCarousel extends AbstractPaginator<Props, State> {
 
                       return `${encodeURIComponent(k)}=${encodeURIComponent(string)}`
                   })
-                  .join('&')
+                  .join('&')}`
             : ''
 
         this.setState({ wasActivated: true, loading: true })
@@ -116,7 +116,7 @@ class GameGridCarousel extends AbstractPaginator<Props, State> {
             index + 1 === games.length && this.hasNextPage ? () => this.fetchData(this.nextPage) : false
 
         return (
-            <Grid item>
+            <Grid item key={index}>
                 <div className={styles.card}>
                     <Link to={`${routes.game.view}/${game.slug}`}>
                         <CardMedia>

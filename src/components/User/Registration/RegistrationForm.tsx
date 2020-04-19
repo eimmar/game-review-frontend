@@ -95,7 +95,8 @@ class RegistrationForm extends Component<Props> {
                     initialValues={this.initialValues}
                     validationSchema={this.validationSchema}
                     onSubmit={this.handleSubmit}
-                    render={({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
+                >
+                    {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
                         <Form className={classes.form} noValidate>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6}>
@@ -175,7 +176,7 @@ class RegistrationForm extends Component<Props> {
                             </Grid>
                         </Form>
                     )}
-                />
+                </Formik>
             </div>
         )
     }

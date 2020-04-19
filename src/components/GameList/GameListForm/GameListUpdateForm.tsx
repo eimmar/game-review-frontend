@@ -63,7 +63,8 @@ class GameListUpdateForm extends Component<Props> {
                 initialValues={this.initialValues}
                 validationSchema={this.validationSchema}
                 onSubmit={this.handleSubmit}
-                render={({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
+            >
+                {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
                     <Form className="width-full" noValidate>
                         <Grid container spacing={2}>
                             {initialValues.type === GameListType.Custom && (
@@ -120,7 +121,7 @@ class GameListUpdateForm extends Component<Props> {
                         </Grid>
                     </Form>
                 )}
-            />
+            </Formik>
         )
     }
 }

@@ -92,7 +92,7 @@ class UserGridCarousel extends AbstractPaginator<Props, State> {
             index + 1 === users.length && this.hasNextPage ? () => this.fetchData(this.nextPage) : false
 
         return (
-            <Grid item>
+            <Grid item key={index}>
                 <div className={styles.card}>
                     <Link to={`${routes.user.view}/${user.id}`}>
                         <CardMedia>

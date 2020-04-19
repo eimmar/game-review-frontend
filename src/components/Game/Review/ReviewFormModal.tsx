@@ -125,7 +125,8 @@ class ReviewFormModal extends Component<Props, State> {
                             initialValues={this.initialValues}
                             validationSchema={this.validationSchema}
                             onSubmit={this.handleSubmit}
-                            render={({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
+                        >
+                            {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
                                 <Form className={classes.form} noValidate>
                                     <DialogContent>
                                         <Grid container spacing={2}>
@@ -229,7 +230,7 @@ class ReviewFormModal extends Component<Props, State> {
                                     </DialogActions>
                                 </Form>
                             )}
-                        />
+                        </Formik>
                     </Dialog>
                 </div>
             </>

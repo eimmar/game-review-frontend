@@ -16,8 +16,7 @@ function HomePageContent() {
                 <Typography variant="h6" className="m-t-32">{t`homePage.topCriticRated`}</Typography>
                 <GameGridCarousel defaultActive query={{ orderBy: 'rating', order: 'DESC' }} />
 
-                <Typography variant="h6">latest reviews</Typography>
-                <Typography variant="h6" className="m-t-32">{t`homePage.newestMembers`}</Typography>
+                <Typography variant="h6" className="m-t-64">{t`homePage.newestMembers`}</Typography>
                 <UserGridCarousel defaultActive />
             </Container>
         </>

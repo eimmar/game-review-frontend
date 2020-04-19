@@ -204,5 +204,5 @@ export const ltTranslations = {
 
     'homePage.latestGames': 'Naujausi žaidimai',
     'homePage.topCriticRated': 'Geriausiai kritikų įvertinti',
-    'homePage.newestMembers': 'Naujausi žaidėjai',
+    'homePage.newestMembers': 'Nauji žaidėjai',
 }
