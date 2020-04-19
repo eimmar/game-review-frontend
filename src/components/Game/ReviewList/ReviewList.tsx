@@ -1,6 +1,6 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter, Link as RouterLink } from 'react-router-dom'
 import {
     Divider,
     Box,
@@ -98,8 +98,8 @@ class ReviewList extends AbstractPaginator<Props, State> {
                         {review.createdAt}
                     </Moment>{' '}
                     {t`common.reviewBy`}{' '}
-                    <Link href={`${routes.user.view}/${review.user.id}`} target="_blank">
-                        {review.user.firstName} {review.user.lastName}({review.user.email})
+                    <Link to={`${routes.user.view}/${review.user.id}`} component={RouterLink}>
+                        {review.user.firstName} {review.user.lastName}
                     </Link>
                 </Typography>
 

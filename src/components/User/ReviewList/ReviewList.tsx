@@ -1,6 +1,6 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter, Link as RouterLink } from 'react-router-dom'
 import {
     Divider,
     Box,
@@ -103,13 +103,13 @@ class ReviewList extends AbstractPaginator<Props, State> {
                 <List>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
-                            <Link href={`${routes.game.view}/${review.game.slug}`} target="_blank">
+                            <Link href={`${routes.game.view}/${review.game.slug}`}>
                                 <Avatar alt={review.title} src={review.game.coverImage || placeholderImg} />
                             </Link>
                         </ListItemAvatar>
                         <ListItemText
                             primary={
-                                <Link href={`${routes.game.view}/${review.game.slug}`} target="_blank">
+                                <Link to={`${routes.game.view}/${review.game.slug}`} component={RouterLink}>
                                     {review.game.name}
                                 </Link>
                             }
