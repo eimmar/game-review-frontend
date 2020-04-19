@@ -21,6 +21,8 @@ export const ltTranslations = {
     'common.updateInfo': 'Atnaujinti informaciją',
     'common.createdBy': 'Sukūrė',
     'common.filters': 'Filtrai',
+    'common.add': 'Pridėti',
+    'common.remove': 'Pašalinti',
 
     'filters.reset': 'Išvalyti filtrus',
 
@@ -114,7 +116,9 @@ export const ltTranslations = {
     'gameReview.comment': 'Atsiliepimas',
     'gameReview.title': 'Antraštė',
     'gameReview.pros': 'Žaidimo privalumai',
+    'gameReview.pro': 'Privalumas',
     'gameReview.cons': 'Žaidimo trūkumai',
+    'gameReview.con': 'Trūkumas',
     'gameReview.create': 'Naujas atsiliepimas',
     'gameReview.noItems': 'Atsiliepimų nėra.',
 
@@ -179,6 +183,7 @@ export const ltTranslations = {
     'errors.validation.email': 'Netinkamas el. paštas',
     'errors.validation.passwordsMustMatch': 'Slaptažodžiai turi sutapti',
     'error.validation.tooLong': 'Laukas neturi būti ilgesnis nei {{number}} symboliai.',
+    'error.validation.tooMany': 'Laukas neturi turėti daugiau nei {{number}} įrašų.',
     'error.validation.tooShort': 'Laukas turi būti ilgesnis nei {{number}} symboliai.',
 
     'header.signIn': 'Prisijungti',

@@ -14,13 +14,17 @@ export interface GameReview extends Timestampable {
     approved: boolean
 }
 
-export interface GameReviewRequest {
+export type ProsCons = 'pros' | 'cons'
+
+export type GameReviewRequest = {
+    [key in ProsCons]: string | string[] | number
+} & {
     game: string
     user: string
     title: string
     comment: string
-    pros: string | null
-    cons: string | null
+    pros: string[]
+    cons: string[]
     rating: number
 }
 

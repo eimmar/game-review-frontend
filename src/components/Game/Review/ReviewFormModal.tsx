@@ -4,16 +4,20 @@ import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core/styles'
-import { Form, Formik, FormikHelpers } from 'formik'
+import { FieldArray, Form, Formik, FormikErrors, FormikHelpers, FormikTouched } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
 import Rating from '@material-ui/lab/Rating'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
-import { DialogActions, FormHelperText, InputLabel } from '@material-ui/core'
+import { DialogActions, FormHelperText, IconButton, InputLabel, Tooltip } from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add'
+import RemoveIcon from '@material-ui/icons/Remove'
+import ThumbUpIcon from '@material-ui/icons/ThumbUp'
+import ThumbDownIcon from '@material-ui/icons/ThumbDown'
 
-import { GameReviewRequest, reviewService } from '../../../services/GameReviewService'
+import { GameReviewRequest, ProsCons, reviewService } from '../../../services/GameReviewService'
 import { t } from '../../../i18n'
 import { authenticatedAction, authService } from '../../../services/AuthService'
 
@@ -64,12 +68,20 @@ class ReviewFormModal extends Component<Props, State> {
             .required(t`errors.validation.required`)
             .min(1, t`errors.validation.required`)
             .max(10),
-        pros: Yup.string()
-            .nullable()
-            .max(1000, t('error.validation.tooLong', { number: 1000 })),
-        cons: Yup.string()
-            .nullable()
-            .max(1000, t('error.validation.tooLong', { number: 1000 })),
+        pros: Yup.array()
+            .of(
+                Yup.string()
+                    .nullable()
+                    .max(99, t('error.validation.tooLong', { number: 99 })),
+            )
+            .max(10, t('error.validation.tooMany', { number: 10 })),
+        cons: Yup.array()
+            .of(
+                Yup.string()
+                    .nullable()
+                    .max(99, t('error.validation.tooLong', { number: 99 })),
+            )
+            .max(10, t('error.validation.tooMany', { number: 10 })),
     })
 
     state = {
@@ -88,8 +100,8 @@ class ReviewFormModal extends Component<Props, State> {
             title: '',
             comment: '',
             rating: 0,
-            pros: null,
-            cons: null,
+            pros: [],
+            cons: [],
         }
     }
 
@@ -105,6 +117,71 @@ class ReviewFormModal extends Component<Props, State> {
                 toast.error(t(error.message))
             })
             .finally(() => actions.setSubmitting(false))
+    }
+
+    renderFieldArray(
+        name: ProsCons,
+        values: GameReviewRequest,
+        touched: FormikTouched<GameReviewRequest>,
+        errors: FormikErrors<GameReviewRequest>,
+        handleChange: (e: React.ChangeEvent<any>) => void,
+        handleBlur: (e: any) => void,
+        header: React.ReactNode,
+        inputLabel: string,
+    ) {
+        return (
+            <FieldArray name={name}>
+                {(arrayHelpers) => {
+                    return (
+                        <Grid item xs={12}>
+                            <Typography variant="subtitle1">{header}</Typography>
+                            {values[name].map((it, index) => {
+                                const error =
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                                    // @ts-ignore
+                                    !!errors[name] && !!errors[name][index] && touched[name] && !!touched[name][index]
+                                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                                // @ts-ignore
+                                const helperText = errors[name] && touched[name] && errors[name][index]
+
+                                return (
+                                    <Grid container key={index}>
+                                        <Grid item xs={11}>
+                                            <TextField
+                                                name={`${name}.${index}`}
+                                                size="small"
+                                                variant="outlined"
+                                                fullWidth
+                                                label={inputLabel}
+                                                value={values[name][index] || ''}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                error={error}
+                                                helperText={helperText}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={1}>
+                                            <Tooltip title={t`common.remove`}>
+                                                <IconButton onClick={() => arrayHelpers.remove(index)}>
+                                                    <RemoveIcon />
+                                                </IconButton>
+                                            </Tooltip>
+                                        </Grid>
+                                    </Grid>
+                                )
+                            })}
+                            {values.pros.length < 10 && (
+                                <Tooltip title={t`common.add`}>
+                                    <IconButton onClick={() => arrayHelpers.push('')}>
+                                        <AddIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            )}
+                        </Grid>
+                    )
+                }}
+            </FieldArray>
+        )
     }
 
     render() {
@@ -184,35 +261,33 @@ class ReviewFormModal extends Component<Props, State> {
                                                 />
                                             </Grid>
 
-                                            <Grid item xs={12}>
-                                                <TextField
-                                                    multiline
-                                                    name="pros"
-                                                    variant="outlined"
-                                                    fullWidth
-                                                    label={t`gameReview.pros`}
-                                                    value={values.pros || ''}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    error={!!errors.pros && !!touched.pros}
-                                                    helperText={errors.pros && touched.pros && errors.pros}
-                                                />
-                                            </Grid>
+                                            {this.renderFieldArray(
+                                                'pros',
+                                                values,
+                                                touched,
+                                                errors,
+                                                handleChange,
+                                                handleBlur,
+                                                <>
+                                                    {t`gameReview.pros`}
+                                                    <ThumbUpIcon className="m-l-8 m-t-16" />
+                                                </>,
+                                                t`gameReview.pro`,
+                                            )}
 
-                                            <Grid item xs={12}>
-                                                <TextField
-                                                    multiline
-                                                    name="cons"
-                                                    variant="outlined"
-                                                    fullWidth
-                                                    label={t`gameReview.cons`}
-                                                    value={values.cons || ''}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    error={!!errors.cons && !!touched.cons}
-                                                    helperText={errors.cons && touched.cons && errors.cons}
-                                                />
-                                            </Grid>
+                                            {this.renderFieldArray(
+                                                'cons',
+                                                values,
+                                                touched,
+                                                errors,
+                                                handleChange,
+                                                handleBlur,
+                                                <>
+                                                    {t`gameReview.cons`}
+                                                    <ThumbDownIcon className="m-l-8 m-t-16" />
+                                                </>,
+                                                t`gameReview.con`,
+                                            )}
                                         </Grid>
                                     </DialogContent>
                                     <DialogActions>

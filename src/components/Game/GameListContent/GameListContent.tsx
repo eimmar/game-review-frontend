@@ -19,6 +19,8 @@ import {
 import { Pagination as PaginationComponent } from '@material-ui/lab'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { toast } from 'react-toastify'
+import Moment from 'react-moment'
+import i18next from 'i18next'
 
 import { t } from '../../../i18n'
 import { Game, gameService, ScreenshotSize } from '../../../services/GameService'
@@ -197,6 +199,20 @@ class GameListContent extends AbstractPaginator<Props, State> {
                                                         <Typography gutterBottom variant="subtitle1" component="h2">
                                                             <b>{game.name}</b>
                                                         </Typography>
+                                                        {game.releaseDate && (
+                                                            <Typography
+                                                                variant="subtitle2"
+                                                                color="inherit"
+                                                                gutterBottom
+                                                            >
+                                                                <Moment
+                                                                    locale={i18next.language}
+                                                                    format="MMMM Do, YYYY"
+                                                                >
+                                                                    {game.releaseDate}
+                                                                </Moment>
+                                                            </Typography>
+                                                        )}
                                                     </Link>
                                                 }
                                                 secondary={
