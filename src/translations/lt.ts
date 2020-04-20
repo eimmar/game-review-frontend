@@ -221,4 +221,11 @@ export const ltTranslations = {
     'homePage.comingSoon': 'Netrukus pasirodys',
     'homePage.topCriticRated': 'Geriausiai kritikų įvertinti',
     'homePage.newestMembers': 'Nauji žaidėjai',
+
+    'error.code.0': 'Nežinoma klaida. Bandykite dar kartą.',
+    'error.code.401': 'Prieiga atmesta.',
+    'error.code.500': 'Nežinoma klaida. Bandykite dar kartą.',
+    'error.code.100': 'Netinkami duomenys.',
+    'error.code.200': 'Slaptažodžio pakeitimo užklausa jau yra išsiųsta.',
+    'error.loginInvalid': 'Neteisingas el. paštas arba slaptažodis.',
 }

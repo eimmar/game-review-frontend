@@ -75,7 +75,7 @@ class LoginForm extends Component<Props> {
                     : history.push({ pathname: routes.homePage })
             })
             .catch((error) => {
-                toast.error(t(error.message))
+                error.code === 401 ? toast.error(t`error.loginInvalid`) : toast.error(error.message)
                 actions.setSubmitting(false)
             })
     }
