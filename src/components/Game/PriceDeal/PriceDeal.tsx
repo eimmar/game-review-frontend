@@ -112,8 +112,10 @@ class PriceDeal extends AbstractPaginator<Props, State> {
     }
 
     renderFinalPrice = (price: number) => {
-        return price === 0 ? t`common.free` : `${price} €`
+        return price === 0 ? t`common.free` : `${this.round(price)} €`
     }
+
+    round = (number: number) => Math.round((number + Number.EPSILON) * 100) / 100
 
     renderDeals() {
         const { visibleDeals, moreDealsUrl, pagination } = this.state
@@ -159,10 +161,10 @@ class PriceDeal extends AbstractPaginator<Props, State> {
                 {deal.priceCut > 0 && (
                     <>
                         <Typography component="span" color="textPrimary">
-                            {this.renderFinalPrice(deal.priceNew)} €{' '}
+                            {this.renderFinalPrice(deal.priceNew)}{' '}
                         </Typography>
                         <Typography component="span" className={classes.oldPrice}>
-                            {deal.priceOld} €{' '}
+                            {this.round(deal.priceOld)} €{' '}
                         </Typography>
                         <Typography component="span" className={classes.discount}>
                             {-deal.priceCut}%

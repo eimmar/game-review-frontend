@@ -27,7 +27,8 @@ import ShowMore from 'react-show-more'
 import Sidebar from './Sidebar/Sidebar'
 import { GameLoaded } from '../../../services/GameService'
 import GameImage from './GameImage'
-import Reviews from '../ReviewList/ReviewList'
+import ReviewList from '../ReviewList/ReviewList'
+import IGDBReviews from '../IGDB/ReviewList/ReviewList'
 import { t } from '../../../i18n'
 import PriceDeal from '../PriceDeal/PriceDeal'
 import GameSpotVideos from '../GameSpot/GameSpotVideos'
@@ -185,14 +186,21 @@ class GameViewContent extends Component<Props, State> {
                     />
                     <Tab
                         className={classes.tab}
+                        label={<Typography variant="h6" gutterBottom>{t`igdbReview.items`}</Typography>}
+                    />
+                    <Tab
+                        className={classes.tab}
                         label={<Typography variant="h6" gutterBottom>{t`gameSpotReview.items`}</Typography>}
                     />
                 </Tabs>
                 <Divider />
                 <TabPanel value={tabIndex} index={0} renderedTabs={renderedTabs}>
-                    <Reviews gameId={game.id} />
+                    <ReviewList gameId={game.id} />
                 </TabPanel>
                 <TabPanel value={tabIndex} index={1} renderedTabs={renderedTabs}>
+                    <IGDBReviews gameIgdbId={game.externalId} />
+                </TabPanel>
+                <TabPanel value={tabIndex} index={2} renderedTabs={renderedTabs}>
                     <GameSpotReviews gameId={game.id} />
                 </TabPanel>
             </>

@@ -290,6 +290,7 @@ class Header extends React.PureComponent<Props> {
                         <form action="" style={{ display: 'contents' }} onSubmit={(e) => e.preventDefault()}>
                             <TextField
                                 className={sStyles.search}
+                                name="query"
                                 placeholder={t`header.search`}
                                 variant="outlined"
                                 size="small"

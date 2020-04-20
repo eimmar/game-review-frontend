@@ -102,9 +102,9 @@ class GameSpotVideo extends Component<Props, State> {
                 <Dialog open={modalOpen} onClose={this.toggleModal} maxWidth="xl">
                     <DialogContent className={classes.modalContent}>
                         <CardMedia>
-                            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
                             <video className={classes.video} controls title={video.title}>
                                 <source src={video.highUrl || video.hdUrl || video.lowUrl} />
+                                <track kind="captions" />
                                 {video.deck}
                             </video>
                             <Typography gutterBottom>{video.title}</Typography>

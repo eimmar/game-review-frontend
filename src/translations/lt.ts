@@ -137,6 +137,8 @@ export const ltTranslations = {
 
     'gameSpotReview.noItems': 'Atsiliepimų nėra.',
     'gameSpotReview.items': 'Kritikų atsiliepimai',
+    'igdbReview.items': 'IGDB atsiliepimai',
+    'igdb.userReview': 'IGDB narys',
 
     'gameSpotArticle.noItems': 'Straipsnių nėra.',
     'gameSpotArticle.items': 'Susiję straipsniai',

@@ -26,4 +26,6 @@ export const routes = {
     },
 }
 
+export const igdbReviews = 'https://www.igdb.com/reviews'
+
 export const phpDebug = '?XDEBUG_SESSION_START=PHPSTORM'
