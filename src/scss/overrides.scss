@@ -1,0 +1,32 @@
+.user-carousel .react-multiple-carousel__arrow,
+.game-video-carousel .react-multiple-carousel__arrow {
+    top: 40px;
+}
+
+.game-carousel .react-multiple-carousel__arrow {
+    top: 64px;
+}
+
+.Toastify__toast {
+    min-height: 40px !important;
+}
+
+.Toastify__toast-body {
+    margin: 0 !important;
+}
+
+.Toastify__toast--info {
+    background: $color-primary !important;
+}
+
+.Toastify__toast--success {
+    background: $color-paper !important;
+}
+
+.Toastify__toast--warning {
+    background: $color-warning !important;
+}
+
+.Toastify__toast--error {
+    background: $color-danger !important;
+}

@@ -31,4 +31,14 @@ export abstract class AbstractPaginator<P = {}, S = {}> extends Component<P, Abs
 
         return pagination.page
     }
+
+    get offset() {
+        const { pagination } = this.state
+
+        return (pagination.page - 1) * pagination.pageSize
+    }
+
+    getOffset(pagination: Pagination) {
+        return (pagination.page - 1) * pagination.pageSize
+    }
 }

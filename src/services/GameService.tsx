@@ -171,7 +171,7 @@ export interface GameEntityFilterValues {
 class GameService {
     baseUrl = '/api/game/'
 
-    getAll(search: string, pageSize: number): Promise<PaginatedList<Game>> {
+    getAllFromSearch(search: string, pageSize: number): Promise<PaginatedList<Game>> {
         const {
             page,
             query,
@@ -200,6 +200,47 @@ class GameService {
                 category,
                 ratingFrom,
                 ratingTo,
+                genre,
+                theme,
+                platform,
+                gameMode,
+            },
+        })
+    }
+
+    getAllFromFilters(filters: GamesFilterRequest, pageSize: number): Promise<PaginatedList<Game>> {
+        const {
+            page,
+            query,
+            releaseDateFrom,
+            releaseDateTo,
+            category,
+            ratingFrom,
+            ratingTo,
+            ratingCountFrom,
+            ratingCountTo,
+            genre,
+            theme,
+            platform,
+            gameMode,
+            orderBy,
+            order,
+        } = filters
+
+        return requestService.performRequest('POST', this.baseUrl, {
+            pageSize,
+            page: Number(page || 1),
+            orderBy,
+            order,
+            filters: {
+                query,
+                releaseDateFrom,
+                releaseDateTo,
+                category,
+                ratingFrom,
+                ratingTo,
+                ratingCountFrom,
+                ratingCountTo,
                 genre,
                 theme,
                 platform,

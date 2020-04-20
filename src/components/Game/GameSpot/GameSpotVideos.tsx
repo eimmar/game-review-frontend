@@ -74,7 +74,7 @@ class GameSpotVideos extends AbstractPaginator<Props, State> {
             .videos(gameId, {
                 format: 'json',
                 limit: pagination.pageSize,
-                offset: pagination.pageSize * pagination.page,
+                offset: this.getOffset(pagination),
                 sort: 'publish_date:desc',
             })
             .then((response) => {
@@ -94,13 +94,12 @@ class GameSpotVideos extends AbstractPaginator<Props, State> {
         const { loading, videos, wasActivated } = this.state
 
         return (
-            <Box mb={2}>
+            <div className="m-b-16">
                 <Typography variant="h6">{t`gameSpotVideos.items`}</Typography>
-                <Box mb={1}>
-                    <Divider />
-                </Box>
+                <Divider className="m-b-8" />
+
                 {wasActivated && (
-                    <Carousel responsive={this.carouselConfig}>
+                    <Carousel responsive={this.carouselConfig} className="game-video-carousel">
                         {videos.map((video, index) => (
                             <GameSpotVideo
                                 key={video.id}
@@ -124,7 +123,7 @@ class GameSpotVideos extends AbstractPaginator<Props, State> {
                         color="primary"
                     >{t`gameSpotVideos.getItems`}</Button>
                 )}
-            </Box>
+            </div>
         )
     }
 }

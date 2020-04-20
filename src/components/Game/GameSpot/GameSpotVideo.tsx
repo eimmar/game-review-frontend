@@ -1,21 +1,31 @@
 import React, { Component } from 'react'
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles'
-import { CardActionArea, CardMedia, Grid, Dialog, DialogContent, Button } from '@material-ui/core'
+import { CardMedia, Grid, Dialog, DialogContent, Button } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
+import Moment from 'react-moment'
+import i18next from 'i18next'
 
-import { Video } from '../../../services/GameSpotService'
 import { t } from '../../../i18n'
+import { Video } from '../../../services/GameSpotService'
+import { placeholderImg } from '../../../services/Util/AssetsProvider'
 
 const styles = () =>
     createStyles({
         card: {
+            height: '100%',
             display: 'flex',
+            flexDirection: 'column',
+            margin: '0 4px',
+            cursor: 'pointer',
         },
-        cardDetails: {
-            flex: 1,
+        cardContent: {
+            flexGrow: 1,
+            marginTop: 8,
         },
         image: {
-            width: 240,
+            width: '100%',
             height: 135,
+            margin: 'auto',
         },
         video: {
             width: '100%',
@@ -23,11 +33,11 @@ const styles = () =>
         },
         modalContent: {
             maxWidth: 900,
-            maxHeight: 540,
+            maxHeight: 640,
         },
         loadMore: {
             position: 'absolute',
-            top: 52,
+            top: 40,
             right: 0,
         },
     })
@@ -37,7 +47,7 @@ interface Props extends WithStyles<typeof styles> {
     loadMoreCallback?: () => void
     classes: {
         card: string
-        cardDetails: string
+        cardContent: string
         image: string
         video: string
         modalContent: string
@@ -62,33 +72,49 @@ class GameSpotVideo extends Component<Props, State> {
 
         return (
             <Grid item>
-                <CardActionArea component="div">
-                    <CardMedia>
-                        <img
-                            className={classes.image}
-                            alt={video.title}
-                            src={video.image?.screenTiny}
-                            onClick={this.toggleModal}
-                        />
-                        {loadMoreCallback && (
-                            <Button
-                                className={classes.loadMore}
-                                component="div"
-                                variant="contained"
-                                onClick={loadMoreCallback}
-                                color="secondary"
-                            >{t`common.more`}</Button>
+                <div className={classes.card}>
+                    <CardMedia
+                        onClick={this.toggleModal}
+                        image={video.image?.screenTiny || placeholderImg}
+                        title={video.title}
+                        className={classes.image}
+                    />
+                    <div onClick={this.toggleModal} className={classes.cardContent}>
+                        <Typography gutterBottom>{video.title}</Typography>
+                        {video.publishDate && (
+                            <Typography variant="subtitle2" color="inherit" gutterBottom>
+                                <Moment locale={i18next.language} format="MMMM Do, YYYY">
+                                    {video.publishDate}
+                                </Moment>
+                            </Typography>
                         )}
-                    </CardMedia>
-                </CardActionArea>
+                    </div>
+                    {loadMoreCallback && (
+                        <Button
+                            className={classes.loadMore}
+                            component="div"
+                            variant="contained"
+                            onClick={loadMoreCallback}
+                            color="secondary"
+                        >{t`common.more`}</Button>
+                    )}
+                </div>
                 <Dialog open={modalOpen} onClose={this.toggleModal} maxWidth="xl">
                     <DialogContent className={classes.modalContent}>
                         <CardMedia>
                             {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-                            <video className={classes.video} controls>
+                            <video className={classes.video} controls title={video.title}>
                                 <source src={video.highUrl || video.hdUrl || video.lowUrl} />
                                 {video.deck}
                             </video>
+                            <Typography gutterBottom>{video.title}</Typography>
+                            {video.publishDate && (
+                                <Typography variant="subtitle2" color="inherit" gutterBottom>
+                                    <Moment locale={i18next.language} format="MMMM Do, YYYY">
+                                        {video.publishDate}
+                                    </Moment>
+                                </Typography>
+                            )}
                         </CardMedia>
                     </DialogContent>
                 </Dialog>

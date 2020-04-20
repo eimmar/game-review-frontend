@@ -22,6 +22,7 @@ import ComputerIcon from '@material-ui/icons/Computer'
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
+import i18next from 'i18next'
 
 import Sidebar from './Sidebar'
 import { GameLoaded } from '../../../services/GameService'
@@ -242,14 +243,14 @@ class GameViewContent extends Component<Props, State> {
                                 {game.screenshots.length === 0 && t`game.noPhotos`}
                             </Carousel>
                         </Box>
-                        <GameSpotVideos gameId={game.id} />
+                        <GameSpotVideos gameId={game.id} defaultActive />
 
                         <Grid container spacing={5} className={classes.mainGrid} direction="row-reverse">
                             <Grid item xs={12} md={4}>
                                 <Sidebar game={game} />
                             </Grid>
                             <Grid item xs={12} md={8}>
-                                <PriceDeal query={game.name} />
+                                <PriceDeal query={game.name} country={i18next.language} />
                                 {this.reviewTabs}
                             </Grid>
                         </Grid>

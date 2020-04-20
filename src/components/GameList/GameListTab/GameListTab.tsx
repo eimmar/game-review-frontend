@@ -22,6 +22,7 @@ import Typography from '@material-ui/core/Typography'
 import DialogContent from '@material-ui/core/DialogContent'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
+import { toast } from 'react-toastify'
 
 import { t } from '../../../i18n'
 import { GameList, gameListService, GameListType } from '../../../services/GameListService'
@@ -119,13 +120,15 @@ class GameListTab extends Component<Props, State> {
         const { gameId } = this.props
 
         if (this.gameInList(list.id)) {
-            gameListService
-                .removeFromList(gameId, list.id)
-                .then((it) => this.setState({ gameListsWithGame: gameListsWithGame.filter((it2) => it2.id !== it.id) }))
+            gameListService.removeFromList(gameId, list.id).then((it) => {
+                toast.success(t('gameList.successRemove'))
+                this.setState({ gameListsWithGame: gameListsWithGame.filter((it2) => it2.id !== it.id) })
+            })
         } else {
-            gameListService
-                .addToList(gameId, list.id)
-                .then((it) => this.setState({ gameListsWithGame: gameListsWithGame.concat(it) }))
+            gameListService.addToList(gameId, list.id).then((it) => {
+                toast.success(t('gameList.successAdd'))
+                this.setState({ gameListsWithGame: gameListsWithGame.concat(it) })
+            })
         }
     })
 

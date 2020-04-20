@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
@@ -19,6 +19,8 @@ import MoreIcon from '@material-ui/icons/More'
 
 import { t } from '../../../i18n'
 import { gameDealService, GameDeal } from '../../../services/GameDealService'
+import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
+import { Pagination } from '../../../services/RequestService'
 
 const styles = ({ spacing, typography, palette }: Theme) =>
     createStyles({
@@ -29,6 +31,9 @@ const styles = ({ spacing, typography, palette }: Theme) =>
         avatar: {
             backgroundColor: palette.warning.main,
         },
+        moreDeals: {
+            backgroundColor: palette.primary.main,
+        },
         oldPrice: {
             textDecoration: 'line-through',
             color: palette.text.secondary,
@@ -36,59 +41,89 @@ const styles = ({ spacing, typography, palette }: Theme) =>
         },
         discount: {
             color: palette.success.main,
+            marginLeft: 4,
         },
     })
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     query: string
+    country?: string
     classes: {
         markdown: string
         avatar: string
+        moreDeals: string
         oldPrice: string
         discount: string
     }
 }
 
-interface State {
-    deals: GameDeal[] | null
+interface State extends AbstractPaginatorState {
+    deals: GameDeal[]
+    visibleDeals: GameDeal[]
     moreDealsUrl: string | null
     loading: boolean
     fetched: boolean
 }
 
-class PriceDeal extends Component<Props, State> {
+class PriceDeal extends AbstractPaginator<Props, State> {
     state: State = {
-        deals: null,
+        deals: [] as GameDeal[],
+        visibleDeals: [] as GameDeal[],
         moreDealsUrl: null,
         loading: true,
         fetched: false,
+        pagination: {
+            page: 1,
+            totalResults: 0,
+            pageSize: 5,
+        },
     }
 
     fetchDeals = () => {
         this.setState({ fetched: true })
 
-        const { query } = this.props
+        const { query, country } = this.props
+        const { pagination } = this.state
 
         gameDealService
-            .search({ query })
+            .search({ query, country })
             .then((response) => {
-                const deals = response.data.list
+                const deals = response.data.list.sort((a, b) => (a.priceNew > b.priceNew ? 1 : -1))
                 const moreDealsUrl = response.data.list[0] ? response.data.list[0].urls.game : null
+                const visibleDeals = deals.slice(this.offset, pagination.pageSize)
 
-                this.setState({ deals, moreDealsUrl })
+                this.setState({
+                    deals,
+                    visibleDeals,
+                    moreDealsUrl,
+                    pagination: { ...pagination, totalResults: deals.length },
+                })
             })
             .finally(() => this.setState({ loading: false }))
     }
 
+    handleShowMore = (pagination: Pagination) => {
+        const { deals, visibleDeals } = this.state
+        const newVisibleDeals = visibleDeals.concat(
+            deals.slice(this.getOffset(pagination), this.getOffset(pagination) + pagination.pageSize),
+        )
+
+        this.setState({ pagination, visibleDeals: newVisibleDeals })
+    }
+
+    renderFinalPrice = (price: number) => {
+        return price === 0 ? t`common.free` : `${price} €`
+    }
+
     renderDeals() {
-        const { deals, moreDealsUrl } = this.state
+        const { visibleDeals, moreDealsUrl, pagination } = this.state
         const { classes } = this.props
 
         return (
             <List>
-                {deals &&
-                    deals.map((it) => (
-                        <ListItem key={it.plain} button href={it.urls.buy} component="a" target="_blank">
+                {visibleDeals &&
+                    visibleDeals.map((it) => (
+                        <ListItem key={it.urls.buy} button href={it.urls.buy} component="a" target="_blank">
                             <ListItemAvatar>
                                 <Avatar className={classes.avatar}>
                                     <LocalOfferIcon />
@@ -97,17 +132,17 @@ class PriceDeal extends Component<Props, State> {
                             <ListItemText primary={it.title} secondary={this.renderDeal(it)} />
                         </ListItem>
                     ))}
-                {moreDealsUrl && (
+                {moreDealsUrl && visibleDeals.length === pagination.totalResults && (
                     <ListItem button href={moreDealsUrl} target="_blank" component="a">
                         <ListItemAvatar>
-                            <Avatar className={classes.avatar}>
+                            <Avatar className={classes.moreDeals}>
                                 <MoreIcon />
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText primary={t`gameDeal.more`} />
                     </ListItem>
                 )}
-                {deals?.length === 0 && t`gameDeal.noDealsFound`}
+                {visibleDeals?.length === 0 && t`gameDeal.noDealsFound`}
             </List>
         )
     }
@@ -124,17 +159,17 @@ class PriceDeal extends Component<Props, State> {
                 {deal.priceCut > 0 && (
                     <>
                         <Typography component="span" color="textPrimary">
-                            {deal.priceNew} €{' '}
+                            {this.renderFinalPrice(deal.priceNew)} €{' '}
                         </Typography>
                         <Typography component="span" className={classes.oldPrice}>
                             {deal.priceOld} €{' '}
                         </Typography>
                         <Typography component="span" className={classes.discount}>
-                            {deal.priceCut}%
+                            {-deal.priceCut}%
                         </Typography>
                     </>
                 )}
-                {deal.priceCut === 0 && `${deal.priceNew} €`}
+                {deal.priceCut === 0 && this.renderFinalPrice(deal.priceNew)}
             </Box>
         )
     }
@@ -156,6 +191,13 @@ class PriceDeal extends Component<Props, State> {
                     )}
                     {fetched && loading && <CircularProgress />}
                     {fetched && !loading && this.renderDeals()}
+                    {!loading && this.hasNextPage && (
+                        <Button
+                            variant="contained"
+                            onClick={() => this.handleShowMore(this.nextPage)}
+                            color="primary"
+                        >{t`common.more`}</Button>
+                    )}
                 </Box>
             </Grid>
         )

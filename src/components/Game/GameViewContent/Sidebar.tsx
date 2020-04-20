@@ -21,11 +21,10 @@ import { t } from '../../../i18n'
 import { GameLoaded, GameWebsiteCategory } from '../../../services/GameService'
 import { routes } from '../../../parameters'
 
-const styles = ({ palette, spacing }: Theme) =>
+const styles = ({ spacing }: Theme) =>
     createStyles({
         sidebarAboutBox: {
             padding: spacing(2),
-            backgroundColor: palette.grey[200],
         },
         sidebarSection: {
             marginTop: spacing(3),

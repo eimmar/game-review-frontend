@@ -1,4 +1,5 @@
 import { requestService } from './RequestService'
+import { phpDebug } from '../parameters'
 
 interface Request {
     format: 'json' | 'xml' | 'jsonp'
@@ -54,8 +55,8 @@ export interface Video {
     lowUrl?: string
     highUrl?: string
     hdUrl?: string
-    length_seconds?: string
-    publish_date?: string
+    lengthSeconds?: string
+    publishDate?: string
     siteDetailUrl?: string
     source?: string
     categories?: string
@@ -67,11 +68,11 @@ class GameSpotService {
     baseUrl = '/api/game-spot/'
 
     reviews(id: string, request: Request): Promise<Response<Review>> {
-        return requestService.performRequest('POST', `${this.baseUrl}reviews/${id}`, request)
+        return requestService.performRequest('POST', `${this.baseUrl}reviews/${id}${phpDebug}`, request)
     }
 
     videos(id: string, request: Request): Promise<Response<Video>> {
-        return requestService.performRequest('POST', `${this.baseUrl}videos/${id}`, request)
+        return requestService.performRequest('POST', `${this.baseUrl}videos/${id}${phpDebug}`, request)
     }
 }
 

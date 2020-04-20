@@ -23,6 +23,7 @@ export const ltTranslations = {
     'common.filters': 'Filtrai',
     'common.add': 'Pridėti',
     'common.remove': 'Pašalinti',
+    'common.free': 'Nemokamas!',
 
     'filters.reset': 'Išvalyti filtrus',
 
@@ -100,6 +101,8 @@ export const ltTranslations = {
     'gameList.customLists': 'Kiti sąrašai',
     'gameList.new': 'Sukurti nuaują',
     'gameList.successCreate': 'Žaidimas pridėtas į sąrašą',
+    'gameList.successAdd': 'Žaidimas pridėtas',
+    'gameList.successRemove': 'Žaidimas pašalintas',
     'gameList.successUpdate': 'Sąrašas atnaujintas',
     'gameList.name': 'Pavadinimas',
     'gameList.privacyType': 'Privatumas',
@@ -208,6 +211,7 @@ export const ltTranslations = {
     'pageTitle.userList': 'Bendruomenė',
 
     'homePage.latestGames': 'Naujausi žaidimai',
+    'homePage.comingSoon': 'Netrukus pasirodys',
     'homePage.topCriticRated': 'Geriausiai kritikų įvertinti',
     'homePage.newestMembers': 'Nauji žaidėjai',
 }

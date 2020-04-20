@@ -73,27 +73,11 @@ class GameGridCarousel extends AbstractPaginator<Props, State> {
 
     fetchData = (pagination: Pagination) => {
         const { query } = this.props
-        const search = query
-            ? `?${Object.keys(query)
-                  .map((k) => {
-                      let string = ''
-
-                      if (Array.isArray(query[k])) {
-                          string = (query[k] as string[]).join(`&${k}=`) || ''
-                      }
-
-                      if (typeof query[k] === 'string') {
-                          string = query[k] as string
-                      }
-
-                      return `${encodeURIComponent(k)}=${encodeURIComponent(string)}`
-                  })
-                  .join('&')}`
-            : ''
+        const nextPageQuery = { ...query, page: String(pagination.page) }
 
         this.setState({ wasActivated: true, loading: true })
         gameService
-            .getAll(search, pagination.pageSize)
+            .getAllFromFilters(nextPageQuery, pagination.pageSize)
             .then()
             .then((response) => {
                 const games = response.items.map((it) => gameService.withCover(it, ScreenshotSize.ScreenshotMed))
@@ -126,14 +110,6 @@ class GameGridCarousel extends AbstractPaginator<Props, State> {
                                 title={game.name}
                                 className={styles.image}
                             />
-                            {loadMoreCallback && (
-                                <Button
-                                    component="div"
-                                    variant="contained"
-                                    onClick={loadMoreCallback}
-                                    color="secondary"
-                                >{t`common.more`}</Button>
-                            )}
                         </CardMedia>
                         <div className={styles.cardContent}>
                             <Typography gutterBottom>{game.name}</Typography>
@@ -146,6 +122,15 @@ class GameGridCarousel extends AbstractPaginator<Props, State> {
                             )}
                         </div>
                     </Link>
+                    {loadMoreCallback && (
+                        <Button
+                            className={styles.loadMore}
+                            component="div"
+                            variant="contained"
+                            onClick={loadMoreCallback}
+                            color="secondary"
+                        >{t`common.more`}</Button>
+                    )}
                 </div>
             </Grid>
         )
@@ -160,7 +145,7 @@ class GameGridCarousel extends AbstractPaginator<Props, State> {
                     <Divider />
                 </Box>
                 {wasActivated && (
-                    <Carousel responsive={this.carouselConfig}>
+                    <Carousel responsive={this.carouselConfig} className="game-carousel">
                         {games.map((game, index) => this.renderGame(game, index))}
                     </Carousel>
                 )}

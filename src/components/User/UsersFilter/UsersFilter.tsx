@@ -45,10 +45,11 @@ class UsersFilter extends Component<Props, State> {
     handleSearchSubmit = () => {
         const { location, history } = this.props
         const { filters } = this.state
+        const userFilter = filters.user?.trim() || ''
         const currentUrlParams = new URLSearchParams(location.search)
 
-        if (filters.user?.trim() || currentUrlParams.get('user')) {
-            currentUrlParams.set('user', filters.user?.trim() || '')
+        if ((currentUrlParams.get('user') || '') !== userFilter) {
+            currentUrlParams.set('user', userFilter)
             currentUrlParams.set('page', '1')
             history.push(`${location.pathname}?${currentUrlParams.toString()}`)
         }

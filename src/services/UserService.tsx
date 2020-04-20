@@ -49,6 +49,20 @@ class UserService {
         })
     }
 
+    getAllFromFilters(filters: UserFilterRequest, pageSize: number): Promise<PaginatedList<User>> {
+        const { page, user, orderBy, order } = filters
+
+        return requestService.performRequest('POST', this.baseUrl, {
+            pageSize,
+            page: Number(page || 1),
+            orderBy,
+            order,
+            filters: {
+                query: user,
+            },
+        })
+    }
+
     update(id: string, data: UserUpdateRequest): Promise<User> {
         return requestService.performRequest('POST', `${this.baseUrl}edit/${id}`, data)
     }

@@ -64,7 +64,7 @@ class GameSpotReviews extends AbstractPaginator<Props, State> {
                 format: 'json',
                 limit: pagination.pageSize,
                 fieldList: ['publish_date', 'id', 'authors', 'title', 'image', 'score', 'deck', 'good', 'bad', 'body'],
-                offset: pagination.pageSize * pagination.page,
+                offset: this.getOffset(pagination),
                 sort: 'publish_date:desc',
             })
             .then((response) => {

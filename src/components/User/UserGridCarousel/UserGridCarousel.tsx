@@ -12,10 +12,11 @@ import { Pagination } from '../../../services/RequestService'
 import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
 import { routes } from '../../../parameters'
 import styles from './UserGridCarousel.module.scss'
-import { User, userService } from '../../../services/UserService'
+import { User, UserFilterRequest, userService } from '../../../services/UserService'
 
 interface Props {
     defaultActive?: boolean
+    query?: UserFilterRequest
 }
 
 interface State extends AbstractPaginatorState {
@@ -29,7 +30,7 @@ class UserGridCarousel extends AbstractPaginator<Props, State> {
         pagination: {
             page: 1,
             totalResults: 0,
-            pageSize: 10,
+            pageSize: 7,
         },
         loading: false,
         wasActivated: false,
@@ -69,9 +70,12 @@ class UserGridCarousel extends AbstractPaginator<Props, State> {
     }
 
     fetchData = (pagination: Pagination) => {
+        const { query } = this.props
+        const nextPageQuery = { ...query, page: String(pagination.page) }
+
         this.setState({ wasActivated: true, loading: true })
         userService
-            .getAll('', pagination.pageSize)
+            .getAllFromFilters(nextPageQuery, pagination.pageSize)
             .then()
             .then((response) => {
                 this.setState((prevState) => ({
@@ -101,14 +105,6 @@ class UserGridCarousel extends AbstractPaginator<Props, State> {
                                     <Typography variant="h3">{userService.getInitials(user)}</Typography>
                                 </Avatar>
                             </ListItemAvatar>
-                            {loadMoreCallback && (
-                                <Button
-                                    component="div"
-                                    variant="contained"
-                                    onClick={loadMoreCallback}
-                                    color="secondary"
-                                >{t`common.more`}</Button>
-                            )}
                         </CardMedia>
                         <div className={styles.cardContent}>
                             <Typography gutterBottom>{userService.getFullName(user)}</Typography>
@@ -120,6 +116,15 @@ class UserGridCarousel extends AbstractPaginator<Props, State> {
                             </Typography>
                         </div>
                     </Link>
+                    {loadMoreCallback && (
+                        <Button
+                            className={styles.loadMore}
+                            component="div"
+                            variant="contained"
+                            onClick={loadMoreCallback}
+                            color="secondary"
+                        >{t`common.more`}</Button>
+                    )}
                 </div>
             </Grid>
         )
@@ -134,8 +139,8 @@ class UserGridCarousel extends AbstractPaginator<Props, State> {
                     <Divider />
                 </Box>
                 {wasActivated && (
-                    <Carousel responsive={this.carouselConfig}>
-                        {users.map((game, index) => this.renderUser(game, index))}
+                    <Carousel responsive={this.carouselConfig} className="user-carousel">
+                        {users.map((user, index) => this.renderUser(user, index))}
                     </Carousel>
                 )}
                 {loading && <CircularProgress />}
