@@ -228,5 +228,6 @@ export const ltTranslations = {
     'error.code.100': 'Netinkami duomenys.',
     'error.code.200': 'Slaptažodžio pakeitimo užklausa jau yra išsiųsta.',
     'error.code.201': 'Naudotojas su tokiu el. paštu jau egzistuoja.',
+    'error.code.300': 'Sąrašas su tokiu pavadinimu jau yra sukurtas.',
     'error.loginInvalid': 'Neteisingas el. paštas arba slaptažodis.',
 }
