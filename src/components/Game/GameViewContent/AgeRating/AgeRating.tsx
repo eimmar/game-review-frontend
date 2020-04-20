@@ -42,7 +42,7 @@ class AgeRating extends Component<Props, State> {
                         >
                             {t(`ageRating.category_${ageRating.category}`)} {t(`ageRating.${ageRating.rating}`)}
                         </Typography>
-                        <Dialog open={open} onClose={this.handleModalToggle}>
+                        <Dialog open={open} onClose={this.handleModalToggle} scroll="body">
                             <DialogTitle>
                                 {t(`ageRating.category_${ageRating.category}`)} {t(`ageRating.${ageRating.rating}`)}
                             </DialogTitle>

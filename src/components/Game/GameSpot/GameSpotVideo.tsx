@@ -99,7 +99,7 @@ class GameSpotVideo extends Component<Props, State> {
                         >{t`common.more`}</Button>
                     )}
                 </div>
-                <Dialog open={modalOpen} onClose={this.toggleModal} maxWidth="xl">
+                <Dialog open={modalOpen} onClose={this.toggleModal} maxWidth="xl" scroll="body">
                     <DialogContent className={classes.modalContent}>
                         <CardMedia>
                             <video className={classes.video} controls title={video.title}>

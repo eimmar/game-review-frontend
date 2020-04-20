@@ -20,6 +20,7 @@ const styles = () =>
         modalContent: {
             maxWidth: 960,
             maxHeight: 540,
+            overflow: 'hidden',
         },
     })
 
@@ -64,7 +65,7 @@ class GameImage extends Component<Props, State> {
                         />
                     </CardMedia>
                 </CardActionArea>
-                <Dialog open={modalOpen} onClose={this.toggleModal} maxWidth="xl">
+                <Dialog open={modalOpen} onClose={this.toggleModal} maxWidth="xl" scroll="body">
                     <DialogContent className={classes.modalContent}>
                         <CardMedia>
                             <img
