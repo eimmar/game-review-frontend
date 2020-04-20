@@ -34,12 +34,14 @@ class RequestService {
                 if (obj.hasOwnProperty(key) && key !== 'page') {
                     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore
-                    const valAsArray = Array.isArray(obj[key]) ? obj[key] : [obj[key]]
+                    const valAsArray = Array.isArray(obj[key]) ? obj[key] : [obj[key].replace(/\+/g, ' ')]
 
                     valAsArray.push(value)
                     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore
                     value = [...new Set(valAsArray)]
+                } else {
+                    value = value.replace(/\+/g, ' ')
                 }
 
                 return { ...obj, [key]: value }

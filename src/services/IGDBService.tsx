@@ -1,5 +1,4 @@
 import { Pagination, requestService } from './RequestService'
-import { phpDebug } from '../parameters'
 
 interface UserRating {
     rating: number
@@ -28,7 +27,7 @@ class IGDBService {
     baseUrl = '/api/igdb/'
 
     reviews(id: number, request: Pagination): Promise<Review[]> {
-        return requestService.performRequest('POST', `${this.baseUrl}reviews/${id}${phpDebug}`, request)
+        return requestService.performRequest('POST', `${this.baseUrl}reviews/${id}`, request)
     }
 }
 
