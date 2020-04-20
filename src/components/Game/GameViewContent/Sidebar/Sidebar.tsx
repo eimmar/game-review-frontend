@@ -17,9 +17,10 @@ import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone'
 import AndroidIcon from '@material-ui/icons/Android'
 import RedditIcon from '@material-ui/icons/Reddit'
 
-import { t } from '../../../i18n'
-import { GameLoaded, GameWebsiteCategory } from '../../../services/GameService'
-import { routes } from '../../../parameters'
+import { t } from '../../../../i18n'
+import { GameLoaded, GameWebsiteCategory } from '../../../../services/GameService'
+import { routes } from '../../../../parameters'
+import AgeRating from '../AgeRating/AgeRating'
 
 const styles = ({ spacing }: Theme) =>
     createStyles({
@@ -143,11 +144,7 @@ class Sidebar extends Component<Props> {
                     {t`game.ageRatings`}
                 </Typography>
                 {game.ageRatings.length > 0 &&
-                    game.ageRatings.map((ageRating) => (
-                        <Typography display="block" variant="body1" key={ageRating.id}>
-                            {t(`ageRating.category_${ageRating.category}`)} {t(`ageRating.${ageRating.rating}`)}
-                        </Typography>
-                    ))}
+                    game.ageRatings.map((ageRating) => <AgeRating ageRating={ageRating} key={ageRating.id} />)}
                 {game.ageRatings.length === 0 && t`game.noInfo`}
 
                 <Typography variant="h6" gutterBottom className={classes.sidebarSection}>

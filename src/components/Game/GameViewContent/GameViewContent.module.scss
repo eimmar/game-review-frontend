@@ -1,0 +1,18 @@
+@import '../../../scss/variables';
+
+.content {
+    color: $color-text-primary !important;
+
+    br {
+        content: "";
+    }
+    br::after {
+        content: " ";
+    }
+
+    font-size: 0.875rem !important;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
+    font-weight: 500 !important;
+    line-height: 1.57 !important;
+    letter-spacing: 0.00714em !important;
+}

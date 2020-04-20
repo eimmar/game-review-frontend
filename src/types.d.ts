@@ -16,7 +16,7 @@ declare module 'i18next-fetch-backend' {
 
 declare module 'react-show-more' {
     declare interface ShowMoreProps {
-        children?: React.ReactElement
+        children?: React.ReactElement | string | null
         lines: boolean | number
         more: string | React.ReactElement
         less: string | React.ReactElement

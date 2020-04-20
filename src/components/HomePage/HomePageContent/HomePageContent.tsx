@@ -24,7 +24,7 @@ function HomePageContent() {
                 />
 
                 <Typography variant="h6" className="m-t-32">{t`homePage.topCriticRated`}</Typography>
-                <GameGridCarousel defaultActive query={{ orderBy: 'rating', order: 'DESC', ratingCountFrom: '20' }} />
+                <GameGridCarousel defaultActive query={{ orderBy: 'rating', order: 'DESC', ratingCountFrom: '0' }} />
 
                 <Typography variant="h6" className="m-t-64">{t`homePage.newestMembers`}</Typography>
                 <UserGridCarousel defaultActive query={{ orderBy: 'createdAt', order: 'DESC' }} />

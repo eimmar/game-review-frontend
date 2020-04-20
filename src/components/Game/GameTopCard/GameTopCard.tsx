@@ -2,10 +2,24 @@ import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { Box, CardMedia, LinearProgress, Paper } from '@material-ui/core'
+import { Link as RouterLink, RouteComponentProps, withRouter } from 'react-router-dom'
+import {
+    Avatar,
+    Box,
+    CardMedia,
+    Divider,
+    LinearProgress,
+    Link,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    Paper,
+} from '@material-ui/core'
 import Moment from 'react-moment'
 import i18next from 'i18next'
+import VideogameAssetOutlinedIcon from '@material-ui/icons/VideogameAssetOutlined'
+import ComputerIcon from '@material-ui/icons/Computer'
 
 import { GameLoaded, gameService, ScreenshotSize } from '../../../services/GameService'
 import { placeholderImg } from '../../../services/Util/AssetsProvider'
@@ -14,6 +28,7 @@ import sStyles from './GameTopCard.module.scss'
 import { flattenClasses } from '../../../services/Util/StyleUtils'
 import { MainLayout } from '../../../layouts/MainLayout/MainLayout'
 import GameListTab from '../../GameList/GameListTab/GameListTab'
+import { routes } from '../../../parameters'
 
 const styles = ({ palette, spacing, breakpoints }: Theme) =>
     createStyles({
@@ -114,9 +129,9 @@ class GameTopCard extends Component<Props> {
                         <Grid item md={2} className={classes.cover}>
                             <CardMedia className={classes.cardMedia} image={game.coverImage || placeholderImg} />
                         </Grid>
-                        <Grid item md={8} className={classes.mainSectionContent}>
+                        <Grid item md={8} sm={12} className={classes.mainSectionContent}>
                             <Box m={2}>
-                                {game.rating && game.ratingCount && (
+                                {game.rating && Number(game.ratingCount) > 0 && (
                                     <>
                                         <Typography color="inherit" className={sStyles.ratingText}>
                                             {t('game.ratingBasedOn', {
@@ -128,23 +143,87 @@ class GameTopCard extends Component<Props> {
                                     </>
                                 )}
 
-                                <Typography component="h1" variant="h4" color="inherit" gutterBottom>
+                                <Typography component="h1" variant="h5" color="inherit" gutterBottom>
                                     {game.name}
                                 </Typography>
                                 {game.releaseDate && (
-                                    <Typography variant="h5" color="inherit" gutterBottom>
+                                    <Typography variant="h6" color="inherit" gutterBottom>
                                         <Moment locale={i18next.language} format="MMMM Do, YYYY">
                                             {game.releaseDate}
                                         </Moment>
                                     </Typography>
                                 )}
-                                <Typography variant="h6" color="inherit" paragraph>
+                                <Typography variant="subtitle1" color="inherit" paragraph>
                                     {game.companies.map((it) => it.name).join(', ')}
                                 </Typography>
 
-                                <Typography variant="subtitle1" color="inherit" paragraph>
-                                    {game.summary}
-                                </Typography>
+                                <List dense>
+                                    <ListItem disableGutters>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <VideogameAssetOutlinedIcon />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary={t`game.genres`}
+                                            secondary={
+                                                <>
+                                                    {game.genres.length > 0 &&
+                                                        game.genres.map((genre) => (
+                                                            <Box
+                                                                mr={1}
+                                                                key={genre.id}
+                                                                display="inline"
+                                                                component="span"
+                                                            >
+                                                                <Link
+                                                                    variant="body1"
+                                                                    component={RouterLink}
+                                                                    to={`${routes.game.list}?genre=${genre.slug}`}
+                                                                >
+                                                                    {genre.name}
+                                                                </Link>
+                                                            </Box>
+                                                        ))}
+                                                    {game.genres.length === 0 && t`game.noInfo`}
+                                                </>
+                                            }
+                                        />
+                                    </ListItem>
+                                    <ListItem disableGutters>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <ComputerIcon />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary={t`game.platforms`}
+                                            secondary={
+                                                <>
+                                                    {game.platforms.length > 0 &&
+                                                        game.platforms.map((platform) => (
+                                                            <Box
+                                                                mr={1}
+                                                                key={platform.id}
+                                                                display="inline"
+                                                                component="span"
+                                                            >
+                                                                <Link
+                                                                    variant="body1"
+                                                                    component={RouterLink}
+                                                                    to={`${routes.game.list}?platform=${platform.slug}`}
+                                                                >
+                                                                    {platform.name}
+                                                                </Link>
+                                                            </Box>
+                                                        ))}
+                                                    {game.platforms.length === 0 && t`game.noInfo`}
+                                                </>
+                                            }
+                                        />
+                                    </ListItem>
+                                </List>
+
                                 <GameListTab gameId={game.id} />
                             </Box>
                         </Grid>

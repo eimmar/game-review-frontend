@@ -6,6 +6,9 @@ export enum GameCategory {
     Expansion,
     Bundle,
     StandaloneExpansion,
+    Mod,
+    Episode,
+    Season,
 }
 
 export enum AgeRatingCategory {
@@ -123,7 +126,6 @@ export interface Game extends Timestampable, ExternalEntity {
     slug: string
     coverImage: string | null
     summary: string | null
-    storyLine: string | null
     releaseDate: string | null
     category: GameCategory
     rating: number | null
@@ -132,6 +134,7 @@ export interface Game extends Timestampable, ExternalEntity {
 }
 
 export interface GameLoaded extends Game {
+    storyLine: string | null
     ageRatings: AgeRating[]
     genres: Genre[]
     screenshots: Screenshot[]

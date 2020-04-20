@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
-import { RouteComponentProps, withRouter, Link as RouterLink } from 'react-router-dom'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import {
     Grid,
     CssBaseline,
     Container,
-    Link,
     Typography,
     Divider,
     List,
@@ -16,15 +15,16 @@ import {
     Box,
     Tab,
     Tabs,
+    Hidden,
 } from '@material-ui/core'
-import VideogameAssetOutlinedIcon from '@material-ui/icons/VideogameAssetOutlined'
-import ComputerIcon from '@material-ui/icons/Computer'
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
+import DescriptionIcon from '@material-ui/icons/Description'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import i18next from 'i18next'
+import ShowMore from 'react-show-more'
 
-import Sidebar from './Sidebar'
+import Sidebar from './Sidebar/Sidebar'
 import { GameLoaded } from '../../../services/GameService'
 import GameImage from './GameImage'
 import Reviews from '../ReviewList/ReviewList'
@@ -32,7 +32,7 @@ import { t } from '../../../i18n'
 import PriceDeal from '../PriceDeal/PriceDeal'
 import GameSpotVideos from '../GameSpot/GameSpotVideos'
 import GameSpotReviews from '../GameSpot/GameSpotReviews/GameSpotReviews'
-import { routes } from '../../../parameters'
+import sStyles from './GameViewContent.module.scss'
 
 const styles = ({ spacing }: Theme) =>
     createStyles({
@@ -88,77 +88,81 @@ class GameViewContent extends Component<Props, State> {
 
         return (
             <List>
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <VideogameAssetOutlinedIcon />
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                        primary={t`game.genres`}
-                        secondary={
-                            <>
-                                {game.genres.length > 0 &&
-                                    game.genres.map((genre) => (
-                                        <Box mr={1} key={genre.id} display="inline" component="span">
-                                            <Link
-                                                variant="body1"
-                                                component={RouterLink}
-                                                to={`${routes.game.list}?genre=${genre.slug}`}
-                                            >
-                                                {genre.name}
-                                            </Link>
-                                        </Box>
-                                    ))}
-                                {game.genres.length === 0 && t`game.noInfo`}
-                            </>
-                        }
-                    />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <ComputerIcon />
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                        primary={t`game.platforms`}
-                        secondary={
-                            <>
-                                {game.platforms.length > 0 &&
-                                    game.platforms.map((platform) => (
-                                        <Box mr={1} key={platform.id} display="inline" component="span">
-                                            <Link
-                                                variant="body1"
-                                                component={RouterLink}
-                                                to={`${routes.game.list}?platform=${platform.slug}`}
-                                            >
-                                                {platform.name}
-                                            </Link>
-                                        </Box>
-                                    ))}
-                                {game.platforms.length === 0 && t`game.noInfo`}
-                            </>
-                        }
-                    />
-                </ListItem>
-
-                {game.storyLine && (
-                    <>
-                        <Divider variant="inset" component="li" />
-                        <ListItem>
+                {game.summary && (
+                    <ListItem>
+                        <Hidden xsDown>
                             <ListItemAvatar>
                                 <Avatar>
                                     <LibraryBooksIcon />
                                 </Avatar>
                             </ListItemAvatar>
+                        </Hidden>
+                        <ListItemText
+                            classes={{ secondary: sStyles.content }}
+                            primary={t`game.summary`}
+                            secondary={
+                                <ShowMore
+                                    lines={3}
+                                    more={
+                                        <Typography
+                                            display="block"
+                                            component="span"
+                                            variant="subtitle1"
+                                            color="primary"
+                                        >{t`common.showMore`}</Typography>
+                                    }
+                                    less={
+                                        <Typography
+                                            display="block"
+                                            component="span"
+                                            variant="subtitle1"
+                                            color="primary"
+                                        >{t`common.showLess`}</Typography>
+                                    }
+                                >
+                                    {game.summary}
+                                </ShowMore>
+                            }
+                        />
+                    </ListItem>
+                )}
+
+                {game.storyLine && (
+                    <>
+                        <Divider variant="inset" component="li" />
+                        <ListItem>
+                            <Hidden xsDown>
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        <DescriptionIcon />
+                                    </Avatar>
+                                </ListItemAvatar>
+                            </Hidden>
                             <ListItemText
+                                classes={{ secondary: sStyles.content }}
                                 primary={t`game.storyLine`}
                                 secondary={
-                                    <Typography variant="subtitle1" color="inherit" paragraph component="span">
+                                    <ShowMore
+                                        lines={3}
+                                        more={
+                                            <Typography
+                                                display="block"
+                                                component="span"
+                                                variant="subtitle1"
+                                                color="primary"
+                                            >{t`common.showMore`}</Typography>
+                                        }
+                                        less={
+                                            <Typography
+                                                display="block"
+                                                component="span"
+                                                variant="subtitle1"
+                                                color="primary"
+                                            >{t`common.showLess`}</Typography>
+                                        }
+                                    >
                                         {game.storyLine}
-                                    </Typography>
+                                    </ShowMore>
                                 }
                             />
                         </ListItem>

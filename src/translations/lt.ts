@@ -73,6 +73,8 @@ export const ltTranslations = {
     'game.genre': 'Žanras',
     'game.platforms': 'Platformos',
     'game.platform': 'Platforma',
+    'game.summary': 'Aprašymas',
+    'game.synopsis': 'Konspektas',
     'game.storyLine': 'Žaidimo istorija',
     'game.noInfo': 'Nėra informacijos.',
     'game.noPhotos': 'Nautraukų nėra.',
@@ -181,6 +183,9 @@ export const ltTranslations = {
     'gameCategory.2': 'Plėtinys',
     'gameCategory.3': 'Bundle',
     'gameCategory.4': 'Atskiras plėtinys',
+    'gameCategory.5': 'Modifikacija',
+    'gameCategory.6': 'Epizodas',
+    'gameCategory.7': 'Sezonas',
 
     'errors.validation.required': 'Šis laukas yra privalomas',
     'errors.validation.email': 'Netinkamas el. paštas',

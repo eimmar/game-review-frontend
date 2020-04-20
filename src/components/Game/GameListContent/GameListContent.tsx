@@ -217,7 +217,7 @@ class GameListContent extends AbstractPaginator<Props, State> {
                                                 }
                                                 secondary={
                                                     <Typography component="span" variant="body2" color="textPrimary">
-                                                        {game.summary}
+                                                        {game.summary ? `${game.summary.substring(0, 240)}...` : ''}
                                                     </Typography>
                                                 }
                                             />
