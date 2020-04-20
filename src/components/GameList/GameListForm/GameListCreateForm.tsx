@@ -47,7 +47,7 @@ class GameListForm extends Component<Props> {
             .create(values)
             .then((list) => {
                 onSuccess(list)
-                toast.success(t('gameList.successCreate'))
+                toast.info(t('gameList.successCreate'))
                 onClose()
             })
             .catch((error) => {

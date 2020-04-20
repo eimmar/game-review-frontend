@@ -68,7 +68,7 @@ class ProfileEditForm extends Component<Props> {
         userService
             .update(initialValues.id, values)
             .then((updatedUser) => {
-                toast.success(t('common.successUpdate'))
+                toast.info(t('common.successUpdate'))
                 authService.update(updatedUser)
                 history.push({ pathname: routes.user.profile })
             })

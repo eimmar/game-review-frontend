@@ -121,12 +121,12 @@ class GameListTab extends Component<Props, State> {
 
         if (this.gameInList(list.id)) {
             gameListService.removeFromList(gameId, list.id).then((it) => {
-                toast.success(t('gameList.successRemove'))
+                toast.info(t('gameList.successRemove'))
                 this.setState({ gameListsWithGame: gameListsWithGame.filter((it2) => it2.id !== it.id) })
             })
         } else {
             gameListService.addToList(gameId, list.id).then((it) => {
-                toast.success(t('gameList.successAdd'))
+                toast.info(t('gameList.successAdd'))
                 this.setState({ gameListsWithGame: gameListsWithGame.concat(it) })
             })
         }

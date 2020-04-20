@@ -110,7 +110,7 @@ class ReviewFormModal extends Component<Props, State> {
             .create(values)
             .then(() => {
                 this.handleModalToggle()
-                toast.success(t('gameReview.successCreate'))
+                toast.info(t('gameReview.successCreate'))
             })
             .catch((error) => {
                 actions.setStatus({ msg: error.message, error: true })

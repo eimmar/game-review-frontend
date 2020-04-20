@@ -45,7 +45,7 @@ class GameListUpdateForm extends Component<Props> {
             .update(initialValues.id, values)
             .then((list) => {
                 onSuccess(list)
-                toast.success(t('gameList.successUpdate'))
+                toast.info(t('gameList.successUpdate'))
                 onClose()
             })
             .catch((error) => {

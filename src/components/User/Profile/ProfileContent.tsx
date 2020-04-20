@@ -333,7 +333,7 @@ class ProfileContent extends Component<Props, State> {
         return (
             <>
                 {this.renderGameListViewButton(list)}
-                {this.renderGameListEditButton(list)}
+                {this.isCurrentUser && this.renderGameListEditButton(list)}
                 {this.renderList(list)}
             </>
         )
