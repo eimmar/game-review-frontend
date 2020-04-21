@@ -28,6 +28,16 @@ class GameListForm extends Component<Props> {
         name: Yup.string().required(t`errors.validation.required`),
     })
 
+    mounted = false
+
+    componentDidMount() {
+        this.mounted = true
+    }
+
+    componentWillUnmount() {
+        this.mounted = false
+    }
+
     get initialValues(): GameListRequest {
         const user = authService.getCurrentUser()
         const { gameId } = this.props
@@ -54,7 +64,7 @@ class GameListForm extends Component<Props> {
                 actions.setStatus({ msg: error.message, error: true })
                 toast.error(t(error.message))
             })
-            .finally(() => actions.setSubmitting(false))
+            .finally(() => this.mounted && actions.setSubmitting(false))
     }
 
     render() {
