@@ -62,8 +62,10 @@ class ProfileEditForm extends Component<Props> {
         return {
             firstName: initialValues.firstName,
             lastName: initialValues.lastName || '',
-            avatarFile: null,
-            removeAvatar: false,
+            avatarFile: {
+                file: null,
+                delete: false,
+            },
         }
     }
 
@@ -133,7 +135,6 @@ class ProfileEditForm extends Component<Props> {
                                     <AvatarInput
                                         setFieldValue={setFieldValue}
                                         name="avatarFile"
-                                        removeName="removeAvatar"
                                         defaultAvatar={initialValues.avatar}
                                         label={t`user.avatar`}
                                         maxSize={2500000}

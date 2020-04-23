@@ -9,11 +9,10 @@ import Checkbox from '@material-ui/core/Checkbox'
 
 import { t } from '../../../../i18n'
 import styles from './AvatarInput.module.scss'
-import { userService } from '../../../../services/UserService'
+import { UserAvatarFile, userService } from '../../../../services/UserService'
 
 interface Props {
     name: string
-    removeName?: string
     maxSize: number
     accept: string[]
     setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
@@ -22,37 +21,39 @@ interface Props {
 }
 
 interface State {
-    file: File | null
-    remove: boolean
+    image: UserAvatarFile
 }
 
 class AvatarInput extends React.Component<Props, State> {
     state = {
-        file: null as File | null,
-        remove: false,
+        image: {
+            file: null as File | null,
+            delete: false,
+        },
     }
 
     handleOnDrop = (files: FileWithPath[]) => {
         const { name, setFieldValue } = this.props
+        const { image } = this.state
+        const newImage = { ...image, file: files[0] }
 
-        this.setState({ file: files[0] }, () => setFieldValue(name, files[0]))
+        this.setState({ image: newImage }, () => setFieldValue(name, newImage))
     }
 
     handleClear = () => {
         const { name, setFieldValue } = this.props
+        const { image } = this.state
+        const newImage = { ...image, file: null }
 
-        this.setState({ file: null }, () => setFieldValue(name, null))
+        this.setState({ image: newImage }, () => setFieldValue(name, newImage))
     }
 
     handleRemoveToggle = () => {
-        const { removeName, setFieldValue } = this.props
+        const { name, setFieldValue } = this.props
+        const { image } = this.state
+        const newImage = { ...image, delete: !image.delete }
 
-        if (removeName) {
-            this.setState(
-                (prevState) => ({ remove: !prevState.remove }),
-                () => setFieldValue(removeName, null),
-            )
-        }
+        this.setState({ image: newImage }, () => setFieldValue(name, newImage))
     }
 
     renderDefaultAvatar = () => {
@@ -66,8 +67,8 @@ class AvatarInput extends React.Component<Props, State> {
     }
 
     render() {
-        const { label, maxSize, accept, defaultAvatar, removeName } = this.props
-        const { file, remove } = this.state
+        const { label, maxSize, accept, defaultAvatar } = this.props
+        const { image } = this.state
 
         return (
             <Dropzone onDropAccepted={this.handleOnDrop} maxSize={maxSize} accept={accept}>
@@ -77,10 +78,14 @@ class AvatarInput extends React.Component<Props, State> {
                             <input {...getInputProps({ name: 'file' })} />
                             <InputLabel error={rejectedFiles.length !== 0}>{label}</InputLabel>
                             <Button fullWidth>
-                                {file && (
-                                    <Avatar alt={file.name} src={URL.createObjectURL(file)} className={styles.medium} />
+                                {image.file && (
+                                    <Avatar
+                                        alt={image.file.name}
+                                        src={URL.createObjectURL(image.file)}
+                                        className={styles.medium}
+                                    />
                                 )}
-                                {file === null && this.renderDefaultAvatar()}
+                                {image.file === null && this.renderDefaultAvatar()}
                             </Button>
                         </div>
                         {rejectedFiles.length > 0 && (
@@ -91,7 +96,7 @@ class AvatarInput extends React.Component<Props, State> {
                                 })}
                             </FormHelperText>
                         )}
-                        {file && (
+                        {image.file && (
                             <Button
                                 className={styles.remove}
                                 onClick={this.handleClear}
@@ -106,11 +111,10 @@ class AvatarInput extends React.Component<Props, State> {
                                 <FormControlLabel
                                     control={
                                         <Checkbox
-                                            value={removeName}
                                             color="primary"
-                                            name={removeName}
+                                            name="delete"
                                             onChange={this.handleRemoveToggle}
-                                            checked={remove}
+                                            checked={image.delete}
                                         />
                                     }
                                     label={t`user.removeAvatar`}

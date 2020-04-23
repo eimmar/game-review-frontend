@@ -13,15 +13,15 @@ interface Props {
 
 function UserAvatar(props: Props) {
     const { user, size } = props
-    const classes = flattenClasses([styles.avatar, size === 'sm' && styles.sm])
+    const classes = flattenClasses([styles.avatar, size === 'sm' && styles.sm, user.avatar && styles.noBg])
 
     if (user.avatar) {
         return <Avatar className={classes} src={userService.getAvatarUrl(user.avatar)} />
     }
 
     return (
-        <Avatar className={styles.avatar}>
-            <Typography variant="h3">{userService.getInitials(user)}</Typography>
+        <Avatar className={classes}>
+            <Typography variant={size === 'sm' ? 'subtitle1' : 'h3'}>{userService.getInitials(user)}</Typography>
         </Avatar>
     )
 }

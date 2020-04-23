@@ -11,6 +11,10 @@
         height: 30px !important;
     }
 
+    &.noBg {
+        background-color: $color-paper !important;
+    }
+
     .icon {
         height: 5em;
         width: 5em;
