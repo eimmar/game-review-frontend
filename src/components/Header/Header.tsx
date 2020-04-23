@@ -33,6 +33,7 @@ import { t } from '../../i18n'
 import { routes } from '../../parameters'
 import { authService } from '../../services/AuthService'
 import { mainLogo } from '../../services/Util/AssetsProvider'
+import UserAvatar from '../User/Profile/UserAvatar/UserAvatar'
 
 const styles = ({ palette, spacing }: Theme) =>
     createStyles({
@@ -153,7 +154,7 @@ class Header extends React.PureComponent<Props> {
                         <Hidden smDown>
                             <Tooltip title={t`header.myProfile`}>
                                 <IconButton color="primary" onClick={this.handleProfileMenuOpen}>
-                                    <AccountCircleIcon fontSize="large" />
+                                    <UserAvatar user={this.user} size="sm" />
                                 </IconButton>
                             </Tooltip>
                             <Menu

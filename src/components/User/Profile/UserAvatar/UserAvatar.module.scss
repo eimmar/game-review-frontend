@@ -1,0 +1,18 @@
+@import '../../../../scss/variables';
+
+.avatar {
+    margin: auto;
+    width: 120px !important;
+    height: 120px !important;
+    background-color: $color-primary !important;
+
+    &.sm {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .icon {
+        height: 5em;
+        width: 5em;
+    }
+}

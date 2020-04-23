@@ -15,6 +15,7 @@ import { authService, LoggedInUser } from '../../../services/AuthService'
 import { t } from '../../../i18n'
 import { routes } from '../../../parameters'
 import { userService, UserUpdateRequest } from '../../../services/UserService'
+import AvatarInput from '../Profile/AvatarPreview/AvatarInput'
 
 const styles = ({ palette, spacing }: Theme) =>
     createStyles({
@@ -51,6 +52,8 @@ class ProfileEditForm extends Component<Props> {
     validationSchema = Yup.object().shape({
         firstName: Yup.string().required(t`errors.validation.required`),
         lastName: Yup.string(),
+        removeAvatar: Yup.boolean(),
+        avatarFile: Yup.string().nullable(),
     })
 
     get initialValues(): UserUpdateRequest {
@@ -58,7 +61,9 @@ class ProfileEditForm extends Component<Props> {
 
         return {
             firstName: initialValues.firstName,
-            lastName: initialValues.lastName,
+            lastName: initialValues.lastName || '',
+            avatarFile: null,
+            removeAvatar: false,
         }
     }
 
@@ -79,7 +84,7 @@ class ProfileEditForm extends Component<Props> {
     }
 
     render() {
-        const { classes } = this.props
+        const { classes, initialValues } = this.props
 
         return (
             <div className={classes.paper}>
@@ -92,8 +97,8 @@ class ProfileEditForm extends Component<Props> {
                     validationSchema={this.validationSchema}
                     onSubmit={this.handleSubmit}
                 >
-                    {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
-                        <Form className={classes.form} noValidate>
+                    {({ values, touched, errors, isSubmitting, handleChange, handleBlur, setFieldValue }) => (
+                        <Form className={classes.form} noValidate encType="multipart/form-data">
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
                                     <TextField
@@ -121,6 +126,18 @@ class ProfileEditForm extends Component<Props> {
                                         onBlur={handleBlur}
                                         error={!!errors.lastName && !!touched.lastName}
                                         helperText={errors.lastName && touched.lastName && errors.lastName}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12}>
+                                    <AvatarInput
+                                        setFieldValue={setFieldValue}
+                                        name="avatarFile"
+                                        removeName="removeAvatar"
+                                        defaultAvatar={initialValues.avatar}
+                                        label={t`user.avatar`}
+                                        maxSize={2500000}
+                                        accept={['.jpeg', '.jpg', '.png']}
                                     />
                                 </Grid>
                             </Grid>

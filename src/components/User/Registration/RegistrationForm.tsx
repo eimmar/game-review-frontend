@@ -48,14 +48,17 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
 
 class RegistrationForm extends Component<Props> {
     validationSchema = Yup.object().shape({
-        firstName: Yup.string().required(t`errors.validation.required`),
-        lastName: Yup.string(),
-        password: Yup.string()
+        username: Yup.string()
             .required(t`errors.validation.required`)
             .min(4, t('error.validation.tooShort', { number: 4 })),
         email: Yup.string()
             .required(t`errors.validation.required`)
             .email(t`errors.validation.email`),
+        firstName: Yup.string().required(t`errors.validation.required`),
+        lastName: Yup.string(),
+        password: Yup.string()
+            .required(t`errors.validation.required`)
+            .min(4, t('error.validation.tooShort', { number: 4 })),
     })
 
     get initialValues(): RegistrationRequest {
@@ -63,6 +66,7 @@ class RegistrationForm extends Component<Props> {
             firstName: '',
             lastName: '',
             email: '',
+            username: '',
             password: '',
         }
     }
@@ -96,9 +100,38 @@ class RegistrationForm extends Component<Props> {
                     validationSchema={this.validationSchema}
                     onSubmit={this.handleSubmit}
                 >
-                    {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
+                    {({ values, touched, errors, isSubmitting, handleChange, handleBlur, setFieldValue }) => (
                         <Form className={classes.form} noValidate>
                             <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        label={t`user.email`}
+                                        name="email"
+                                        value={values.email}
+                                        type="email"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={!!errors.email && !!touched.email}
+                                        helperText={errors.email && touched.email && errors.email}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        label={t`user.username`}
+                                        name="username"
+                                        value={values.username}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        error={!!errors.username && !!touched.username}
+                                        helperText={errors.username && touched.username && errors.username}
+                                    />
+                                </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <TextField
                                         name="firstName"
@@ -125,20 +158,6 @@ class RegistrationForm extends Component<Props> {
                                         onBlur={handleBlur}
                                         error={!!errors.lastName && !!touched.lastName}
                                         helperText={errors.lastName && touched.lastName && errors.lastName}
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        variant="outlined"
-                                        required
-                                        fullWidth
-                                        label={t`user.email`}
-                                        name="email"
-                                        value={values.email}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        error={!!errors.email && !!touched.email}
-                                        helperText={errors.email && touched.email && errors.email}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>

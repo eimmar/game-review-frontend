@@ -32,6 +32,10 @@ export const ltTranslations = {
     'user.firstName': 'Vardas',
     'user.lastName': 'Pavardė',
     'user.email': 'El. paštas',
+    'user.avatar': 'Profilio nuotrauka',
+    'user.username': 'Slapyvardis',
+    'user.usernameOrEmail': 'El. paštas arba slapyvardis',
+    'user.removeAvatar': 'Pašalinti dabartinę nuotrauką',
     'user.password': 'Slaptažodis',
     'user.currentPassword': 'Dabartinis slaptažodis',
     'user.successCreate': 'Registracija sėkminga!',
@@ -195,6 +199,9 @@ export const ltTranslations = {
     'error.validation.tooLong': 'Laukas neturi būti ilgesnis nei {{number}} symboliai.',
     'error.validation.tooMany': 'Laukas neturi turėti daugiau nei {{number}} įrašų.',
     'error.validation.tooShort': 'Laukas turi būti ilgesnis nei {{number}} symboliai.',
+    'error.validation.fileTooBig': 'Nuotrauka negali būti didesnė nei {{sizeMb}} MB.',
+    'error.validation.invalidFile':
+        'Nuotrauka negali būti didesnė nei {{sizeMb}} MB, leidižiami nuotraukų tipai: {{types}}.',
 
     'header.signIn': 'Prisijungti',
     'header.logOut': 'Atsijungti',
@@ -227,7 +234,7 @@ export const ltTranslations = {
     'error.code.500': 'Nežinoma klaida. Bandykite dar kartą.',
     'error.code.100': 'Netinkami duomenys.',
     'error.code.200': 'Slaptažodžio pakeitimo užklausa jau yra išsiųsta.',
-    'error.code.201': 'Naudotojas su tokiu el. paštu jau egzistuoja.',
+    'error.code.201': 'Naudotojas su tokiu el. paštu arba slapyvardžiu jau egzistuoja.',
     'error.code.300': 'Sąrašas su tokiu pavadinimu jau yra sukurtas.',
-    'error.loginInvalid': 'Neteisingas el. paštas arba slaptažodis.',
+    'error.loginInvalid': 'Neteisingi prisijungimo duomenys.',
 }

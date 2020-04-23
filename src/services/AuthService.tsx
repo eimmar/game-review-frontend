@@ -4,7 +4,7 @@ import cookie from 'react-cookies'
 // eslint-disable-next-line import/no-cycle
 import { requestService } from './RequestService'
 // eslint-disable-next-line import/no-cycle
-import { User, UserUpdateRequest } from './UserService'
+import { User } from './UserService'
 import history from './History'
 import { routes } from '../parameters'
 
@@ -15,7 +15,7 @@ export interface LoggedInUser extends User {
 }
 
 export interface LogInRequest {
-    email: string
+    username: string
     password: string
     rememberMe: boolean
 }
@@ -24,17 +24,16 @@ interface LogInResponse {
     token?: string
 }
 
-export interface RegistrationRequest extends UserUpdateRequest {
+export interface RegistrationRequest {
     email: string
+    username: string
+    firstName: string
+    lastName: string | null
     password: string
 }
 
 export interface ForgotPasswordRequest {
     email: string
-}
-
-export interface ChangePasswordRequest extends ResetPasswordRequest {
-    currentPassword: string
 }
 
 export interface ResetPasswordRequest {
@@ -44,22 +43,20 @@ export interface ResetPasswordRequest {
 
 class AuthService {
     login(params: LogInRequest) {
-        return requestService
-            .performRequest('POST', '/api/auth/login', { ...params, username: params.email })
-            .then((response: LogInResponse) => {
-                if (response.token) {
-                    const currentUser = JwtDecode(response.token) as LoggedInUser
+        return requestService.performRequest('POST', '/api/auth/login', params).then((response: LogInResponse) => {
+            if (response.token) {
+                const currentUser = JwtDecode(response.token) as LoggedInUser
 
-                    currentUser.accessToken = response.token
+                currentUser.accessToken = response.token
 
-                    cookie.save('currentUser', currentUser.email, {})
-                    localStorage.clear()
-                    localStorage.setItem(currentUser.email, JSON.stringify(currentUser))
+                cookie.save('currentUser', currentUser.username, {})
+                localStorage.clear()
+                localStorage.setItem(currentUser.username, JSON.stringify(currentUser))
 
-                    return currentUser
-                }
-                throw new DOMException('Could not authenticate.')
-            })
+                return currentUser
+            }
+            throw new DOMException('Could not authenticate.')
+        })
     }
 
     register(params: RegistrationRequest): Promise<any> {
@@ -98,29 +95,8 @@ class AuthService {
         const currentUser = this.getCurrentUser()
 
         if (currentUser && currentUser.id === user.id) {
-            localStorage.setItem(
-                currentUser.email,
-                JSON.stringify({ ...currentUser, firstName: user.firstName, lastName: user.lastName }),
-            )
+            localStorage.setItem(currentUser.username, JSON.stringify({ ...currentUser, ...user }))
         }
-    }
-
-    hasRole(role: string) {
-        const currentUser = this.getCurrentUser()
-
-        return currentUser && currentUser.roles.includes(role)
-    }
-
-    isUser() {
-        return this.hasRole('ROLE_USER')
-    }
-
-    isAdmin() {
-        return this.hasRole('ROLE_ADMIN')
-    }
-
-    isSuperAdmin() {
-        return this.hasRole('ROLE_SUPER_ADMIN')
     }
 }
 

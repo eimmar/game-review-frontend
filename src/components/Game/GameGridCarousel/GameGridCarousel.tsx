@@ -38,10 +38,18 @@ class GameGridCarousel extends AbstractPaginator<Props, State> {
         wasActivated: false,
     }
 
+    mounted = false
+
     componentDidMount(): void {
+        this.mounted = true
+
         const { defaultActive } = this.props
 
         defaultActive && this.activate()
+    }
+
+    componentWillUnmount(): void {
+        this.mounted = false
     }
 
     get carouselConfig() {
@@ -91,7 +99,7 @@ class GameGridCarousel extends AbstractPaginator<Props, State> {
                     },
                 }))
             })
-            .finally(() => this.setState({ loading: false }))
+            .finally(() => this.mounted && this.setState({ loading: false }))
     }
 
     renderGame(game: Game, index: number) {

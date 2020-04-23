@@ -51,14 +51,12 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps<{}, {}, {
 class LoginForm extends Component<Props> {
     validationSchema = Yup.object().shape({
         password: Yup.string().required(t`errors.validation.required`),
-        email: Yup.string()
-            .required(t`errors.validation.required`)
-            .email(t`errors.validation.email`),
+        username: Yup.string().required(t`errors.validation.required`),
     })
 
     get initialValues(): LogInRequest {
         return {
-            email: '',
+            username: '',
             password: '',
             rememberMe: false,
         }
@@ -70,6 +68,7 @@ class LoginForm extends Component<Props> {
         authService
             .login(values)
             .then(() => {
+                toast.info(t`user.successLogIn`)
                 location.state && location.state.referer
                     ? history.push({ pathname: location.state.referer.url, state: location.state.referer.state })
                     : history.push({ pathname: routes.homePage })
@@ -102,13 +101,13 @@ class LoginForm extends Component<Props> {
                                         variant="outlined"
                                         required
                                         fullWidth
-                                        label={t`user.email`}
-                                        name="email"
-                                        value={values.email}
+                                        label={t`user.usernameOrEmail`}
+                                        name="username"
+                                        value={values.username}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        error={!!errors.email && !!touched.email}
-                                        helperText={errors.email && touched.email && errors.email}
+                                        error={!!errors.username && !!touched.username}
+                                        helperText={errors.username && touched.username && errors.username}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>

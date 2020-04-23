@@ -41,20 +41,20 @@ class RequestService {
                     // @ts-ignore
                     value = [...new Set(valAsArray)]
                 } else {
-                    value = value.replace(/\+/g, ' ')
+                    value = value ? value.replace(/\+/g, ' ') : value
                 }
 
                 return { ...obj, [key]: value }
             }, {}) as Filter[]
     }
 
-    getRequestOptions(method: string, body: BodyInit): RequestInit {
+    getRequestOptions(method: string, body: BodyInit, contentType: string | null): RequestInit {
         const currentUser = authService.getCurrentUser()
 
         const requestOptions: RequestInit = {
             method,
             headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
+                ...(contentType && { 'Content-Type': contentType }),
                 ...(currentUser && { Authorization: `Bearer ${currentUser.accessToken}` }),
             },
         }
@@ -86,9 +86,14 @@ class RequestService {
     }
 
     performRequest(method: 'POST' | 'GET' | 'DELETE', action: string, body?: object) {
-        return fetch(backendUrl + action, this.getRequestOptions(method, body ? JSON.stringify(body) : '')).then(
-            this.handleResponse,
-        )
+        return fetch(
+            backendUrl + action,
+            this.getRequestOptions(method, body ? JSON.stringify(body) : '', 'application/json;charset=UTF-8'),
+        ).then(this.handleResponse)
+    }
+
+    performMultiPartRequest(method: 'POST' | 'GET' | 'DELETE', action: string, body: BodyInit) {
+        return fetch(backendUrl + action, this.getRequestOptions(method, body, null)).then(this.handleResponse)
     }
 }
 

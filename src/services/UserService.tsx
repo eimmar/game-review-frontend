@@ -1,11 +1,16 @@
 // eslint-disable-next-line import/no-cycle
 import { PaginatedList, requestService } from './RequestService'
 // eslint-disable-next-line import/no-cycle
-import { ChangePasswordRequest } from './AuthService'
+import { ResetPasswordRequest } from './AuthService'
+import { backendUrl } from '../parameters'
 
-export interface User extends UserUpdateRequest {
+export interface User {
     id: string
     email: string
+    username: string
+    firstName: string
+    lastName: string | null
+    avatar: string | null
     roles: string[]
     createdAt: DateTimeObj
 }
@@ -13,6 +18,12 @@ export interface User extends UserUpdateRequest {
 export interface UserUpdateRequest {
     firstName: string
     lastName: string | null
+    avatarFile: File | null
+    removeAvatar: boolean
+}
+
+export interface ChangePasswordRequest extends ResetPasswordRequest {
+    currentPassword: string
 }
 
 export interface UserFilterRequest {
@@ -31,8 +42,8 @@ interface DateTimeObj {
 class UserService {
     baseUrl = '/api/user/'
 
-    get(id: string): Promise<User> {
-        return requestService.performRequest('GET', this.baseUrl + id)
+    get(username: string): Promise<User> {
+        return requestService.performRequest('GET', this.baseUrl + username)
     }
 
     getAll(search: string, pageSize: number): Promise<PaginatedList<User>> {
@@ -64,7 +75,13 @@ class UserService {
     }
 
     update(id: string, data: UserUpdateRequest): Promise<User> {
-        return requestService.performRequest('POST', `${this.baseUrl}edit/${id}`, data)
+        const formData = new FormData()
+
+        formData.append('user_edit[firstName]', data.firstName)
+        formData.append('user_edit[lastName]', data.lastName || '')
+        data.avatarFile && formData.append('user_edit[avatarFile][file]', data.avatarFile)
+
+        return requestService.performMultiPartRequest('POST', `${this.baseUrl}edit/${id}`, formData)
     }
 
     changePassword(userId: string, params: ChangePasswordRequest): Promise<any> {
@@ -80,6 +97,10 @@ class UserService {
 
     getInitials(user: User) {
         return (user.firstName.charAt(0) + (user.lastName?.charAt(0) || '')).toUpperCase()
+    }
+
+    getAvatarUrl(path: string) {
+        return `${backendUrl}/images/users/${path}`
     }
 
     getFullName(user: User) {

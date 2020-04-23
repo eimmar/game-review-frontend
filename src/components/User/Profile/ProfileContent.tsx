@@ -42,6 +42,7 @@ import ReviewList from '../ReviewList/ReviewList'
 import { User, userService } from '../../../services/UserService'
 import GameListUpdateForm from '../../GameList/GameListForm/GameListUpdateForm'
 import { routes } from '../../../parameters'
+import UserAvatar from './UserAvatar/UserAvatar'
 
 const styles = ({ spacing, palette }: Theme) =>
     createStyles({
@@ -392,31 +393,34 @@ class ProfileContent extends Component<Props, State> {
             <>
                 <CssBaseline />
                 <Container>
-                    <Grid container spacing={5} className={classes.mainGrid}>
+                    <Grid container spacing={1} className={classes.mainGrid}>
                         <Grid item lg={12} className="width-full">
-                            <Avatar className={sStyles.avatar}>
-                                <Typography variant="h3">{userService.getInitials(user)}</Typography>
-                            </Avatar>
+                            <UserAvatar user={user} />
                             <Typography variant="h5" align="center">
+                                {user.username}
+                            </Typography>
+                            <Typography variant="subtitle1" align="center">
                                 {userService.getFullName(user)}
                             </Typography>
                         </Grid>
 
-                        <Grid item lg={12} className="width-full">
-                            <Typography align="center">
-                                <Chip
-                                    component="span"
-                                    size="medium"
-                                    avatar={
-                                        <Avatar component="span">
-                                            <AlternateEmailIcon />
-                                        </Avatar>
-                                    }
-                                    label={user.email}
-                                    color="primary"
-                                />
-                            </Typography>
-                        </Grid>
+                        {this.isCurrentUser && (
+                            <Grid item lg={12} className="width-full">
+                                <Typography align="center">
+                                    <Chip
+                                        component="span"
+                                        size="medium"
+                                        avatar={
+                                            <Avatar component="span">
+                                                <AlternateEmailIcon />
+                                            </Avatar>
+                                        }
+                                        label={user.email}
+                                        color="primary"
+                                    />
+                                </Typography>
+                            </Grid>
+                        )}
 
                         <Grid item lg={12} className="width-full">
                             <Typography align="center">

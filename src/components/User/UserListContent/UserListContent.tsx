@@ -3,21 +3,10 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
-import {
-    Container,
-    ListItem,
-    ListItemAvatar,
-    ListItemText,
-    List,
-    Divider,
-    Button,
-    Chip,
-    Avatar,
-} from '@material-ui/core'
+import { Container, ListItem, ListItemAvatar, ListItemText, List, Divider, Button } from '@material-ui/core'
 import { Pagination as PaginationComponent } from '@material-ui/lab'
 import Moment from 'react-moment'
 import i18next from 'i18next'
-import AlternateEmailIcon from '@material-ui/icons/AlternateEmail'
 
 import { t } from '../../../i18n'
 import { routes } from '../../../parameters'
@@ -26,7 +15,7 @@ import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/Abst
 import Centered from '../../Global/Centered/Centered'
 import { Pagination } from '../../../services/RequestService'
 import { User, userService } from '../../../services/UserService'
-import sStyles from '../Profile/ProfileContent.module.scss'
+import UserAvatar from '../Profile/UserAvatar/UserAvatar'
 
 const styles = ({ palette, spacing, breakpoints }: Theme) =>
     createStyles({
@@ -166,50 +155,29 @@ class UserListContent extends AbstractPaginator<Props, State> {
                                     <div key={user.id}>
                                         <ListItem alignItems="flex-start" className={classes.listItem}>
                                             <ListItemAvatar className={classes.listAvatar}>
-                                                <Link to={`${routes.user.view}/${user.id}`}>
-                                                    <Avatar className={sStyles.avatar}>
-                                                        <Typography variant="h3">
-                                                            {userService.getInitials(user)}
-                                                        </Typography>
-                                                    </Avatar>
+                                                <Link to={`${routes.user.view}/${user.username}`}>
+                                                    <UserAvatar user={user} />
                                                 </Link>
                                             </ListItemAvatar>
                                             <ListItemText
                                                 primary={
-                                                    <Link to={`${routes.user.view}/${user.id}`}>
+                                                    <Link to={`${routes.user.view}/${user.username}`}>
                                                         <Typography gutterBottom variant="subtitle1" component="h2">
-                                                            <b>{userService.getFullName(user)}</b>
+                                                            <b>{user.username}</b>
                                                         </Typography>
                                                     </Link>
                                                 }
                                                 secondary={
-                                                    <>
-                                                        <Typography
-                                                            component="span"
-                                                            variant="subtitle2"
-                                                            color="textPrimary"
-                                                        >
-                                                            {t`user.memberSince`}{' '}
-                                                            <Moment
-                                                                locale={i18next.language}
-                                                                format="hh:mm, MMMM Do, YYYY"
-                                                            >
-                                                                {user.createdAt.date}
-                                                            </Moment>
-                                                        </Typography>
-                                                        <br />
-                                                        <Chip
-                                                            component="span"
-                                                            size="medium"
-                                                            avatar={
-                                                                <Avatar component="span">
-                                                                    <AlternateEmailIcon />
-                                                                </Avatar>
-                                                            }
-                                                            label={user.email}
-                                                            color="primary"
-                                                        />
-                                                    </>
+                                                    <Typography
+                                                        component="span"
+                                                        variant="subtitle2"
+                                                        color="textPrimary"
+                                                    >
+                                                        {t`user.memberSince`}{' '}
+                                                        <Moment locale={i18next.language} format="hh:mm, MMMM Do, YYYY">
+                                                            {user.createdAt.date}
+                                                        </Moment>
+                                                    </Typography>
                                                 }
                                             />
                                         </ListItem>

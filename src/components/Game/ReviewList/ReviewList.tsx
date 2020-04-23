@@ -98,7 +98,7 @@ class ReviewList extends AbstractPaginator<Props, State> {
                         {review.createdAt}
                     </Moment>{' '}
                     {t`common.reviewBy`}{' '}
-                    <Link to={`${routes.user.view}/${review.user.id}`} component={RouterLink}>
+                    <Link to={`${routes.user.view}/${review.user.username}`} component={RouterLink}>
                         {review.user.firstName} {review.user.lastName}
                     </Link>
                 </Typography>

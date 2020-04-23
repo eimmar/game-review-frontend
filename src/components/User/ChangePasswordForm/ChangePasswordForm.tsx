@@ -12,9 +12,8 @@ import { Form, Formik, FormikHelpers } from 'formik'
 import { toast } from 'react-toastify'
 
 import { t } from '../../../i18n'
-import { ChangePasswordRequest } from '../../../services/AuthService'
 import { routes } from '../../../parameters'
-import { userService } from '../../../services/UserService'
+import { userService, ChangePasswordRequest } from '../../../services/UserService'
 
 const styles = ({ palette, spacing }: Theme) =>
     createStyles({

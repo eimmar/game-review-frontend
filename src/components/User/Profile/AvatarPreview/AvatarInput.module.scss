@@ -1,0 +1,11 @@
+@import "src/scss/variables";
+
+.medium {
+    width: 80px !important;
+    height: 80px !important;
+}
+
+.remove {
+    color: $color-danger !important;
+    border-color: $color-danger !important;
+}

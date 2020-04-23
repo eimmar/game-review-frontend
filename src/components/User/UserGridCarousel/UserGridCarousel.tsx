@@ -1,6 +1,6 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
-import { Box, CircularProgress, Button, Divider, Grid, CardMedia, ListItemAvatar, Avatar } from '@material-ui/core'
+import { Box, CircularProgress, Button, Divider, Grid, CardMedia, ListItemAvatar } from '@material-ui/core'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import { Link } from 'react-router-dom'
@@ -13,6 +13,7 @@ import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/Abst
 import { routes } from '../../../parameters'
 import styles from './UserGridCarousel.module.scss'
 import { User, UserFilterRequest, userService } from '../../../services/UserService'
+import UserAvatar from '../Profile/UserAvatar/UserAvatar'
 
 interface Props {
     defaultActive?: boolean
@@ -98,12 +99,10 @@ class UserGridCarousel extends AbstractPaginator<Props, State> {
         return (
             <Grid item key={index}>
                 <div className={styles.card}>
-                    <Link to={`${routes.user.view}/${user.id}`}>
+                    <Link to={`${routes.user.view}/${user.username}`}>
                         <CardMedia>
                             <ListItemAvatar>
-                                <Avatar className={styles.avatar}>
-                                    <Typography variant="h3">{userService.getInitials(user)}</Typography>
-                                </Avatar>
+                                <UserAvatar user={user} />
                             </ListItemAvatar>
                         </CardMedia>
                         <div className={styles.cardContent}>

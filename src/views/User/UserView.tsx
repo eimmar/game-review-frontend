@@ -9,14 +9,14 @@ import NotFound404 from '../Error/NotFound404'
 import { t } from '../../i18n'
 
 export default function UserView() {
-    const { guid } = useParams()
+    const { username } = useParams()
     const [loading, setLoading] = useState(true)
     const [user, setUser] = useState(null as User | null)
 
     useEffect(() => {
-        if (guid) {
+        if (username) {
             userService
-                .get(guid)
+                .get(username)
                 .then((response) => setUser(response))
                 .finally(() => setLoading(false))
         } else {
@@ -32,7 +32,7 @@ export default function UserView() {
         )
     }
 
-    if (!guid || !user) {
+    if (!username || !user) {
         return <NotFound404 />
     }
     document.title = `${userService.getFullName(user)} - ${t`common.websiteName`}`

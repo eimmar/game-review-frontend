@@ -65,7 +65,7 @@ function App() {
                         <PrivateRoute exact path={`${routes.user.profile}`} component={Profile} />
                         <PrivateRoute exact path={`${routes.user.profileEdit}`} component={ProfileEdit} />
                         <PrivateRoute exact path={`${routes.user.changePassword}`} component={ChangePassword} />
-                        <PublicRoute exact path={`${routes.user.view}/:guid`} component={UserView} />
+                        <PublicRoute exact path={`${routes.user.view}/:username`} component={UserView} />
                         <PublicRoute exact path={routes.user.list} component={UserList} />
 
                         <PublicRoute component={NotFound404} />
