@@ -52,11 +52,11 @@ export const ltTranslations = {
     'user.passwordResetSuccess': 'Slaptažodis pakeistas sėkmingai! Galite prisijungti.',
     'user.passwordUpdateSuccess': 'Slaptažodis pakeistas sėkmingai!',
     'user.memberSince': 'Narys nuo',
-    'user.gameLists': 'Žaidimai',
+    'user.gameLists': 'Žaidimų sąrašai',
     'user.favorites': 'Mėgstamiausi',
     'user.wishList': 'Norimi',
     'user.playing': 'Žaidžiami',
-    'user.reviews': 'Paskutiniai žaidimų atsiliepimai',
+    'user.reviews': 'Atsiliepimai',
     'user.listHeader': 'Bendruomenė',
 
     'game.listHeader': 'Žaidimų paieška',

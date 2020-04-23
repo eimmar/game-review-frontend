@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
-import { Avatar, Container, CssBaseline, Grid, Typography } from '@material-ui/core'
+import { Avatar, Button, Container, CssBaseline, DialogActions, Grid, Typography } from '@material-ui/core'
 import Moment from 'react-moment'
 import i18next from 'i18next'
 import FavoriteIcon from '@material-ui/icons/Favorite'
@@ -8,14 +8,23 @@ import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
 import GamesIcon from '@material-ui/icons/Games'
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports'
 import { Link } from 'react-router-dom'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import { toast } from 'react-toastify'
+import DeleteIcon from '@material-ui/icons/Delete'
+import EditIcon from '@material-ui/icons/Edit'
 
 import { t } from '../../../i18n'
 import GameListContent from '../../Game/GameListContent/GameListContent'
-import { GameList, GameListType, WithUser } from '../../../services/GameListService'
+import { GameList, gameListService, GameListType, WithUser } from '../../../services/GameListService'
 import { gameService } from '../../../services/GameService'
 import sStyles from './GameListViewContent.module.scss'
 import { routes } from '../../../parameters'
 import { userService } from '../../../services/UserService'
+import GameListUpdateForm from '../GameListForm/GameListUpdateForm'
+import { authService } from '../../../services/AuthService'
+import history from '../../../services/History'
 
 const styles = ({ spacing, palette }: Theme) =>
     createStyles({
@@ -52,7 +61,23 @@ interface Props extends WithStyles<typeof styles> {
     }
 }
 
-class GameListViewContent extends Component<Props> {
+interface State {
+    gameList: GameList<WithUser>
+    deleteOpen: boolean
+    editOpen: boolean
+}
+
+class GameListViewContent extends Component<Props, State> {
+    constructor(props: Props) {
+        super(props)
+
+        this.state = {
+            deleteOpen: false,
+            editOpen: false,
+            gameList: props.gameList,
+        }
+    }
+
     get listIcon() {
         const { gameList } = this.props
 
@@ -72,7 +97,7 @@ class GameListViewContent extends Component<Props> {
     }
 
     get listTitle() {
-        const { gameList } = this.props
+        const { gameList } = this.state
 
         if (gameList.type === GameListType.Favorites) {
             return t`user.favorites`
@@ -89,8 +114,100 @@ class GameListViewContent extends Component<Props> {
         return gameList.name
     }
 
+    get gameListEditFormModal() {
+        const { editOpen, gameList } = this.state
+
+        return (
+            <Dialog
+                open={editOpen}
+                onClose={this.handleEditModalToggle}
+                scroll="body"
+                classes={{ paper: 'width-full' }}
+            >
+                <DialogTitle>
+                    <Typography variant="h5" component="p">{t`common.edit`}</Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <GameListUpdateForm
+                        initialValues={gameList}
+                        onSuccess={this.handleGameListUpdate}
+                        onClose={this.handleEditModalToggle}
+                    />
+                </DialogContent>
+            </Dialog>
+        )
+    }
+
+    get gameListDeleteModal() {
+        const { deleteOpen } = this.state
+
+        return (
+            <Dialog open={deleteOpen} onClose={this.handleDeleteModalToggle} scroll="body">
+                <DialogTitle>
+                    <Typography variant="h5" component="p">{t`gameList.confirmDelete`}</Typography>
+                </DialogTitle>
+                <DialogActions>
+                    <Button type="submit" variant="contained" color="secondary" onClick={this.handleGameListDelete}>
+                        {t`common.delete`}
+                    </Button>
+                    <Button onClick={this.handleDeleteModalToggle} color="primary" variant="outlined">
+                        {t`common.cancel`}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        )
+    }
+
+    get renderGameListEditButton() {
+        return (
+            <Button
+                className="m-r-8"
+                onClick={this.handleEditModalToggle}
+                variant="contained"
+                color="primary"
+                startIcon={<EditIcon />}
+            >
+                {t`common.edit`}
+            </Button>
+        )
+    }
+
+    get renderGameListDeleteButton() {
+        return (
+            <Button
+                onClick={this.handleDeleteModalToggle}
+                variant="contained"
+                color="secondary"
+                startIcon={<DeleteIcon />}
+            >
+                {t`common.delete`}
+            </Button>
+        )
+    }
+
+    handleEditModalToggle = () => this.setState((prevState) => ({ editOpen: !prevState.editOpen }))
+
+    handleDeleteModalToggle = () => this.setState((prevState) => ({ deleteOpen: !prevState.deleteOpen }))
+
+    handleGameListDelete = () => {
+        const { gameList } = this.state
+
+        gameListService
+            .delete(gameList.id)
+            .then(() => {
+                toast.success(t`gameList.deleteSuccess`)
+                history.push(routes.user.profile)
+            })
+            .catch(() => toast.error(t`gameList.deleteError`))
+    }
+
+    handleGameListUpdate = (gameList: GameList<WithUser>) => {
+        this.setState({ gameList })
+    }
+
     render() {
-        const { classes, gameList } = this.props
+        const { classes } = this.props
+        const { gameList } = this.state
 
         return (
             <>
@@ -103,6 +220,13 @@ class GameListViewContent extends Component<Props> {
                                 {this.listTitle}
                             </Typography>
                         </Grid>
+
+                        {authService.isCurrentUser(gameList.user) && (
+                            <Grid item>
+                                {this.renderGameListEditButton}
+                                {this.renderGameListDeleteButton}
+                            </Grid>
+                        )}
 
                         <Grid item lg={12} className="width-full">
                             <Typography align="center">
@@ -120,6 +244,11 @@ class GameListViewContent extends Component<Props> {
                         <Grid item lg={12} className="width-full">
                             <GameListContent
                                 infiniteScroll
+                                deleteFunction={
+                                    authService.isCurrentUser(gameList.user)
+                                        ? (game) => gameListService.removeFromList(game.id, gameList.id)
+                                        : undefined
+                                }
                                 dataFunction={(_, pagination) =>
                                     gameService.getAllForList(gameList.id, pagination.page, pagination.pageSize)
                                 }
@@ -127,6 +256,8 @@ class GameListViewContent extends Component<Props> {
                         </Grid>
                     </Grid>
                 </Container>
+                {this.gameListDeleteModal}
+                {this.gameListEditFormModal}
             </>
         )
     }

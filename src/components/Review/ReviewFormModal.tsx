@@ -217,7 +217,7 @@ class ReviewFormModal extends Component<Props, State> {
                 {this.button}
                 <Dialog open={open} onClose={this.handleModalToggle} scroll="body">
                     <DialogTitle>
-                        <Typography variant="h5">{t`gameReview.create`}</Typography>
+                        <Typography variant="h5" component="p">{t`gameReview.create`}</Typography>
                     </DialogTitle>
                     <Formik<GameReviewRequest>
                         initialValues={this.initialValues}

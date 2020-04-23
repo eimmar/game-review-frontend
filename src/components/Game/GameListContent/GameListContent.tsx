@@ -152,13 +152,10 @@ class GameListContent extends AbstractPaginator<Props, State> {
     }
 
     removeGameFromState = (game: Game) => {
-        const { games, pagination } = this.state
+        const { games } = this.state
 
         this.setState({ games: games.filter((it) => it.id !== game.id) }, () => {
             toast.success(t`game.successRemove`)
-            if (games.length === 1) {
-                this.fetchData(pagination)
-            }
         })
     }
 

@@ -14,19 +14,22 @@ import {
     gameListService,
     GameListType,
     GameListUpdateRequest,
+    WithUser,
 } from '../../../services/GameListService'
 import { t } from '../../../i18n'
 
 interface Props extends RouteComponentProps {
     initialValues: GameList
-    onSuccess: (list: GameList) => void
+    onSuccess: (list: GameList<WithUser>) => void
     onClose: () => void
 }
 
 class GameListUpdateForm extends Component<Props> {
     validationSchema = Yup.object().shape({
         privacyType: Yup.string().required(t`errors.validation.required`),
-        name: Yup.string().required(t`errors.validation.required`),
+        name: Yup.string()
+            .required(t`errors.validation.required`)
+            .max(100, t('error.validation.tooLong', { number: 100 })),
     })
 
     mounted = false

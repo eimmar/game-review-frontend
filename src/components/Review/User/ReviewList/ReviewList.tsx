@@ -94,7 +94,7 @@ class ReviewList extends AbstractPaginator<Props, State> {
         return (
             <Dialog open={!!reviewToDelete} onClose={() => this.setReviewToDelete(null)} scroll="body">
                 <DialogTitle>
-                    <Typography variant="h5">{t`gameReview.confirmDelete`}</Typography>
+                    <Typography variant="h5" component="p">{t`gameReview.confirmDelete`}</Typography>
                 </DialogTitle>
                 <DialogActions>
                     <Button type="submit" variant="contained" color="secondary" onClick={this.handleDelete}>

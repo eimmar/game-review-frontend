@@ -25,7 +25,9 @@ class GameListForm extends Component<Props> {
         games: Yup.string()
             .required(t`errors.validation.required`)
             .min(1, t`errors.validation.required`),
-        name: Yup.string().required(t`errors.validation.required`),
+        name: Yup.string()
+            .required(t`errors.validation.required`)
+            .max(100, t('error.validation.tooLong', { number: 100 })),
     })
 
     mounted = false
@@ -81,6 +83,7 @@ class GameListForm extends Component<Props> {
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
+                                    size="small"
                                     name="name"
                                     variant="outlined"
                                     required

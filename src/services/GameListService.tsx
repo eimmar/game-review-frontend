@@ -53,7 +53,7 @@ class GameListService {
         return requestService.performRequest('POST', `${this.baseUrl}new`, data)
     }
 
-    update(id: string, data: GameListUpdateRequest): Promise<GameList> {
+    update(id: string, data: GameListUpdateRequest): Promise<GameList<WithUser>> {
         return requestService.performRequest('POST', `${this.baseUrl}edit/${id}`, data)
     }
 

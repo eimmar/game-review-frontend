@@ -201,14 +201,15 @@ class GameListTab extends Component<Props, State> {
                     scroll="body"
                 >
                     <DialogTitle>
-                        <Typography variant="h5">{t`gameList.customLists`}</Typography>
+                        <Typography variant="h5" component="p">{t`gameList.customLists`}</Typography>
                     </DialogTitle>
                     <DialogContent className={styles.dialog}>
-                        <List>
+                        <List style={{ maxHeight: 300 }} dense>
                             {lists.map((list) => (
                                 <ListItem button key={list.id} onClick={() => this.toggleGameInList(list)}>
                                     <ListItemIcon>
                                         <Checkbox
+                                            size="small"
                                             color="primary"
                                             edge="start"
                                             checked={this.gameInList(list.id)}
@@ -219,31 +220,28 @@ class GameListTab extends Component<Props, State> {
                                     <ListItemText primary={list.name} />
                                 </ListItem>
                             ))}
-
-                            {!formOpen && (
-                                <ListItem button onClick={this.handleFormToggle}>
-                                    <ListItemIcon>
-                                        <AddIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary={t`gameList.new`} />
-                                </ListItem>
-                            )}
-
-                            {formOpen && (
-                                <ListItem>
-                                    <GameListCreateForm
-                                        gameId={gameId}
-                                        onSuccess={this.handleListCreateSuccess}
-                                        onClose={this.handleFormToggle}
-                                    />
-                                </ListItem>
-                            )}
                         </List>
                     </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleModalToggle} color="secondary" variant="contained">
-                            {t`common.close`}
-                        </Button>
+                    {formOpen && (
+                        <DialogContent className={styles.dialog}>
+                            <GameListCreateForm
+                                gameId={gameId}
+                                onSuccess={this.handleListCreateSuccess}
+                                onClose={this.handleFormToggle}
+                            />
+                        </DialogContent>
+                    )}
+                    <DialogActions style={{ justifyContent: 'space-between' }}>
+                        {!formOpen && (
+                            <>
+                                <Button startIcon={<AddIcon />} onClick={this.handleFormToggle} variant="outlined">
+                                    {t`gameList.new`}
+                                </Button>
+                                <Button onClick={this.handleModalToggle} color="secondary" variant="contained">
+                                    {t`common.close`}
+                                </Button>
+                            </>
+                        )}
                     </DialogActions>
                 </Dialog>
             </>
