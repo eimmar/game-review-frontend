@@ -38,7 +38,7 @@ import GameListContent from '../../Game/GameListContent/GameListContent'
 import { GameList, gameListService, GameListType } from '../../../services/GameListService'
 import { gameService } from '../../../services/GameService'
 import Centered from '../../Global/Centered/Centered'
-import ReviewList from '../ReviewList/ReviewList'
+import ReviewList from '../../Review/User/ReviewList/ReviewList'
 import { User, userService } from '../../../services/UserService'
 import GameListUpdateForm from '../../GameList/GameListForm/GameListUpdateForm'
 import { routes } from '../../../parameters'
@@ -222,7 +222,7 @@ class ProfileContent extends Component<Props, State> {
     get isCurrentUser() {
         const { user } = this.props
 
-        return authService.getCurrentUser()?.id === user.id
+        return authService.isCurrentUser(user)
     }
 
     get gameListEditFormModal() {

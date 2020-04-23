@@ -117,10 +117,11 @@ export const ltTranslations = {
     'gameList.private': 'Privatus',
     'gameList.noResults': 'Sąrašas tuščias.',
     'gameList.confirmDelete': 'Ar tikrai norite ištrinti šį sąrašą?',
-    'gameList.deleteSuccess': 'Sąrašas ištrintas sėkmingai',
+    'gameList.deleteSuccess': 'Sąrašas ištrintas.',
     'gameList.deleteError': 'Klaida! Sąrašo negalima išstrinti.',
 
     'gameReview.successCreate': 'Atsiliepimas pateiktas peržiūrai.',
+    'gameReview.successUpdate': 'Atsiliepimas atnaujintas.',
     'gameReview.rating': 'Įvertinimas',
     'gameReview.comment': 'Atsiliepimas',
     'gameReview.title': 'Antraštė',
@@ -130,10 +131,14 @@ export const ltTranslations = {
     'gameReview.con': 'Trūkumas',
     'gameReview.create': 'Naujas atsiliepimas',
     'gameReview.noItems': 'Atsiliepimų nėra.',
+    'gameReview.confirmDelete': 'Ar tikrai norite ištrinti šį atsiliepimą?',
+    'gameReview.deleteSuccess': 'Atsiliepimas ištrintas.',
+    'gameReview.deleteError': 'Klaida! Atsiliepimo negalima išstrinti.',
 
     'review.rating': 'Įvertinimas',
     'review.good': 'Žaidimo privalumai',
     'review.bad': 'Žaidimo trūkumai',
+    'review.waitingForApproval': 'Laukiama patvirtinimo',
 
     'gameDeal.more': 'Daugiau pasiūlymų',
     'gameDeal.getDeals': 'Gauti pasiūlimus',

@@ -98,6 +98,10 @@ class AuthService {
             localStorage.setItem(currentUser.username, JSON.stringify({ ...currentUser, ...user }))
         }
     }
+
+    isCurrentUser(user: User) {
+        return authService.getCurrentUser()?.id === user.id
+    }
 }
 
 export const authService = new AuthService()

@@ -1,0 +1,17 @@
+@import '../../../../scss/variables';
+
+.inline {
+    display: inline;
+}
+
+.thumbUp {
+    fill: $color-success !important;
+}
+
+.delete {
+    background-color: $color-danger !important;
+}
+
+.edit {
+    background-color: $color-primary !important;
+}

@@ -14,6 +14,7 @@ import {
     Avatar,
     Link,
 } from '@material-ui/core'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import ClearIcon from '@material-ui/icons/Clear'
 import Rating from '@material-ui/lab/Rating'
 import ShowMore from 'react-show-more'
@@ -23,16 +24,16 @@ import ThumbDownIcon from '@material-ui/icons/ThumbDown'
 import Moment from 'react-moment'
 import i18next from 'i18next'
 
-import { Pagination } from '../../../services/RequestService'
-import { GameReview, reviewService } from '../../../services/GameReviewService'
-import { t } from '../../../i18n'
+import { Pagination } from '../../../../services/RequestService'
+import { GameReview, reviewService } from '../../../../services/GameReviewService'
+import ReviewFormModal from '../../ReviewFormModal'
+import { t } from '../../../../i18n'
 import styles from './ReviewList.module.scss'
-import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
-import { placeholderImg } from '../../../services/Util/AssetsProvider'
-import { routes } from '../../../parameters'
+import { AbstractPaginator, AbstractPaginatorState } from '../../../Pagination/AbstractPaginator'
+import { routes } from '../../../../parameters'
 
 interface Props extends RouteComponentProps {
-    userId: string
+    gameId: string
 }
 
 interface State extends AbstractPaginatorState {
@@ -59,10 +60,10 @@ class ReviewList extends AbstractPaginator<Props, State> {
     fetchData = (pagination: Pagination) => {
         this.setState({ loading: true })
 
-        const { userId } = this.props
+        const { gameId } = this.props
 
         reviewService
-            .getAllForUser(userId, pagination)
+            .getAllForGame(gameId, pagination)
             .then((response) => {
                 this.setState((prevState) => ({
                     reviews: prevState.reviews.concat(response.items),
@@ -95,7 +96,11 @@ class ReviewList extends AbstractPaginator<Props, State> {
                 <Typography variant="caption" paragraph gutterBottom>
                     <Moment locale={i18next.language} format="hh:mm, MMMM Do, YYYY">
                         {review.createdAt}
-                    </Moment>
+                    </Moment>{' '}
+                    {t`common.reviewBy`}{' '}
+                    <Link to={`${routes.user.view}/${review.user.username}`} component={RouterLink}>
+                        {review.user.firstName} {review.user.lastName}
+                    </Link>
                 </Typography>
 
                 {review.rating && this.renderRatingIndicator(review.rating)}
@@ -103,16 +108,12 @@ class ReviewList extends AbstractPaginator<Props, State> {
                 <List>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
-                            <Link href={`${routes.game.view}/${review.game.slug}`}>
-                                <Avatar alt={review.title} src={review.game.coverImage || placeholderImg} />
-                            </Link>
+                            <Avatar alt={review.title} className={styles.avatar}>
+                                <AccountCircleIcon />
+                            </Avatar>
                         </ListItemAvatar>
                         <ListItemText
-                            primary={
-                                <Link to={`${routes.game.view}/${review.game.slug}`} component={RouterLink}>
-                                    {review.game.name}
-                                </Link>
-                            }
+                            classes={{ secondary: styles.reviewContent }}
                             secondary={
                                 <Box mt={1} component="span">
                                     <ShowMore
@@ -200,6 +201,7 @@ class ReviewList extends AbstractPaginator<Props, State> {
     }
 
     render() {
+        const { gameId } = this.props
         const { loading, reviews } = this.state
 
         return (
@@ -218,6 +220,7 @@ class ReviewList extends AbstractPaginator<Props, State> {
                         )}
                     </List>
                 </Box>
+                <ReviewFormModal gameId={gameId} />
             </>
         )
     }

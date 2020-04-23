@@ -1,7 +1,7 @@
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
 import { RouteComponentProps, withRouter, Link as RouterLink } from 'react-router-dom'
 import {
+    Typography,
     Divider,
     Box,
     List,
@@ -13,8 +13,9 @@ import {
     ListItemIcon,
     Avatar,
     Link,
+    Chip,
+    DialogActions,
 } from '@material-ui/core'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import ClearIcon from '@material-ui/icons/Clear'
 import Rating from '@material-ui/lab/Rating'
 import ShowMore from 'react-show-more'
@@ -23,26 +24,36 @@ import CheckIcon from '@material-ui/icons/Check'
 import ThumbDownIcon from '@material-ui/icons/ThumbDown'
 import Moment from 'react-moment'
 import i18next from 'i18next'
+import AccessTimeIcon from '@material-ui/icons/AccessTime'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import { toast } from 'react-toastify'
 
-import { Pagination } from '../../../services/RequestService'
-import { GameReview, reviewService } from '../../../services/GameReviewService'
-import ReviewFormModal from '../Review/ReviewFormModal'
-import { t } from '../../../i18n'
+import { Pagination } from '../../../../services/RequestService'
+import { GameReview, reviewService } from '../../../../services/GameReviewService'
+import { t } from '../../../../i18n'
 import styles from './ReviewList.module.scss'
-import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
-import { routes } from '../../../parameters'
+import { AbstractPaginator, AbstractPaginatorState } from '../../../Pagination/AbstractPaginator'
+import { placeholderImg } from '../../../../services/Util/AssetsProvider'
+import { routes } from '../../../../parameters'
+import { authService } from '../../../../services/AuthService'
+import ReviewFormModal from '../../ReviewFormModal'
 
 interface Props extends RouteComponentProps {
-    gameId: string
+    userId: string
 }
 
 interface State extends AbstractPaginatorState {
     reviews: GameReview[]
+    reviewToDelete: GameReview | null
 }
 
 class ReviewList extends AbstractPaginator<Props, State> {
     state: State = {
         reviews: [],
+        reviewToDelete: null,
         pagination: {
             page: 1,
             totalResults: 0,
@@ -60,10 +71,10 @@ class ReviewList extends AbstractPaginator<Props, State> {
     fetchData = (pagination: Pagination) => {
         this.setState({ loading: true })
 
-        const { gameId } = this.props
+        const { userId } = this.props
 
         reviewService
-            .getAllForGame(gameId, pagination)
+            .getAllForUser(userId, pagination)
             .then((response) => {
                 this.setState((prevState) => ({
                     reviews: prevState.reviews.concat(response.items),
@@ -75,6 +86,57 @@ class ReviewList extends AbstractPaginator<Props, State> {
                 }))
             })
             .finally(() => this.setState({ loading: false }))
+    }
+
+    get reviewDeleteModal() {
+        const { reviewToDelete } = this.state
+
+        return (
+            <Dialog open={!!reviewToDelete} onClose={() => this.setReviewToDelete(null)} scroll="body">
+                <DialogTitle>
+                    <Typography variant="h5">{t`gameReview.confirmDelete`}</Typography>
+                </DialogTitle>
+                <DialogActions>
+                    <Button type="submit" variant="contained" color="secondary" onClick={this.handleDelete}>
+                        {t`common.delete`}
+                    </Button>
+                    <Button onClick={() => this.setReviewToDelete(null)} color="primary" variant="outlined">
+                        {t`common.cancel`}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        )
+    }
+
+    setReviewToDelete = (reviewToDelete: GameReview | null) => this.setState({ reviewToDelete })
+
+    handleUpdate = (review: GameReview) => {
+        const { reviews } = this.state
+        const idx = reviews.findIndex((it) => it.id === review.id)
+
+        if (idx) {
+            const newReviews = [...reviews]
+
+            newReviews[idx] = review
+
+            this.setState({ reviews: newReviews })
+        }
+    }
+
+    handleDelete = () => {
+        const { reviewToDelete } = this.state
+
+        reviewToDelete &&
+            reviewService
+                .delete(reviewToDelete.id)
+                .then(() => {
+                    toast.success(t`gameReview.deleteSuccess`)
+                    this.setState((prevState) => ({
+                        reviews: prevState.reviews.filter((it) => it.id !== reviewToDelete.id),
+                        reviewToDelete: null,
+                    }))
+                })
+                .catch(() => toast.error(t`gameReview.deleteError`))
     }
 
     renderRatingIndicator = (rating: number) => {
@@ -92,15 +154,41 @@ class ReviewList extends AbstractPaginator<Props, State> {
                 <Typography variant="h6" gutterBottom>
                     {review.title}
                 </Typography>
+                {!review.approved && (
+                    <Chip className="m-r-8 m-t-8" icon={<AccessTimeIcon />} label={t`review.waitingForApproval`} />
+                )}
+                {authService.isCurrentUser(review.user) && (
+                    <>
+                        <ReviewFormModal
+                            onSuccess={this.handleUpdate}
+                            gameId={review.game.id}
+                            initialValues={review}
+                            button={(onClick) => (
+                                <Chip
+                                    className="m-r-8 m-t-8"
+                                    onClick={onClick}
+                                    clickable
+                                    color="primary"
+                                    icon={<EditIcon />}
+                                    label={t`common.edit`}
+                                />
+                            )}
+                        />
+                        <Chip
+                            className="m-t-8"
+                            onClick={() => this.setReviewToDelete(review)}
+                            clickable
+                            color="secondary"
+                            icon={<DeleteIcon />}
+                            label={t`common.delete`}
+                        />
+                    </>
+                )}
 
                 <Typography variant="caption" paragraph gutterBottom>
                     <Moment locale={i18next.language} format="hh:mm, MMMM Do, YYYY">
                         {review.createdAt}
-                    </Moment>{' '}
-                    {t`common.reviewBy`}{' '}
-                    <Link to={`${routes.user.view}/${review.user.username}`} component={RouterLink}>
-                        {review.user.firstName} {review.user.lastName}
-                    </Link>
+                    </Moment>
                 </Typography>
 
                 {review.rating && this.renderRatingIndicator(review.rating)}
@@ -108,12 +196,16 @@ class ReviewList extends AbstractPaginator<Props, State> {
                 <List>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
-                            <Avatar alt={review.title} className={styles.avatar}>
-                                <AccountCircleIcon />
-                            </Avatar>
+                            <Link href={`${routes.game.view}/${review.game.slug}`}>
+                                <Avatar alt={review.title} src={review.game.coverImage || placeholderImg} />
+                            </Link>
                         </ListItemAvatar>
                         <ListItemText
-                            classes={{ secondary: styles.reviewContent }}
+                            primary={
+                                <Link to={`${routes.game.view}/${review.game.slug}`} component={RouterLink}>
+                                    {review.game.name}
+                                </Link>
+                            }
                             secondary={
                                 <Box mt={1} component="span">
                                     <ShowMore
@@ -201,7 +293,6 @@ class ReviewList extends AbstractPaginator<Props, State> {
     }
 
     render() {
-        const { gameId } = this.props
         const { loading, reviews } = this.state
 
         return (
@@ -219,8 +310,8 @@ class ReviewList extends AbstractPaginator<Props, State> {
                             >{t`common.more`}</Button>
                         )}
                     </List>
+                    {this.reviewDeleteModal}
                 </Box>
-                <ReviewFormModal gameId={gameId} />
             </>
         )
     }
