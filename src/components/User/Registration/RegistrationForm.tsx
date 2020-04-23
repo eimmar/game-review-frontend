@@ -50,7 +50,8 @@ class RegistrationForm extends Component<Props> {
     validationSchema = Yup.object().shape({
         username: Yup.string()
             .required(t`errors.validation.required`)
-            .min(4, t('error.validation.tooShort', { number: 4 })),
+            .min(4, t('error.validation.tooShort', { number: 4 }))
+            .test('username', t`error.validation.specialCharsDetected`, (val) => val.match(/^[a-zA-Z0-9_]+$/)),
         email: Yup.string()
             .required(t`errors.validation.required`)
             .email(t`errors.validation.email`),
