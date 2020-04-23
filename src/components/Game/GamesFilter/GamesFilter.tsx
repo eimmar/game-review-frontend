@@ -152,23 +152,41 @@ class GamesFilter extends Component<Props, State> {
                 <Container>
                     <Grid item>
                         <FormControl className={classes.formControl}>
-                            <InputLabel>{t`game.theme`}</InputLabel>
+                            <InputLabel>{t`common.sort`}</InputLabel>
+                            <Select
+                                name="sort"
+                                value={this.selectedSort}
+                                onChange={this.handleSortChange}
+                                MenuProps={this.selectMenuProps}
+                            >
+                                {this.sort.map((it) => (
+                                    <MenuItem key={it.label} value={it.label}>
+                                        {it.label}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+
+                    <Grid item>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel>{t`game.platform`}</InputLabel>
                             <Select
                                 multiple
-                                name="theme"
-                                value={this.valueAsArray(filters.theme)}
+                                name="platform"
+                                value={this.valueAsArray(filters.platform)}
                                 onChange={this.handleMultiSelectChange}
                                 input={<Input />}
                                 renderValue={(selected) => (
                                     <div className={classes.chips}>
                                         {(selected as string[]).map((slug) => {
-                                            const theme = themes.find((it) => it.slug === slug)
+                                            const platform = platforms.find((it) => it.slug === slug)
 
                                             return (
                                                 <Chip
                                                     color="primary"
                                                     key={slug}
-                                                    label={theme ? theme.name : ''}
+                                                    label={platform ? platform.name : ''}
                                                     className={classes.chip}
                                                 />
                                             )
@@ -177,12 +195,66 @@ class GamesFilter extends Component<Props, State> {
                                 )}
                                 MenuProps={this.selectMenuProps}
                             >
-                                {themes.map((it) => (
+                                {platforms.map((it) => (
                                     <MenuItem key={it.slug} value={it.slug}>
                                         {it.name}
                                     </MenuItem>
                                 ))}
                             </Select>
+                        </FormControl>
+                    </Grid>
+
+                    <Grid item>
+                        <FormControl className={classes.formControl}>
+                            <TextField
+                                label={t`game.releaseDateFrom`}
+                                name="releaseDateFrom"
+                                type="date"
+                                defaultValue={filters.releaseDateFrom}
+                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
+                                InputLabelProps={{ shrink: true }}
+                            />
+                        </FormControl>
+                    </Grid>
+
+                    <Grid item>
+                        <FormControl className={classes.formControl}>
+                            <TextField
+                                label={t`game.releaseDateTo`}
+                                name="releaseDateTo"
+                                type="date"
+                                defaultValue={filters.releaseDateTo}
+                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
+                                InputLabelProps={{ shrink: true }}
+                            />
+                        </FormControl>
+                    </Grid>
+
+                    <Grid item>
+                        <FormControl className={classes.formControl}>
+                            <TextField
+                                label={t`game.ratingFrom`}
+                                name="ratingFrom"
+                                type="number"
+                                inputProps={{ min: 0, max: 100, step: 1 }}
+                                defaultValue={filters.ratingFrom}
+                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
+                                InputLabelProps={{ shrink: true }}
+                            />
+                        </FormControl>
+                    </Grid>
+
+                    <Grid item>
+                        <FormControl className={classes.formControl}>
+                            <TextField
+                                label={t`game.ratingTo`}
+                                name="ratingTo"
+                                type="number"
+                                inputProps={{ min: 0, max: 100, step: 1 }}
+                                defaultValue={filters.ratingTo}
+                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
+                                InputLabelProps={{ shrink: true }}
+                            />
                         </FormControl>
                     </Grid>
 
@@ -224,23 +296,23 @@ class GamesFilter extends Component<Props, State> {
 
                     <Grid item>
                         <FormControl className={classes.formControl}>
-                            <InputLabel>{t`game.platform`}</InputLabel>
+                            <InputLabel>{t`game.theme`}</InputLabel>
                             <Select
                                 multiple
-                                name="platform"
-                                value={this.valueAsArray(filters.platform)}
+                                name="theme"
+                                value={this.valueAsArray(filters.theme)}
                                 onChange={this.handleMultiSelectChange}
                                 input={<Input />}
                                 renderValue={(selected) => (
                                     <div className={classes.chips}>
                                         {(selected as string[]).map((slug) => {
-                                            const platform = platforms.find((it) => it.slug === slug)
+                                            const theme = themes.find((it) => it.slug === slug)
 
                                             return (
                                                 <Chip
                                                     color="primary"
                                                     key={slug}
-                                                    label={platform ? platform.name : ''}
+                                                    label={theme ? theme.name : ''}
                                                     className={classes.chip}
                                                 />
                                             )
@@ -249,7 +321,7 @@ class GamesFilter extends Component<Props, State> {
                                 )}
                                 MenuProps={this.selectMenuProps}
                             >
-                                {platforms.map((it) => (
+                                {themes.map((it) => (
                                     <MenuItem key={it.slug} value={it.slug}>
                                         {it.name}
                                     </MenuItem>
@@ -322,78 +394,6 @@ class GamesFilter extends Component<Props, State> {
                                 {['0', '1', '2', '3', '4'].map((it) => (
                                     <MenuItem key={it} value={it}>
                                         {t(`gameCategory.${it}`)}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </Grid>
-
-                    <Grid item>
-                        <FormControl className={classes.formControl}>
-                            <TextField
-                                label={t`game.releaseDateFrom`}
-                                name="releaseDateFrom"
-                                type="date"
-                                defaultValue={filters.releaseDateFrom}
-                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
-                                InputLabelProps={{ shrink: true }}
-                            />
-                        </FormControl>
-                    </Grid>
-
-                    <Grid item>
-                        <FormControl className={classes.formControl}>
-                            <TextField
-                                label={t`game.releaseDateTo`}
-                                name="releaseDateTo"
-                                type="date"
-                                defaultValue={filters.releaseDateTo}
-                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
-                                InputLabelProps={{ shrink: true }}
-                            />
-                        </FormControl>
-                    </Grid>
-
-                    <Grid item>
-                        <FormControl className={classes.formControl}>
-                            <TextField
-                                label={t`game.ratingFrom`}
-                                name="ratingFrom"
-                                type="number"
-                                inputProps={{ min: 0, max: 100, step: 1 }}
-                                defaultValue={filters.ratingFrom}
-                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
-                                InputLabelProps={{ shrink: true }}
-                            />
-                        </FormControl>
-                    </Grid>
-
-                    <Grid item>
-                        <FormControl className={classes.formControl}>
-                            <TextField
-                                label={t`game.ratingTo`}
-                                name="ratingTo"
-                                type="number"
-                                inputProps={{ min: 0, max: 100, step: 1 }}
-                                defaultValue={filters.ratingTo}
-                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
-                                InputLabelProps={{ shrink: true }}
-                            />
-                        </FormControl>
-                    </Grid>
-
-                    <Grid item>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>{t`common.sort`}</InputLabel>
-                            <Select
-                                name="sort"
-                                value={this.selectedSort}
-                                onChange={this.handleSortChange}
-                                MenuProps={this.selectMenuProps}
-                            >
-                                {this.sort.map((it) => (
-                                    <MenuItem key={it.label} value={it.label}>
-                                        {it.label}
                                     </MenuItem>
                                 ))}
                             </Select>

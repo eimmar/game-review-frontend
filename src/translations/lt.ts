@@ -204,6 +204,7 @@ export const ltTranslations = {
     'error.validation.tooLong': 'Laukas neturi būti ilgesnis nei {{number}} symboliai.',
     'error.validation.tooMany': 'Laukas neturi turėti daugiau nei {{number}} įrašų.',
     'error.validation.tooShort': 'Laukas turi būti ilgesnis nei {{number}} symboliai.',
+    'error.validation.specialCharsDetected': 'Laukas gali būti sudarytas tik iš skaičių, raidžių arba ženklo "_".',
     'error.validation.fileTooBig': 'Nuotrauka negali būti didesnė nei {{sizeMb}} MB.',
     'error.validation.invalidFile':
         'Nuotrauka negali būti didesnė nei {{sizeMb}} MB, leidižiami nuotraukų tipai: {{types}}.',
