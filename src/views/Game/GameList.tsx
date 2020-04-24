@@ -10,6 +10,7 @@ import GameListContent from '../../components/Game/GameListContent/GameListConte
 import GamesFilter from '../../components/Game/GamesFilter/GamesFilter'
 import { GameEntityFilterValues, GameMode, gameService, Genre, Platform, Theme } from '../../services/GameService'
 import { t } from '../../i18n'
+import { igdbService } from '../../services/IGDBService'
 
 interface State extends GameEntityFilterValues {
     mobileDrawerOpen: boolean
@@ -113,7 +114,7 @@ class GameList extends Component<Props, State> {
                         <GameListContent
                             key={location.key}
                             dataFunction={(search, pagination) =>
-                                gameService.getAllFromSearch(search, pagination.pageSize)
+                                igdbService.getAllFromSearch(search, pagination.pageSize)
                             }
                         />
                     </Grid>

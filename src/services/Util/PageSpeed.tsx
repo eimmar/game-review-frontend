@@ -14,3 +14,7 @@ export function lazyComponent(componentImport: any, componentProps?: object) {
         },
     })
 }
+
+export function ensureArray(val: any) {
+    return Array.isArray(val) ? val : [val]
+}

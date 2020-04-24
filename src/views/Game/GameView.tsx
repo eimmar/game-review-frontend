@@ -10,6 +10,7 @@ import GameTopCard from '../../components/Game/GameTopCard/GameTopCard'
 import NotFound404 from '../Error/NotFound404'
 import Header from '../../components/Header/Header'
 import { t } from '../../i18n'
+import { igdbService } from '../../services/IGDBService'
 
 export default function GameView() {
     const { slug } = useParams()
@@ -18,8 +19,8 @@ export default function GameView() {
 
     useEffect(() => {
         if (slug) {
-            gameService
-                .get(slug)
+            igdbService
+                .game(slug)
                 .then((response) => setGame(gameService.withCover(response, ScreenshotSize.CoverBig)))
                 .finally(() => setLoading(false))
         } else {

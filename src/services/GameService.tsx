@@ -252,7 +252,7 @@ class GameService {
         })
     }
 
-    getAllForList(listId: string, page: number, pageSize: number): Promise<PaginatedList<Game>> {
+    getAllForList(listId: string, page: number, pageSize: number): Promise<Game[]> {
         return requestService.performRequest('POST', `${this.baseUrl}list/${listId}`, { pageSize, page })
     }
 

@@ -213,20 +213,13 @@ class GameListViewContent extends Component<Props, State> {
             <>
                 <CssBaseline />
                 <Container>
-                    <Grid container spacing={5} className={classes.mainGrid}>
+                    <Grid container spacing={2} className={classes.mainGrid}>
                         <Grid item lg={12} className="width-full">
                             <Avatar className={sStyles.avatar}>{this.listIcon}</Avatar>
                             <Typography variant="h5" align="center">
                                 {this.listTitle}
                             </Typography>
                         </Grid>
-
-                        {authService.isCurrentUser(gameList.user) && (
-                            <Grid item>
-                                {this.renderGameListEditButton}
-                                {this.renderGameListDeleteButton}
-                            </Grid>
-                        )}
 
                         <Grid item lg={12} className="width-full">
                             <Typography align="center">
@@ -240,6 +233,13 @@ class GameListViewContent extends Component<Props, State> {
                                 </Moment>
                             </Typography>
                         </Grid>
+
+                        {authService.isCurrentUser(gameList.user) && (
+                            <Grid item>
+                                {this.renderGameListEditButton}
+                                {this.renderGameListDeleteButton}
+                            </Grid>
+                        )}
 
                         <Grid item lg={12} className="width-full">
                             <GameListContent

@@ -61,6 +61,8 @@
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/member-delimiter-style": "off",
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/camelcase": "off",
     "newline-before-return": "error",
     "no-console": "error",
     "newline-after-var": "error",

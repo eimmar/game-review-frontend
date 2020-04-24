@@ -65,12 +65,12 @@ class GamesFilter extends Component<Props, State> {
     }, 800)
 
     sort = [
-        { orderBy: 'name', order: 'ASC', label: t`game.sortByNameAsc` },
-        { orderBy: 'name', order: 'DESC', label: t`game.sortByNameDesc` },
-        { orderBy: 'releaseDate', order: 'ASC', label: t`game.sortByReleaseDateAsc` },
-        { orderBy: 'releaseDate', order: 'DESC', label: t`game.sortByReleaseDateDesc` },
-        { orderBy: 'rating', order: 'ASC', label: t`game.sortByRatingAsc` },
-        { orderBy: 'rating', order: 'DESC', label: t`game.sortByRatingDesc` },
+        { orderBy: 'name', order: 'asc', label: t`game.sortByNameAsc` },
+        { orderBy: 'name', order: 'desc', label: t`game.sortByNameDesc` },
+        { orderBy: 'first_release_date', order: 'asc', label: t`game.sortByReleaseDateAsc` },
+        { orderBy: 'first_release_date', order: 'desc', label: t`game.sortByReleaseDateDesc` },
+        { orderBy: 'total_rating', order: 'asc', label: t`game.sortByRatingAsc` },
+        { orderBy: 'total_rating', order: 'desc', label: t`game.sortByRatingDesc` },
     ]
 
     constructor(props: Props) {
@@ -101,6 +101,13 @@ class GamesFilter extends Component<Props, State> {
             this.sort.find((it) => it.order === filters.order && it.orderBy === filters.orderBy) || this.sort[3]
 
         return selected ? selected.label : ''
+    }
+
+    canSort = () => {
+        const { location } = this.props
+        const currentUrlParams = new URLSearchParams(location.search)
+
+        return Boolean(currentUrlParams.get('query'))
     }
 
     valueAsArray = (value?: unknown | unknown[]) => {
@@ -154,6 +161,7 @@ class GamesFilter extends Component<Props, State> {
                         <FormControl className={classes.formControl}>
                             <InputLabel>{t`common.sort`}</InputLabel>
                             <Select
+                                disabled={this.canSort()}
                                 name="sort"
                                 value={this.selectedSort}
                                 onChange={this.handleSortChange}

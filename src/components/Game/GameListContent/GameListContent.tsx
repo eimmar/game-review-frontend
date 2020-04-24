@@ -75,7 +75,7 @@ const styles = ({ palette, spacing, breakpoints }: Theme) =>
     })
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
-    dataFunction: (search: string, pagination: Pagination) => Promise<PaginatedList<Game>>
+    dataFunction: (search: string, pagination: Pagination) => Promise<Game[]>
     deleteFunction?: (game: Game) => Promise<any>
     infiniteScroll?: boolean
     classes: {
@@ -121,13 +121,13 @@ class GameListContent extends AbstractPaginator<Props, State> {
 
         dataFunction(location.search, pagination).then((response) =>
             this.setState((prevState) => {
-                const games = response.items.map((game) => gameService.withCover(game, ScreenshotSize.CoverSmall))
+                const games = response.map((game) => gameService.withCover(game, ScreenshotSize.CoverSmall))
 
                 return {
                     games: infiniteScroll ? prevState.games.concat(games) : games,
                     loading: false,
                     pagination: {
-                        totalResults: response.totalResults,
+                        totalResults: 0,
                         page: pagination.page,
                         pageSize: pagination.pageSize,
                     },
@@ -178,7 +178,7 @@ class GameListContent extends AbstractPaginator<Props, State> {
                             )}
                             {(!loading || infiniteScroll) &&
                                 games.map((game) => (
-                                    <div key={game.id}>
+                                    <div key={game.externalId}>
                                         <ListItem alignItems="flex-start" className={classes.listItem}>
                                             {game.rating && <RatingIndicator rating={game.rating} />}
                                             <ListItemAvatar className={classes.listAvatar}>
