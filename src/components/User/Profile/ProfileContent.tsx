@@ -115,7 +115,7 @@ class ProfileContent extends Component<Props, State> {
     }
 
     get tabs() {
-        const { tabIndex, renderedTabs } = this.state
+        const { tabIndex, renderedTabs, gameLists } = this.state
         const { classes, user } = this.props
 
         return (
@@ -150,26 +150,29 @@ class ProfileContent extends Component<Props, State> {
                 <Divider />
 
                 <TabPanel value={tabIndex} index={0} renderedTabs={renderedTabs}>
-                    <Grid container spacing={2} className="m-t-8">
-                        {this.renderListByType(GameListType.Favorites)}
-                        {this.renderListByType(GameListType.Wishlist)}
-                        {this.renderListByType(GameListType.Playing)}
-                        {this.customLists.map((list) => (
-                            <Grid item key={list.id}>
-                                <Paper>
-                                    <Typography
-                                        className={sStyles.gameList}
-                                        variant="h6"
-                                        component={Link}
-                                        to={`${routes.gameList.view}/${list.id}`}
-                                    >
-                                        <SportsEsportsIcon className="m-r-8" />
-                                        {list.name}
-                                    </Typography>
-                                </Paper>
-                            </Grid>
-                        ))}
-                    </Grid>
+                    {gameLists.length > 0 && (
+                        <Grid container spacing={2} className="m-t-8">
+                            {this.renderListByType(GameListType.Favorites)}
+                            {this.renderListByType(GameListType.Wishlist)}
+                            {this.renderListByType(GameListType.Playing)}
+                            {this.customLists.map((list) => (
+                                <Grid item key={list.id}>
+                                    <Paper>
+                                        <Typography
+                                            className={sStyles.gameList}
+                                            variant="h6"
+                                            component={Link}
+                                            to={`${routes.gameList.view}/${list.id}`}
+                                        >
+                                            <SportsEsportsIcon className="m-r-8" />
+                                            {list.name}
+                                        </Typography>
+                                    </Paper>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    )}
+                    {gameLists.length === 0 && <div className="m-t-8 m-b-24">{t`gameList.noItems`}</div>}
                 </TabPanel>
                 <TabPanel value={tabIndex} index={1} renderedTabs={renderedTabs}>
                     <ReviewList userId={user.id} />
