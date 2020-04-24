@@ -1,6 +1,5 @@
 import { Pagination, requestService } from './RequestService'
 import { Game, GameLoaded, GamesFilterRequest } from './GameService'
-import { phpDebug } from '../parameters'
 import { ensureArray } from './Util/PageSpeed'
 
 interface UserRating {
@@ -46,7 +45,7 @@ class IGDBService {
     getAllFromFilters(filters: GamesFilterRequest, limit: number, offset: number): Promise<Game[]> {
         return requestService.performRequest(
             'POST',
-            `${this.baseUrl}games${phpDebug}`,
+            `${this.baseUrl}games`,
             this.getRequestBody(filters, limit, offset),
         )
     }

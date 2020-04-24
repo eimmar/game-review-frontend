@@ -2,7 +2,7 @@
 import { PaginatedList, requestService } from './RequestService'
 // eslint-disable-next-line import/no-cycle
 import { ResetPasswordRequest } from './AuthService'
-import { backendUrl, phpDebug } from '../parameters'
+import { backendUrl } from '../parameters'
 
 export interface User {
     id: string
@@ -86,7 +86,7 @@ class UserService {
         data.avatarFile.file && formData.append('user_edit[avatarFile][file]', data.avatarFile.file)
         data.avatarFile.delete && formData.append('user_edit[avatarFile][delete]', '1')
 
-        return requestService.performMultiPartRequest('POST', `${this.baseUrl}edit/${id}${phpDebug}`, formData)
+        return requestService.performMultiPartRequest('POST', `${this.baseUrl}edit/${id}`, formData)
     }
 
     changePassword(userId: string, params: ChangePasswordRequest): Promise<any> {

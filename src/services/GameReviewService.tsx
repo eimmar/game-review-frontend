@@ -1,7 +1,6 @@
 import { PaginatedList, Pagination, requestService } from './RequestService'
 import { Game } from './GameService'
 import { User } from './UserService'
-import { phpDebug } from '../parameters'
 
 export interface GameReview extends Timestampable {
     id: string
@@ -53,7 +52,7 @@ class ReviewService {
     }
 
     delete(id: string) {
-        return requestService.performRequest('DELETE', this.baseUrl + id + phpDebug)
+        return requestService.performRequest('DELETE', this.baseUrl + id)
     }
 
     toFormData(review: GameReview): GameReviewRequest {
