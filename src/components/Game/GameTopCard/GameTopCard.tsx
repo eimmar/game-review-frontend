@@ -135,7 +135,7 @@ class GameTopCard extends Component<Props> {
                                     <>
                                         <Typography color="inherit" className={sStyles.ratingText}>
                                             {t('game.ratingBasedOn', {
-                                                rating: game.rating?.toPrecision(2),
+                                                rating: Math.round(game.rating),
                                                 count: game.ratingCount,
                                             })}
                                         </Typography>

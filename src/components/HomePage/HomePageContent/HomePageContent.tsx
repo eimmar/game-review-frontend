@@ -14,20 +14,31 @@ function HomePageContent() {
                 <Typography variant="h6">{t`homePage.latestGames`}</Typography>
                 <GameGridCarousel
                     defaultActive
-                    query={{ orderBy: 'releaseDate', order: 'DESC', releaseDateTo: moment().format('YYYY-MM-DD') }}
+                    query={{
+                        orderBy: 'first_release_date',
+                        order: 'desc',
+                        releaseDateTo: moment().format('YYYY-MM-DD'),
+                    }}
                 />
 
                 <Typography variant="h6">{t`homePage.comingSoon`}</Typography>
                 <GameGridCarousel
                     defaultActive
-                    query={{ orderBy: 'releaseDate', order: 'ASC', releaseDateFrom: moment().format('YYYY-MM-DD') }}
+                    query={{
+                        orderBy: 'first_release_date',
+                        order: 'asc',
+                        releaseDateFrom: moment().format('YYYY-MM-DD'),
+                    }}
                 />
 
                 <Typography variant="h6" className="m-t-32">{t`homePage.topCriticRated`}</Typography>
-                <GameGridCarousel defaultActive query={{ orderBy: 'rating', order: 'DESC', ratingCountFrom: '20' }} />
+                <GameGridCarousel
+                    defaultActive
+                    query={{ orderBy: 'total_rating', order: 'desc', ratingCountFrom: '20' }}
+                />
 
                 <Typography variant="h6" className="m-t-64">{t`homePage.newestMembers`}</Typography>
-                <UserGridCarousel defaultActive query={{ orderBy: 'createdAt', order: 'DESC' }} />
+                <UserGridCarousel defaultActive query={{ orderBy: 'createdAt', order: 'desc' }} />
             </Container>
         </>
     )

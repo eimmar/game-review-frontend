@@ -23,7 +23,7 @@ function RatingIndicator(props: Props) {
             <Tooltip title={t`game.criticScore`} placement="top">
                 <div className={styles.rating}>
                     <CircularProgress variant="static" value={rating} className={color} />
-                    <Typography variant="h6" className={flattenClasses([styles.value, color])}>
+                    <Typography variant="subtitle1" className={flattenClasses([styles.value, color])}>
                         {Math.round(rating)}
                     </Typography>
                 </div>

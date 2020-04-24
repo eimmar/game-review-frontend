@@ -108,8 +108,8 @@ export const ltTranslations = {
     'gameList.new': 'Sukurti nuaują',
     'gameList.successCreate': 'Žaidimas pridėtas į sąrašą',
     'gameList.successAdd': 'Žaidimas pridėtas',
-    'gameList.successRemove': 'Žaidimas pašalintas',
-    'gameList.successUpdate': 'Sąrašas atnaujintas',
+    'gameList.successRemove': 'Sąrašas pašalintas.',
+    'gameList.successUpdate': 'Sąrašas atnaujintas.',
     'gameList.name': 'Pavadinimas',
     'gameList.privacyType': 'Privatumas',
     'gameList.public': 'Viešas',
@@ -119,6 +119,7 @@ export const ltTranslations = {
     'gameList.confirmDelete': 'Ar tikrai norite ištrinti šį sąrašą?',
     'gameList.deleteSuccess': 'Sąrašas ištrintas.',
     'gameList.deleteError': 'Klaida! Sąrašo negalima išstrinti.',
+    'gameList.noItems': 'Sąrašų nėra.',
 
     'gameReview.successCreate': 'Atsiliepimas pateiktas peržiūrai.',
     'gameReview.successUpdate': 'Atsiliepimas atnaujintas.',

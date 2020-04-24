@@ -31,6 +31,7 @@ import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/Abst
 import Centered from '../../Global/Centered/Centered'
 import { Pagination } from '../../../services/RequestService'
 import RatingIndicator from '../RatingIndicator/RatingIndicator'
+import { igdbService } from '../../../services/IGDBService'
 
 const styles = ({ palette, spacing, breakpoints }: Theme) =>
     createStyles({
@@ -121,7 +122,7 @@ class GameListContent extends AbstractPaginator<Props, State> {
     get totalPages() {
         const { pagination } = this.state
 
-        return Math.min(251, pagination.page + Number(this.hasNextPage))
+        return Math.min(igdbService.getMaxPage(pagination.pageSize), pagination.page + Number(this.hasNextPage))
     }
 
     componentDidMount() {
@@ -172,7 +173,7 @@ class GameListContent extends AbstractPaginator<Props, State> {
         const { games } = this.state
 
         this.setState({ games: games.filter((it) => it.id !== game.id) }, () => {
-            toast.success(t`game.successRemove`)
+            toast.info(t`game.successRemove`)
         })
     }
 

@@ -160,7 +160,7 @@ export interface GamesFilterRequest {
     platform?: string | string[]
     gameMode?: string | string[]
     orderBy?: string
-    order?: string
+    order?: 'asc' | 'desc'
     [key: string]: string | string[] | undefined
 }
 

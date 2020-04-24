@@ -15,6 +15,7 @@ import { routes } from '../../../parameters'
 import { placeholderImg } from '../../../services/Util/AssetsProvider'
 import styles from './GameGridCarousel.module.scss'
 import RatingIndicator from '../RatingIndicator/RatingIndicator'
+import { igdbService } from '../../../services/IGDBService'
 
 interface Props {
     defaultActive?: boolean
@@ -24,6 +25,7 @@ interface Props {
 interface State extends AbstractPaginatorState {
     games: Game[]
     wasActivated: boolean
+    hasNextPage: boolean
 }
 
 class GameGridCarousel extends AbstractPaginator<Props, State> {
@@ -36,6 +38,7 @@ class GameGridCarousel extends AbstractPaginator<Props, State> {
         },
         loading: false,
         wasActivated: false,
+        hasNextPage: false,
     }
 
     mounted = false
@@ -73,6 +76,12 @@ class GameGridCarousel extends AbstractPaginator<Props, State> {
         }
     }
 
+    get hasNextPage() {
+        const { hasNextPage } = this.state
+
+        return hasNextPage
+    }
+
     activate = () => {
         const { wasActivated, pagination } = this.state
 
@@ -84,21 +93,28 @@ class GameGridCarousel extends AbstractPaginator<Props, State> {
         const nextPageQuery = { ...query, page: String(pagination.page) }
 
         this.setState({ wasActivated: true, loading: true })
-        gameService
-            .getAllFromFilters(nextPageQuery, pagination.pageSize)
-            .then()
-            .then((response) => {
-                const games = response.items.map((it) => gameService.withCover(it, ScreenshotSize.ScreenshotMed))
+        igdbService
+            .getAllFromFilters(nextPageQuery, pagination.pageSize + 1, this.getOffset(pagination))
+            .then((response) =>
+                this.setState((prevState) => {
+                    const games = response
+                        .slice(0, pagination.pageSize)
+                        .map((game) => gameService.withCover(game, ScreenshotSize.ScreenshotMed))
 
-                this.setState((prevState) => ({
-                    games: prevState.games.concat(games),
-                    pagination: {
-                        totalResults: response.totalResults,
-                        page: pagination.page,
-                        pageSize: pagination.pageSize,
-                    },
-                }))
-            })
+                    return {
+                        games: prevState.games.concat(games),
+                        loading: false,
+                        hasNextPage:
+                            response.length > pagination.pageSize &&
+                            pagination.page < igdbService.getMaxPage(pagination.pageSize),
+                        pagination: {
+                            totalResults: 0,
+                            page: pagination.page,
+                            pageSize: pagination.pageSize,
+                        },
+                    }
+                }),
+            )
             .finally(() => this.mounted && this.setState({ loading: false }))
     }
 

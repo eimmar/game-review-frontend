@@ -220,6 +220,7 @@ class GameListTab extends Component<Props, State> {
                                     <ListItemText primary={list.name} />
                                 </ListItem>
                             ))}
+                            {lists.length === 0 && t`gameList.noItems`}
                         </List>
                     </DialogContent>
                     {formOpen && (

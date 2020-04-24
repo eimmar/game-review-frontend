@@ -111,6 +111,10 @@ class IGDBService {
 
         return { limit, offset, sort, search, where }
     }
+
+    getMaxPage(pageSize: number) {
+        return 5000 / pageSize + 1
+    }
 }
 
 export const igdbService = new IGDBService()
