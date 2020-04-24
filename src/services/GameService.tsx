@@ -252,8 +252,8 @@ class GameService {
         })
     }
 
-    getAllForList(listId: string, page: number, pageSize: number): Promise<Game[]> {
-        return requestService.performRequest('POST', `${this.baseUrl}list/${listId}`, { pageSize, page })
+    getAllForList(listId: string, page: number, pageSize: number, firstResult?: number): Promise<Game[]> {
+        return requestService.performRequest('POST', `${this.baseUrl}list/${listId}`, { pageSize, page, firstResult })
     }
 
     get(slug: string): Promise<GameLoaded> {

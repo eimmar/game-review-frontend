@@ -37,17 +37,17 @@ class IGDBService {
         return requestService.performRequest('POST', `${this.baseUrl}reviews/${gameId}`, request)
     }
 
-    getAllFromSearch(searchString: string, limit: number): Promise<Game[]> {
+    getAllFromSearch(searchString: string, limit: number, offset: number): Promise<Game[]> {
         const filters = (requestService.getFilters(searchString) as unknown) as GamesFilterRequest
 
-        return this.getAllFromFilters(filters, limit)
+        return this.getAllFromFilters(filters, limit, offset)
     }
 
-    getAllFromFilters(filters: GamesFilterRequest, limit: number): Promise<Game[]> {
+    getAllFromFilters(filters: GamesFilterRequest, limit: number, offset: number): Promise<Game[]> {
         return requestService.performRequest(
             'POST',
             `${this.baseUrl}games${phpDebug}`,
-            this.getRequestBody(filters, limit),
+            this.getRequestBody(filters, limit, offset),
         )
     }
 
@@ -55,11 +55,10 @@ class IGDBService {
         return requestService.performRequest('POST', `${this.baseUrl}game/${slug}`)
     }
 
-    getRequestBody(request: GamesFilterRequest, limit: number) {
-        const offset = (Number(request.page || 1) - 1) * limit
+    getRequestBody(request: GamesFilterRequest, limit: number, offset: number) {
         const sort = request.query ? undefined : `${request.orderBy || 'first_release_date'} ${request.order || 'desc'}`
         const search = request.query
-        let where: Anything = {}
+        let where: Anything = { first_release_date: '!= null' }
 
         if (request.category) {
             where.category = `= (${ensureArray(request.category).join(', ')})`
@@ -92,13 +91,15 @@ class IGDBService {
         }
 
         if (request.releaseDateFrom) {
-            where.first_release_date = `>= ${new Date(request.releaseDateFrom).getTime() / 1000}`
+            where.first_release_date = `${where.first_release_date} & first_release_date >= ${new Date(
+                request.releaseDateFrom,
+            ).getTime() / 1000}`
         }
 
         if (request.releaseDateTo) {
-            const previousPart = where.first_release_date ? `${where.first_release_date} & first_release_date ` : ''
-
-            where.first_release_date = `${previousPart}<= ${new Date(request.releaseDateTo).getTime() / 1000}`
+            where.first_release_date = `${where.first_release_date} & first_release_date <= ${new Date(
+                request.releaseDateTo,
+            ).getTime() / 1000}`
         }
 
         if (request.orderBy === 'total_rating') {

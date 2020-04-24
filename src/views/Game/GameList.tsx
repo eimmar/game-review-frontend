@@ -113,8 +113,8 @@ class GameList extends Component<Props, State> {
                     <Grid item xs={12} sm={12} md={8} lg={9}>
                         <GameListContent
                             key={location.key}
-                            dataFunction={(search, pagination) =>
-                                igdbService.getAllFromSearch(search, pagination.pageSize)
+                            dataFunction={(search, limit, offset) =>
+                                igdbService.getAllFromSearch(search, limit, offset)
                             }
                         />
                     </Grid>

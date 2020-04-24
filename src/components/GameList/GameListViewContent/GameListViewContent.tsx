@@ -249,8 +249,8 @@ class GameListViewContent extends Component<Props, State> {
                                         ? (game) => gameListService.removeFromList(game.id, gameList.id)
                                         : undefined
                                 }
-                                dataFunction={(_, pagination) =>
-                                    gameService.getAllForList(gameList.id, pagination.page, pagination.pageSize)
+                                dataFunction={(_, limit, offset) =>
+                                    gameService.getAllForList(gameList.id, 0, limit, offset)
                                 }
                             />
                         </Grid>

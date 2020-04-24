@@ -29,7 +29,7 @@ import PageLoader from '../../Global/PageLoader'
 import { placeholderImg } from '../../../services/Util/AssetsProvider'
 import { AbstractPaginator, AbstractPaginatorState } from '../../Pagination/AbstractPaginator'
 import Centered from '../../Global/Centered/Centered'
-import { PaginatedList, Pagination } from '../../../services/RequestService'
+import { Pagination } from '../../../services/RequestService'
 import RatingIndicator from '../RatingIndicator/RatingIndicator'
 
 const styles = ({ palette, spacing, breakpoints }: Theme) =>
@@ -75,7 +75,7 @@ const styles = ({ palette, spacing, breakpoints }: Theme) =>
     })
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
-    dataFunction: (search: string, pagination: Pagination) => Promise<Game[]>
+    dataFunction: (search: string, limit: number, offset: number) => Promise<Game[]>
     deleteFunction?: (game: Game) => Promise<any>
     infiniteScroll?: boolean
     classes: {
@@ -92,6 +92,7 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
 
 interface State extends AbstractPaginatorState {
     games: Game[]
+    hasNextPage: boolean
 }
 
 class GameListContent extends AbstractPaginator<Props, State> {
@@ -101,13 +102,26 @@ class GameListContent extends AbstractPaginator<Props, State> {
 
         this.state = {
             games: [],
+            hasNextPage: false,
             pagination: {
                 page: Number(currentUrlParams.get('page') || 1),
                 totalResults: 0,
-                pageSize: 10,
+                pageSize: 20,
             },
             loading: true,
         }
+    }
+
+    get hasNextPage() {
+        const { hasNextPage } = this.state
+
+        return hasNextPage
+    }
+
+    get totalPages() {
+        const { pagination } = this.state
+
+        return Math.min(251, pagination.page + Number(this.hasNextPage))
     }
 
     componentDidMount() {
@@ -119,13 +133,16 @@ class GameListContent extends AbstractPaginator<Props, State> {
     fetchData = (pagination: Pagination) => {
         const { location, dataFunction, infiniteScroll } = this.props
 
-        dataFunction(location.search, pagination).then((response) =>
+        dataFunction(location.search, pagination.pageSize + 1, this.getOffset(pagination)).then((response) =>
             this.setState((prevState) => {
-                const games = response.map((game) => gameService.withCover(game, ScreenshotSize.CoverSmall))
+                const games = response
+                    .slice(0, pagination.pageSize)
+                    .map((game) => gameService.withCover(game, ScreenshotSize.CoverSmall))
 
                 return {
                     games: infiniteScroll ? prevState.games.concat(games) : games,
                     loading: false,
+                    hasNextPage: response.length > pagination.pageSize,
                     pagination: {
                         totalResults: 0,
                         page: pagination.page,
@@ -259,7 +276,6 @@ class GameListContent extends AbstractPaginator<Props, State> {
                             count={this.totalPages}
                             onChange={this.handlePageChange}
                             showFirstButton
-                            showLastButton
                         />
                     )}
                 </Grid>
