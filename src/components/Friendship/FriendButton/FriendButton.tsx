@@ -17,6 +17,8 @@ interface Props {
     initialFriendship?: Friendship<WithUser>
     onAcceptSuccess?: () => void
     onRemoveSuccess?: () => void
+    showSuccess?: boolean
+    hideAcceptedButton?: boolean
 }
 
 interface State {
@@ -69,7 +71,7 @@ class FriendButton extends React.Component<Props, State> {
 
     get button() {
         const { friendship, loading } = this.state
-        const { user } = this.props
+        const { user, hideAcceptedButton } = this.props
 
         if (!this.currentUser || user.id === this.currentUser.id) {
             return ''
@@ -93,7 +95,9 @@ class FriendButton extends React.Component<Props, State> {
         if (friendship.status === FriendshipStatus.Accepted) {
             return (
                 <>
-                    <Button variant="contained" startIcon={<PersonIcon />}>{t`friendship.youAreFriends`}</Button>
+                    {!hideAcceptedButton && (
+                        <Button variant="contained" startIcon={<PersonIcon />}>{t`friendship.youAreFriends`}</Button>
+                    )}
                     <Tooltip placement="top" title={t`friendship.removeFriend`}>
                         <IconButton color="secondary" onClick={this.handleRemoveModalToggle}>
                             <PersonAddDisabledIcon />
@@ -130,13 +134,15 @@ class FriendButton extends React.Component<Props, State> {
     }
 
     handleAcceptRequest = () => {
-        const { user, onAcceptSuccess } = this.props
+        const { user, onAcceptSuccess, showSuccess } = this.props
 
         this.setState({ loading: true })
-
         friendshipService
             .accept(user.id)
-            .then((friendship) => this.setState({ friendship }, () => onAcceptSuccess && onAcceptSuccess()))
+            .then((friendship) => {
+                showSuccess && toast.info(t`friendship.acceptSuccess`)
+                this.setState({ friendship }, () => onAcceptSuccess && onAcceptSuccess())
+            })
             .catch((error) => toast.error(error.message))
             .finally(() => this.setState({ loading: false }))
     }
@@ -145,7 +151,6 @@ class FriendButton extends React.Component<Props, State> {
         const { user, onRemoveSuccess } = this.props
 
         this.setState({ loading: true })
-
         friendshipService
             .remove(user.id)
             .then(() => {

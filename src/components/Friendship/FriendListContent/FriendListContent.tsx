@@ -109,7 +109,7 @@ class FriendListContent extends AbstractPaginator<Props, State> {
         pagination: {
             page: 1,
             totalResults: 0,
-            pageSize: 1,
+            pageSize: 20,
         },
         loading: true,
         search: '',
@@ -159,8 +159,8 @@ class FriendListContent extends AbstractPaginator<Props, State> {
         const { currentUser } = this.props
 
         this.setState({
-            friendships: friendships.filter((it) =>
-                [it.sender.id, it.receiver.id].every((e) => [friend.id, currentUser.id].includes(e)),
+            friendships: friendships.filter(
+                (it) => ![it.sender.id, it.receiver.id].every((e) => [friend.id, currentUser.id].includes(e)),
             ),
         })
     }
@@ -223,6 +223,8 @@ class FriendListContent extends AbstractPaginator<Props, State> {
                         secondary={this.renderFriendshipDate(friendship)}
                     />
                     <FriendButton
+                        hideAcceptedButton
+                        showSuccess
                         user={friend}
                         initialFriendship={friendship}
                         onAcceptSuccess={this.handleRemove(friend)}
