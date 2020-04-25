@@ -31,7 +31,7 @@ import ReviewList from '../../Review/User/ReviewList/ReviewList'
 import { User, userService } from '../../../services/UserService'
 import { routes } from '../../../parameters'
 import UserAvatar from './UserAvatar/UserAvatar'
-import FriendBadge from '../../Friend/FriendBadge/FriendBadge'
+import FriendButton from '../../Friendship/FriendButton/FriendButton'
 
 const styles = ({ spacing, palette }: Theme) =>
     createStyles({
@@ -289,7 +289,7 @@ class ProfileContent extends Component<Props, State> {
                                 </Moment>
                             </Typography>
                             <div className="text-center m-t-8">
-                                <FriendBadge user={user} />
+                                <FriendButton user={user} />
                             </div>
                         </Grid>
 

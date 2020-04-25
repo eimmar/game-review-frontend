@@ -14,6 +14,9 @@ import { t } from '../../../i18n'
 
 interface Props {
     user: User
+    initialFriendship?: Friendship<WithUser>
+    onAcceptSuccess?: () => void
+    onRemoveSuccess?: () => void
 }
 
 interface State {
@@ -22,19 +25,22 @@ interface State {
     loading: boolean
 }
 
-class FriendBadge extends React.Component<Props, State> {
-    state = {
-        loading: true,
-        friendship: null as Friendship | null,
-        removeModal: false,
-    }
-
+class FriendButton extends React.Component<Props, State> {
     currentUser = authService.getCurrentUser()
 
-    componentDidMount(): void {
-        const { user } = this.props
+    constructor(props: Props) {
+        super(props)
+        this.state = {
+            loading: true,
+            friendship: props.initialFriendship || null,
+            removeModal: false,
+        }
+    }
 
-        if (this.currentUser && user.id !== this.currentUser.id) {
+    componentDidMount(): void {
+        const { user, initialFriendship } = this.props
+
+        if (!initialFriendship && this.currentUser && user.id !== this.currentUser.id) {
             friendshipService.get(user.id).then((friendship) => this.setState({ friendship, loading: false }))
         } else {
             this.setState({ loading: false })
@@ -124,19 +130,19 @@ class FriendBadge extends React.Component<Props, State> {
     }
 
     handleAcceptRequest = () => {
-        const { user } = this.props
+        const { user, onAcceptSuccess } = this.props
 
         this.setState({ loading: true })
 
         friendshipService
             .accept(user.id)
-            .then((friendship) => this.setState({ friendship }))
+            .then((friendship) => this.setState({ friendship }, () => onAcceptSuccess && onAcceptSuccess()))
             .catch((error) => toast.error(error.message))
             .finally(() => this.setState({ loading: false }))
     }
 
     handleRemoveRequest = () => {
-        const { user } = this.props
+        const { user, onRemoveSuccess } = this.props
 
         this.setState({ loading: true })
 
@@ -145,6 +151,7 @@ class FriendBadge extends React.Component<Props, State> {
             .then(() => {
                 this.setState({ friendship: null }, () => {
                     toast.info(t`friendship.removeSuccess`)
+                    onRemoveSuccess && onRemoveSuccess()
                     this.handleRemoveModalToggle()
                 })
             })
@@ -164,4 +171,4 @@ class FriendBadge extends React.Component<Props, State> {
     }
 }
 
-export default FriendBadge
+export default FriendButton

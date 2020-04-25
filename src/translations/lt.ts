@@ -131,6 +131,11 @@ export const ltTranslations = {
     'friendship.removeSuccess': 'Žaidėjas pašalintas iš draugų.',
     'friendship.youAreFriends': 'Esate draugai',
     'friendship.confirmRemove': 'Ar tikrai norite pašalinti šį žaidėją iš savo draugų sąrašo?',
+    'friendship.friendSince': 'Esate draugai nuo',
+    'friendship.requestDate': 'Kvietimas draugauti nusiūstas',
+    'friendship.noResults': 'Sąrašas tuščias.',
+    'friendship.list': 'Draugai',
+    'friendship.invites': 'Kvietimai draugauti',
 
     'gameReview.successCreate': 'Atsiliepimas pateiktas peržiūrai.',
     'gameReview.successUpdate': 'Atsiliepimas atnaujintas.',
@@ -241,6 +246,8 @@ export const ltTranslations = {
     'pageTitle.gameListView': 'Žaidimų sąrašas',
     'pageTitle.profileEdit': 'Paskyros atnaujinimas',
     'pageTitle.userList': 'Bendruomenė',
+    'pageTitle.friends': 'Draugai',
+    'pageTitle.friendInvites': 'Kvietimai draugauti',
 
     'homePage.latestGames': 'Naujausi žaidimai',
     'homePage.comingSoon': 'Netrukus pasirodys',

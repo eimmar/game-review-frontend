@@ -12,8 +12,12 @@ export interface Pagination {
     pageSize: number
 }
 
+export interface SearchRequest extends Pagination {
+    filters: Filter
+}
+
 export interface Filter {
-    [key: string]: string
+    [key: string]: string | number | undefined
 }
 
 export interface PaginatedList<T> extends Pagination {

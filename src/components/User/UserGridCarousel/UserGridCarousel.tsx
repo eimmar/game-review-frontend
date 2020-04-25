@@ -106,7 +106,7 @@ class UserGridCarousel extends AbstractPaginator<Props, State> {
                             </ListItemAvatar>
                         </CardMedia>
                         <div className={styles.cardContent}>
-                            <Typography gutterBottom>{userService.getFullName(user)}</Typography>
+                            <Typography gutterBottom>{user.username}</Typography>
                             <Typography variant="subtitle2" color="inherit" gutterBottom>
                                 {t`user.memberSince`}{' '}
                                 <Moment locale={i18next.language} format="MMMM Do, YYYY">

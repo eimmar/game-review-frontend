@@ -1,5 +1,5 @@
-import { PaginatedList, Pagination, requestService } from './RequestService'
-import { User, WithUser } from './UserService'
+import { PaginatedList, requestService, SearchRequest } from './RequestService'
+import { WithUser } from './UserService'
 
 export enum FriendshipStatus {
     Pending,
@@ -33,16 +33,8 @@ class FriendshipService {
         return requestService.performRequest('GET', `${this.baseUrl}accept/${userId}`)
     }
 
-    friendList(request: Pagination): Promise<PaginatedList<User>> {
+    getAll(request: SearchRequest): Promise<PaginatedList<Friendship<WithUser>>> {
         return requestService.performRequest('POST', this.baseUrl, request)
-    }
-
-    pendingForSender(request: Pagination): Promise<PaginatedList<User>> {
-        return requestService.performRequest('POST', `${this.baseUrl}pending-sent`, request)
-    }
-
-    pendingForReceiver(request: Pagination): Promise<PaginatedList<User>> {
-        return requestService.performRequest('POST', `${this.baseUrl}pending-received`, request)
     }
 }
 

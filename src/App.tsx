@@ -27,6 +27,8 @@ import ChangePassword from './views/Auth/ChangePassword'
 import GameListView from './views/GameList/GameListView'
 import LogOut from './views/Auth/LogOut'
 import ScrollToTop from './components/Global/ScrollToTop'
+import FriendListView from './views/Friendship/FriendListView'
+import FriendInvitesView from './views/Friendship/FriendInvitesView'
 
 const HomePage = lazyComponent(import('./views/HomePage'))
 
@@ -62,9 +64,12 @@ function App() {
 
                         <PublicRoute exact path={`${routes.gameList.view}/:guid`} component={GameListView} />
 
+                        <PrivateRoute exact path={`${routes.user.friendList}`} component={FriendListView} />
+                        <PrivateRoute exact path={`${routes.user.friendInvites}`} component={FriendInvitesView} />
                         <PrivateRoute exact path={`${routes.user.profile}`} component={Profile} />
                         <PrivateRoute exact path={`${routes.user.profileEdit}`} component={ProfileEdit} />
                         <PrivateRoute exact path={`${routes.user.changePassword}`} component={ChangePassword} />
+
                         <PublicRoute exact path={`${routes.user.view}/:username`} component={UserView} />
                         <PublicRoute exact path={routes.user.list} component={UserList} />
 

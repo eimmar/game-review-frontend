@@ -26,6 +26,8 @@ import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import CloseIcon from '@material-ui/icons/Close'
+import PeopleIcon from '@material-ui/icons/People'
+import PersonAddIcon from '@material-ui/icons/PersonAdd'
 
 import { ContentLayout } from '../../layouts/ContentLayout/ContentLayout'
 import sStyles from './Header.module.scss'
@@ -76,6 +78,15 @@ class Header extends React.PureComponent<Props> {
         query: '',
         mobileDrawerOpen: false,
     }
+
+    userMenu = [
+        { route: routes.user.profile, title: t`header.profileInfo`, icon: ContactMailIcon },
+        { route: routes.user.profileEdit, title: t`header.updateProfile`, icon: EditIcon },
+        { route: routes.user.friendList, title: t`friendship.list`, icon: PeopleIcon },
+        { route: routes.user.friendInvites, title: t`friendship.invites`, icon: PersonAddIcon },
+        { route: routes.user.changePassword, title: t`header.changePassword`, icon: LockIcon },
+        { route: routes.logout, title: t`header.logOut`, icon: ExitToAppIcon },
+    ]
 
     componentDidMount(): void {
         const { location } = this.props
@@ -163,54 +174,27 @@ class Header extends React.PureComponent<Props> {
                                 open={!!profileMenuAnchor}
                                 onClose={this.handleProfileMenuClose}
                             >
-                                <MenuItem
-                                    onClick={this.handleProfileMenuClose}
-                                    component={Link}
-                                    to={routes.user.profile}
-                                >
-                                    <ContactMailIcon className="m-r-16" />
-                                    {t`header.profileInfo`}
-                                </MenuItem>
-                                <MenuItem
-                                    onClick={this.handleProfileMenuClose}
-                                    component={Link}
-                                    to={routes.user.profileEdit}
-                                >
-                                    <EditIcon className="m-r-16" />
-                                    {t`header.updateProfile`}
-                                </MenuItem>
-                                <MenuItem
-                                    onClick={this.handleProfileMenuClose}
-                                    component={Link}
-                                    to={routes.user.changePassword}
-                                >
-                                    <LockIcon className="m-r-16" />
-                                    {t`header.changePassword`}
-                                </MenuItem>
-                                <MenuItem onClick={this.handleProfileMenuClose} component={Link} to={routes.logout}>
-                                    <ExitToAppIcon className="m-r-16" />
-                                    {t`header.logOut`}
-                                </MenuItem>
+                                {this.userMenu.map((it) => (
+                                    <MenuItem
+                                        key={it.route}
+                                        onClick={this.handleProfileMenuClose}
+                                        component={Link}
+                                        to={it.route}
+                                    >
+                                        <it.icon className="m-r-16" />
+                                        {it.title}
+                                    </MenuItem>
+                                ))}
                             </Menu>
                         </Hidden>
 
                         <Hidden mdUp>
-                            <MenuItem component={Link} to={routes.user.profile} className={sStyles.drawerItem}>
-                                <ContactMailIcon className="m-r-32" />
-                                {t`header.profileInfo`}
-                            </MenuItem>
-                            <MenuItem component={Link} to={routes.user.profileEdit} className={sStyles.drawerItem}>
-                                <EditIcon className="m-r-32" />
-                                {t`header.updateProfile`}
-                            </MenuItem>
-                            <MenuItem component={Link} to={routes.user.changePassword} className={sStyles.drawerItem}>
-                                <LockIcon className="m-r-32" />
-                                {t`header.changePassword`}
-                            </MenuItem>
-                            <MenuItem component={Link} to={routes.logout} className={sStyles.drawerItem}>
-                                <ExitToAppIcon className="m-r-32" />
-                                {t`header.logOut`}
-                            </MenuItem>
+                            {this.userMenu.map((it) => (
+                                <MenuItem key={it.route} component={Link} to={it.route} className={sStyles.drawerItem}>
+                                    <it.icon className="m-r-32" />
+                                    {it.title}
+                                </MenuItem>
+                            ))}
                         </Hidden>
                     </>
                 )}

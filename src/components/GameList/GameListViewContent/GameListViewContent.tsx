@@ -225,7 +225,7 @@ class GameListViewContent extends Component<Props, State> {
                             <Typography align="center">
                                 {t`common.createdBy`}{' '}
                                 <Link to={`${routes.user.view}/${gameList.user.username}`}>
-                                    <b>{userService.getFullName(gameList.user)}</b>
+                                    <b>{gameList.user.username}</b>
                                 </Link>
                                 {', '}
                                 <Moment locale={i18next.language} format="MMMM Do, YYYY">

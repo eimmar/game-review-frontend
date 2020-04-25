@@ -18,6 +18,8 @@ export const routes = {
     },
 
     user: {
+        friendList: '/draugai',
+        friendInvites: '/kvietimai-draugauti',
         profile: '/profilis',
         profileEdit: '/profilis/redaguoti',
         changePassword: '/profilis/keisti-slaptazodi',
