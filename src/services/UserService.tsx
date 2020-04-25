@@ -43,6 +43,8 @@ interface DateTimeObj {
     timezone: string
 }
 
+export type WithUser = User
+
 class UserService {
     baseUrl = '/api/user/'
 

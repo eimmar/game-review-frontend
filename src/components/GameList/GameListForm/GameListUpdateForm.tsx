@@ -14,9 +14,9 @@ import {
     gameListService,
     GameListType,
     GameListUpdateRequest,
-    WithUser,
 } from '../../../services/GameListService'
 import { t } from '../../../i18n'
+import { WithUser } from '../../../services/UserService'
 
 interface Props extends RouteComponentProps {
     initialValues: GameList

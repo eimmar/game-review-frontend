@@ -121,6 +121,17 @@ export const ltTranslations = {
     'gameList.deleteError': 'Klaida! Sąrašo negalima išstrinti.',
     'gameList.noItems': 'Sąrašų nėra.',
 
+    'friendship.addFriend': 'Pridėti prie draugų',
+    'friendship.removeFriend': 'Šalinti iš draugų',
+    'friendship.pending': 'Kvietimas darugauti išsiūstas',
+    'friendship.accept': 'Patvirtinti kvietimą draugauti',
+    'friendship.decline': 'Atmesti',
+    'friendship.remove': 'Taip',
+    'friendship.requestSent': 'Kvietimas darugauti nusiūstas.',
+    'friendship.removeSuccess': 'Žaidėjas pašalintas iš draugų.',
+    'friendship.youAreFriends': 'Esate draugai',
+    'friendship.confirmRemove': 'Ar tikrai norite pašalinti šį žaidėją iš savo draugų sąrašo?',
+
     'gameReview.successCreate': 'Atsiliepimas pateiktas peržiūrai.',
     'gameReview.successUpdate': 'Atsiliepimas atnaujintas.',
     'gameReview.rating': 'Įvertinimas',
@@ -238,10 +249,12 @@ export const ltTranslations = {
 
     'error.code.0': 'Nežinoma klaida. Bandykite dar kartą.',
     'error.code.401': 'Prieiga atmesta.',
+    'error.code.403': 'Prieiga atmesta.',
     'error.code.500': 'Nežinoma klaida. Bandykite dar kartą.',
     'error.code.100': 'Netinkami duomenys.',
     'error.code.200': 'Slaptažodžio pakeitimo užklausa jau yra išsiųsta.',
     'error.code.201': 'Naudotojas su tokiu el. paštu arba slapyvardžiu jau egzistuoja.',
     'error.code.300': 'Sąrašas su tokiu pavadinimu jau yra sukurtas.',
+    'error.code.400': 'Klaida.',
     'error.loginInvalid': 'Neteisingi prisijungimo duomenys.',
 }

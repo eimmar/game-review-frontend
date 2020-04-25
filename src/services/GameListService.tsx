@@ -1,5 +1,5 @@
 import { requestService } from './RequestService'
-import { User } from './UserService'
+import { WithUser } from './UserService'
 
 export enum GameListPrivacyType {
     Private = 1,
@@ -13,8 +13,6 @@ export enum GameListType {
     Playing,
     Custom,
 }
-
-export type WithUser = User
 
 export interface GameList<T = WithUser | null> extends Timestampable {
     id: string

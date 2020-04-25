@@ -5,8 +5,8 @@ export interface ErrorResponse {
     message: string
 }
 
-function getError(error: ErrorResponse): ErrorResponse {
-    return { ...error, message: t(`error.code.${error.code}`) }
+function getError(responseStatus: number, error: ErrorResponse): ErrorResponse {
+    return { ...error, message: t(`error.code.${error.code || responseStatus}`) }
 }
 
 export const errorService = {

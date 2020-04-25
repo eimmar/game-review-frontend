@@ -31,6 +31,7 @@ import ReviewList from '../../Review/User/ReviewList/ReviewList'
 import { User, userService } from '../../../services/UserService'
 import { routes } from '../../../parameters'
 import UserAvatar from './UserAvatar/UserAvatar'
+import FriendBadge from '../../Friend/FriendBadge/FriendBadge'
 
 const styles = ({ spacing, palette }: Theme) =>
     createStyles({
@@ -287,6 +288,9 @@ class ProfileContent extends Component<Props, State> {
                                     {user.createdAt.date}
                                 </Moment>
                             </Typography>
+                            <div className="text-center m-t-8">
+                                <FriendBadge user={user} />
+                            </div>
                         </Grid>
 
                         <Grid item lg={12} className="width-full">

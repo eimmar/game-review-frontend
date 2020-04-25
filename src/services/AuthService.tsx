@@ -46,11 +46,10 @@ class AuthService {
         return requestService.performRequest('POST', '/api/auth/login', params).then((response: LogInResponse) => {
             if (response.token) {
                 const currentUser = JwtDecode(response.token) as LoggedInUser
+                const expires = new Date(currentUser.exp * 1000)
 
                 currentUser.accessToken = response.token
-
-                cookie.save('currentUser', currentUser.username, {})
-                localStorage.clear()
+                cookie.save('currentUser', currentUser.username, { expires })
                 localStorage.setItem(currentUser.username, JSON.stringify(currentUser))
 
                 return currentUser

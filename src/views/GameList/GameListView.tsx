@@ -5,9 +5,10 @@ import { useParams } from 'react-router-dom'
 import { MainLayout } from '../../layouts/MainLayout/MainLayout'
 import NotFound404 from '../Error/NotFound404'
 import PageLoader from '../../components/Global/PageLoader'
-import { GameList, gameListService, GameListType, WithUser } from '../../services/GameListService'
+import { GameList, gameListService, GameListType } from '../../services/GameListService'
 import GameListViewContent from '../../components/GameList/GameListViewContent/GameListViewContent'
 import { t } from '../../i18n'
+import { WithUser } from '../../services/UserService'
 
 export default function GameListView() {
     const { guid } = useParams()

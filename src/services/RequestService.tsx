@@ -1,6 +1,6 @@
 import cookie from 'react-cookies'
 
-import { backendUrl, routes } from '../parameters'
+import { backendUrl, phpDebug, routes } from '../parameters'
 import { errorService } from './ErrorService'
 // eslint-disable-next-line import/no-cycle
 import { authService } from './AuthService'
@@ -79,7 +79,7 @@ class RequestService {
                 return data
             }
 
-            const error = errorService.getError(data)
+            const error = errorService.getError(response.status, data)
 
             return Promise.reject(error)
         })
@@ -87,7 +87,7 @@ class RequestService {
 
     performRequest(method: 'POST' | 'GET' | 'DELETE', action: string, body?: object) {
         return fetch(
-            backendUrl + action,
+            backendUrl + action + phpDebug,
             this.getRequestOptions(method, body ? JSON.stringify(body) : '', 'application/json;charset=UTF-8'),
         ).then(this.handleResponse)
     }
