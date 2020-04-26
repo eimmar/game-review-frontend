@@ -6,6 +6,7 @@ import 'react-multi-carousel/lib/styles.css'
 import { Link } from 'react-router-dom'
 import Moment from 'react-moment'
 import i18next from 'i18next'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import { t } from '../../../i18n'
 import { Pagination } from '../../../services/RequestService'
@@ -129,10 +130,10 @@ class GameGridCarousel extends AbstractPaginator<Props, State> {
                     <Link to={`${routes.game.view}/${game.slug}`}>
                         <CardMedia>
                             {game.rating && <RatingIndicator rating={game.rating} />}
-                            <CardMedia
-                                image={game.coverImage || placeholderImg}
-                                title={game.name}
+                            <LazyLoadImage
                                 className={styles.image}
+                                alt={game.name}
+                                src={game.coverImage || placeholderImg}
                             />
                         </CardMedia>
                         <div className={styles.cardContent}>

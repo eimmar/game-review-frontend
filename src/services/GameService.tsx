@@ -267,11 +267,14 @@ class GameService {
     }
 
     withCover<T extends Game>(game: T, size: ScreenshotSize): T {
-        return { ...game, coverImage: game.coverImage ? game.coverImage?.replace(ScreenshotSize.Thumb, size) : null }
+        return {
+            ...game,
+            coverImage: game.coverImage ? `https:${game.coverImage?.replace(ScreenshotSize.Thumb, size)}` : null,
+        }
     }
 
     getScreenshots(game: GameLoaded, size: ScreenshotSize): Screenshot[] {
-        return game.screenshots.map((it) => ({ ...it, url: it.url.replace(ScreenshotSize.Thumb, size) }))
+        return game.screenshots.map((it) => ({ ...it, url: `https:${it.url.replace(ScreenshotSize.Thumb, size)}` }))
     }
 
     transformImage(imageUrl: string, fromSize: ScreenshotSize, toSize: ScreenshotSize) {

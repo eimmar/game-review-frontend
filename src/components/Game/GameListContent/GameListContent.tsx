@@ -4,7 +4,6 @@ import Typography from '@material-ui/core/Typography'
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import {
-    CardMedia,
     Container,
     ListItem,
     ListItemAvatar,
@@ -21,6 +20,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import { toast } from 'react-toastify'
 import Moment from 'react-moment'
 import i18next from 'i18next'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import { t } from '../../../i18n'
 import { Game, gameService, ScreenshotSize } from '../../../services/GameService'
@@ -40,11 +40,6 @@ const styles = ({ palette, spacing, breakpoints }: Theme) =>
         },
         cardGrid: {
             padding: 0,
-        },
-        cardMedia: {
-            width: 90,
-            height: 128,
-            margin: 'auto',
         },
         footer: {
             backgroundColor: palette.background.paper,
@@ -82,7 +77,6 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
     classes: {
         icon: string
         cardGrid: string
-        cardMedia: string
         footer: string
         list: string
         inline: string
@@ -201,10 +195,12 @@ class GameListContent extends AbstractPaginator<Props, State> {
                                             {game.rating && <RatingIndicator rating={game.rating} />}
                                             <ListItemAvatar className={classes.listAvatar}>
                                                 <Link to={`${routes.game.view}/${game.slug}`}>
-                                                    <CardMedia
-                                                        className={classes.cardMedia}
-                                                        image={game.coverImage || placeholderImg}
-                                                        title={game.name}
+                                                    <LazyLoadImage
+                                                        style={{ display: 'block', margin: 'auto' }}
+                                                        width={90}
+                                                        height={120}
+                                                        src={game.coverImage || placeholderImg}
+                                                        alt={game.name}
                                                     />
                                                 </Link>
                                             </ListItemAvatar>

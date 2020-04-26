@@ -4,6 +4,7 @@ import { CardMedia, Grid, Dialog, DialogContent, Button } from '@material-ui/cor
 import Typography from '@material-ui/core/Typography'
 import Moment from 'react-moment'
 import i18next from 'i18next'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import { t } from '../../../i18n'
 import { Video } from '../../../services/GameSpotService'
@@ -73,11 +74,11 @@ class GameSpotVideo extends Component<Props, State> {
         return (
             <Grid item>
                 <div className={classes.card}>
-                    <CardMedia
+                    <LazyLoadImage
                         onClick={this.toggleModal}
-                        image={video.image?.screenTiny || placeholderImg}
-                        title={video.title}
                         className={classes.image}
+                        alt={video.title}
+                        src={video.image?.screenTiny || placeholderImg}
                     />
                     <div onClick={this.toggleModal} className={classes.cardContent}>
                         <Typography gutterBottom>{video.title}</Typography>

@@ -12,6 +12,7 @@ export interface User {
     lastName: string | null
     avatar: string | null
     roles: string[]
+    enabled: boolean
     createdAt: DateTimeObj
 }
 

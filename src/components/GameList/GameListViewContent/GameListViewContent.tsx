@@ -223,11 +223,15 @@ class GameListViewContent extends Component<Props, State> {
 
                         <Grid item lg={12} className="width-full">
                             <Typography align="center">
-                                {t`common.createdBy`}{' '}
-                                <Link to={`${routes.user.view}/${gameList.user.username}`}>
-                                    <b>{gameList.user.username}</b>
-                                </Link>
-                                {', '}
+                                {gameList.user.enabled && (
+                                    <>
+                                        {t`common.createdBy`}{' '}
+                                        <Link to={`${routes.user.view}/${gameList.user.username}`}>
+                                            <b>{gameList.user.username}</b>
+                                        </Link>
+                                        {', '}
+                                    </>
+                                )}
                                 <Moment locale={i18next.language} format="MMMM Do, YYYY">
                                     {gameList.createdAt}
                                 </Moment>

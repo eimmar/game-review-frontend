@@ -1,7 +1,7 @@
 import cookie from 'react-cookies'
 import { toast } from 'react-toastify'
 
-import { backendUrl, params, phpDebug, routes, storage } from '../parameters'
+import { backendUrl, params, routes, storage } from '../parameters'
 import { errorService } from './ErrorService'
 // eslint-disable-next-line import/no-cycle
 import { authService } from './AuthService'
@@ -98,7 +98,7 @@ class RequestService {
 
     performRequest(method: 'POST' | 'GET' | 'DELETE', action: string, body?: object) {
         return fetch(
-            backendUrl + action + phpDebug,
+            backendUrl + action,
             this.getRequestOptions(method, body ? JSON.stringify(body) : '', 'application/json;charset=UTF-8'),
         ).then(this.handleResponse)
     }

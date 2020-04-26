@@ -262,7 +262,8 @@ export const ltTranslations = {
     'error.code.403': 'Prieiga atmesta.',
     'error.code.500': 'Nežinoma klaida. Bandykite dar kartą.',
     'error.code.100': 'Netinkami duomenys.',
-    'error.code.200': 'Slaptažodžio pakeitimo užklausa jau yra išsiųsta.',
+    'error.code.200':
+        'Slaptažodžio pakeitimo užklausa jau yra išsiųsta. Palaukite bent 10 minučių prieš siūsdami sekančią.',
     'error.code.201': 'Naudotojas su tokiu el. paštu arba slapyvardžiu jau egzistuoja.',
     'error.code.300': 'Sąrašas su tokiu pavadinimu jau yra sukurtas.',
     'error.code.400': 'Klaida.',

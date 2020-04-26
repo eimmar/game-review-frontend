@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { CardActionArea, CardMedia, Grid, Dialog, DialogContent } from '@material-ui/core'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import { gameService, Screenshot, ScreenshotSize } from '../../../services/GameService'
 
@@ -54,7 +55,7 @@ class GameImage extends Component<Props, State> {
             <Grid item>
                 <CardActionArea component="a" onClick={this.toggleModal}>
                     <CardMedia>
-                        <img
+                        <LazyLoadImage
                             className={classes.image}
                             alt={title}
                             src={gameService.transformImage(
