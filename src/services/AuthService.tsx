@@ -6,7 +6,7 @@ import { requestService } from './RequestService'
 // eslint-disable-next-line import/no-cycle
 import { User } from './UserService'
 import history from './History'
-import { routes } from '../parameters'
+import { routes, storage } from '../parameters'
 
 export interface LoggedInUser extends User {
     accessToken: string
@@ -49,7 +49,7 @@ class AuthService {
                 const expires = new Date(currentUser.exp * 1000)
 
                 currentUser.accessToken = response.token
-                cookie.save('currentUser', currentUser.username, { expires })
+                cookie.save(storage.user, currentUser.username, { expires, path: routes.homePage })
                 localStorage.setItem(currentUser.username, JSON.stringify(currentUser))
 
                 return currentUser
@@ -80,12 +80,12 @@ class AuthService {
     }
 
     logout() {
-        localStorage.removeItem(cookie.load('currentUser') || '')
-        cookie.remove('currentUser')
+        localStorage.removeItem(cookie.load(storage.user) || '')
+        cookie.remove(storage.user, { path: routes.homePage })
     }
 
     getCurrentUser(): LoggedInUser | null {
-        const userCookie = localStorage.getItem(cookie.load('currentUser'))
+        const userCookie = localStorage.getItem(cookie.load(storage.user))
 
         return userCookie ? JSON.parse(userCookie) : null
     }

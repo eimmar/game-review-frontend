@@ -216,9 +216,9 @@ export const ltTranslations = {
     'gameCategory.6': 'Epizodas',
     'gameCategory.7': 'Sezonas',
 
-    'errors.validation.required': 'Šis laukas yra privalomas',
-    'errors.validation.email': 'Netinkamas el. paštas',
-    'errors.validation.passwordsMustMatch': 'Slaptažodžiai turi sutapti',
+    'error.validation.required': 'Šis laukas yra privalomas',
+    'error.validation.email': 'Netinkamas el. paštas',
+    'error.validation.passwordsMustMatch': 'Slaptažodžiai turi sutapti',
     'error.validation.tooLong': 'Laukas neturi būti ilgesnis nei {{number}} symboliai.',
     'error.validation.tooMany': 'Laukas neturi turėti daugiau nei {{number}} įrašų.',
     'error.validation.tooShort': 'Laukas turi būti ilgesnis nei {{number}} symboliai.',
@@ -226,11 +226,13 @@ export const ltTranslations = {
     'error.validation.fileTooBig': 'Nuotrauka negali būti didesnė nei {{sizeMb}} MB.',
     'error.validation.invalidFile':
         'Nuotrauka negali būti didesnė nei {{sizeMb}} MB, leidižiami nuotraukų tipai: {{types}}.',
+    'warning.gamePartialContent':
+        'Dėl šiuo metu esamų sutrikimų išoriniuose duomenų šaltiniuose negalime rodyti visų žaidimų informacijos.',
 
     'header.signIn': 'Prisijungti',
     'header.logOut': 'Atsijungti',
     'header.myProfile': 'Mano paskyra',
-    'header.profileInfo': 'Informacija',
+    'header.profileInfo': 'Mano paskyra',
     'header.updateProfile': 'Atnaujinti informaciją',
     'header.changePassword': 'Keisti slaptažodį',
     'header.search': 'Paieška',

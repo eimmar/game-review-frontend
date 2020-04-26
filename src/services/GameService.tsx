@@ -120,8 +120,14 @@ export interface Company extends Timestampable, ExternalEntity {
     url: string
 }
 
-export interface Game extends Timestampable, ExternalEntity {
-    id: string
+export type DB = string
+
+export type API = null
+
+export type DataOrigin = DB | API
+
+export interface Game<T extends DataOrigin = DB> extends Timestampable<T>, ExternalEntity {
+    id: T
     name: string
     slug: string
     coverImage: string | null

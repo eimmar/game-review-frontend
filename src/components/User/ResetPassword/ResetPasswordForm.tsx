@@ -49,11 +49,11 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
 class ResetPasswordForm extends Component<Props> {
     validationSchema = Yup.object().shape({
         password: Yup.string()
-            .required(t`errors.validation.required`)
+            .required(t`error.validation.required`)
             .min(4, t('error.validation.tooShort', { number: 4 })),
         repeatPassword: Yup.string()
-            .required(t`errors.validation.required`)
-            .oneOf([Yup.ref('password'), null], t`errors.validation.passwordsMustMatch`),
+            .required(t`error.validation.required`)
+            .oneOf([Yup.ref('password'), null], t`error.validation.passwordsMustMatch`),
     })
 
     get initialValues(): ResetPasswordRequest {

@@ -50,7 +50,7 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
 
 class ProfileEditForm extends Component<Props> {
     validationSchema = Yup.object().shape({
-        firstName: Yup.string().required(t`errors.validation.required`),
+        firstName: Yup.string().required(t`error.validation.required`),
         lastName: Yup.string(),
         removeAvatar: Yup.boolean(),
         avatarFile: Yup.string().nullable(),

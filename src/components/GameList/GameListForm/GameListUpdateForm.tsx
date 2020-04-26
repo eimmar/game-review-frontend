@@ -26,9 +26,9 @@ interface Props extends RouteComponentProps {
 
 class GameListUpdateForm extends Component<Props> {
     validationSchema = Yup.object().shape({
-        privacyType: Yup.string().required(t`errors.validation.required`),
+        privacyType: Yup.string().required(t`error.validation.required`),
         name: Yup.string()
-            .required(t`errors.validation.required`)
+            .required(t`error.validation.required`)
             .max(100, t('error.validation.tooLong', { number: 100 })),
     })
 

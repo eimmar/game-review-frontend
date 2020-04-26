@@ -49,8 +49,8 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
 class ForgotPasswordForm extends Component<Props> {
     validationSchema = Yup.object().shape({
         email: Yup.string()
-            .required(t`errors.validation.required`)
-            .email(t`errors.validation.email`),
+            .required(t`error.validation.required`)
+            .email(t`error.validation.email`),
     })
 
     get initialValues(): ForgotPasswordRequest {

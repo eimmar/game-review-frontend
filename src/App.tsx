@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { withTranslation } from 'react-i18next'
 import { Switch, Router } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import 'moment/locale/lt'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { Hidden } from '@material-ui/core'
 
 import { PublicRoute } from './routes/PublicRoute'
 import { routes } from './parameters'
@@ -49,7 +50,12 @@ function App() {
         <ThemeProvider theme={theme}>
             <Router history={history}>
                 <ScrollToTop>
-                    <ToastContainer />
+                    <Hidden xsDown>
+                        <ToastContainer position="bottom-right" />
+                    </Hidden>
+                    <Hidden smUp>
+                        <ToastContainer position="top-right" />
+                    </Hidden>
                     <Switch>
                         <PublicOnlyRoute exact path={routes.register} component={Registration} />
                         <PublicOnlyRoute exact path={routes.login} component={Login} />

@@ -20,13 +20,13 @@ interface Props extends RouteComponentProps {
 
 class GameListForm extends Component<Props> {
     validationSchema = Yup.object().shape({
-        privacyType: Yup.string().required(t`errors.validation.required`),
-        user: Yup.string().required(t`errors.validation.required`),
+        privacyType: Yup.string().required(t`error.validation.required`),
+        user: Yup.string().required(t`error.validation.required`),
         games: Yup.string()
-            .required(t`errors.validation.required`)
-            .min(1, t`errors.validation.required`),
+            .required(t`error.validation.required`)
+            .min(1, t`error.validation.required`),
         name: Yup.string()
-            .required(t`errors.validation.required`)
+            .required(t`error.validation.required`)
             .max(100, t('error.validation.tooLong', { number: 100 })),
     })
 

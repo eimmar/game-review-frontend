@@ -94,9 +94,11 @@ class ReviewList extends AbstractPaginator<Props, State> {
     renderReview(review: Review) {
         return (
             <Box mt={0} mb={2} key={review.id}>
-                <Typography variant="h6" gutterBottom>
-                    {review.title}
-                </Typography>
+                {review.title.length > 3 && (
+                    <Typography variant="h6" gutterBottom>
+                        {review.title}
+                    </Typography>
+                )}
 
                 <Typography variant="caption" paragraph gutterBottom>
                     <Moment locale={i18next.language} format="hh:mm, MMMM Do, YYYY">
@@ -113,8 +115,32 @@ class ReviewList extends AbstractPaginator<Props, State> {
                 <List>
                     <ListItem alignItems="flex-start" disableGutters>
                         <ListItemText
-                            classes={{ secondary: styles.reviewContent }}
-                            primary={review.content}
+                            classes={{ secondary: styles.reviewContent, primary: styles.content }}
+                            primary={
+                                <ShowMore
+                                    lines={6}
+                                    more={
+                                        <Typography
+                                            display="block"
+                                            component="span"
+                                            variant="subtitle1"
+                                            className={styles.inline}
+                                            color="primary"
+                                        >{t`common.showMore`}</Typography>
+                                    }
+                                    less={
+                                        <Typography
+                                            display="block"
+                                            component="span"
+                                            variant="subtitle1"
+                                            className={styles.inline}
+                                            color="primary"
+                                        >{t`common.showLess`}</Typography>
+                                    }
+                                >
+                                    {review.content}
+                                </ShowMore>
+                            }
                             secondary={
                                 <Box mt={1} component="span">
                                     {review.video && (

@@ -59,17 +59,17 @@ interface State {
 
 class ReviewFormModal extends Component<Props, State> {
     validationSchema = Yup.object().shape({
-        game: Yup.string().required(t`errors.validation.required`),
-        user: Yup.string().required(t`errors.validation.required`),
+        game: Yup.string().required(t`error.validation.required`),
+        user: Yup.string().required(t`error.validation.required`),
         comment: Yup.string()
-            .required(t`errors.validation.required`)
+            .required(t`error.validation.required`)
             .max(10000, t('error.validation.tooLong', { number: 10000 })),
         title: Yup.string()
-            .required(t`errors.validation.required`)
+            .required(t`error.validation.required`)
             .max(255, t('error.validation.tooLong', { number: 255 })),
         rating: Yup.number()
-            .required(t`errors.validation.required`)
-            .min(1, t`errors.validation.required`)
+            .required(t`error.validation.required`)
+            .min(1, t`error.validation.required`)
             .max(10),
         pros: Yup.array()
             .of(

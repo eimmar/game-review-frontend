@@ -1,10 +1,12 @@
 import cookie from 'react-cookies'
+import { toast } from 'react-toastify'
 
-import { backendUrl, phpDebug, routes } from '../parameters'
+import { backendUrl, params, phpDebug, routes, storage } from '../parameters'
 import { errorService } from './ErrorService'
 // eslint-disable-next-line import/no-cycle
 import { authService } from './AuthService'
 import history from './History'
+import { t } from '../i18n'
 
 export interface Pagination {
     page: number
@@ -75,8 +77,13 @@ class RequestService {
             const data = text && JSON.parse(text)
 
             if (!response.ok && response.status === 401) {
-                cookie.remove('currentUser')
+                cookie.remove(storage.user, { path: routes.homePage })
                 history.push(routes.login, { referer: { url: history.location.pathname } })
+            }
+
+            if (response.status === 206 && !cookie.load(storage.partialContentWarningShown)) {
+                toast.warn(t`warning.gamePartialContent`, { autoClose: false, position: 'top-center' })
+                cookie.save(storage.partialContentWarningShown, 1, { maxAge: params.partialContentWarningMaxAge })
             }
 
             if (response.ok) {

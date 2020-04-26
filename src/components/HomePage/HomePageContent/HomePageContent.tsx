@@ -15,7 +15,7 @@ function HomePageContent() {
                 <GameGridCarousel
                     defaultActive
                     query={{
-                        orderBy: 'first_release_date',
+                        orderBy: 'releaseDate',
                         order: 'desc',
                         releaseDateTo: moment().format('YYYY-MM-DD'),
                     }}
@@ -25,17 +25,14 @@ function HomePageContent() {
                 <GameGridCarousel
                     defaultActive
                     query={{
-                        orderBy: 'first_release_date',
+                        orderBy: 'releaseDate',
                         order: 'asc',
                         releaseDateFrom: moment().format('YYYY-MM-DD'),
                     }}
                 />
 
                 <Typography variant="h6" className="m-t-32">{t`homePage.topCriticRated`}</Typography>
-                <GameGridCarousel
-                    defaultActive
-                    query={{ orderBy: 'total_rating', order: 'desc', ratingCountFrom: '20' }}
-                />
+                <GameGridCarousel defaultActive query={{ orderBy: 'rating', order: 'desc', ratingCountFrom: '20' }} />
 
                 <Typography variant="h6" className="m-t-64">{t`homePage.newestMembers`}</Typography>
                 <UserGridCarousel defaultActive query={{ orderBy: 'createdAt', order: 'desc' }} />

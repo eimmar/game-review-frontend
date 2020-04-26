@@ -28,6 +28,15 @@ export const routes = {
     },
 }
 
+export const storage = {
+    user: 'currentUser',
+    partialContentWarningShown: 'partialContentWarningShown',
+}
+
+export const params = {
+    partialContentWarningMaxAge: 3600,
+}
+
 export const igdbReviews = 'https://www.igdb.com/reviews'
 
 export const phpDebug = '?XDEBUG_SESSION_START=PHPSTORM'

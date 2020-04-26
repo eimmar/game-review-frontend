@@ -49,16 +49,16 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
 class RegistrationForm extends Component<Props> {
     validationSchema = Yup.object().shape({
         username: Yup.string()
-            .required(t`errors.validation.required`)
+            .required(t`error.validation.required`)
             .min(4, t('error.validation.tooShort', { number: 4 }))
             .test('username', t`error.validation.specialCharsDetected`, (val) => val.match(/^[a-zA-Z0-9_]+$/)),
         email: Yup.string()
-            .required(t`errors.validation.required`)
-            .email(t`errors.validation.email`),
-        firstName: Yup.string().required(t`errors.validation.required`),
+            .required(t`error.validation.required`)
+            .email(t`error.validation.email`),
+        firstName: Yup.string().required(t`error.validation.required`),
         lastName: Yup.string(),
         password: Yup.string()
-            .required(t`errors.validation.required`)
+            .required(t`error.validation.required`)
             .min(4, t('error.validation.tooShort', { number: 4 })),
     })
 

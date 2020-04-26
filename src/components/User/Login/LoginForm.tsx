@@ -50,8 +50,8 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps<{}, {}, {
 
 class LoginForm extends Component<Props> {
     validationSchema = Yup.object().shape({
-        password: Yup.string().required(t`errors.validation.required`),
-        username: Yup.string().required(t`errors.validation.required`),
+        password: Yup.string().required(t`error.validation.required`),
+        username: Yup.string().required(t`error.validation.required`),
     })
 
     get initialValues(): LogInRequest {

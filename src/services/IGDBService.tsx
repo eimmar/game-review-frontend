@@ -1,6 +1,5 @@
 import { Pagination, requestService } from './RequestService'
 import { Game, GameLoaded, GamesFilterRequest } from './GameService'
-import { ensureArray } from './Util/PageSpeed'
 
 interface UserRating {
     rating: number
@@ -25,8 +24,9 @@ export interface Review {
     video?: Video
 }
 
-interface Anything {
-    [key: string]: any
+interface GameListResponse {
+    items: Game[]
+    status: number
 }
 
 class IGDBService {
@@ -42,73 +42,50 @@ class IGDBService {
         return this.getAllFromFilters(filters, limit, offset)
     }
 
-    getAllFromFilters(filters: GamesFilterRequest, limit: number, offset: number): Promise<Game[]> {
-        return requestService.performRequest(
-            'POST',
-            `${this.baseUrl}games`,
-            this.getRequestBody(filters, limit, offset),
-        )
+    getAllFromFilters(filters: GamesFilterRequest, pageSize: number, firstResult: number): Promise<Game[]> {
+        const {
+            page,
+            query,
+            releaseDateFrom,
+            releaseDateTo,
+            category,
+            ratingFrom,
+            ratingTo,
+            ratingCountFrom,
+            ratingCountTo,
+            genre,
+            theme,
+            platform,
+            gameMode,
+            orderBy,
+            order,
+        } = filters
+
+        return requestService.performRequest('POST', `${this.baseUrl}games`, {
+            pageSize,
+            page: Number(page || 1),
+            firstResult,
+            orderBy,
+            order,
+            filters: {
+                query,
+                releaseDateFrom,
+                releaseDateTo,
+                category,
+                ratingFrom,
+                ratingTo,
+                ratingCountFrom,
+                ratingCountTo,
+                genre,
+                theme,
+                platform,
+                gameMode,
+            },
+        })
     }
 
     game(slug: string): Promise<GameLoaded> {
         return requestService.performRequest('POST', `${this.baseUrl}game/${slug}`)
-    }
-
-    getRequestBody(request: GamesFilterRequest, limit: number, offset: number) {
-        const sort = request.query ? undefined : `${request.orderBy || 'first_release_date'} ${request.order || 'desc'}`
-        const search = request.query
-        let where: Anything = { first_release_date: '!= null' }
-
-        if (request.category) {
-            where.category = `= (${ensureArray(request.category).join(', ')})`
-        }
-
-        if (request.genre) {
-            where['genres.slug'] = `= ("${ensureArray(request.genre).join('", "')}")`
-        }
-
-        if (request.theme) {
-            where['themes.slug'] = `= ("${ensureArray(request.theme).join('", "')}")`
-        }
-
-        if (request.platform) {
-            where['platforms.slug'] = `= ("${ensureArray(request.platform).join('", "')}")`
-        }
-
-        if (request.gameMode) {
-            where['game_modes.slug'] = `= ("${ensureArray(request.gameMode).join('", "')}")`
-        }
-
-        if (request.ratingFrom) {
-            where.total_rating = `>= ${request.ratingFrom}`
-        }
-
-        if (request.ratingTo) {
-            const previousPart = where.total_rating ? `${where.total_rating} & total_rating ` : ''
-
-            where.total_rating = `${previousPart}<= ${request.ratingTo}`
-        }
-
-        if (request.releaseDateFrom) {
-            where.first_release_date = `${where.first_release_date} & first_release_date >= ${new Date(
-                request.releaseDateFrom,
-            ).getTime() / 1000}`
-        }
-
-        if (request.releaseDateTo) {
-            where.first_release_date = `${where.first_release_date} & first_release_date <= ${new Date(
-                request.releaseDateTo,
-            ).getTime() / 1000}`
-        }
-
-        if (request.orderBy === 'total_rating') {
-            where.total_rating = '!= null'
-            where.total_rating_count = '>= 20'
-        }
-
-        where = where || { first_release_date: `<= ${new Date().getTime()}` }
-
-        return { limit, offset, sort, search, where }
     }
 
     getMaxPage(pageSize: number) {

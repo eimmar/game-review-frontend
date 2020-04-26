@@ -26,9 +26,9 @@ declare module 'react-show-more' {
     export default function ShowMore(props: ShowMoreProps): JSX.Element
 }
 
-declare interface Timestampable {
-    createdAt: string
-    updatedAt: string
+declare interface Timestampable<T = string> {
+    createdAt: T
+    updatedAt: T
 }
 
 declare interface ExternalEntity {

@@ -67,10 +67,10 @@ class GamesFilter extends Component<Props, State> {
     sort = [
         { orderBy: 'name', order: 'asc', label: t`game.sortByNameAsc` },
         { orderBy: 'name', order: 'desc', label: t`game.sortByNameDesc` },
-        { orderBy: 'first_release_date', order: 'asc', label: t`game.sortByReleaseDateAsc` },
-        { orderBy: 'first_release_date', order: 'desc', label: t`game.sortByReleaseDateDesc` },
-        { orderBy: 'total_rating', order: 'asc', label: t`game.sortByRatingAsc` },
-        { orderBy: 'total_rating', order: 'desc', label: t`game.sortByRatingDesc` },
+        { orderBy: 'releaseDate', order: 'asc', label: t`game.sortByReleaseDateAsc` },
+        { orderBy: 'releaseDate', order: 'desc', label: t`game.sortByReleaseDateDesc` },
+        { orderBy: 'rating', order: 'asc', label: t`game.sortByRatingAsc` },
+        { orderBy: 'rating', order: 'desc', label: t`game.sortByRatingDesc` },
     ]
 
     constructor(props: Props) {

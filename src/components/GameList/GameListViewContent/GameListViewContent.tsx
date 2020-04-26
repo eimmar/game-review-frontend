@@ -21,7 +21,7 @@ import { GameList, gameListService, GameListType } from '../../../services/GameL
 import { gameService } from '../../../services/GameService'
 import sStyles from './GameListViewContent.module.scss'
 import { routes } from '../../../parameters'
-import { userService, WithUser } from '../../../services/UserService'
+import { WithUser } from '../../../services/UserService'
 import GameListUpdateForm from '../GameListForm/GameListUpdateForm'
 import { authService } from '../../../services/AuthService'
 import history from '../../../services/History'
