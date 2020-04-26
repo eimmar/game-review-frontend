@@ -159,7 +159,7 @@ class Sidebar extends Component<Props> {
                             to={`${routes.game.list}?theme=${theme.slug}`}
                             key={theme.id}
                         >
-                            {theme.name}
+                            {t(theme.name)}
                         </Link>
                     ))}
                 {game.themes.length === 0 && t`game.noInfo`}
@@ -176,7 +176,7 @@ class Sidebar extends Component<Props> {
                             to={`${routes.game.list}?genre=${genre.slug}`}
                             key={genre.id}
                         >
-                            {genre.name}
+                            {t(genre.name)}
                         </Link>
                     ))}
                 {game.genres.length === 0 && t`game.noInfo`}
@@ -193,7 +193,7 @@ class Sidebar extends Component<Props> {
                             to={`${routes.game.list}?gameMode=${gameMode.slug}`}
                             key={gameMode.id}
                         >
-                            {gameMode.name}
+                            {t(gameMode.name)}
                         </Link>
                     ))}
                 {game.gameModes.length === 0 && t`game.noInfo`}

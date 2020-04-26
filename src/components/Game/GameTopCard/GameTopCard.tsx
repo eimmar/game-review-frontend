@@ -181,7 +181,7 @@ class GameTopCard extends Component<Props> {
                                                                     component={RouterLink}
                                                                     to={`${routes.game.list}?genre=${genre.slug}`}
                                                                 >
-                                                                    {genre.name}
+                                                                    {t(genre.name)}
                                                                 </Link>
                                                             </Box>
                                                         ))}

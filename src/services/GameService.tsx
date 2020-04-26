@@ -277,10 +277,6 @@ class GameService {
     transformImage(imageUrl: string, fromSize: ScreenshotSize, toSize: ScreenshotSize) {
         return imageUrl.replace(fromSize, toSize)
     }
-
-    getAllFilterEntities(): Promise<GameEntityFilterValues> {
-        return requestService.performRequest('POST', `${this.baseUrl}entity-filter-values`)
-    }
 }
 
 export const gameService = new GameService()
