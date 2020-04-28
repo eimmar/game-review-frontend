@@ -80,12 +80,22 @@ class Header extends React.PureComponent<Props> {
     }
 
     userMenu = [
-        { route: routes.user.profile, title: t`header.profileInfo`, icon: ContactMailIcon },
-        { route: routes.user.profileEdit, title: t`header.updateProfile`, icon: EditIcon },
-        { route: routes.user.friendList, title: t`friendship.list`, icon: PeopleIcon },
-        { route: routes.user.friendInvites, title: t`friendship.invites`, icon: PersonAddIcon },
-        { route: routes.user.changePassword, title: t`header.changePassword`, icon: LockIcon },
-        { route: routes.logout, title: t`header.logOut`, icon: ExitToAppIcon },
+        { route: routes.user.profile, title: t`header.profileInfo`, icon: ContactMailIcon, dataId: 'profile' },
+        { route: routes.user.profileEdit, title: t`header.updateProfile`, icon: EditIcon, dataId: 'profileEdit' },
+        { route: routes.user.friendList, title: t`friendship.list`, icon: PeopleIcon, dataId: 'friendList' },
+        {
+            route: routes.user.friendInvites,
+            title: t`friendship.invites`,
+            icon: PersonAddIcon,
+            dataId: 'friendInvites',
+        },
+        {
+            route: routes.user.changePassword,
+            title: t`header.changePassword`,
+            icon: LockIcon,
+            dataId: 'changePassword',
+        },
+        { route: routes.logout, title: t`header.logOut`, icon: ExitToAppIcon, dataId: 'logout' },
     ]
 
     componentDidMount(): void {
@@ -141,7 +151,13 @@ class Header extends React.PureComponent<Props> {
                                 </IconButton>
                             </Tooltip>
 
-                            <Button variant="outlined" color="primary" component={Link} to={routes.register}>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                component={Link}
+                                to={routes.register}
+                                data-id="register"
+                            >
                                 <AccountCircleIcon className="m-r-8" />
                                 {t`user.register`}
                             </Button>
@@ -164,7 +180,7 @@ class Header extends React.PureComponent<Props> {
                     <>
                         <Hidden smDown>
                             <Tooltip title={t`header.myProfile`}>
-                                <IconButton color="primary" onClick={this.handleProfileMenuOpen}>
+                                <IconButton color="primary" onClick={this.handleProfileMenuOpen} data-id="profile-menu">
                                     <UserAvatar user={this.user} size="sm" />
                                 </IconButton>
                             </Tooltip>
@@ -180,6 +196,7 @@ class Header extends React.PureComponent<Props> {
                                         onClick={this.handleProfileMenuClose}
                                         component={Link}
                                         to={it.route}
+                                        data-id={it.dataId}
                                     >
                                         <it.icon className="m-r-16" />
                                         {it.title}

@@ -317,7 +317,13 @@ class ReviewFormModal extends Component<Props, State> {
                                     <Button onClick={this.handleModalToggle} color="primary" variant="outlined">
                                         {t`common.close`}
                                     </Button>
-                                    <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
+                                    <Button
+                                        data-id="review-submit"
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                        disabled={isSubmitting}
+                                    >
                                         {t`common.submit`}
                                     </Button>
                                 </DialogActions>

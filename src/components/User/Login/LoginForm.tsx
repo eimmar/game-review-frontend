@@ -139,6 +139,7 @@ class LoginForm extends Component<Props> {
                                 label={t`user.rememberMe`}
                             />
                             <Button
+                                id="login-submit"
                                 type="submit"
                                 fullWidth
                                 variant="contained"

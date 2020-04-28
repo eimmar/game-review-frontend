@@ -178,6 +178,7 @@ class RegistrationForm extends Component<Props> {
                                 </Grid>
                             </Grid>
                             <Button
+                                id="register-submit"
                                 type="submit"
                                 fullWidth
                                 variant="contained"

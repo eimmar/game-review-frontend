@@ -127,6 +127,7 @@ class ResetPasswordForm extends Component<Props> {
                                 </Grid>
                             </Grid>
                             <Button
+                                id="reset-password-submit"
                                 type="submit"
                                 fullWidth
                                 variant="contained"

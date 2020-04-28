@@ -145,6 +145,7 @@ class ChangePasswordForm extends Component<Props> {
                                 </Grid>
                             </Grid>
                             <Button
+                                id="change-password-submit"
                                 type="submit"
                                 fullWidth
                                 variant="contained"

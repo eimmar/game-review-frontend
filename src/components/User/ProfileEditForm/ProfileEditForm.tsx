@@ -143,6 +143,7 @@ class ProfileEditForm extends Component<Props> {
                                 </Grid>
                             </Grid>
                             <Button
+                                data-id="submit"
                                 type="submit"
                                 fullWidth
                                 variant="contained"

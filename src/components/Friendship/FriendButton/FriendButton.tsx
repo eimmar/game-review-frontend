@@ -84,6 +84,7 @@ class FriendButton extends React.Component<Props, State> {
         if (!friendship) {
             return (
                 <Button
+                    data-id="add"
                     variant="contained"
                     color="primary"
                     onClick={this.handleSendRequest}
@@ -99,7 +100,7 @@ class FriendButton extends React.Component<Props, State> {
                         <Button variant="contained" startIcon={<PersonIcon />}>{t`friendship.youAreFriends`}</Button>
                     )}
                     <Tooltip placement="top" title={t`friendship.removeFriend`}>
-                        <IconButton color="secondary" onClick={this.handleRemoveModalToggle}>
+                        <IconButton data-id="remove" color="secondary" onClick={this.handleRemoveModalToggle}>
                             <PersonAddDisabledIcon />
                         </IconButton>
                     </Tooltip>
@@ -110,6 +111,7 @@ class FriendButton extends React.Component<Props, State> {
         if (friendship.receiver && friendship.receiver.id === this.currentUser.id) {
             return (
                 <Button
+                    data-id="accept"
                     variant="contained"
                     color="primary"
                     onClick={this.handleAcceptRequest}
@@ -118,7 +120,14 @@ class FriendButton extends React.Component<Props, State> {
             )
         }
 
-        return <Button variant="contained" disabled startIcon={<PersonIcon />}>{t`friendship.pending`}</Button>
+        return (
+            <Button
+                data-id="pending"
+                variant="contained"
+                disabled
+                startIcon={<PersonIcon />}
+            >{t`friendship.pending`}</Button>
+        )
     }
 
     handleSendRequest = () => {

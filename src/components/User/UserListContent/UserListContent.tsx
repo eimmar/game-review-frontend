@@ -152,7 +152,7 @@ class UserListContent extends AbstractPaginator<Props, State> {
                             )}
                             {(!loading || infiniteScroll) &&
                                 users.map((user) => (
-                                    <div key={user.id}>
+                                    <div key={user.id} data-id="user">
                                         <ListItem alignItems="flex-start" className={classes.listItem}>
                                             <ListItemAvatar className={classes.listAvatar}>
                                                 <Link to={`${routes.user.view}/${user.username}`}>

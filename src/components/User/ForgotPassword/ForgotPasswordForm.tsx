@@ -105,6 +105,7 @@ class ForgotPasswordForm extends Component<Props> {
                                 </Grid>
                             </Grid>
                             <Button
+                                id="forgot-password-submit"
                                 type="submit"
                                 fullWidth
                                 variant="contained"

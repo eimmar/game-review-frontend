@@ -1,0 +1,30 @@
+[
+  {
+    "id": "6d4afd07-849a-11ea-b480-8c164583cd5d",
+    "privacyType": 3,
+    "type": 4,
+    "name": "Eimantas",
+    "user": []
+  },
+  {
+    "id": "d8f18f0f-7fff-11ea-b480-8c164583cd5d",
+    "privacyType": 3,
+    "type": 1,
+    "name": "Favorites",
+    "user": []
+  },
+  {
+    "id": "d968f86e-7fff-11ea-b480-8c164583cd5d",
+    "privacyType": 3,
+    "type": 3,
+    "name": "Played",
+    "user": []
+  },
+  {
+    "id": "d92ac996-7fff-11ea-b480-8c164583cd5d",
+    "privacyType": 3,
+    "type": 2,
+    "name": "Wishlist",
+    "user": []
+  }
+]

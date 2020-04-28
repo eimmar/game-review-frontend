@@ -165,6 +165,7 @@ class ReviewList extends AbstractPaginator<Props, State> {
                             initialValues={review}
                             button={(onClick) => (
                                 <Chip
+                                    data-id="edit"
                                     className="m-r-8 m-t-8"
                                     onClick={onClick}
                                     clickable
@@ -175,6 +176,7 @@ class ReviewList extends AbstractPaginator<Props, State> {
                             )}
                         />
                         <Chip
+                            data-id="delete"
                             className="m-t-8"
                             onClick={() => this.setReviewToDelete(review)}
                             clickable

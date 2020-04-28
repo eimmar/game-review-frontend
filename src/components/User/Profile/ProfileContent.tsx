@@ -130,6 +130,7 @@ class ProfileContent extends Component<Props, State> {
                     scrollButtons="auto"
                 >
                     <Tab
+                        data-id="gameLists"
                         className={classes.tab}
                         label={
                             <Typography variant="h6" gutterBottom>
@@ -139,6 +140,7 @@ class ProfileContent extends Component<Props, State> {
                         }
                     />
                     <Tab
+                        data-id="reviews"
                         className={classes.tab}
                         label={
                             <Typography variant="h6" gutterBottom>
@@ -152,7 +154,7 @@ class ProfileContent extends Component<Props, State> {
 
                 <TabPanel value={tabIndex} index={0} renderedTabs={renderedTabs}>
                     {gameLists.length > 0 && (
-                        <Grid container spacing={2} className="m-t-8">
+                        <Grid container spacing={2} className="m-t-8" data-id="game-list-tabs">
                             {this.renderListByType(GameListType.Favorites)}
                             {this.renderListByType(GameListType.Wishlist)}
                             {this.renderListByType(GameListType.Playing)}

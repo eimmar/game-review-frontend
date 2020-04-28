@@ -1,0 +1,67 @@
+{
+  "page": 1,
+  "totalResults": 6,
+  "pageSize": 7,
+  "items": [
+    {
+      "id": "b936b1b9-88ae-11ea-9e75-8c164583cd5d",
+      "firstName": "Naudotojas",
+      "lastName": "Naujas",
+      "username": "test",
+      "avatar": null,
+      "enabled": true,
+      "createdAt": "2020-04-27T20:44:20+03:00",
+      "updatedAt": "2020-04-27T20:44:20+03:00"
+    },
+    {
+      "id": "ef04220c-85ae-11ea-9e75-8c164583cd5d",
+      "firstName": "Eimantas",
+      "lastName": "2",
+      "username": "ZABO",
+      "avatar": null,
+      "enabled": true,
+      "createdAt": "2020-04-24T01:08:16+03:00",
+      "updatedAt": "2020-04-26T22:24:31+03:00"
+    },
+    {
+      "id": "ea6495a4-84b3-11ea-b480-8c164583cd5d",
+      "firstName": "Rambo",
+      "lastName": "2",
+      "username": "rambo",
+      "avatar": "zaisk-logo-5ea6b5e792e0c172652343.png",
+      "enabled": true,
+      "createdAt": "2020-04-22T19:11:25+03:00",
+      "updatedAt": "2020-04-27T13:39:30+03:00"
+    },
+    {
+      "id": "5a7fcd55-8499-11ea-b480-8c164583cd5d",
+      "firstName": "Eimantas",
+      "lastName": null,
+      "username": "klakalasas2",
+      "avatar": null,
+      "enabled": true,
+      "createdAt": "2020-04-22T16:01:17+03:00",
+      "updatedAt": "2020-04-28T18:43:06+03:00"
+    },
+    {
+      "id": "f20a80de-8008-11ea-b480-8c164583cd5d",
+      "firstName": "Jonas",
+      "lastName": "Paulius",
+      "username": "paulius",
+      "avatar": null,
+      "enabled": true,
+      "createdAt": "2020-04-16T20:37:29+03:00",
+      "updatedAt": "2020-04-26T21:41:07+03:00"
+    },
+    {
+      "id": "da3f733f-7fff-11ea-b480-8c164583cd5d",
+      "firstName": "Eimantas",
+      "lastName": "Markevi\u010dius",
+      "username": "klakalasas",
+      "avatar": null,
+      "enabled": true,
+      "createdAt": "2020-04-16T19:32:24+03:00",
+      "updatedAt": "2020-04-27T13:41:23+03:00"
+    }
+  ]
+}
