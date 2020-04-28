@@ -38,5 +38,3 @@ export const params = {
 }
 
 export const igdbReviews = 'https://www.igdb.com/reviews'
-
-export const phpDebug = '?XDEBUG_SESSION_START=PHPSTORM'

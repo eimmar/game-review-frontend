@@ -88,7 +88,7 @@ class UserListContent extends AbstractPaginator<Props, State> {
             pagination: {
                 page: Number(currentUrlParams.get('page') || 1),
                 totalResults: 0,
-                pageSize: 10,
+                pageSize: 20,
             },
             loading: true,
         }
