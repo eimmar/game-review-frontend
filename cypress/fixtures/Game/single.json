@@ -1,0 +1,268 @@
+{
+  "id": "51a2b57e-8636-11ea-9e75-8c164583cd5d",
+  "name": "Half-Life",
+  "slug": "half-life",
+  "coverImage": "//images.igdb.com/igdb/image/upload/t_thumb/co1tnt.jpg",
+  "summary": "Dr. Gordon Freeman doesn't speak, but he's got a helluva story to tell. This first-person roller-coaster initiated a new era in the history of action games by combining engrossing gameplay, upgraded graphics, ingenious level design and a revolutionary story that may not be all that it seems, told not through cutscenes, but through the visual environment.",
+  "storyline": "Dr. Gordon Freeman arrives late for work at 8:47 am in the Black Mesa Research Facility, using the advanced Black Mesa tram system that leads through the facility. He arrives at the Anomalous Materials Lab, his work place, and he is informed by the security officer that the scientists have a special experiment today, so he goes to the locker room and puts on the hazard suit. He goes to the lab's lower levels, and arrives at the Anti-Mass Chamber, where he is instructed that the specimen to be used that day is the rarest and also the most unstable specimen. He is tasked with pushing the specimen into the scanning beam of the Anti-Mass Spectrometer for analysis. However as soon as he pushes it, it explodes, and creates a sudden catastrophe called a \"resonance cascade\", opening a portal between Earth and a dimension called Xen. Freeman is apparently teleported to an alien planet and catches glimpses of various alien lifeforms, including a circle of Vortigaunts, shortly before blacking out.",
+  "releaseDate": "1998-11-27T01:00:00+01:00",
+  "category": 0,
+  "rating": 85.113206544057,
+  "ratingCount": 1367,
+  "ageRatings": [
+    {
+      "id": "51a2c7f0-8636-11ea-9e75-8c164583cd5d",
+      "synopsis": null,
+      "category": 1,
+      "rating": 11,
+      "externalId": 4903
+    },
+    {
+      "id": "51a2d480-8636-11ea-9e75-8c164583cd5d",
+      "synopsis": "The content of this game is suitable for persons aged 16 years and over only.\r\nIt contains: Realistic looking violence.",
+      "category": 2,
+      "rating": 4,
+      "externalId": 11277
+    }
+  ],
+  "genres": [
+    {
+      "id": "52cfa7b3-7673-11ea-9e35-8c164583cd5d",
+      "name": "Shooter",
+      "slug": "shooter",
+      "url": "https://www.igdb.com/genres/shooter",
+      "createdAt": "2020-04-04T15:53:47+03:00",
+      "updatedAt": "2020-04-04T15:53:47+03:00",
+      "externalId": 5
+    },
+    {
+      "id": "cf7156be-8287-11ea-b480-8c164583cd5d",
+      "name": "Puzzle",
+      "slug": "puzzle",
+      "url": "https://www.igdb.com/genres/puzzle",
+      "createdAt": "2020-04-20T00:50:40+03:00",
+      "updatedAt": "2020-04-20T00:50:40+03:00",
+      "externalId": 9
+    },
+    {
+      "id": "cfa2a24f-8287-11ea-b480-8c164583cd5d",
+      "name": "Adventure",
+      "slug": "adventure",
+      "url": "https://www.igdb.com/genres/adventure",
+      "createdAt": "2020-04-20T00:50:40+03:00",
+      "updatedAt": "2020-04-20T00:50:40+03:00",
+      "externalId": 31
+    }
+  ],
+  "screenshots": [
+    {
+      "id": "51a2e60f-8636-11ea-9e75-8c164583cd5d",
+      "imageId": "i8ey1ywk535qolfrwdf0",
+      "url": "//images.igdb.com/igdb/image/upload/t_thumb/i8ey1ywk535qolfrwdf0.jpg",
+      "height": 720,
+      "width": 1280,
+      "createdAt": "2020-04-24T17:17:24+03:00",
+      "updatedAt": "2020-04-24T17:17:24+03:00",
+      "externalId": 1133
+    },
+    {
+      "id": "51a2f2b9-8636-11ea-9e75-8c164583cd5d",
+      "imageId": "kxwmkaixbsuvyaeqana7",
+      "url": "//images.igdb.com/igdb/image/upload/t_thumb/kxwmkaixbsuvyaeqana7.jpg",
+      "height": 640,
+      "width": 1024,
+      "createdAt": "2020-04-24T17:17:24+03:00",
+      "updatedAt": "2020-04-24T17:17:24+03:00",
+      "externalId": 1134
+    },
+    {
+      "id": "51a30117-8636-11ea-9e75-8c164583cd5d",
+      "imageId": "g9cvvoi9ftpdax4dmwdp",
+      "url": "//images.igdb.com/igdb/image/upload/t_thumb/g9cvvoi9ftpdax4dmwdp.jpg",
+      "height": 819,
+      "width": 1024,
+      "createdAt": "2020-04-24T17:17:24+03:00",
+      "updatedAt": "2020-04-24T17:17:24+03:00",
+      "externalId": 1135
+    },
+    {
+      "id": "51a30cfb-8636-11ea-9e75-8c164583cd5d",
+      "imageId": "bpyqlfhfbnhxf2jl5qao",
+      "url": "//images.igdb.com/igdb/image/upload/t_thumb/bpyqlfhfbnhxf2jl5qao.jpg",
+      "height": 768,
+      "width": 1024,
+      "createdAt": "2020-04-24T17:17:24+03:00",
+      "updatedAt": "2020-04-24T17:17:24+03:00",
+      "externalId": 1136
+    },
+    {
+      "id": "51a318a8-8636-11ea-9e75-8c164583cd5d",
+      "imageId": "rthkfaau3znzdzzhtftq",
+      "url": "//images.igdb.com/igdb/image/upload/t_thumb/rthkfaau3znzdzzhtftq.jpg",
+      "height": 768,
+      "width": 1024,
+      "createdAt": "2020-04-24T17:17:24+03:00",
+      "updatedAt": "2020-04-24T17:17:24+03:00",
+      "externalId": 1137
+    }
+  ],
+  "themes": [
+    {
+      "id": "52cfc96a-7673-11ea-9e35-8c164583cd5d",
+      "name": "Action",
+      "slug": "action",
+      "url": "https://www.igdb.com/themes/action",
+      "createdAt": "2020-04-04T15:53:47+03:00",
+      "updatedAt": "2020-04-04T15:53:47+03:00",
+      "externalId": 1
+    },
+    {
+      "id": "52cfd0bb-7673-11ea-9e35-8c164583cd5d",
+      "name": "Science fiction",
+      "slug": "science-fiction",
+      "url": "https://www.igdb.com/themes/science-fiction",
+      "createdAt": "2020-04-04T15:53:47+03:00",
+      "updatedAt": "2020-04-04T15:53:47+03:00",
+      "externalId": 18
+    },
+    {
+      "id": "52cfd8f5-7673-11ea-9e35-8c164583cd5d",
+      "name": "Horror",
+      "slug": "horror",
+      "url": "https://www.igdb.com/themes/horror",
+      "createdAt": "2020-04-04T15:53:47+03:00",
+      "updatedAt": "2020-04-04T15:53:47+03:00",
+      "externalId": 19
+    },
+    {
+      "id": "52d0500e-7673-11ea-9e35-8c164583cd5d",
+      "name": "Warfare",
+      "slug": "warfare",
+      "url": "https://www.igdb.com/themes/warfare",
+      "createdAt": "2020-04-04T15:53:47+03:00",
+      "updatedAt": "2020-04-04T15:53:47+03:00",
+      "externalId": 39
+    },
+    {
+      "id": "d0e517ce-8287-11ea-b480-8c164583cd5d",
+      "name": "Thriller",
+      "slug": "thriller",
+      "url": "https://www.igdb.com/themes/thriller",
+      "createdAt": "2020-04-20T00:50:42+03:00",
+      "updatedAt": "2020-04-20T00:50:42+03:00",
+      "externalId": 20
+    }
+  ],
+  "platforms": [
+    {
+      "id": "52cfe013-7673-11ea-9e35-8c164583cd5d",
+      "name": "PC (Microsoft Windows)",
+      "slug": "win",
+      "abbreviation": "PC",
+      "summary": null,
+      "url": "https://www.igdb.com/platforms/win",
+      "category": 4,
+      "createdAt": "2020-04-04T15:53:47+03:00",
+      "updatedAt": "2020-04-19T23:48:56+03:00",
+      "externalId": 6
+    },
+    {
+      "id": "52d10fc7-7673-11ea-9e35-8c164583cd5d",
+      "name": "Mac",
+      "slug": "mac",
+      "abbreviation": "Mac",
+      "summary": null,
+      "url": "https://www.igdb.com/platforms/mac",
+      "category": 4,
+      "createdAt": "2020-04-04T15:53:47+03:00",
+      "updatedAt": "2020-04-04T15:53:47+03:00",
+      "externalId": 14
+    }
+  ],
+  "gameModes": [
+    {
+      "id": "52cfe6e0-7673-11ea-9e35-8c164583cd5d",
+      "name": "Single player",
+      "slug": "single-player",
+      "url": "https://www.igdb.com/game_modes/single-player",
+      "createdAt": "2020-04-04T15:53:47+03:00",
+      "updatedAt": "2020-04-04T15:53:47+03:00",
+      "externalId": 1
+    },
+    {
+      "id": "52cfed5b-7673-11ea-9e35-8c164583cd5d",
+      "name": "Multiplayer",
+      "slug": "multiplayer",
+      "url": "https://www.igdb.com/game_modes/multiplayer",
+      "createdAt": "2020-04-04T15:53:47+03:00",
+      "updatedAt": "2020-04-04T15:53:47+03:00",
+      "externalId": 2
+    }
+  ],
+  "gameSpotAssociation": "5000-64",
+  "websites": [
+    {
+      "id": "51a329a1-8636-11ea-9e75-8c164583cd5d",
+      "trusted": false,
+      "url": "http://combineoverwiki.net/",
+      "category": 2,
+      "externalId": 15341
+    },
+    {
+      "id": "51a336a9-8636-11ea-9e75-8c164583cd5d",
+      "trusted": true,
+      "url": "https://store.steampowered.com/app/70",
+      "category": 13,
+      "externalId": 15342
+    },
+    {
+      "id": "51a343fe-8636-11ea-9e75-8c164583cd5d",
+      "trusted": true,
+      "url": "https://en.wikipedia.org/wiki/Half-Life_(video_game)",
+      "category": 3,
+      "externalId": 41193
+    },
+    {
+      "id": "51a34f73-8636-11ea-9e75-8c164583cd5d",
+      "trusted": false,
+      "url": "http://www.half-life.com/",
+      "category": 1,
+      "externalId": 63952
+    }
+  ],
+  "companies": [
+    {
+      "id": "02ecfcb3-828b-11ea-b480-8c164583cd5d",
+      "name": "Gearbox Software",
+      "description": "The diverse and passionate members of the Gearbox Software team share a common identity \u2013 we feel we were made to set our time and talent towards bringing joy, fun and happiness to our customers through our craft.\n\nSince its inception and our first release, Half-Life: Opposing Force, the talented developers at Gearbox Software have had the pleasure of creating video games for some of the most exciting and revered brands on the planet. The Gearbox Software team has also created original, owned and managed brands including the award winning, best-selling Brothers in Arms series and the record-setting, genre breaking Borderlands franchise. In addition, Gearbox Software has acquired other major video game properties including the Duke Nukem and Homeworld brands. With all of its owned franchises, the people of Gearbox Software enjoy driving and managing a deep portfolio of licensed and internally produced ancillary products including video games, comic books, action figures, apparel, art prints, fictional novels, non-fiction reference books, and linear media content for film and television.\n\nUltimately, Gearbox Software is a family of talented, inventive and passionate individuals who want to collaborate with smart, committed, capable people with a quality of character that seek to inspire and be inspired \u2013 that care about creativity, happiness and the desire to make wonderful, engaging and exciting things that our customers feel is very valuable so that we may learn the lessons of experience together and share together in the rewards from a job well done.",
+      "url": "https://www.igdb.com/companies/gearbox-software",
+      "websites": [],
+      "createdAt": "2020-04-20T01:13:34+03:00",
+      "updatedAt": "2020-04-24T17:17:24+03:00",
+      "externalId": 148
+    },
+    {
+      "id": "52d01729-7673-11ea-9e35-8c164583cd5d",
+      "name": "Valve Corporation",
+      "description": "Valve's debut title, Half-Life, was released in 1998. It won more than 50 game of the year awards, and PC Gamer even called it the Best PC Game Ever. Since then, we've released dozens of titles that changed the world. Today, millions of people play our games every day.",
+      "url": "https://www.igdb.com/companies/valve-corporation",
+      "websites": [],
+      "createdAt": "2020-04-04T15:53:47+03:00",
+      "updatedAt": "2020-04-25T22:50:24+03:00",
+      "externalId": 56
+    },
+    {
+      "id": "ac048439-8288-11ea-b480-8c164583cd5d",
+      "name": "Sierra Entertainment",
+      "description": null,
+      "url": "https://www.igdb.com/companies/sierra-entertainment",
+      "websites": [],
+      "createdAt": "2020-04-20T00:56:50+03:00",
+      "updatedAt": "2020-04-25T22:50:24+03:00",
+      "externalId": 24
+    }
+  ],
+  "createdAt": "2020-04-24T17:17:24+03:00",
+  "updatedAt": "2020-04-24T17:17:26+03:00",
+  "externalId": 231
+}

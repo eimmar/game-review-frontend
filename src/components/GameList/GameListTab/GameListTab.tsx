@@ -275,7 +275,7 @@ class GameListTab extends Component<Props, State> {
             <>
                 {loading && <CircularProgress />}
                 {!loading && (
-                    <Grid container>
+                    <Grid container data-id="game-lists">
                         <Tooltip placement="top" title={favorites.tooltip}>
                             <IconButton color={favorites.color} onClick={favorites.onClick}>
                                 <FavoriteIcon />

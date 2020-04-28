@@ -1,0 +1,18 @@
+{
+  "id": "d8f18f0f-7fff-11ea-b480-8c164583cd5d",
+  "privacyType": 3,
+  "type": 4,
+  "name": "Favorites",
+  "user": {
+    "id": "5a7fcd55-8499-11ea-b480-8c164583cd5d",
+    "firstName": "Eimantas",
+    "lastName": "Markevi\u010dius",
+    "username": "klakalasas",
+    "avatar": null,
+    "enabled": true,
+    "createdAt": "2020-04-16T19:32:24+03:00",
+    "updatedAt": "2020-04-28T23:27:03+03:00"
+  },
+  "createdAt": "2020-04-16T19:32:22+03:00",
+  "updatedAt": "2020-04-22T17:27:31+03:00"
+}

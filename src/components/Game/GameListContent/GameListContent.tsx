@@ -190,7 +190,7 @@ class GameListContent extends AbstractPaginator<Props, State> {
                             )}
                             {(!loading || infiniteScroll) &&
                                 games.map((game) => (
-                                    <div key={game.externalId}>
+                                    <div key={game.externalId} data-id="game">
                                         <ListItem alignItems="flex-start" className={classes.listItem}>
                                             {game.rating && <RatingIndicator rating={game.rating} />}
                                             <ListItemAvatar className={classes.listAvatar}>
@@ -236,6 +236,7 @@ class GameListContent extends AbstractPaginator<Props, State> {
                                                 <ListItemSecondaryAction>
                                                     <Tooltip placement="top" title={t`common.delete`}>
                                                         <IconButton
+                                                            data-id="remove-game"
                                                             edge="end"
                                                             onClick={() =>
                                                                 deleteFunction(game)

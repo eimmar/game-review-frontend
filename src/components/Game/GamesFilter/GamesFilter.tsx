@@ -63,11 +63,11 @@ interface State {
 }
 
 class GamesFilter extends Component<Props, State> {
-    handleInputChange = debounce((name: string, value: string) => {
+    handleInputChange = debounce((name: string, value: string | number) => {
         const { location, history } = this.props
         const currentUrlParams = new URLSearchParams(location.search)
 
-        currentUrlParams.set(name, value)
+        currentUrlParams.set(name, String(value))
         currentUrlParams.set('page', '1')
         history.push(`${location.pathname}?${currentUrlParams.toString()}`)
     }, 800)
@@ -262,7 +262,7 @@ class GamesFilter extends Component<Props, State> {
                                 type="number"
                                 inputProps={{ min: 0, max: 100, step: 1 }}
                                 defaultValue={filters.ratingFrom}
-                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
+                                onChange={(e) => this.handleInputChange(e.target.name, Number(e.target.value))}
                                 InputLabelProps={{ shrink: true }}
                             />
                         </FormControl>
@@ -276,7 +276,7 @@ class GamesFilter extends Component<Props, State> {
                                 type="number"
                                 inputProps={{ min: 0, max: 100, step: 1 }}
                                 defaultValue={filters.ratingTo}
-                                onChange={(e) => this.handleInputChange(e.target.name, e.target.value)}
+                                onChange={(e) => this.handleInputChange(e.target.name, Number(e.target.value))}
                                 InputLabelProps={{ shrink: true }}
                             />
                         </FormControl>
@@ -291,6 +291,7 @@ class GamesFilter extends Component<Props, State> {
                         <Grid item>
                             <FormControl className={classes.formControl}>
                                 <Button
+                                    data-id="reset-filters"
                                     style={{ maxWidth: 300 }}
                                     variant="contained"
                                     color="secondary"

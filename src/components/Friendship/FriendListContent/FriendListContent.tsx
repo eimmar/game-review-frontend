@@ -205,7 +205,7 @@ class FriendListContent extends AbstractPaginator<Props, State> {
         const friend = friendship.sender.id === currentUser.id ? friendship.receiver : friendship.sender
 
         return (
-            <div key={friend.id}>
+            <div key={friend.id} data-id="friendship">
                 <ListItem alignItems="flex-start" className={classes.listItem}>
                     <ListItemAvatar className={classes.listAvatar}>
                         <Link to={`${routes.user.view}/${friend.username}`}>

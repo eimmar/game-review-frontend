@@ -31,6 +31,7 @@ import { t } from '../../../../i18n'
 import styles from './ReviewList.module.scss'
 import { AbstractPaginator, AbstractPaginatorState } from '../../../Pagination/AbstractPaginator'
 import { routes } from '../../../../parameters'
+import UserAvatar from '../../../User/Profile/UserAvatar/UserAvatar'
 
 interface Props extends RouteComponentProps {
     gameId: string
@@ -112,7 +113,7 @@ class ReviewList extends AbstractPaginator<Props, State> {
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
                             <Avatar alt={review.title} className={styles.avatar}>
-                                <AccountCircleIcon />
+                                <UserAvatar user={review.user} size="sm" />
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText

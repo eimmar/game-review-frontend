@@ -6,7 +6,7 @@ import FriendListContent from '../../components/Friendship/FriendListContent/Fri
 import { authService, LoggedInUser } from '../../services/AuthService'
 import { FriendshipStatus } from '../../services/FriendshipService'
 
-export default function FriendInvitesView() {
+export default function FriendInvites() {
     document.title = `${t`pageTitle.friendInvites`} - ${t`common.websiteName`}`
 
     return (

@@ -289,7 +289,12 @@ class Header extends React.PureComponent<Props> {
                         </IconButton>
                         <div className={classes.spacer} />
 
-                        <form action="" style={{ display: 'contents' }} onSubmit={(e) => e.preventDefault()}>
+                        <form
+                            name="game-search"
+                            action=""
+                            style={{ display: 'contents' }}
+                            onSubmit={(e) => e.preventDefault()}
+                        >
                             <TextField
                                 className={sStyles.search}
                                 name="query"

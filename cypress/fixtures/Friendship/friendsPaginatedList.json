@@ -1,0 +1,57 @@
+{
+  "page": 1,
+  "totalResults": 2,
+  "pageSize": 20,
+  "items": [
+    {
+      "sender": {
+        "id": "5a7fcd55-8499-11ea-b480-8c164583cd5d",
+        "firstName": "Eimantas",
+        "lastName": "Markevi\u010dius",
+        "username": "klakalasas",
+        "avatar": null,
+        "enabled": true,
+        "createdAt": "2020-04-16T19:32:24+03:00",
+        "updatedAt": "2020-04-29T01:12:12+03:00"
+      },
+      "receiver": {
+        "id": "02e9b2f4-8973-11ea-9e75-8c164583cd5d",
+        "username": "damdam",
+        "enabled": true,
+        "createdAt": "2020-04-28T20:09:25+03:00",
+        "updatedAt": "2020-04-29T01:11:46+03:00",
+        "firstName": "Dam",
+        "lastName": "Ram",
+        "avatar": null
+      },
+      "status": 1,
+      "createdAt": "2020-04-29T01:06:56+03:00",
+      "acceptedAt": "2020-04-29T01:10:30+03:00"
+    },
+    {
+      "sender": {
+        "id": "5a7fcd55-8499-11ea-b480-8c164583cd5d",
+        "firstName": "Eimantas",
+        "lastName": "Markevi\u010dius",
+        "username": "klakalasas",
+        "avatar": null,
+        "enabled": true,
+        "createdAt": "2020-04-16T19:32:24+03:00",
+        "updatedAt": "2020-04-29T01:12:12+03:00"
+      },
+      "receiver": {
+        "id": "ea6495a4-84b3-11ea-b480-8c164583cd5d",
+        "username": "rambo",
+        "enabled": true,
+        "createdAt": "2020-04-22T19:11:25+03:00",
+        "updatedAt": "2020-04-29T01:09:46+03:00",
+        "firstName": "Rambo",
+        "lastName": "2",
+        "avatar": "zaisk-logo-5ea6b5e792e0c172652343.png"
+      },
+      "status": 1,
+      "createdAt": "2020-04-29T01:07:03+03:00",
+      "acceptedAt": "2020-04-29T01:09:46+03:00"
+    }
+  ]
+}

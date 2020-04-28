@@ -1,0 +1,57 @@
+{
+  "page": 1,
+  "totalResults": 2,
+  "pageSize": 20,
+  "items": [
+    {
+      "sender": {
+        "id": "5a7fcd55-8499-11ea-b480-8c164583cd5d",
+        "firstName": "Eimantas",
+        "lastName": "Markevi\u010dius",
+        "username": "klakalasas",
+        "avatar": null,
+        "enabled": true,
+        "createdAt": "2020-04-16T19:32:24+03:00",
+        "updatedAt": "2020-04-29T01:13:44+03:00"
+      },
+      "receiver": {
+        "id": "ef04220c-85ae-11ea-9e75-8c164583cd5d",
+        "username": "ZABO",
+        "enabled": true,
+        "createdAt": "2020-04-24T01:08:16+03:00",
+        "updatedAt": "2020-04-28T21:17:44+03:00",
+        "firstName": "Eimantas",
+        "lastName": "2",
+        "avatar": null
+      },
+      "status": 0,
+      "createdAt": "2020-04-29T01:07:40+03:00",
+      "acceptedAt": null
+    },
+    {
+      "sender": {
+        "id": "b936b1b9-88ae-11ea-9e75-8c164583cd5d",
+        "username": "test",
+        "enabled": true,
+        "createdAt": "2020-04-27T20:44:20+03:00",
+        "updatedAt": "2020-04-27T20:44:20+03:00",
+        "firstName": "Naudotojas",
+        "lastName": "Naujas",
+        "avatar": null
+      },
+      "receiver": {
+        "id": "5a7fcd55-8499-11ea-b480-8c164583cd5d",
+        "firstName": "Eimantas",
+        "lastName": "Markevi\u010dius",
+        "username": "klakalasas",
+        "avatar": null,
+        "enabled": true,
+        "createdAt": "2020-04-16T19:32:24+03:00",
+        "updatedAt": "2020-04-29T01:13:44+03:00"
+      },
+      "status": 0,
+      "createdAt": "2020-04-29T01:07:35+03:00",
+      "acceptedAt": null
+    }
+  ]
+}

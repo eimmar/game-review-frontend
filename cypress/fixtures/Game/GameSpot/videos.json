@@ -1,0 +1,451 @@
+{
+  "error": "OK",
+  "limit": 10,
+  "offset": 0,
+  "numberOfPageResults": 10,
+  "numberOfTotalResults": 28,
+  "statusCode": 1,
+  "results": [
+    {
+      "lengthSeconds": 5950,
+      "publishDate": "2019-11-26 02:00:00",
+      "mpxId": "",
+      "id": 6451673,
+      "title": "We Play Half-Life | GameSpot Live",
+      "image": {
+        "squareTiny": "https://gamespot1.cbsistatic.com/uploads/square_tiny/1593/15930438/3609124-halflife.jpg",
+        "screenTiny": "https://gamespot1.cbsistatic.com/uploads/screen_tiny/1593/15930438/3609124-halflife.jpg",
+        "squareSmall": "https://gamespot1.cbsistatic.com/uploads/square_small/1593/15930438/3609124-halflife.jpg",
+        "original": "https://gamespot1.cbsistatic.com/uploads/original/1593/15930438/3609124-halflife.jpg"
+      },
+      "deck": "Persia and David revisit one of the most influential PC games ever: Half-Life. Join them as they go through the events at Black Mesa and see how far they can get in the shoes of Gordon Freeman.",
+      "source": "",
+      "categories": [
+        {
+          "id": 55,
+          "name": "Games"
+        },
+        {
+          "id": 123,
+          "name": "Show"
+        }
+      ],
+      "show": [
+        {
+          "id": 10,
+          "title": "GameSpot Live"
+        }
+      ],
+      "associations": [
+        {
+          "id": 64,
+          "name": "Half-Life",
+          "apiDetailUrl": "https://www.gamespot.com/api/games/?filter=id%3A64",
+          "guid": "5000-64"
+        }
+      ],
+      "highUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2019/11/28/trim_half_life_stream_3200.mp4",
+      "lowUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2019/11/28/trim_half_life_stream_1000.mp4",
+      "hdUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2019/11/28/trim_half_life_stream_4000.mp4",
+      "siteDetailUrl": "https://www.gamespot.com/videos/we-play-half-life-gamespot-live/2300-6451673/"
+    },
+    {
+      "lengthSeconds": 71,
+      "publishDate": "2019-11-21 11:10:00",
+      "mpxId": "1646396483690",
+      "id": 6451643,
+      "title": "New Half-Life Game Coming March 2020 - GS News Update",
+      "image": {
+        "squareTiny": "https://gamespot1.cbsistatic.com/uploads/square_tiny/1563/15636435/3607239-hl%20site.jpg",
+        "screenTiny": "https://gamespot1.cbsistatic.com/uploads/screen_tiny/1563/15636435/3607239-hl%20site.jpg",
+        "squareSmall": "https://gamespot1.cbsistatic.com/uploads/square_small/1563/15636435/3607239-hl%20site.jpg",
+        "original": "https://gamespot1.cbsistatic.com/uploads/original/1563/15636435/3607239-hl site.png"
+      },
+      "deck": "Back to Black Mesa.",
+      "source": "",
+      "categories": [
+        {
+          "id": 55,
+          "name": "Games"
+        },
+        {
+          "id": 121,
+          "name": "News"
+        }
+      ],
+      "show": [
+        {
+          "id": 79,
+          "title": "GS News Updates"
+        }
+      ],
+      "associations": [
+        {
+          "id": 64,
+          "name": "Half-Life",
+          "apiDetailUrl": "https://www.gamespot.com/api/games/?filter=id%3A64",
+          "guid": "5000-64"
+        }
+      ],
+      "highUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2019/11/21/GSNU_HL_11212019_3200.mp4",
+      "lowUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2019/11/21/GSNU_HL_11212019_1000.mp4",
+      "hdUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2019/11/21/GSNU_HL_11212019_4000.mp4",
+      "siteDetailUrl": "https://www.gamespot.com/videos/new-half-life-game-coming-march-2020-gs-news-updat/2300-6451643/"
+    },
+    {
+      "lengthSeconds": 1265,
+      "publishDate": "2018-08-18 08:00:00",
+      "mpxId": "1301333571637",
+      "id": 6445607,
+      "title": "Is Half-Life As Good As You Remember? | Nostalgia Trip",
+      "image": {
+        "squareTiny": "https://gamespot1.cbsistatic.com/uploads/square_tiny/1574/15746725/3427379-nostalgiatrip_halflife_20180817_site.jpg",
+        "screenTiny": "https://gamespot1.cbsistatic.com/uploads/screen_tiny/1574/15746725/3427379-nostalgiatrip_halflife_20180817_site.jpg",
+        "squareSmall": "https://gamespot1.cbsistatic.com/uploads/square_small/1574/15746725/3427379-nostalgiatrip_halflife_20180817_site.jpg",
+        "original": "https://gamespot1.cbsistatic.com/uploads/original/1574/15746725/3427379-nostalgiatrip_halflife_20180817_site.jpg"
+      },
+      "deck": "Half-Life was revolutionary when it first launched in 1998. 20 years later Michael and Jean-Luc see if the classic PC shooter still holds up.",
+      "source": "",
+      "categories": [
+        {
+          "id": 55,
+          "name": "Games"
+        },
+        {
+          "id": 123,
+          "name": "Show"
+        },
+        {
+          "id": 142,
+          "name": "Full Episode"
+        }
+      ],
+      "show": [
+        {
+          "id": 97,
+          "title": "Nostalgia Trip"
+        }
+      ],
+      "associations": [
+        {
+          "id": 64,
+          "name": "Half-Life",
+          "apiDetailUrl": "https://www.gamespot.com/api/games/?filter=id%3A64",
+          "guid": "5000-64"
+        }
+      ],
+      "highUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2018/08/17/NostalgiaTrip_HalfLife_2018_3200.mp4",
+      "lowUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2018/08/17/NostalgiaTrip_HalfLife_2018_1000.mp4",
+      "hdUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2018/08/17/NostalgiaTrip_HalfLife_2018_4000.mp4",
+      "siteDetailUrl": "https://www.gamespot.com/videos/is-half-life-as-good-as-you-remember-nostalgia-tri/2300-6445607/"
+    },
+    {
+      "lengthSeconds": 93,
+      "publishDate": "2017-08-25 11:52:00",
+      "mpxId": "",
+      "id": 6440643,
+      "title": "GS News Update: Half-Life Writer Shares Episode 3 Details",
+      "image": {
+        "squareTiny": "https://gamespot1.cbsistatic.com/uploads/square_tiny/1551/15511094/3278150-game%20news%20update.00_00_11_13.still021.png",
+        "screenTiny": "https://gamespot1.cbsistatic.com/uploads/screen_tiny/1551/15511094/3278150-game%20news%20update.00_00_11_13.still021.png",
+        "squareSmall": "https://gamespot1.cbsistatic.com/uploads/square_small/1551/15511094/3278150-game%20news%20update.00_00_11_13.still021.png",
+        "original": "https://gamespot1.cbsistatic.com/uploads/original/1551/15511094/3278150-game news update.00_00_11_13.still021.png"
+      },
+      "deck": "Is this what Half-Life 2: Episode 3 could have been?",
+      "source": "",
+      "categories": [
+        {
+          "id": 55,
+          "name": "Games"
+        },
+        {
+          "id": 121,
+          "name": "News"
+        }
+      ],
+      "show": [
+        {
+          "id": 79,
+          "title": "GS News Updates"
+        }
+      ],
+      "associations": [
+        {
+          "id": 64,
+          "name": "Half-Life",
+          "apiDetailUrl": "https://www.gamespot.com/api/games/?filter=id%3A64",
+          "guid": "5000-64"
+        }
+      ],
+      "highUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2017/08/25/GSNU_HalfLife3_08252017_3200.mp4",
+      "lowUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2017/08/25/GSNU_HalfLife3_08252017_1000.mp4",
+      "hdUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2017/08/25/GSNU_HalfLife3_08252017_4000.mp4",
+      "siteDetailUrl": "https://www.gamespot.com/videos/gs-news-update-half-life-writer-shares-episode-3-d/2300-6440643/"
+    },
+    {
+      "lengthSeconds": 184,
+      "publishDate": "2017-07-11 05:00:00",
+      "mpxId": "993138755601",
+      "id": 6439826,
+      "title": "Half Life Updated; Loads Of Amazon Prime Day Game Deals! - GS News Roundup",
+      "image": {
+        "squareTiny": "https://gamespot1.cbsistatic.com/uploads/square_tiny/1570/15709614/3259397-site_gsn_july11.jpg",
+        "screenTiny": "https://gamespot1.cbsistatic.com/uploads/screen_tiny/1570/15709614/3259397-site_gsn_july11.jpg",
+        "squareSmall": "https://gamespot1.cbsistatic.com/uploads/square_small/1570/15709614/3259397-site_gsn_july11.jpg",
+        "original": "https://gamespot1.cbsistatic.com/uploads/original/1570/15709614/3259397-site_gsn_july11.jpg"
+      },
+      "deck": "Rainbow Six Siege gets a massive update, and find out how to get your hands on cheap PS4 and Xbox One consoles and games!",
+      "source": "",
+      "categories": [
+        {
+          "id": 55,
+          "name": "Games"
+        },
+        {
+          "id": 121,
+          "name": "News"
+        }
+      ],
+      "show": [
+        {
+          "id": 42,
+          "title": "GameSpot News"
+        }
+      ],
+      "associations": [
+        {
+          "id": 64,
+          "name": "Half-Life",
+          "apiDetailUrl": "https://www.gamespot.com/api/games/?filter=id%3A64",
+          "guid": "5000-64"
+        }
+      ],
+      "highUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2017/07/11/GSNews_July11_20170712_3200.mp4",
+      "lowUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2017/07/11/GSNews_July11_20170712_1000.mp4",
+      "hdUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2017/07/11/GSNews_July11_20170712_4000.mp4",
+      "siteDetailUrl": "https://www.gamespot.com/videos/half-life-updated-loads-of-amazon-prime-day-game-d/2300-6439826/"
+    },
+    {
+      "lengthSeconds": 793,
+      "publishDate": "2016-05-19 12:00:00",
+      "mpxId": "688297027698",
+      "id": 6432191,
+      "title": "What's the Most Impactful Mod Ever?  - The Lobby",
+      "image": {
+        "squareTiny": "https://gamespot1.cbsistatic.com/uploads/square_tiny/1566/15663463/3064516-6294952685-TheLo.jpg",
+        "screenTiny": "https://gamespot1.cbsistatic.com/uploads/screen_tiny/1566/15663463/3064516-6294952685-TheLo.jpg",
+        "squareSmall": "https://gamespot1.cbsistatic.com/uploads/square_small/1566/15663463/3064516-6294952685-TheLo.jpg",
+        "original": "https://gamespot1.cbsistatic.com/uploads/original/1566/15663463/3064516-6294952685-TheLo.jpg"
+      },
+      "deck": "Danny, Ben, and Peter share their judgements of the most impactful mods in video game history. Beyond Skyrim and Day of Defeat, see what made their list.",
+      "source": "",
+      "categories": [
+        {
+          "id": 55,
+          "name": "Games"
+        },
+        {
+          "id": 123,
+          "name": "Show"
+        },
+        {
+          "id": 141,
+          "name": "Breakout"
+        }
+      ],
+      "show": [
+        {
+          "id": 69,
+          "title": "The Lobby"
+        }
+      ],
+      "associations": [
+        {
+          "id": 64,
+          "name": "Half-Life",
+          "apiDetailUrl": "https://www.gamespot.com/api/games/?filter=id%3A64",
+          "guid": "5000-64"
+        }
+      ],
+      "highUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2016/05/18/Lobby_Mods_20160517_3200.mp4",
+      "lowUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2016/05/18/Lobby_Mods_20160517_1000.mp4",
+      "hdUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2016/05/18/Lobby_Mods_20160517_4000.mp4",
+      "siteDetailUrl": "https://www.gamespot.com/videos/whats-the-most-impactful-mod-ever-the-lobby/2300-6432191/"
+    },
+    {
+      "lengthSeconds": 943,
+      "publishDate": "2016-03-24 08:00:00",
+      "mpxId": "651108931819",
+      "id": 6430221,
+      "title": "Voice Actors Voice Gordon Freeman, Link, and More - The Lobby",
+      "image": {
+        "squareTiny": "https://gamespot1.cbsistatic.com/uploads/square_tiny/1566/15663463/3026542-8443627754-TheLo.jpg",
+        "screenTiny": "https://gamespot1.cbsistatic.com/uploads/screen_tiny/1566/15663463/3026542-8443627754-TheLo.jpg",
+        "squareSmall": "https://gamespot1.cbsistatic.com/uploads/square_small/1566/15663463/3026542-8443627754-TheLo.jpg",
+        "original": "https://gamespot1.cbsistatic.com/uploads/original/1566/15663463/3026542-8443627754-TheLo.jpg"
+      },
+      "deck": "Danny gets voice actors Marisha Ray, Matthew Mercer, Laura Bailey, and Travis Willingham to audition for a few understated characters.",
+      "source": "",
+      "categories": [
+        {
+          "id": 55,
+          "name": "Games"
+        },
+        {
+          "id": 123,
+          "name": "Show"
+        },
+        {
+          "id": 141,
+          "name": "Breakout"
+        }
+      ],
+      "show": [
+        {
+          "id": 69,
+          "title": "The Lobby"
+        }
+      ],
+      "associations": [
+        {
+          "id": 64,
+          "name": "Half-Life",
+          "apiDetailUrl": "https://www.gamespot.com/api/games/?filter=id%3A64",
+          "guid": "5000-64"
+        }
+      ],
+      "highUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2016/03/23/TheLobby_230315_MuteCharacters_3200.mp4",
+      "lowUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2016/03/23/TheLobby_230315_MuteCharacters_1000.mp4",
+      "hdUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2016/03/23/TheLobby_230315_MuteCharacters_4000.mp4",
+      "siteDetailUrl": "https://www.gamespot.com/videos/voice-actors-voice-gordon-freeman-link-and-more-th/2300-6430221/"
+    },
+    {
+      "lengthSeconds": 126,
+      "publishDate": "2016-01-08 08:18:00",
+      "mpxId": "598423107585",
+      "id": 6428858,
+      "title": "GS News Update: Half-Life Writer Confirms Valve Retirement",
+      "image": {
+        "squareTiny": "https://gamespot1.cbsistatic.com/uploads/square_tiny/1365/13658182/2988543-gsnu_thumbnail1080_20160108halflifesite.jpg",
+        "screenTiny": "https://gamespot1.cbsistatic.com/uploads/screen_tiny/1365/13658182/2988543-gsnu_thumbnail1080_20160108halflifesite.jpg",
+        "squareSmall": "https://gamespot1.cbsistatic.com/uploads/square_small/1365/13658182/2988543-gsnu_thumbnail1080_20160108halflifesite.jpg",
+        "original": "https://gamespot1.cbsistatic.com/uploads/original/1365/13658182/2988543-gsnu_thumbnail1080_20160108halflifesite.jpg"
+      },
+      "deck": "Marc Laidlaw, the esteemed sci-fi writer who has worked at Half-Life developer Valve since 1997, has confirmed his retirement from the Bellevue, Washington studio.",
+      "source": "",
+      "categories": [
+        {
+          "id": 55,
+          "name": "Games"
+        },
+        {
+          "id": 121,
+          "name": "News"
+        }
+      ],
+      "show": [
+        {
+          "id": 79,
+          "title": "GS News Updates"
+        }
+      ],
+      "associations": [
+        {
+          "id": 64,
+          "name": "Half-Life",
+          "apiDetailUrl": "https://www.gamespot.com/api/games/?filter=id%3A64",
+          "guid": "5000-64"
+        }
+      ],
+      "highUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2016/01/08/GSNU_HalfLifeWriterLeavesValve_20160108_V2_3200.mp4",
+      "lowUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2016/01/08/GSNU_HalfLifeWriterLeavesValve_20160108_V2_1000.mp4",
+      "hdUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2016/01/08/GSNU_HalfLifeWriterLeavesValve_20160108_V2_4000.mp4",
+      "siteDetailUrl": "https://www.gamespot.com/videos/gs-news-update-half-life-writer-confirms-valve-ret/2300-6428858/"
+    },
+    {
+      "lengthSeconds": 899,
+      "publishDate": "2015-05-09 07:00:00",
+      "mpxId": "442367555506",
+      "id": 6424750,
+      "title": "Black Mesa - GameSpot Plays",
+      "image": {
+        "squareTiny": "https://gamespot1.cbsistatic.com/uploads/square_tiny/1535/15351135/2862315-gamespot_plays_blackmesasiteandpromo.jpg",
+        "screenTiny": "https://gamespot1.cbsistatic.com/uploads/screen_tiny/1535/15351135/2862315-gamespot_plays_blackmesasiteandpromo.jpg",
+        "squareSmall": "https://gamespot1.cbsistatic.com/uploads/square_small/1535/15351135/2862315-gamespot_plays_blackmesasiteandpromo.jpg",
+        "original": "https://gamespot1.cbsistatic.com/uploads/original/1535/15351135/2862315-gamespot_plays_blackmesasiteandpromo.jpg"
+      },
+      "deck": "Ever wanted to play the original Half Life, but with the graphics and physics of a modern shooter? Jeremy and Danny check out this Early Access homage to one of the best games of all time.",
+      "source": "",
+      "categories": [
+        {
+          "id": 55,
+          "name": "Games"
+        },
+        {
+          "id": 116,
+          "name": "Feature"
+        },
+        {
+          "id": 128,
+          "name": "GameSpot Plays"
+        }
+      ],
+      "show": [],
+      "associations": [
+        {
+          "id": 64,
+          "name": "Half-Life",
+          "apiDetailUrl": "https://www.gamespot.com/api/games/?filter=id%3A64",
+          "guid": "5000-64"
+        }
+      ],
+      "highUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2015/05/08/GameSpotPlays_BlackMesa_20150508_3200.mp4",
+      "lowUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2015/05/08/GameSpotPlays_BlackMesa_20150508_1000.mp4",
+      "hdUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2015/05/08/GameSpotPlays_BlackMesa_20150508_4000.mp4",
+      "siteDetailUrl": "https://www.gamespot.com/videos/black-mesa-gamespot-plays/2300-6424750/"
+    },
+    {
+      "lengthSeconds": 344,
+      "publishDate": "2013-09-02 07:25:22",
+      "mpxId": "",
+      "id": 6413965,
+      "title": "Greatest Game Series of the Decade: Sweet 16 Rundown",
+      "image": {
+        "squareTiny": "https://gamespot1.cbsistatic.com/uploads/square_tiny/mig/6/3/9/7/2236397-gsm_169_ggsotd_top16_au_vf_090313_320.jpg",
+        "screenTiny": "https://gamespot1.cbsistatic.com/uploads/screen_tiny/mig/6/3/9/7/2236397-gsm_169_ggsotd_top16_au_vf_090313_320.jpg",
+        "squareSmall": "https://gamespot1.cbsistatic.com/uploads/square_small/mig/6/3/9/7/2236397-gsm_169_ggsotd_top16_au_vf_090313_320.jpg",
+        "original": "https://gamespot1.cbsistatic.com/uploads/original/mig/6/3/9/7/2236397-gsm_169_ggsotd_top16_au_vf_090313_320.jpg"
+      },
+      "deck": "Voting in our Greatest Game Series of the Decade brackets? Don't place your votes without getting the rundown on the top 16 games first! ",
+      "source": "",
+      "categories": [
+        {
+          "id": 55,
+          "name": "Games"
+        },
+        {
+          "id": 116,
+          "name": "Feature"
+        },
+        {
+          "id": 133,
+          "name": "Editorial Opinion"
+        }
+      ],
+      "show": [],
+      "associations": [
+        {
+          "id": 64,
+          "name": "Half-Life",
+          "apiDetailUrl": "https://www.gamespot.com/api/games/?filter=id%3A64",
+          "guid": "5000-64"
+        }
+      ],
+      "highUrl": "",
+      "lowUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2013/09/169_ggsotd_top16_au_vf_090313_1200.mp4",
+      "hdUrl": "https://static-gamespotvideo.cbsistatic.com/vr/2013/09/169_ggsotd_top16_au_vf_090313_4000.mp4",
+      "siteDetailUrl": "https://www.gamespot.com/videos/greatest-game-series-of-the-decade-sweet-16-rundow/2300-6413965/"
+    }
+  ],
+  "version": "1.0"
+}

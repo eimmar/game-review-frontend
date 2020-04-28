@@ -161,6 +161,7 @@ class GameListViewContent extends Component<Props, State> {
     get renderGameListEditButton() {
         return (
             <Button
+                data-id="edit"
                 className="m-r-8"
                 onClick={this.handleEditModalToggle}
                 variant="contained"
@@ -175,6 +176,7 @@ class GameListViewContent extends Component<Props, State> {
     get renderGameListDeleteButton() {
         return (
             <Button
+                data-id="delete"
                 onClick={this.handleDeleteModalToggle}
                 variant="contained"
                 color="secondary"
@@ -241,7 +243,7 @@ class GameListViewContent extends Component<Props, State> {
                         {authService.isCurrentUser(gameList.user) && (
                             <Grid item>
                                 {this.renderGameListEditButton}
-                                {this.renderGameListDeleteButton}
+                                {gameList.type === GameListType.Custom && this.renderGameListDeleteButton}
                             </Grid>
                         )}
 
@@ -260,8 +262,12 @@ class GameListViewContent extends Component<Props, State> {
                         </Grid>
                     </Grid>
                 </Container>
-                {this.gameListDeleteModal}
-                {this.gameListEditFormModal}
+                {authService.isCurrentUser(gameList.user) && (
+                    <>
+                        {this.gameListDeleteModal}
+                        {gameList.type === GameListType.Custom && this.gameListEditFormModal}
+                    </>
+                )}
             </>
         )
     }

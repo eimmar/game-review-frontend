@@ -77,7 +77,7 @@ class GameList extends Component<Props, State> {
         const { location } = this.props
 
         return (
-            <MainLayout>
+            <MainLayout key={location.key}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Typography component="h1" variant="h4" align="center" color="textPrimary" gutterBottom>
@@ -87,7 +87,7 @@ class GameList extends Component<Props, State> {
 
                     <Grid item xs={12} sm={12} md={4} lg={3}>
                         <Hidden smDown>
-                            <GamesFilter key={location.key} />
+                            <GamesFilter />
                         </Hidden>
                         <Hidden mdUp>{this.renderMobileDrawer()}</Hidden>
                     </Grid>

@@ -1,10 +1,6 @@
 import { routes } from '../../../src/parameters'
 
 context('ProfileEdit', () => {
-    // beforeEach(() => {
-    //     cy.route({ method: 'GET', url: '/api/game-list/user/5a7fcd55-8499-11ea-b480-8c164583cd5d', response: 'fixture:GameList/list.json' })
-    // })
-
     it('Profile edit', () => {
         cy.route({ method: 'POST', url: '/api/user/edit/**', response: 'fixture:User/editResponse.json' }).as('edit')
         cy.route({ method: 'POST', url: '/api/review/user/**', response: 'fixture:Review/paginatedList.json' })
