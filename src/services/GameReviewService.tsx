@@ -44,11 +44,13 @@ class ReviewService {
     }
 
     create(data: GameReviewRequest): Promise<GameReview> {
-        return requestService.performRequest('POST', this.baseUrl, data)
+        return requestService.performRequest('POST', `${this.baseUrl}new`, data)
     }
 
     update(id: string, data: GameReviewRequest): Promise<GameReview> {
-        return requestService.performRequest('POST', `${this.baseUrl}edit/${id}`, data)
+        const { game, user, ...rest } = data
+
+        return requestService.performRequest('POST', `${this.baseUrl}edit/${id}`, rest)
     }
 
     delete(id: string) {

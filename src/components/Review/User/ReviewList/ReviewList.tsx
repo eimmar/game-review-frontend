@@ -114,7 +114,7 @@ class ReviewList extends AbstractPaginator<Props, State> {
         const { reviews } = this.state
         const idx = reviews.findIndex((it) => it.id === review.id)
 
-        if (idx) {
+        if (idx !== -1) {
             const newReviews = [...reviews]
 
             newReviews[idx] = review
