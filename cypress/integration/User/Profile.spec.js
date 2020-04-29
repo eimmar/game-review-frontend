@@ -44,7 +44,7 @@ context('Profile', () => {
         cy.get('[data-id=edit]')
             .first()
             .click()
-        cy.get('textarea[name=title]')
+        cy.get('input[name=title]')
             .should('be.visible')
             .type('Headline')
         cy.get('[data-id=review-submit]').click()

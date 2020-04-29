@@ -120,7 +120,7 @@ class ReviewFormModal extends Component<Props, State> {
         }
 
         return (
-            <Button variant="outlined" color="primary" onClick={this.handleModalToggle}>
+            <Button variant="outlined" color="primary" onClick={this.handleModalToggle} data-id="create-review">
                 {t`gameReview.create`}
             </Button>
         )
@@ -157,7 +157,7 @@ class ReviewFormModal extends Component<Props, State> {
             <FieldArray name={name}>
                 {(arrayHelpers) => {
                     return (
-                        <Grid item xs={12}>
+                        <Grid item xs={12} data-id={name}>
                             <Typography variant="subtitle1">{header}</Typography>
                             {values[name].map((it, index) => {
                                 const error =
@@ -230,7 +230,6 @@ class ReviewFormModal extends Component<Props, State> {
                                     <Grid container spacing={2}>
                                         <Grid item xs={12}>
                                             <TextField
-                                                multiline
                                                 name="title"
                                                 variant="outlined"
                                                 size="small"

@@ -14,7 +14,6 @@ import {
     Avatar,
     Link,
 } from '@material-ui/core'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import ClearIcon from '@material-ui/icons/Clear'
 import Rating from '@material-ui/lab/Rating'
 import ShowMore from 'react-show-more'
