@@ -8,7 +8,6 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 
 import { PublicRoute } from './routes/PublicRoute'
 import { routes } from './parameters'
-import { lazyComponent } from './services/Util/PageSpeed'
 import Registration from './views/Auth/Registration'
 import Login from './views/Auth/Login'
 import ForgotPassword from './views/Auth/ForgotPassword'
@@ -17,7 +16,7 @@ import NotFound404 from './views/Error/NotFound404'
 import GameList from './views/Game/GameList'
 import GameView from './views/Game/GameView'
 import { PublicOnlyRoute } from './routes/PublicOnlyRoute'
-import history from './services/History'
+import history from './services/Util/History'
 import { PrivateRoute } from './routes/PrivateRoute'
 import Profile from './views/User/Profile'
 import UserView from './views/User/UserView'
@@ -29,8 +28,7 @@ import LogOut from './views/Auth/LogOut'
 import ScrollToTop from './components/Global/ScrollToTop'
 import FriendList from './views/Friendship/FriendList'
 import FriendInvites from './views/Friendship/FriendInvites'
-
-const HomePage = lazyComponent(import('./views/HomePage'))
+import HomePage from './views/HomePage'
 
 function App() {
     const theme = createMuiTheme({

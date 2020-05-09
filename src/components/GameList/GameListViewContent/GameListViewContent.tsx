@@ -24,7 +24,7 @@ import { routes } from '../../../parameters'
 import { WithUser } from '../../../services/UserService'
 import GameListUpdateForm from '../GameListForm/GameListUpdateForm'
 import { authService } from '../../../services/AuthService'
-import history from '../../../services/History'
+import history from '../../../services/Util/History'
 
 const styles = ({ spacing, palette }: Theme) =>
     createStyles({

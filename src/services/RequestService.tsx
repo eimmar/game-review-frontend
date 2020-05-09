@@ -5,7 +5,7 @@ import { backendUrl, params, routes, storage } from '../parameters'
 import { errorService } from './ErrorService'
 // eslint-disable-next-line import/no-cycle
 import { authService } from './AuthService'
-import history from './History'
+import history from './Util/History'
 import { t } from '../i18n'
 
 export interface Pagination {

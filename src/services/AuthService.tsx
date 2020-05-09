@@ -5,7 +5,7 @@ import cookie from 'react-cookies'
 import { requestService } from './RequestService'
 // eslint-disable-next-line import/no-cycle
 import { User } from './UserService'
-import history from './History'
+import history from './Util/History'
 import { routes, storage } from '../parameters'
 
 export interface LoggedInUser extends User {
