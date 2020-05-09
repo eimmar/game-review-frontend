@@ -23,7 +23,7 @@ interface Props {
 
 interface State {
     friendship: Friendship | null
-    removeModal: boolean
+    removeModalText: string | null
     loading: boolean
 }
 
@@ -35,7 +35,7 @@ class FriendButton extends React.Component<Props, State> {
         this.state = {
             loading: true,
             friendship: props.initialFriendship || null,
-            removeModal: false,
+            removeModalText: null,
         }
     }
 
@@ -50,18 +50,20 @@ class FriendButton extends React.Component<Props, State> {
     }
 
     get removeModal() {
-        const { removeModal } = this.state
+        const { removeModalText } = this.state
 
         return (
-            <Dialog open={removeModal} onClose={this.handleRemoveModalToggle} scroll="body">
+            <Dialog open={Boolean(removeModalText)} onClose={this.handleRemoveModalToggle(null)} scroll="body">
                 <DialogTitle>
-                    <Typography variant="h6" component="p">{t`friendship.confirmRemove`}</Typography>
+                    <Typography variant="h6" component="p">
+                        {removeModalText}
+                    </Typography>
                 </DialogTitle>
                 <DialogActions>
                     <Button type="submit" variant="contained" color="secondary" onClick={this.handleRemoveRequest}>
                         {t`friendship.remove`}
                     </Button>
-                    <Button onClick={this.handleRemoveModalToggle} color="primary" variant="outlined">
+                    <Button onClick={this.handleRemoveModalToggle(removeModalText)} color="primary" variant="outlined">
                         {t`common.cancel`}
                     </Button>
                 </DialogActions>
@@ -100,7 +102,11 @@ class FriendButton extends React.Component<Props, State> {
                         <Button variant="contained" startIcon={<PersonIcon />}>{t`friendship.youAreFriends`}</Button>
                     )}
                     <Tooltip placement="top" title={t`friendship.removeFriend`}>
-                        <IconButton data-id="remove" color="secondary" onClick={this.handleRemoveModalToggle}>
+                        <IconButton
+                            data-id="remove"
+                            color="secondary"
+                            onClick={this.handleRemoveModalToggle(t`friendship.confirmRemove`)}
+                        >
                             <PersonAddDisabledIcon />
                         </IconButton>
                     </Tooltip>
@@ -110,13 +116,24 @@ class FriendButton extends React.Component<Props, State> {
 
         if (friendship.receiver && friendship.receiver.id === this.currentUser.id) {
             return (
-                <Button
-                    data-id="accept"
-                    variant="contained"
-                    color="primary"
-                    onClick={this.handleAcceptRequest}
-                    startIcon={<PersonAddIcon />}
-                >{t`friendship.accept`}</Button>
+                <>
+                    <Button
+                        data-id="accept"
+                        variant="contained"
+                        color="primary"
+                        onClick={this.handleAcceptRequest}
+                        startIcon={<PersonAddIcon />}
+                    >{t`friendship.accept`}</Button>
+                    <Tooltip placement="top" title={t`friendship.removeFriendRequest`}>
+                        <IconButton
+                            data-id="remove"
+                            color="secondary"
+                            onClick={this.handleRemoveModalToggle(t`friendship.confirmRemoveRequest`)}
+                        >
+                            <PersonAddDisabledIcon />
+                        </IconButton>
+                    </Tooltip>
+                </>
             )
         }
 
@@ -158,22 +175,31 @@ class FriendButton extends React.Component<Props, State> {
 
     handleRemoveRequest = () => {
         const { user, onRemoveSuccess } = this.props
+        const { friendship } = this.state
+        const successMessage =
+            friendship?.status === FriendshipStatus.Accepted
+                ? t`friendship.removeSuccess`
+                : t`friendship.requestRemoveSuccess`
 
         this.setState({ loading: true })
         friendshipService
             .remove(user.id)
             .then(() => {
                 this.setState({ friendship: null }, () => {
-                    toast.info(t`friendship.removeSuccess`)
+                    toast.info(successMessage)
                     onRemoveSuccess && onRemoveSuccess()
-                    this.handleRemoveModalToggle()
+                    this.handleRemoveModalToggle(null)()
                 })
             })
             .catch((error) => toast.error(error.message))
             .finally(() => this.setState({ loading: false }))
     }
 
-    handleRemoveModalToggle = () => this.setState((prevState) => ({ removeModal: !prevState.removeModal }))
+    handleRemoveModalToggle = (modalText: string | null) => () => {
+        const { removeModalText } = this.state
+
+        this.setState({ removeModalText: removeModalText !== null ? null : modalText })
+    }
 
     render(): React.ReactNode {
         return (
