@@ -264,8 +264,8 @@ class GameListViewContent extends Component<Props, State> {
                 </Container>
                 {authService.isCurrentUser(gameList.user) && (
                     <>
-                        {this.gameListDeleteModal}
-                        {gameList.type === GameListType.Custom && this.gameListEditFormModal}
+                        {gameList.type === GameListType.Custom && this.gameListDeleteModal}
+                        {this.gameListEditFormModal}
                     </>
                 )}
             </>
