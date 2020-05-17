@@ -7,7 +7,6 @@ import {
     Avatar,
     Box,
     CardMedia,
-    Divider,
     LinearProgress,
     Link,
     List,

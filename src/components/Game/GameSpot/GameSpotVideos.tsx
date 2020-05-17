@@ -1,6 +1,6 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
-import { Box, CircularProgress, Button, Divider } from '@material-ui/core'
+import { CircularProgress, Button, Divider } from '@material-ui/core'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 

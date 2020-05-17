@@ -18,7 +18,6 @@ import {
     Input,
     InputAdornment,
     IconButton,
-    TextField,
 } from '@material-ui/core'
 import { Pagination as PaginationComponent } from '@material-ui/lab'
 import Moment from 'react-moment'

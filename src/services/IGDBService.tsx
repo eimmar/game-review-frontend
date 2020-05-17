@@ -24,11 +24,6 @@ export interface Review {
     video?: Video
 }
 
-interface GameListResponse {
-    items: Game[]
-    status: number
-}
-
 class IGDBService {
     baseUrl = '/api/igdb/'
 

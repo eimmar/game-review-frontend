@@ -119,7 +119,6 @@ class ProfileEditForm extends Component<Props> {
                                 <Grid item xs={12}>
                                     <TextField
                                         variant="outlined"
-                                        required
                                         fullWidth
                                         label={t`user.lastName`}
                                         name="lastName"

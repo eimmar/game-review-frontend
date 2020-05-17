@@ -51,7 +51,7 @@ class RegistrationForm extends Component<Props> {
         username: Yup.string()
             .required(t`error.validation.required`)
             .min(4, t('error.validation.tooShort', { number: 4 }))
-            .test('username', t`error.validation.specialCharsDetected`, (val) => val.match(/^[a-zA-Z0-9_]+$/)),
+            .test('username', t`error.validation.specialCharsDetected`, (val) => val && val.match(/^[a-zA-Z0-9_]+$/)),
         email: Yup.string()
             .required(t`error.validation.required`)
             .email(t`error.validation.email`),
@@ -101,7 +101,7 @@ class RegistrationForm extends Component<Props> {
                     validationSchema={this.validationSchema}
                     onSubmit={this.handleSubmit}
                 >
-                    {({ values, touched, errors, isSubmitting, handleChange, handleBlur, setFieldValue }) => (
+                    {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
                         <Form className={classes.form} noValidate>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
@@ -150,7 +150,6 @@ class RegistrationForm extends Component<Props> {
                                 <Grid item xs={12} sm={6}>
                                     <TextField
                                         variant="outlined"
-                                        required
                                         fullWidth
                                         label={t`user.lastName`}
                                         name="lastName"
