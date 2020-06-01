@@ -112,7 +112,7 @@ class ReviewList extends AbstractPaginator<Props, State> {
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
                             <Avatar alt={review.title} className={styles.avatar}>
-                                <UserAvatar user={review.user} size="sm" />
+                                <UserAvatar user={review.user} size="auto" />
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText

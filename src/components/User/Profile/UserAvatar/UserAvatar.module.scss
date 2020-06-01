@@ -11,6 +11,11 @@
         height: 30px !important;
     }
 
+    &.autoSize {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
     &.noBg {
         background-color: $color-paper !important;
     }

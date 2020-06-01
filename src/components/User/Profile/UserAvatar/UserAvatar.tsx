@@ -8,12 +8,17 @@ import { flattenClasses } from '../../../../services/Util/StyleUtils'
 
 interface Props {
     user: User | LoggedInUser
-    size?: 'sm' | 'lg'
+    size?: 'sm' | 'lg' | 'auto'
 }
 
 function UserAvatar(props: Props) {
     const { user, size } = props
-    const classes = flattenClasses([styles.avatar, size === 'sm' && styles.sm, user.avatar && styles.noBg])
+    const classes = flattenClasses([
+        styles.avatar,
+        size === 'sm' && styles.sm,
+        size === 'auto' && styles.autoSize,
+        user.avatar && styles.noBg,
+    ])
 
     if (user.avatar) {
         return <Avatar className={classes} src={userService.getAvatarUrl(user.avatar)} />
