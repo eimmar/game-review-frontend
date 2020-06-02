@@ -287,7 +287,7 @@ class ProfileContent extends Component<Props, State> {
                             <Typography align="center">
                                 {t`user.memberSince`}{' '}
                                 <Moment locale={i18next.language} format="MMMM Do, YYYY">
-                                    {user.createdAt.date}
+                                    {user.createdAt}
                                 </Moment>
                             </Typography>
                             <div className="text-center m-t-8">

@@ -175,7 +175,7 @@ class UserListContent extends AbstractPaginator<Props, State> {
                                                     >
                                                         {t`user.memberSince`}{' '}
                                                         <Moment locale={i18next.language} format="hh:mm, MMMM Do, YYYY">
-                                                            {user.createdAt.date}
+                                                            {user.createdAt}
                                                         </Moment>
                                                     </Typography>
                                                 }

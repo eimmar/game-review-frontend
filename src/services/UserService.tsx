@@ -13,7 +13,8 @@ export interface User {
     avatar: string | null
     roles: string[]
     enabled: boolean
-    createdAt: DateTimeObj
+    createdAt: string
+    updatedAt: string
 }
 
 export interface UserUpdateRequest {
@@ -36,12 +37,6 @@ export interface UserFilterRequest {
     user?: string
     orderBy?: string
     order?: string
-}
-
-interface DateTimeObj {
-    date: string
-    timezone_type: number
-    timezone: string
 }
 
 export type WithUser = User

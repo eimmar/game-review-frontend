@@ -110,7 +110,7 @@ class UserGridCarousel extends AbstractPaginator<Props, State> {
                             <Typography variant="subtitle2" color="inherit" gutterBottom>
                                 {t`user.memberSince`}{' '}
                                 <Moment locale={i18next.language} format="MMMM Do, YYYY">
-                                    {user.createdAt.date}
+                                    {user.createdAt}
                                 </Moment>
                             </Typography>
                         </div>
